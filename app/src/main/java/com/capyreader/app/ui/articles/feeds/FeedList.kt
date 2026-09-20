@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.ui.articles.AddFeedButton
-import com.capyreader.app.ui.articles.ArticleStatusBar
 import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.CountBadge
 import com.capyreader.app.ui.articles.ListTitle
@@ -42,7 +41,6 @@ import com.capyreader.app.ui.navigationTitle
 import com.capyreader.app.ui.savedSearchNavTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleFilter
-import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.SavedSearch
@@ -60,7 +58,6 @@ fun FeedList(
     savedSearches: List<SavedSearch> = emptyList(),
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
-    onSelectStatus: (status: ArticleStatus) -> Unit,
     onSelectSavedSearch: (search: SavedSearch) -> Unit,
     refreshState: AngleRefreshState,
     onRefresh: () -> Unit,
@@ -75,225 +72,206 @@ fun FeedList(
     val buttonState = rememberRefreshButtonState(refreshState)
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier
+            .verticalScroll(scrollState)
+            .padding(horizontal = 12.dp)
+            .fillMaxSize()
     ) {
-        Column(
-            Modifier
-                .verticalScroll(scrollState)
-                .padding(horizontal = 12.dp)
-                .weight(1f)
-                .fillMaxSize()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            CapyIcon()
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CapyIcon()
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { onNavigateToSettings() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Settings,
-                            contentDescription = stringResource(R.string.settings)
-                        )
-                    }
-                    IconButton(onClick = { onRefresh() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Refresh,
-                            contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
-                            modifier = Modifier.graphicsLayer {
-                                rotationZ = buttonState.iconRotation
-                            }
-                        )
-                    }
-                    AddFeedButton(
-                        iconOnly = true,
-                        onComplete = { onFeedAdded(it) },
-                        onBeforeAdd = onBeforeFeedAdd,
+                IconButton(onClick = { onNavigateToSettings() }) {
+                    Icon(
+                        imageVector = Icons.Rounded.Settings,
+                        contentDescription = stringResource(R.string.settings)
                     )
                 }
-            }
-
-            Box {
-                val (showArticlesMenu, setShowArticlesMenu) = remember { mutableStateOf(false) }
-
-                DrawerItem(
-                    icon = { ArticleStatusIcon(status = filter.status) },
-                    label = {
-                        ListTitle(
-                            stringResource(filter.status.navigationTitle),
-                        )
-                    },
-                    badge = { CountBadge(count = statusCount) },
-                    selected = filter.hasArticlesSelected(),
-                    onClick = { onFilterSelect() },
-                    onLongClick = { setShowArticlesMenu(true) },
-                )
-
-                MarkAllReadMenu(
-                    expanded = showArticlesMenu,
-                    onDismiss = { setShowArticlesMenu(false) },
-                    onMarkAllRead = {
-                        onMarkAllRead(ArticleFilter.Articles(articleStatus = filter.status))
-                    },
+                IconButton(onClick = { onRefresh() }) {
+                    Icon(
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = stringResource(R.string.feed_nav_drawer_refresh_all),
+                        modifier = Modifier.graphicsLayer {
+                            rotationZ = buttonState.iconRotation
+                        }
+                    )
+                }
+                AddFeedButton(
+                    iconOnly = true,
+                    onComplete = { onFeedAdded(it) },
+                    onBeforeAdd = onBeforeFeedAdd,
                 )
             }
+        }
 
+        Box {
+            val (showArticlesMenu, setShowArticlesMenu) = remember { mutableStateOf(false) }
+
+            DrawerItem(
+                icon = { ArticleStatusIcon(status = filter.status) },
+                label = {
+                    ListTitle(
+                        stringResource(filter.status.navigationTitle),
+                    )
+                },
+                badge = { CountBadge(count = statusCount) },
+                selected = filter.hasArticlesSelected(),
+                onClick = { onFilterSelect() },
+                onLongClick = { setShowArticlesMenu(true) },
+            )
+
+            MarkAllReadMenu(
+                expanded = showArticlesMenu,
+                onDismiss = { setShowArticlesMenu(false) },
+                onMarkAllRead = {
+                    onMarkAllRead(ArticleFilter.Articles(articleStatus = filter.status))
+                },
+            )
+        }
+
+        Box {
+            val (showTodayMenu, setShowTodayMenu) = remember { mutableStateOf(false) }
+
+            DrawerItem(
+                icon = {
+                    Icon(
+                        Icons.Rounded.Today,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    ListTitle(
+                        stringResource(R.string.filter_today),
+                    )
+                },
+                badge = { CountBadge(count = todayCount) },
+                selected = filter.hasTodaySelected(),
+                onClick = { onSelectToday() },
+                onLongClick = { setShowTodayMenu(true) },
+            )
+
+            MarkAllReadMenu(
+                expanded = showTodayMenu,
+                onDismiss = { setShowTodayMenu(false) },
+                onMarkAllRead = {
+                    onMarkAllRead(ArticleFilter.Today(filter.status))
+                },
+            )
+        }
+
+        if (readLaterFeed != null) {
             Box {
-                val (showTodayMenu, setShowTodayMenu) = remember { mutableStateOf(false) }
+                val (showReadLaterMenu, setShowReadLaterMenu) = remember { mutableStateOf(false) }
 
                 DrawerItem(
                     icon = {
                         Icon(
-                            Icons.Rounded.Today,
+                            Icons.Rounded.Bookmark,
                             contentDescription = null
                         )
                     },
                     label = {
                         ListTitle(
-                            stringResource(R.string.filter_today),
+                            stringResource(R.string.filter_read_later),
                         )
                     },
-                    badge = { CountBadge(count = todayCount) },
-                    selected = filter.hasTodaySelected(),
-                    onClick = { onSelectToday() },
-                    onLongClick = { setShowTodayMenu(true) },
+                    badge = { CountBadge(count = readLaterFeed.count) },
+                    selected = filter.isFeedSelected(readLaterFeed),
+                    onClick = { onSelectFeed(readLaterFeed, null) },
+                    onLongClick = { setShowReadLaterMenu(true) },
                 )
 
                 MarkAllReadMenu(
-                    expanded = showTodayMenu,
-                    onDismiss = { setShowTodayMenu(false) },
+                    expanded = showReadLaterMenu,
+                    onDismiss = { setShowReadLaterMenu(false) },
                     onMarkAllRead = {
-                        onMarkAllRead(ArticleFilter.Today(filter.status))
+                        onMarkAllRead(
+                            ArticleFilter.Feeds(
+                                feedID = readLaterFeed.id,
+                                folderTitle = null,
+                                feedStatus = filter.status,
+                            )
+                        )
                     },
                 )
             }
+        }
 
-            if (readLaterFeed != null) {
-                Box {
-                    val (showReadLaterMenu, setShowReadLaterMenu) = remember { mutableStateOf(false) }
+        Spacer(Modifier.height(8.dp))
 
-                    DrawerItem(
-                        icon = {
-                            Icon(
-                                Icons.Rounded.Bookmark,
-                                contentDescription = null
-                            )
-                        },
-                        label = {
-                            ListTitle(
-                                stringResource(R.string.filter_read_later),
-                            )
-                        },
-                        badge = { CountBadge(count = readLaterFeed.count) },
-                        selected = filter.isFeedSelected(readLaterFeed),
-                        onClick = { onSelectFeed(readLaterFeed, null) },
-                        onLongClick = { setShowReadLaterMenu(true) },
+        if (savedSearches.isNotEmpty()) {
+            FeedListDivider()
+            FeedGroupList(
+                type = FeedGroup.SAVED_SEARCHES,
+                title = stringResource(source.savedSearchNavTitle),
+            ) {
+                savedSearches.forEach {
+                    SavedSearchRow(
+                        onSelect = onSelectSavedSearch,
+                        selected = filter.isSavedSearchSelected(it),
+                        savedSearch = it,
                     )
+                }
+            }
+        }
 
-                    MarkAllReadMenu(
-                        expanded = showReadLaterMenu,
-                        onDismiss = { setShowReadLaterMenu(false) },
+        if (folders.isNotEmpty()) {
+            FeedListDivider()
+            FeedGroupList(
+                type = FeedGroup.FOLDERS,
+                title = stringResource(R.string.nav_headline_folders)
+            ) {
+                folders.forEach { folder ->
+                    FolderRow(
+                        folder = folder,
+                        onFolderSelect = onSelectFolder,
+                        onFeedSelect = { feed ->
+                            onSelectFeed(feed, folder.title)
+                        },
+                        onMarkAllRead = onMarkAllRead,
+                        filter = filter,
+                        source = source,
+                    )
+                }
+            }
+        }
+
+        if (feeds.isNotEmpty()) {
+            FeedListDivider()
+            FeedGroupList(
+                type = FeedGroup.FEEDS,
+                title = stringResource(R.string.nav_headline_feeds),
+            ) {
+                feeds.forEach { feed ->
+                    FeedRow(
+                        feed = feed,
+                        onSelect = {
+                            onSelectFeed(it, null)
+                        },
                         onMarkAllRead = {
                             onMarkAllRead(
                                 ArticleFilter.Feeds(
-                                    feedID = readLaterFeed.id,
+                                    feedID = feed.id,
                                     folderTitle = null,
                                     feedStatus = filter.status,
                                 )
                             )
                         },
+                        selected = filter.isFeedSelected(feed),
+                        source = source,
                     )
                 }
             }
-
-            Spacer(Modifier.height(8.dp))
-
-            if (savedSearches.isNotEmpty()) {
-                FeedListDivider()
-                FeedGroupList(
-                    type = FeedGroup.SAVED_SEARCHES,
-                    title = stringResource(source.savedSearchNavTitle),
-                ) {
-                    savedSearches.forEach {
-                        SavedSearchRow(
-                            onSelect = onSelectSavedSearch,
-                            selected = filter.isSavedSearchSelected(it),
-                            savedSearch = it,
-                        )
-                    }
-                }
-            }
-
-            if (folders.isNotEmpty()) {
-                FeedListDivider()
-                FeedGroupList(
-                    type = FeedGroup.FOLDERS,
-                    title = stringResource(R.string.nav_headline_folders)
-                ) {
-                    folders.forEach { folder ->
-                        FolderRow(
-                            folder = folder,
-                            onFolderSelect = onSelectFolder,
-                            onFeedSelect = { feed ->
-                                onSelectFeed(feed, folder.title)
-                            },
-                            onMarkAllRead = onMarkAllRead,
-                            filter = filter,
-                            source = source,
-                        )
-                    }
-                }
-            }
-
-            if (feeds.isNotEmpty()) {
-                FeedListDivider()
-                FeedGroupList(
-                    type = FeedGroup.FEEDS,
-                    title = stringResource(R.string.nav_headline_feeds),
-                ) {
-                    feeds.forEach { feed ->
-                        FeedRow(
-                            feed = feed,
-                            onSelect = {
-                                onSelectFeed(it, null)
-                            },
-                            onMarkAllRead = {
-                                onMarkAllRead(
-                                    ArticleFilter.Feeds(
-                                        feedID = feed.id,
-                                        folderTitle = null,
-                                        feedStatus = filter.status,
-                                    )
-                                )
-                            },
-                            selected = filter.isFeedSelected(feed),
-                            source = source,
-                        )
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(16.dp))
         }
 
-        HorizontalDivider()
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            ArticleStatusBar(
-                status = filter.status,
-                onSelectStatus = onSelectStatus,
-            )
-        }
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -315,7 +293,6 @@ fun FeedListPreview() {
                 onRefresh = {},
                 onFilterSelect = {},
                 onSelectToday = {},
-                onSelectStatus = {},
                 filter = ArticleFilter.default(),
                 statusCount = 10,
                 todayCount = 5,
