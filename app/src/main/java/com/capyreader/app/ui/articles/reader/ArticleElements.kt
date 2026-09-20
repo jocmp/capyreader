@@ -332,7 +332,7 @@ fun ImageElement(
 
         val requestWidth = source.requestWidth(maxWidthPx)
         val requestHeight = source.heightPx ?: requestWidth
-        val aspectRatio = source.aspectRatio
+        val aspectRatio = source.aspectRatio ?: ImageAspectRatios[source.imgUri]
 
         val sizeModifier = if (aspectRatio != null) {
             Modifier
@@ -354,6 +354,13 @@ fun ImageElement(
                     .build(),
                 contentDescription = image.caption?.text,
                 contentScale = RestrainedFillWidthScaling(density.density),
+                onSuccess = { state ->
+                    ImageAspectRatios.put(
+                        url = source.imgUri,
+                        width = state.result.image.width,
+                        height = state.result.image.height,
+                    )
+                },
                 modifier = sizeModifier
                     .combinedClickable(
                         onClick = { actions.onImageClick(image) },

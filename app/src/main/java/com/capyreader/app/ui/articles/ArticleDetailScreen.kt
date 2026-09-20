@@ -119,6 +119,8 @@ fun ArticleDetailScreen(
                     onBackPressed()
                     viewModel.deletePage(current.id)
                 },
+                contentRevision = viewModel.contentRevision,
+                flattened = viewModel.flattenedArticle,
                 onSelectMedia = onSelectMedia,
                 onSelectAudio = { audio -> audioController.play(audio) },
                 onPauseAudio = { audioController.pause() },

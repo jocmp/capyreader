@@ -13,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
@@ -46,20 +45,18 @@ import com.capyreader.app.ui.articles.reader.rememberReaderStyle
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.jocmp.capy.Article
-import com.jocmp.capy.articles.flatten
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.mallet.LinearArticle
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import kotlin.math.roundToInt
 
 @Composable
 fun ArticleReader(
     article: Article,
+    flattened: LinearArticle?,
     pinToolbars: Boolean,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
@@ -117,14 +114,6 @@ fun ArticleReader(
         }
 
         setImageUrl(null)
-    }
-
-    val flattened by produceState<LinearArticle?>(
-        initialValue = null,
-        article.id,
-        article.content,
-    ) {
-        value = withContext(Dispatchers.Default) { article.flatten() }
     }
 
     val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {

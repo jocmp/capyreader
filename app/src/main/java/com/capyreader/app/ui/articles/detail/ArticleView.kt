@@ -20,7 +20,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,6 +46,7 @@ import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.jocmp.capy.Article
+import com.jocmp.mallet.LinearArticle
 import org.koin.compose.koinInject
 
 @Composable
@@ -57,6 +60,8 @@ fun ArticleView(
     canSaveExternally: Boolean = false,
     onDeletePage: () -> Unit = {},
     onSelectArticle: (id: String) -> Unit,
+    contentRevision: Int = 0,
+    flattened: LinearArticle? = null,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -81,12 +86,20 @@ fun ArticleView(
     val hasPrevious = previousArticleID != null
     val hasNext = nextArticleID != null
 
+    var pendingDirection by remember { mutableStateOf<Pair<String, Int>?>(null) }
+
     fun selectPrevious() {
-        previousArticleID?.let(onSelectArticle)
+        previousArticleID?.let { id ->
+            pendingDirection = id to ArticleDirection.DOWNWARD
+            onSelectArticle(id)
+        }
     }
 
     fun selectNext() {
-        nextArticleID?.let(onSelectArticle)
+        nextArticleID?.let { id ->
+            pendingDirection = id to ArticleDirection.UPWARD
+            onSelectArticle(id)
+        }
     }
 
     val onSwipe = { swipe: ArticleVerticalSwipe ->
@@ -141,9 +154,13 @@ fun ArticleView(
                             enableHorizontalPager = enableHorizontalPager,
                             previousArticleId = previousArticleID,
                             nextArticleId = nextArticleID,
-                        ) { targetArticle ->
+                            contentRevision = contentRevision,
+                            flattened = flattened,
+                            pendingDirection = pendingDirection,
+                        ) { targetArticle, targetFlattened ->
                             ArticleReader(
                                 article = targetArticle,
+                                flattened = targetFlattened,
                                 pinToolbars = pinToolbars,
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,

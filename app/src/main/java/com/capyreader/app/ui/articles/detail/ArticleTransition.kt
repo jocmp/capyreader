@@ -15,14 +15,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.jocmp.capy.Article
+import com.jocmp.mallet.LinearArticle
 
-private const val UPWARD = 1
-private const val DOWNWARD = -1
+object ArticleDirection {
+    const val UPWARD = 1
+    const val DOWNWARD = -1
+}
+
+private const val UPWARD = ArticleDirection.UPWARD
+private const val DOWNWARD = ArticleDirection.DOWNWARD
 
 private data class ArticleState(
     val article: Article,
     val previousId: String?,
     val nextId: String?,
+    val contentRevision: Int,
+    val flattened: LinearArticle?,
 )
 
 @Composable
@@ -31,7 +39,10 @@ fun ArticleTransition(
     enableHorizontalPager: Boolean = false,
     previousArticleId: String? = null,
     nextArticleId: String? = null,
-    content: @Composable (Article) -> Unit,
+    contentRevision: Int = 0,
+    flattened: LinearArticle? = null,
+    pendingDirection: Pair<String, Int>? = null,
+    content: @Composable (Article, LinearArticle?) -> Unit,
 ) {
     val (hasShownArticle, setShownArticle) = remember { mutableStateOf(false) }
 
@@ -40,6 +51,8 @@ fun ArticleTransition(
             article = article,
             previousId = previousArticleId,
             nextId = nextArticleId,
+            contentRevision = contentRevision,
+            flattened = flattened,
         ),
         transitionSpec = {
             if (!hasShownArticle) {
@@ -47,9 +60,12 @@ fun ArticleTransition(
             } else if (enableHorizontalPager) {
                 fadeIn(tween(100)) togetherWith fadeOut(tween(200))
             } else {
-                val direction = when (targetState.article.id) {
-                    initialState.nextId -> UPWARD
-                    initialState.previousId -> DOWNWARD
+                val targetId = targetState.article.id
+                val direction = when {
+                    targetId == initialState.article.id -> UPWARD
+                    targetId == pendingDirection?.first -> pendingDirection.second
+                    targetId == initialState.nextId -> UPWARD
+                    targetId == initialState.previousId -> DOWNWARD
                     else -> null
                 }
 
@@ -86,14 +102,18 @@ fun ArticleTransition(
                 }
             }
         },
-        contentKey = { it.article.id },
+        contentKey = { it.article.id to it.contentRevision },
         label = "articleTransition"
     ) {
         setShownArticle(true)
 
-        remember { it }
-            .run {
-                content(it.article)
-            }
+        val frozen = remember { it }
+        val isCurrent = frozen.article.id == article.id && frozen.contentRevision == contentRevision
+
+        if (isCurrent) {
+            content(article, flattened)
+        } else {
+            content(frozen.article, frozen.flattened)
+        }
     }
 }
