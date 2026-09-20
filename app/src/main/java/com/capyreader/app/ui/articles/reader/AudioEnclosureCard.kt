@@ -45,7 +45,7 @@ fun AudioEnclosureCard(
     val duration = enclosure.itunesDurationSeconds?.let { formatDuration(it) }
 
     Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(

@@ -35,11 +35,12 @@ import com.jocmp.mallet.LinearTextBlockStyle
 val LinearText.headingScale: Float?
     get() = annotations.firstNotNullOfOrNull { annotation ->
         when (annotation.data) {
-            LinearTextAnnotationH1 -> 1.75f
+            LinearTextAnnotationH1 -> 2f
             LinearTextAnnotationH2 -> 1.5f
-            LinearTextAnnotationH3 -> 1.25f
-            LinearTextAnnotationH4 -> 1.125f
-            LinearTextAnnotationH5, LinearTextAnnotationH6 -> 1f
+            LinearTextAnnotationH3 -> 1.17f
+            LinearTextAnnotationH4 -> 1f
+            LinearTextAnnotationH5 -> 0.83f
+            LinearTextAnnotationH6 -> 0.67f
             else -> null
         }
     }
@@ -62,9 +63,9 @@ fun LinearText.toAnnotatedString(): AnnotatedString {
                 LinearTextAnnotationUnderline -> SpanStyle(textDecoration = TextDecoration.Underline)
                 LinearTextAnnotationStrikethrough -> SpanStyle(textDecoration = TextDecoration.LineThrough)
                 LinearTextAnnotationMonospace -> SpanStyle(fontFamily = FontFamily.Monospace)
-                is LinearTextAnnotationLink -> SpanStyle(color = colors.primary)
+                is LinearTextAnnotationLink -> SpanStyle(color = colors.primary, textDecoration = TextDecoration.Underline)
                 is LinearTextAnnotationFont -> SpanStyle(fontFamily = data.face.toFontFamily())
-                LinearTextAnnotationCode -> inlineCodeStyle(colors.surfaceVariant)
+                LinearTextAnnotationCode -> inlineCodeStyle(colors.surfaceContainer)
                 LinearTextAnnotationSubscript -> shiftedStyle(BaselineShift.Subscript, baseSize)
                 LinearTextAnnotationSuperscript -> shiftedStyle(BaselineShift.Superscript, baseSize)
                 LinearTextAnnotationH1,

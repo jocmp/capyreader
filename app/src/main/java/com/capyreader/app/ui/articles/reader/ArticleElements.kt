@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material.icons.outlined.PlayCircleOutline
@@ -74,6 +76,7 @@ import com.jocmp.mallet.toTableData
 
 private const val MAX_IMAGE_WIDTH_PX = 2000
 private val DEFAULT_VIDEO_ASPECT_RATIO = 16f / 9f
+private val CORNER_SHAPE = RoundedCornerShape(3.dp)
 
 @Composable
 fun ArticleElement(
@@ -280,12 +283,12 @@ fun CodeBlockElement(
     }
 
     Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        shape = CORNER_SHAPE,
         modifier = modifier.fillMaxWidth(),
     ) {
         Box(
-            modifier = scrollModifier.padding(12.dp),
+            modifier = scrollModifier.padding(16.dp),
             contentAlignment = Alignment.TopStart,
         ) {
             ProvideTextStyle(codeStyle) {
@@ -352,7 +355,6 @@ fun ImageElement(
                 contentDescription = image.caption?.text,
                 contentScale = RestrainedFillWidthScaling(density.density),
                 modifier = sizeModifier
-                    .clip(MaterialTheme.shapes.small)
                     .combinedClickable(
                         onClick = { actions.onImageClick(image) },
                         onLongClick = { actions.onImageLongPress(source.imgUri) },
@@ -379,8 +381,8 @@ private fun CaptionText(
     val base = LocalTextStyle.current
     val captionStyle = if (base.fontSize.isSpecified) {
         base.copy(
-            fontSize = base.fontSize * 0.85f,
-            lineHeight = base.fontSize * 0.85f * 1.4f,
+            fontSize = base.fontSize * 0.75f,
+            lineHeight = base.fontSize * 0.75f * 1.2f,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     } else {
@@ -407,14 +409,14 @@ fun BlockQuoteElement(
     Row(modifier = modifier.height(IntrinsicSize.Min)) {
         Box(
             modifier = Modifier
-                .width(3.dp)
+                .width(2.dp)
                 .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.primary)
+                .background(MaterialTheme.colorScheme.onSurfaceVariant)
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .padding(start = 12.dp)
+                .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
                 .fillMaxWidth(),
         ) {
             blockQuote.content.forEach { element ->
@@ -475,8 +477,7 @@ fun TableElement(
 ) {
     val tableData = remember(table) { table.toTableData() }
     val wrap = LocalReaderStyle.current.wrapPreformattedText
-    val borderColor = MaterialTheme.colorScheme.outlineVariant
-    val headerBackground = MaterialTheme.colorScheme.surfaceVariant
+    val borderColor = MaterialTheme.colorScheme.outline
 
     TableLayout(
         tableData = tableData,
@@ -487,11 +488,6 @@ fun TableElement(
 
         if (cell != null) {
             val isHeader = cell.type == LinearTableCellItemType.HEADER
-            val background = if (isHeader) {
-                headerBackground
-            } else {
-                Color.Transparent
-            }
             val cellStyle = if (isHeader) {
                 LocalTextStyle.current.copy(fontWeight = FontWeight.Bold)
             } else {
@@ -501,9 +497,8 @@ fun TableElement(
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier
-                    .background(background)
-                    .border(width = 0.5.dp, color = borderColor)
-                    .padding(8.dp),
+                    .border(width = 1.dp, color = borderColor)
+                    .padding(4.dp),
             ) {
                 ProvideTextStyle(cellStyle) {
                     cell.content.forEach { element ->
@@ -537,8 +532,8 @@ fun VideoElement(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(aspectRatio)
-            .clip(MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .clip(CORNER_SHAPE)
+            .background(Color.Black)
             .clickable { actions.onLinkClick(source.link, null) },
     ) {
         if (thumbnail != null && showImages) {
@@ -555,7 +550,7 @@ fun VideoElement(
             tint = Color.White,
             modifier = Modifier
                 .size(64.dp)
-                .background(Color.Black.copy(alpha = 0.4f), MaterialTheme.shapes.extraLarge),
+                .background(Color.Black.copy(alpha = 0.6f), CircleShape),
         )
     }
 }
@@ -567,7 +562,7 @@ fun AudioElement(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant,
+        color = MaterialTheme.colorScheme.surfaceContainer,
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
             .fillMaxWidth()
