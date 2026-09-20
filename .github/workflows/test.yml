@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   typecheck:
     runs-on: ubuntu-latest
@@ -29,12 +33,11 @@ jobs:
           java-version: "21"
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
       - name: Run tests
-        run: make test
+        run: ./gradlew test --build-cache
+      - name: Compile gplay flavor
+        if: github.event_name == 'push'
+        run: ./gradlew :app:compileGplayDebugKotlin --build-cache
       - name: Test report
         uses: test-summary/action@v2
         if: always()

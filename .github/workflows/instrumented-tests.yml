@@ -1,9 +1,17 @@
-name: CI
+name: Instrumented Tests
 
 on:
   push:
     branches:
       - main
+
+concurrency:
+  group: instrumented-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  API_LEVEL: 31
+  EMULATOR_OPTIONS: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 
 jobs:
   instrumented-test:
@@ -22,9 +30,30 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Cache AVD snapshot
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ env.API_LEVEL }}-x86_64
+      - name: Create AVD snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-snapshot-load ${{ env.EMULATOR_OPTIONS }}
+          disable-animations: false
+          script: echo "Generated AVD snapshot."
       - name: Run instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 31
+          api-level: ${{ env.API_LEVEL }}
           arch: x86_64
-          script: ./gradlew :app:connectedFreeDebugAndroidTest
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save ${{ env.EMULATOR_OPTIONS }}
+          disable-animations: true
+          script: ./gradlew :app:connectedFreeDebugAndroidTest --build-cache
