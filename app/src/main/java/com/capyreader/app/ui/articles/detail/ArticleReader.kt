@@ -42,6 +42,7 @@ import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
 import com.capyreader.app.ui.components.LocalSnackbarHost
+import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.jocmp.capy.Article
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
@@ -62,6 +63,7 @@ fun ArticleReader(
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
 ) {
+    val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
     val linkOpener = LocalLinkOpener.current
     val context = LocalContext.current
@@ -137,6 +139,7 @@ fun ArticleReader(
                     }
                 }
             },
+            onLinkLongPress = { link -> setShareLink(link) },
             onImageClick = { image ->
                 val items = currentFlattened?.galleryItems().orEmpty()
                 val clickedUrl = image.largestSource()?.imgUri
@@ -182,6 +185,15 @@ fun ArticleReader(
                 onElementPositioned = { index, coordinates -> anchors.register(index, coordinates) },
             )
         }
+    }
+
+    if (shareLink != null) {
+        ShareLinkDialog(
+            onClose = {
+                setShareLink(null)
+            },
+            link = shareLink,
+        )
     }
 
     if (shareImageUrl != null) {

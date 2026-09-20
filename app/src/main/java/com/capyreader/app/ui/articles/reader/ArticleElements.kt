@@ -60,6 +60,7 @@ import coil3.request.ImageRequest
 import coil3.size.Precision
 import coil3.size.Size
 import com.capyreader.app.R
+import com.capyreader.app.ui.components.ShareLink
 import com.jocmp.mallet.LinearAudio
 import com.jocmp.mallet.LinearBlockQuote
 import com.jocmp.mallet.LinearElement
@@ -209,12 +210,26 @@ fun TextElement(
         idToIndex = idToIndex,
         onLinkClick = actions.onLinkClick,
     )
+    val links = remember(linearText) { linearText.links }
+    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
 
     BidiLayoutDirection(paragraph = linearText.text) {
         Text(
             text = annotated,
             softWrap = softWrap,
-            modifier = modifier,
+            onTextLayout = { layout = it },
+            modifier = modifier.longPressLink(
+                enabled = links.isNotEmpty(),
+                linkAt = { position -> layout.linkAt(position, links) },
+                onLongPress = { link ->
+                    actions.onLinkLongPress(
+                        ShareLink(
+                            text = linearText.text.substring(link.start, link.endExclusive),
+                            url = (link.data as LinearTextAnnotationLink).href,
+                        )
+                    )
+                },
+            ),
         )
     }
 }
