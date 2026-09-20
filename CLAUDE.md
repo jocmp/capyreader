@@ -17,7 +17,7 @@ Capy Reader is an RSS reader for Android split into several gradle modules
 - readerclient: Google Reader API HTTP client
 - feedfinder: Feed discovery helper
 - rssparser: Feed parsing helper based on JSoup
-- mallet: Flattens article HTML into a list of renderable elements for the native reader (ported from Feeder)
+- mallet: Flattens article HTML into a list of renderable elements for the native reader
 
 ### Key Architectural Patterns
 - **Account System**: Pluggable account delegates for different sync services

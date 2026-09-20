@@ -872,7 +872,7 @@ class MalletTest {
             <table>
             <caption>
             <p>Table 1.
-            </p><p>This table demonstrates the table rendering capabilities of Feeder's Reader view. This caption
+            </p><p>This table demonstrates the table rendering capabilities of the reader view. This caption
             is by the spec allowed to contain most objects, except other tables. See
             <a href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">flow content</a>.
             </p></caption>
@@ -1174,7 +1174,7 @@ class MalletTest {
     }
 
     @Test
-    fun `test with feeder news changelog`() {
+    fun `news changelog`() {
         val html =
             """
             <p>Aitor Salaberria (1):</p>
@@ -1185,7 +1185,7 @@ class MalletTest {
             <ul>
             <li>[42e567d5] Updated Bosnian translation using Weblate</li>
             </ul>
-            <p>Jonas Kalderstam (7):</p>
+            <p>A Contributor (7):</p>
             <ul>
             <li>[f2486f3c] Upgraded some dependency versions</li>
             <li>[e69ed180] Fixed sync indicator: should now stay on screen as long as
@@ -1214,7 +1214,7 @@ class MalletTest {
             <li>[b56e987b] Updated Indonesian translation using Weblate</li>
             </ul>
             """.trimIndent()
-        val baseUrl = "https://news.nononsenseapps.com"
+        val baseUrl = "https://news.example.com"
 
         val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
 
@@ -1222,7 +1222,7 @@ class MalletTest {
     }
 
     @Test
-    fun `cowboyprogrammer transmission`() {
+    fun `transmission release post`() {
         val html =
             """
 
@@ -1305,7 +1305,7 @@ class MalletTest {
             </code></pre>
             """.trimIndent()
 
-        val baseUrl = "https://cowboyprogrammer.org"
+        val baseUrl = "https://example.com"
 
         val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
 
@@ -1313,24 +1313,24 @@ class MalletTest {
     }
 
     @Test
-    fun `cowboyprogrammer exhaustive`() {
+    fun `exhaustive sample post`() {
         val html =
             """
             <p>Just a placeholder so far. Needed a known blog to test a few things with.</p> <h2
                     id="animated-images">Animated images!</h2> <p><img
-                    src="https://cowboyprogrammer.org/images/2021/06/animated-webp-supported.webp"
+                    src="https://example.com/images/2021/06/animated-webp-supported.webp"
                     alt="Animated Webp image"/></p> <p><img
-                    src="https://cowboyprogrammer.org/images/2021/06/rotating_earth.gif" alt="Animated Gif"/>
+                    src="https://example.com/images/2021/06/rotating_earth.gif" alt="Animated Gif"/>
             </p> <p>And at long last animated in the reader itself!</p> <p><img
-                    src="https://cowboyprogrammer.org/images/2021/06/reader_animated.gif"
+                    src="https://example.com/images/2021/06/reader_animated.gif"
                     alt="Animated reader"/></p> <h2 id="text-formatting">Text formatting</h2> <p>A <a
-                    href="https://gitlab.com/spacecowboy/Feeder/-/merge_requests/318">link</a> to Gitlab.</p>
+                    href="https://example.com/merge_requests/318">link</a> to Gitlab.</p>
             <p>Some <code>inline code formatting</code>.</p> <p>And then</p>
             <pre><code>A code block with some lines of code should be scrollable if one very very long line with many sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss </code></pre>
             <p>A table!</p>
             <table>
                 <caption><p>Table 1.
-                    <p>This table demonstrates the table rendering capabilities of Feeder's Reader view. This
+                    <p>This table demonstrates the table rendering capabilities of the reader view. This
                         caption is by the spec allowed to contain most objects, except other tables. See <a
                                 href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">flow
                             content</a>.</caption>
@@ -1368,7 +1368,7 @@ class MalletTest {
             <table>
                 <tbody>
                 <tr>
-                    <td><img src="https://cowboyprogrammer.org/images/Ardebian_logo_512_0.png"
+                    <td><img src="https://example.com/images/Ardebian_logo_512_0.png"
                              alt="Debian logo"></td>
                 </tr>
                 <tr>
@@ -1376,8 +1376,8 @@ class MalletTest {
                 </tr>
                 </tbody>
             </table> <p>And this is a link with an image inside</p> <p><a
-                    href="https://cowboyprogrammer.org/2016/08/zopfli_all_the_things/"> <img
-                    src="https://cowboyprogrammer.org/images/2017/10/zopfli_all_the_things_32.png" alt="A meme">
+                    href="https://example.com/2016/08/zopfli_all_the_things/"> <img
+                    src="https://example.com/images/2017/10/zopfli_all_the_things_32.png" alt="A meme">
             </a></p> <p>Here is a blockquote with a nested quote in it:</p>
             <blockquote><p>Once upon a time</p>
                 <p>A dev coded compose it was written:</p>
@@ -1405,13 +1405,13 @@ class MalletTest {
                 <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
-            <hr/> <p>Other posts in the <b>Rewriting Feeder in Compose</b> series:</p>
+            <hr/> <p>Other posts in the <b>Rewriting the reader in Compose</b> series:</p>
             <ul class="series">
-                <li>2021-06-09 &mdash; The biggest update to Feeder so far</li>
+                <li>2021-06-09 &mdash; The biggest update so far</li>
             </ul>
             """.trimIndent()
 
-        val baseUrl = "https://cowboyprogrammer.org"
+        val baseUrl = "https://example.com"
 
         val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
 
