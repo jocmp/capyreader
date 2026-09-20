@@ -10,7 +10,7 @@ assets:
 
 .PHONY: check
 check: ## Type-check JavaScript files
-	npx -p typescript tsc --noEmit
+	npx -y -p typescript@7 tsc --noEmit
 
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
@@ -25,7 +25,7 @@ changelog: ## Prep next release notes
 	./scripts/changelog
 
 test: ## Run all tests
-	$(FASTLANE) test
+	./gradlew test --build-cache
 
 deploy-production: release-secrets
 	$(FASTLANE) production

@@ -4,7 +4,7 @@
 
 - `./gradlew assembleFreeDebug` will compile the debug version of the app
 - For fast feedback, run single tests i.e. `./gradlew :capy:test --tests com.jocmp.capy.persistence.ArticleRecordsTest` replacing the module - `:capy` - and Java package accordingly. Note `:capy` is a JVM module (use `:capy:test`); Android modules like `:app` use the variant task `testFreeDebugUnitTest`
-- `make test` will run all tests via Fastlane.
+- `make test` will run all tests via Gradle. Unit tests only run against the `free` flavor of `:app`; the `gplay` flavor shares the same test sources, so its unit test variant is disabled in `app/build.gradle.kts`.
 - When modifying the `.js` and `.liquid` files, be sure to run `make` to compile those assets, and `make check` to typecheck
 
 ## Project Architecture
