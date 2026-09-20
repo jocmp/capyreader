@@ -366,4 +366,8 @@
     <string name="article_actions_delete_page_title">Delete</string>
     <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
     <string name="article_actions_delete_page_confirm">Delete</string>
+    <string name="reader_play_video">Play video</string>
+    <string name="reader_play_audio">Play audio</string>
+    <string name="reader_article_truncated">This article is too long to show in full.</string>
+    <string name="reader_open_in_browser">Open in browser</string>
 </resources>
