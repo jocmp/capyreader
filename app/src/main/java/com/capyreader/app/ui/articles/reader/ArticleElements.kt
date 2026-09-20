@@ -76,6 +76,7 @@ import com.jocmp.mallet.LinearVideo
 import com.jocmp.mallet.toTableData
 
 private const val MAX_IMAGE_WIDTH_PX = 2000
+private const val PLACEHOLDER_ASPECT_RATIO = 3f / 2f
 private val DEFAULT_VIDEO_ASPECT_RATIO = 16f / 9f
 private val CORNER_SHAPE = RoundedCornerShape(3.dp)
 
@@ -315,14 +316,18 @@ fun ImageElement(
 
         val requestWidth = source.requestWidth(maxWidthPx)
         val requestHeight = source.heightPx ?: requestWidth
-        val aspectRatio = source.aspectRatio ?: ImageAspectRatios[source.imgUri]
+        var failed by remember(source.imgUri) { mutableStateOf(false) }
 
-        val sizeModifier = if (aspectRatio != null) {
+        val aspectRatio = source.aspectRatio
+            ?: ImageAspectRatios[source.imgUri]
+            ?: PLACEHOLDER_ASPECT_RATIO
+
+        val sizeModifier = if (failed) {
+            Modifier.fillMaxWidth()
+        } else {
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
-        } else {
-            Modifier.fillMaxWidth()
         }
 
         Column(
@@ -338,12 +343,15 @@ fun ImageElement(
                 contentDescription = image.caption?.text,
                 contentScale = RestrainedFillWidthScaling(density.density),
                 onSuccess = { state ->
+                    failed = false
+
                     ImageAspectRatios.put(
                         url = source.imgUri,
                         width = state.result.image.width,
                         height = state.result.image.height,
                     )
                 },
+                onError = { failed = true },
                 modifier = sizeModifier
                     .combinedClickable(
                         onClick = { actions.onImageClick(image) },
