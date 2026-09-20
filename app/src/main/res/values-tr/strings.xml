@@ -261,8 +261,6 @@
     <string name="account_source_reader">Reader</string>
     <string name="after_read_all_behavior_open_drawer">Gezinme Çekmecesini Aç</string>
     <string name="add_account_reader_subtitle">Kendi kendine barındırılan Google Reader API</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Talkback metnini iyileştirmek için bazı ayarları devre dışı bırakır</string>
-    <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
     <string name="settings_options_reader_pin_top_toolbar">Üst araç çubuğunu sabitle</string>
     <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
     <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>

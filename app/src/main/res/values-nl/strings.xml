@@ -272,8 +272,6 @@
     <string name="widget_headlines_title">Laatste koppen</string>
     <string name="widget_headlines_see_more_button">Meer artikelen bekijken</string>
     <string name="widget_headlines_account_error">Voeg eerst een account toe</string>
-    <string name="settings_gestures_improve_talkback_title">TalkBack verbeteren</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Schakelt enkele instellingen uit om TalkBack tekst-naar-spraak te verbeteren</string>
     <string name="mark_read_position_toolbar">Werkbalk</string>
     <string name="mark_read_position_floating_action_button">Zwevende actieknop</string>
     <string name="mark_all_read_button_position">Alles gelezen markeren knop positie</string>

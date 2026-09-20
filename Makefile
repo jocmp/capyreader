@@ -4,14 +4,6 @@ FASTLANE ?= bundle exec fastlane
 
 .PHONY: test release-secrets deploy-production
 
-.PHONY: assets
-assets:
-	$(MAKE) -C article_forge clean build
-
-.PHONY: check
-check: ## Type-check JavaScript files
-	npx -y -p typescript@7 tsc --noEmit
-
 .PHONY: bump-release-dev
 bump-release-dev: ## Bump GitHub version
 	./scripts/bumpver update --tag=dev --push

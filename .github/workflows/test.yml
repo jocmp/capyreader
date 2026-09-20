@@ -11,17 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: "22"
-      - name: Type-check JavaScript
-        run: make check
-
   test:
     runs-on: ubuntu-latest
     steps:

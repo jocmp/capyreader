@@ -15,7 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -89,7 +89,7 @@ fun rememberArticlePaneExpansion(
         anchors = anchors,
         initialAnchoredIndex = savedIndex,
     )
-    val compact = isCompact()
+    val compact = isSinglePane()
     val scope = rememberCoroutineScope()
     var lastAnchorIndex by rememberSaveable { mutableIntStateOf(savedIndex) }
     val listFullscreenIndex = anchors.lastIndex

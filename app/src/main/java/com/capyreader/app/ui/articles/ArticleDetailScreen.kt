@@ -21,6 +21,7 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLocalConnectivity
@@ -47,6 +48,7 @@ fun ArticleDetailScreen(
 
     val context = LocalContext.current
     val article = viewModel.article
+
     val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val connectivity = rememberLocalConnectivity()
@@ -101,7 +103,9 @@ fun ArticleDetailScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
-                CapyPlaceholder()
+                if (!isSinglePane()) {
+                    CapyPlaceholder()
+                }
             }
         } else {
             ArticleView(
@@ -116,6 +120,8 @@ fun ArticleDetailScreen(
                     onBackPressed()
                     viewModel.deletePage(current.id)
                 },
+                contentRevision = viewModel.contentRevision,
+                flattened = viewModel.flattenedArticle,
                 onSelectMedia = onSelectMedia,
                 onSelectAudio = { audio -> audioController.play(audio) },
                 onPauseAudio = { audioController.pause() },

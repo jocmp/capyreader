@@ -22,7 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +48,7 @@ fun SettingsPanelScaffold(
                         Text(stringResource(panel.title))
                     },
                     navigationIcon = {
-                        if (isCompact() || panel.isNested()) {
+                        if (isSinglePane() || panel.isNested()) {
                             IconButton(
                                 onClick = {
                                     onBack()

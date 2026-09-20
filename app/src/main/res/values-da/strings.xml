@@ -274,8 +274,6 @@
     <string name="widget_headlines_title">Seneste overskrifter</string>
     <string name="widget_headlines_see_more_button">Se flere artikler</string>
     <string name="widget_headlines_account_error">Tilføj en konto først</string>
-    <string name="settings_gestures_improve_talkback_title">Forbedr TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Deaktiverer nogle indstillinger for at forbedre TalkBack tekst-til-tale</string>
     <string name="mark_read_position_toolbar">Værktøjslinje</string>
     <string name="mark_read_position_floating_action_button">Flydende handlingsknap</string>
     <string name="mark_all_read_button_position">Position af marker alle som læst-knap</string>

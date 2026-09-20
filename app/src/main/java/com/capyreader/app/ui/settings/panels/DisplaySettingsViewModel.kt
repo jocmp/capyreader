@@ -62,8 +62,6 @@ class DisplaySettingsViewModel(
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
 
-    val improveTalkback = appPreferences.readerOptions.improveTalkback
-
     val markReadButtonPosition = appPreferences.articleListOptions.markReadButtonPosition
 
     fun updateThemeMode(themeMode: ThemeMode) {

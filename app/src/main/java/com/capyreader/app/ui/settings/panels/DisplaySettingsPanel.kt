@@ -45,7 +45,6 @@ fun DisplaySettingsPanel(
     onNavigateToArticleList: () -> Unit = {},
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
-    val improveTalkback by viewModel.improveTalkback.collectChangesWithCurrent()
     val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
     val appTheme by viewModel.appPreferences.appTheme.collectChangesWithCurrent()
 
@@ -60,7 +59,6 @@ fun DisplaySettingsPanel(
         appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         pinArticleBars = pinArticleBars,
-        enablePinArticleBars = !improveTalkback,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
         markReadButtonPosition = markReadButtonPosition,
@@ -82,7 +80,6 @@ fun DisplaySettingsPanelView(
     appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
-    enablePinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     markReadButtonPosition: MarkReadPosition,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
@@ -156,7 +153,6 @@ fun DisplaySettingsPanelView(
             )
             RowItem {
                 TextSwitch(
-                    enabled = enablePinArticleBars,
                     checked = pinArticleBars,
                     onCheckedChange = updatePinArticleBars,
                     title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
@@ -224,7 +220,6 @@ private fun DisplaySettingsPanelViewPreview() {
                 pinArticleBars = false,
                 updateImageVisibility = {},
                 imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
-                enablePinArticleBars = false,
                 markReadButtonPosition = MarkReadPosition.TOOLBAR,
                 updateMarkReadButtonPosition = {}
             )

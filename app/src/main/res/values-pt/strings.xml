@@ -254,8 +254,6 @@
     <string name="folder_action_edit_success">Etiqueta atualizada</string>
     <string name="folder_action_edit_error">Erro ao atualizar etiqueta</string>
     <string name="actions_copy_link">Copiar link</string>
-    <string name="settings_gestures_improve_talkback_title">Melhorar o TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Desativa algumas configurações para melhorar o TalkBack text-to-speech</string>
     <string name="widget_receiver_headlines_title">Títulos</string>
     <string name="widget_headlines_account_error">Adicionar uma conta primeiro</string>
     <string name="widget_headlines_see_more_button">Ver mais artigos</string>

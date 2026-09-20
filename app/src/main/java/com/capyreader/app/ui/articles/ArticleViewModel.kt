@@ -3,8 +3,10 @@ package com.capyreader.app.ui.articles
 import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.notifications.NotificationHelper
@@ -12,14 +14,18 @@ import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.SavedSearch
+import com.jocmp.capy.articles.flatten
+import com.jocmp.mallet.LinearArticle
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.logging.CapyLog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Backs a single [com.capyreader.app.ui.Route.ArticleDetail] entry. The [articleID] arrives as a
@@ -41,6 +47,14 @@ class ArticleViewModel(
 
     var article by mutableStateOf<Article?>(null)
         private set
+
+    var flattenedArticle by mutableStateOf<LinearArticle?>(null)
+        private set
+
+    var contentRevision by mutableIntStateOf(0)
+        private set
+
+    private var userRequestedFullContent = false
 
     var previousArticleID by mutableStateOf<String?>(null)
         private set
@@ -68,9 +82,11 @@ class ArticleViewModel(
         // pinned in the neighbor set (and the article we're opening can be navigated back to).
         articleCutoff.start()
 
+        userRequestedFullContent = false
+
         viewModelScope.launchIO {
             val loaded = buildArticle(articleID) ?: return@launchIO
-            article = loaded
+            display(loaded)
 
             launchIO { markRead(articleID) }
 
@@ -116,6 +132,8 @@ class ArticleViewModel(
     fun fetchFullContentAsync(target: Article? = article) {
         target ?: return
 
+        userRequestedFullContent = true
+
         viewModelScope.launchIO {
             if (enableStickyFullContent && !account.isFullContentEnabled(feedID = target.feedID)) {
                 account.enableStickyContent(target.feedID)
@@ -129,10 +147,15 @@ class ArticleViewModel(
     fun resetFullContent() {
         val current = article ?: return
 
-        article = current.copy(
-            content = current.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
+        viewModelScope.launchIO {
+            display(
+                current.copy(
+                    content = current.defaultContent,
+                    fullContent = Article.FullContentState.NONE
+                )
+            )
+            contentRevision++
+        }
 
         if (enableStickyFullContent) {
             viewModelScope.launch { account.disableStickyContent(current.feedID) }
@@ -175,6 +198,15 @@ class ArticleViewModel(
         )
     }
 
+    private suspend fun display(article: Article) {
+        val flattened = withContext(Dispatchers.Default) { article.flatten() }
+
+        Snapshot.withMutableSnapshot {
+            this.article = article
+            this.flattenedArticle = flattened
+        }
+    }
+
     private suspend fun buildArticle(articleID: String): Article? {
         val found = account.findArticle(articleID = articleID) ?: return null
 
@@ -200,17 +232,25 @@ class ArticleViewModel(
         account.fetchFullContent(article).fold(
             onSuccess = { value ->
                 if (this.article?.id == article.id) {
-                    this.article = article.copy(
-                        content = value,
-                        fullContent = Article.FullContentState.LOADED
+                    display(
+                        article.copy(
+                            content = value,
+                            fullContent = Article.FullContentState.LOADED
+                        )
                     )
+
+                    if (userRequestedFullContent) {
+                        contentRevision++
+                    }
                 }
             },
             onFailure = {
                 if (this.article?.id != article.id) return
-                this.article = article.copy(
-                    content = article.defaultContent,
-                    fullContent = Article.FullContentState.ERROR
+                display(
+                    article.copy(
+                        content = article.defaultContent,
+                        fullContent = Article.FullContentState.ERROR
+                    )
                 )
 
                 CapyLog.warn(

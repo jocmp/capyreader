@@ -256,8 +256,6 @@
     <string name="widget_receiver_headlines_title">Titulares</string>
     <string name="widget_headlines_title">Últimos titulares</string>
     <string name="widget_headlines_see_more_button">Ver máis artigos</string>
-    <string name="settings_gestures_improve_talkback_title">Mellorar TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Desactiva algúns axustes para mellorar o texto-a-palabra de TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Fixar Ferramentas</string>
     <string name="add_account_miniflux_signup_prompt">Non tes unha instancia Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>

@@ -254,8 +254,6 @@
     <string name="folder_action_edit_error">Erro ao atualizar etiqueta</string>
     <string name="actions_copy_link">Copiar link</string>
     <string name="actions_share_link">Compartilhar link</string>
-    <string name="settings_gestures_improve_talkback_title">Melhorar TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Desabilitar algumas configurações para melhorar o leitor de tela TalkBack</string>
     <string name="widget_headlines_see_more_button">Ver mais artigos</string>
     <string name="widget_receiver_headlines_title">Manchetes</string>
     <string name="widget_headlines_title">Últimas Manchetes</string>

@@ -61,7 +61,7 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.LoadingView
 import com.capyreader.app.ui.components.Swiper
 import com.capyreader.app.ui.components.rememberSwiperState
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.findStatusBarColor
@@ -294,7 +294,7 @@ private fun CaptionOverlay(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = if (isCompact()) {
+        horizontalAlignment = if (isSinglePane()) {
             Alignment.Start
         } else {
             Alignment.CenterHorizontally

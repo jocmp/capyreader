@@ -253,8 +253,6 @@
     <string name="tag_action_delete_confirm">Hapus</string>
     <string name="tag_action_edit">Ubah Label</string>
     <string name="actions_copy_link">Salin tautan</string>
-    <string name="settings_gestures_improve_talkback_title">Tingkatkan TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Nonaktifkan beberapa pengaturan untuk meningkatkan teks-ke-ucapan TalkBack</string>
     <string name="widget_headlines_title">Berita Utama Terbaru</string>
     <string name="widget_headlines_see_more_button">Lihat artikel lainnya</string>
     <string name="widget_headlines_account_error">Tambahkan akun terlebih dahulu</string>

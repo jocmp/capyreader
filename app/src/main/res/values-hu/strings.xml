@@ -263,8 +263,6 @@
     <string name="widget_headlines_title">Legújabb Címlapok</string>
     <string name="widget_headlines_see_more_button">További cikkek megtekintése</string>
     <string name="widget_headlines_account_error">Először adjon hozzá egy fiókot</string>
-    <string name="settings_gestures_improve_talkback_title">TalkBack javítása</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Egyes beállítások letiltása a TalkBack szövegfelolvasás javítása érdekében</string>
     <string name="mark_read_position_toolbar">Eszköztár</string>
     <string name="mark_read_position_floating_action_button">Lebegő műveleti gomb</string>
     <string name="mark_all_read_button_position">Összes Olvasottként Megjelölése gomb pozíciója</string>

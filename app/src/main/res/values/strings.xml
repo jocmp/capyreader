@@ -330,8 +330,6 @@
     <string name="widget_spotlight_see_all">See all</string>
     <string name="widget_spotlight_previous">Previous</string>
     <string name="widget_spotlight_next">Next</string>
-    <string name="settings_gestures_improve_talkback_title">Improve TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Disables some settings to improve TalkBack text-to-speech</string>
     <string name="mark_read_position_toolbar">Toolbar</string>
     <string name="mark_read_position_floating_action_button">Floating Action Button</string>
     <string name="mark_all_read_button_position">Mark All Read Button Position</string>
@@ -366,4 +364,8 @@
     <string name="article_actions_delete_page_title">Delete</string>
     <string name="article_actions_delete_page_message">Are you sure you want to delete this page?</string>
     <string name="article_actions_delete_page_confirm">Delete</string>
+    <string name="reader_play_video">Play video</string>
+    <string name="reader_play_audio">Play audio</string>
+    <string name="reader_article_truncated">This article is too long to show in full.</string>
+    <string name="reader_open_in_browser">Open in browser</string>
 </resources>

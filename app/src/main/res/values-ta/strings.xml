@@ -256,8 +256,6 @@
     <string name="notification_mark_as_read_action">படித்தபடி குறி</string>
     <string name="media_save">சேமி</string>
     <string name="media_share">பங்கு</string>
-    <string name="settings_gestures_improve_talkback_title">டாக் பேக்கை மேம்படுத்தவும்</string>
-    <string name="settings_gestures_improve_talkback_subtitle">டாக் பேக் உரை-க்கு-பேச்சை மேம்படுத்த சில அமைப்புகளை முடக்குகிறது</string>
     <string name="filter_read_later">பிறகு சேமிக்கப்பட்டது</string>
     <string name="article_actions_save_for_later">பின்னர் சேமிக்கவும்</string>
     <string name="saved_for_later_success">பிறகு சேமிக்கப்பட்டது</string>

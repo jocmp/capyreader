@@ -258,8 +258,6 @@
     <string name="after_read_all_behavior_open_next_feed">Agor y ffrwd nesaf</string>
     <string name="full_content_error_missing_response">Wedi methu nôl erthygl</string>
     <string name="filters_remove_keyword">Dileu allweddair</string>
-    <string name="settings_gestures_improve_talkback_title">Gwella TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Analluogi gosodiadau i wella testun-i-leferydd TalkBack</string>
     <string name="widget_receiver_headlines_title">Penawdau</string>
     <string name="filters_title">Rhestr rhwystro</string>
     <string name="add_account_miniflux_signup_link_text">Dysgu mwy.</string>
