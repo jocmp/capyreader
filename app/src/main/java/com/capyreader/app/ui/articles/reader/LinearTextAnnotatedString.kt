@@ -4,7 +4,9 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -49,21 +51,47 @@ val LinearText.links: List<LinearTextAnnotation>
     get() = annotations.filter { it.data is LinearTextAnnotationLink }
 
 @Composable
-fun LinearText.toAnnotatedString(): AnnotatedString {
+fun LinearText.toAnnotatedString(
+    idToIndex: Map<String, Int>,
+    onLinkClick: (url: String, elementIndex: Int?) -> Unit,
+): AnnotatedString {
     val colors = MaterialTheme.colorScheme
     val baseSize = LocalTextStyle.current.fontSize
+    val linkStyles = TextLinkStyles(
+        style = SpanStyle(color = colors.primary, textDecoration = TextDecoration.Underline)
+    )
 
     return buildAnnotatedString {
         append(text)
 
         annotations.forEach { annotation ->
+            val link = annotation.data as? LinearTextAnnotationLink
+
+            if (link != null) {
+                val href = link.href
+
+                addLink(
+                    clickable = LinkAnnotation.Clickable(
+                        tag = href,
+                        styles = linkStyles,
+                        linkInteractionListener = {
+                            onLinkClick(href, resolveAnchorIndex(href, idToIndex))
+                        },
+                    ),
+                    start = annotation.start,
+                    end = annotation.endExclusive,
+                )
+
+                return@forEach
+            }
+
             val style = when (val data = annotation.data) {
                 LinearTextAnnotationBold -> SpanStyle(fontWeight = FontWeight.Bold)
                 LinearTextAnnotationItalic -> SpanStyle(fontStyle = FontStyle.Italic)
                 LinearTextAnnotationUnderline -> SpanStyle(textDecoration = TextDecoration.Underline)
                 LinearTextAnnotationStrikethrough -> SpanStyle(textDecoration = TextDecoration.LineThrough)
                 LinearTextAnnotationMonospace -> SpanStyle(fontFamily = FontFamily.Monospace)
-                is LinearTextAnnotationLink -> SpanStyle(color = colors.primary, textDecoration = TextDecoration.Underline)
+                is LinearTextAnnotationLink -> null
                 is LinearTextAnnotationFont -> SpanStyle(fontFamily = data.face.toFontFamily())
                 LinearTextAnnotationCode -> inlineCodeStyle(colors.surfaceContainer)
                 LinearTextAnnotationSubscript -> shiftedStyle(BaselineShift.Subscript, baseSize)

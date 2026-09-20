@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -59,7 +60,6 @@ import coil3.request.ImageRequest
 import coil3.size.Precision
 import coil3.size.Size
 import com.capyreader.app.R
-import com.capyreader.app.ui.components.ShareLink
 import com.jocmp.mallet.LinearAudio
 import com.jocmp.mallet.LinearBlockQuote
 import com.jocmp.mallet.LinearElement
@@ -106,12 +106,14 @@ fun ArticleElement(
             }
         }
 
-        is LinearImage -> ImageElement(
-            image = element,
-            idToIndex = idToIndex,
-            actions = actions,
-            modifier = modifier,
-        )
+        is LinearImage -> DisableSelection {
+            ImageElement(
+                image = element,
+                idToIndex = idToIndex,
+                actions = actions,
+                modifier = modifier,
+            )
+        }
 
         is LinearBlockQuote -> BlockQuoteElement(
             blockQuote = element,
@@ -137,17 +139,21 @@ fun ArticleElement(
             modifier = modifier,
         )
 
-        is LinearVideo -> VideoElement(
-            video = element,
-            actions = actions,
-            modifier = modifier,
-        )
+        is LinearVideo -> DisableSelection {
+            VideoElement(
+                video = element,
+                actions = actions,
+                modifier = modifier,
+            )
+        }
 
-        is LinearAudio -> AudioElement(
-            audio = element,
-            actions = actions,
-            modifier = modifier,
-        )
+        is LinearAudio -> DisableSelection {
+            AudioElement(
+                audio = element,
+                actions = actions,
+                modifier = modifier,
+            )
+        }
     }
 }
 
@@ -199,56 +205,18 @@ fun TextElement(
     modifier: Modifier = Modifier,
     softWrap: Boolean = true,
 ) {
-    val annotated = linearText.toAnnotatedString()
-    val links = remember(linearText) { linearText.links }
-    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
-
-    val linkModifier = if (links.isEmpty()) {
-        Modifier
-    } else {
-        Modifier.pointerInput(linearText) {
-            detectTapGestures(
-                onTap = { position ->
-                    val link = layout.linkAt(position, links) ?: return@detectTapGestures
-                    val href = (link.data as LinearTextAnnotationLink).href
-
-                    actions.onLinkClick(href, resolveAnchorIndex(href, idToIndex))
-                },
-                onLongPress = { position ->
-                    val link = layout.linkAt(position, links) ?: return@detectTapGestures
-                    val href = (link.data as LinearTextAnnotationLink).href
-                    val text = linearText.text.substring(link.start, link.endExclusive)
-
-                    actions.onLinkLongPress(ShareLink(text = text, url = href))
-                },
-            )
-        }
-    }
+    val annotated = linearText.toAnnotatedString(
+        idToIndex = idToIndex,
+        onLinkClick = actions.onLinkClick,
+    )
 
     BidiLayoutDirection(paragraph = linearText.text) {
         Text(
             text = annotated,
             softWrap = softWrap,
-            onTextLayout = { layout = it },
-            modifier = modifier.then(linkModifier),
+            modifier = modifier,
         )
     }
-}
-
-private fun TextLayoutResult?.linkAt(
-    position: Offset,
-    links: List<LinearTextAnnotation>,
-): LinearTextAnnotation? {
-    val layout = this ?: return null
-    val line = layout.getLineForVerticalPosition(position.y)
-
-    if (position.x < layout.getLineLeft(line) || position.x > layout.getLineRight(line)) {
-        return null
-    }
-
-    val offset = layout.getOffsetForPosition(position)
-
-    return links.firstOrNull { offset >= it.start && offset <= it.end }
 }
 
 fun resolveAnchorIndex(href: String, idToIndex: Map<String, Int>): Int? {
