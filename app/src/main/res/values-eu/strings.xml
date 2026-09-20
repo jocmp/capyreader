@@ -340,8 +340,6 @@
     <string name="settings_gestures_list_back_navigation_open_drawer">Ireki nabigazio-tiradera</string>
     <string name="settings_gestures_reader_tap_to_page_title">Sakatu tinta elektronikoan desplazatzeko</string>
     <string name="after_read_all_behavior_open_drawer">Ireki nabigazio-tiradera</string>
-    <string name="settings_gestures_improve_talkback_title">Hobetu TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Konfigurazio batzuk desaktibatzen ditu TalkBack-en testutik ahotsa hobetzeko</string>
     <string name="auth_fields_miniflux_use_password">Erabili pasahitza haren ordez</string>
     <string name="settings_account_refresh_value">%1$s %2$s(e)tan</string>
     <string name="article_byline_date_only">%1$s %2$s(e)tan</string>

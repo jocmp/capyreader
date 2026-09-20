@@ -44,8 +44,6 @@ fun GesturesSettingPanel(
         rowSwipeEnd = viewModel.rowSwipeEnd,
         listSwipeBottom = viewModel.listSwipeBottom,
         topSwipe = viewModel.readerTopSwipe,
-        updateImproveTalkback = viewModel::updateImproveTalkback,
-        improveTalkback = viewModel.improveTalkback,
     )
 }
 
@@ -67,8 +65,6 @@ private fun GesturesSettingsPanelView(
     rowSwipeEnd: RowSwipeOption,
     listSwipeBottom: ArticleListVerticalSwipe,
     topSwipe: ArticleVerticalSwipe,
-    updateImproveTalkback: (improve: Boolean) -> Unit,
-    improveTalkback: Boolean
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -81,7 +77,6 @@ private fun GesturesSettingsPanelView(
                     update = updateReaderTopSwipe,
                     options = ArticleVerticalSwipe.topOptions,
                     label = R.string.settings_gestures_reader_swipe_down,
-                    enabled = !improveTalkback,
                     disabledOption = ArticleVerticalSwipe.DISABLED,
                     optionText = {
                         stringResource(it.translationKey)
@@ -93,7 +88,6 @@ private fun GesturesSettingsPanelView(
                     update = updateReaderBottomSwipe,
                     options = ArticleVerticalSwipe.bottomOptions,
                     label = R.string.settings_gestures_reader_swipe_up,
-                    enabled = !improveTalkback,
                     disabledOption = ArticleVerticalSwipe.DISABLED,
                     optionText = { stringResource(it.translationKey) }
                 )
@@ -113,15 +107,6 @@ private fun GesturesSettingsPanelView(
                         checked = enablePagingTapGesture,
                         title = stringResource(R.string.settings_gestures_reader_tap_to_page_title),
                         subtitle = stringResource(R.string.settings_gestures_reader_tap_to_page_subtitle)
-                    )
-                }
-
-                RowItem {
-                    TextSwitch(
-                        onCheckedChange = updateImproveTalkback,
-                        checked = improveTalkback,
-                        title = stringResource(R.string.settings_gestures_improve_talkback_title),
-                        subtitle = stringResource(R.string.settings_gestures_improve_talkback_subtitle)
                     )
                 }
             }
@@ -190,8 +175,6 @@ fun GesturesSettingsPanelPreview() {
             enablePagingTapGesture = true,
             enableHorizontalPagination = true,
             listSwipeBottom = ArticleListVerticalSwipe.NEXT_FEED,
-            improveTalkback = true,
-            updateImproveTalkback = {}
         )
     }
 }

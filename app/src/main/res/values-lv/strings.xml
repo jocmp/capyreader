@@ -252,11 +252,9 @@
     <string name="actions_copy_link">Kopēt saiti</string>
     <string name="widget_headlines_see_more_button">Skatīt vairāk rakstus</string>
     <string name="widget_headlines_account_error">Vispirms pievienojiet kontu</string>
-    <string name="settings_gestures_improve_talkback_title">Uzlabot ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
     <string name="actions_share_link">Dalīties ar raksta saiti</string>
     <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
     <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Atspējo dažus iestatījumus, lai uzlabotu ekrānā redzamo teksta elementu pārveidošanu runā (TalkBack)</string>
     <string name="settings_article_list_shorten_titles">Saīsināt virsrakstus</string>
     <string name="mark_all_read_button_position">Pogas \"Atzīmēt visus kā lasītus\" pozīcija</string>
     <string name="mark_read_position_toolbar">Rīkjosla</string>

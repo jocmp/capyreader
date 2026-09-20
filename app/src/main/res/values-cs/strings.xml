@@ -276,8 +276,6 @@
     <string name="widget_headlines_title">Nejnovější titulky</string>
     <string name="widget_headlines_see_more_button">Zobrazit více článků</string>
     <string name="widget_headlines_account_error">Nejprve přidat účet</string>
-    <string name="settings_gestures_improve_talkback_title">Vylepšit TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Zakáže určitá nastavení pro vylepšení převodu textu na řeč TalkBack</string>
     <string name="mark_read_position_toolbar">Panel</string>
     <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
     <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>

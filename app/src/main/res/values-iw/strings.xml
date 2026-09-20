@@ -268,8 +268,6 @@
     <string name="widget_headlines_title">כותרות אחרונות</string>
     <string name="widget_headlines_see_more_button">הצג עוד מאמרים</string>
     <string name="widget_headlines_account_error">הוסף חשבון תחילה</string>
-    <string name="settings_gestures_improve_talkback_title">שפר TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">בטל אפשרויות כדי לשפר TalkBack text-to-speech</string>
     <string name="mark_read_position_toolbar">תפריט כלים</string>
     <string name="mark_read_position_floating_action_button">כפתור פעולה מרחף</string>
     <string name="mark_all_read_button_position">מיקום כפתור סמן הכל כנקרא</string>

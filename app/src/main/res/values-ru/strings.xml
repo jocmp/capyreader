@@ -267,8 +267,6 @@
     <string name="widget_headlines_title">Последние рубрики</string>
     <string name="widget_headlines_see_more_button">См. ещё статьи</string>
     <string name="widget_headlines_account_error">Сперва добавьте аккаунт</string>
-    <string name="settings_gestures_improve_talkback_title">Улучшить озвучку элементов на экране</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Отключает некоторые настройки для улучшения озвучки элементов на экране</string>
     <string name="settings_options_reader_pin_top_toolbar">Закрепить панели инструментов</string>
     <string name="add_account_miniflux_signup_prompt">У вас нет сервера Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Узнать больше.</string>

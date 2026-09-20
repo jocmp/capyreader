@@ -253,8 +253,6 @@
     <string name="widget_headlines_title">Τελευταίες Επικεφαλίδες</string>
     <string name="widget_headlines_see_more_button">Δες περισσότερα άρθρα</string>
     <string name="widget_headlines_account_error">Πρόσθεσε ένα λογαριασμό πρώτα</string>
-    <string name="settings_gestures_improve_talkback_title">Βελτίωση TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Απενεργοποιεί κάποιες ρυθμίσεις για βελτίωση του κειμένου σε ομιλία TalkBack</string>
     <string name="folder_action_delete_confirm">Διαγραφή</string>
     <string name="folder_name_title">\'Ονομα</string>
     <string name="folder_action_edit_success">Ετικέτα ενημερώθηκε</string>

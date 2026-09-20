@@ -123,9 +123,6 @@ class AppPreferences(context: Context) {
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
-        val improveTalkback: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_improve_talkback", false)
-
         val titleTextAlignment: Preference<TextAlignment>
             get() = preferenceStore.getEnum("article_title_text_alignment", TextAlignment.default)
 

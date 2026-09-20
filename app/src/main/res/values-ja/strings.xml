@@ -246,8 +246,6 @@
     <string name="widget_headlines_title">最新のヘッドライン</string>
     <string name="widget_headlines_see_more_button">記事をもっと見る</string>
     <string name="widget_headlines_account_error">まずアカウントを追加してください</string>
-    <string name="settings_gestures_improve_talkback_title">TalkBackを改善</string>
-    <string name="settings_gestures_improve_talkback_subtitle">一部の設定を無効化し、TalkBackの音声読み上げを改善します</string>
     <string name="mark_read_position_toolbar">ツールバー</string>
     <string name="mark_read_position_floating_action_button">フローティングアクションボタン</string>
     <string name="mark_all_read_button_position">すべてを既読にするボタンの位置</string>

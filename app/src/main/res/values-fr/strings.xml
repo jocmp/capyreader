@@ -266,8 +266,6 @@
     <string name="widget_headlines_see_more_button">Voir plus d\'articles</string>
     <string name="widget_headlines_account_error">Ajoutez d\'abord un compte</string>
     <string name="widget_receiver_headlines_title">Titres</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Désactive certains paramètres pour améliorer la synthèse vocale de TalkBack</string>
-    <string name="settings_gestures_improve_talkback_title">Améliorer TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Épingler les barres d\'outils</string>
     <string name="add_account_miniflux_signup_link_text">En savoir plus.</string>
     <string name="add_account_miniflux_signup_prompt">Vous n\'avez pas d\'instance Miniflux ?</string>

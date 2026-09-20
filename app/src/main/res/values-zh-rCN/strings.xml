@@ -264,8 +264,6 @@
     <string name="widget_headlines_see_more_button">查看更多文章</string>
     <string name="widget_receiver_headlines_title">标题</string>
     <string name="widget_headlines_title">最新标题</string>
-    <string name="settings_gestures_improve_talkback_subtitle">禁用部分设置以改进 TalkBack 文本转语音功能</string>
-    <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定工具栏</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
     <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>

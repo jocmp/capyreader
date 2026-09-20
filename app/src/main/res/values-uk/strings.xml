@@ -270,8 +270,6 @@
     <string name="selected">Вибрано</string>
     <string name="mark_all_read_button_position">Кнопка позначення прочитаними</string>
     <string name="mark_read_position_floating_action_button">Спливна</string>
-    <string name="settings_gestures_improve_talkback_title">Покращити TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Вимикає деякі параметри, щоб TalkBack краще озвучувала текст</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Горизонтальне гортання</string>
     <string name="settings_gestures_reader_swipe_down">Гортання вниз</string>
     <string name="settings_gestures_reader_swipe_up">Гортання вгору</string>
