@@ -21,7 +21,7 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.detail.ArticleView
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberLocalConnectivity
@@ -102,7 +102,7 @@ fun ArticleDetailScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
-                if (!isCompact()) {
+                if (!isSinglePane()) {
                     CapyPlaceholder()
                 }
             }

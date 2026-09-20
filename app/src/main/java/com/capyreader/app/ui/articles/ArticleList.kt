@@ -30,7 +30,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
@@ -114,10 +114,10 @@ fun ScrollToSelectedArticleEffect(
     articles: LazyPagingItems<Article>,
     listState: LazyListState,
 ) {
-    val isCompact = isCompact()
+    val isSinglePane = isSinglePane()
 
-    LaunchedEffect(selectedArticleKey, isCompact, articles.itemCount) {
-        if (isCompact) return@LaunchedEffect
+    LaunchedEffect(selectedArticleKey, isSinglePane, articles.itemCount) {
+        if (isSinglePane) return@LaunchedEffect
         val id = selectedArticleKey ?: return@LaunchedEffect
         val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
         if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {

@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.settings.panels.AboutSettingsPanel
 import com.capyreader.app.ui.settings.panels.AccountSettingsPanel
@@ -113,7 +113,7 @@ fun SettingsView(
                     },
                     label = "SettingsPanel",
                 ) { panel ->
-                    if (panel == null && !isCompact()) {
+                    if (panel == null && !isSinglePane()) {
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier
