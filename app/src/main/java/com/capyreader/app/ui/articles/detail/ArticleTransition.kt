@@ -12,6 +12,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.jocmp.capy.Article
@@ -109,11 +110,15 @@ fun ArticleTransition(
 
         val frozen = remember { it }
         val isCurrent = frozen.article.id == article.id && frozen.contentRevision == contentRevision
+        val lastShown = remember { mutableStateOf(frozen.flattened) }
 
         if (isCurrent) {
-            content(article, flattened)
-        } else {
-            content(frozen.article, frozen.flattened)
+            SideEffect { lastShown.value = flattened }
         }
+
+        content(
+            if (isCurrent) article else frozen.article,
+            if (isCurrent) flattened else lastShown.value,
+        )
     }
 }

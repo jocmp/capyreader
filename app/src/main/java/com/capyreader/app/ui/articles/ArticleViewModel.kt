@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.notifications.NotificationHelper
@@ -200,8 +201,10 @@ class ArticleViewModel(
     private suspend fun display(article: Article) {
         val flattened = withContext(Dispatchers.Default) { article.flatten() }
 
-        this.article = article
-        this.flattenedArticle = flattened
+        Snapshot.withMutableSnapshot {
+            this.article = article
+            this.flattenedArticle = flattened
+        }
     }
 
     private suspend fun buildArticle(articleID: String): Article? {

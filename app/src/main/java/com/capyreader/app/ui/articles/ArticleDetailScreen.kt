@@ -48,6 +48,7 @@ fun ArticleDetailScreen(
 
     val context = LocalContext.current
     val article = viewModel.article
+
     val canSaveExternally by viewModel.canSaveArticleExternally.collectAsStateWithLifecycle()
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val connectivity = rememberLocalConnectivity()

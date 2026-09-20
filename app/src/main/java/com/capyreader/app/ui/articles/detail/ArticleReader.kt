@@ -18,7 +18,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -43,7 +42,6 @@ import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
 import com.capyreader.app.ui.components.LocalSnackbarHost
-import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.jocmp.capy.Article
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
@@ -51,12 +49,12 @@ import com.jocmp.capy.common.withUIContext
 import com.jocmp.mallet.LinearArticle
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-import kotlin.math.roundToInt
 
 @Composable
 fun ArticleReader(
     article: Article,
     flattened: LinearArticle?,
+    scrollState: ScrollState,
     pinToolbars: Boolean,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
@@ -64,7 +62,6 @@ fun ArticleReader(
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
 ) {
-    val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
     val linkOpener = LocalLinkOpener.current
     val context = LocalContext.current
@@ -116,10 +113,8 @@ fun ArticleReader(
         setImageUrl(null)
     }
 
-    val scrollState = rememberSaveable(article.id, saver = ScrollState.Saver) {
-        ScrollState(initial = 0)
-    }
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
+
     val currentFlattened by rememberUpdatedState(flattened)
     val currentOnSelectMedia by rememberUpdatedState(onSelectMedia)
     val currentOnSelectAudio by rememberUpdatedState(onSelectAudio)
@@ -142,7 +137,6 @@ fun ArticleReader(
                     }
                 }
             },
-            onLinkLongPress = { link -> setShareLink(link) },
             onImageClick = { image ->
                 val items = currentFlattened?.galleryItems().orEmpty()
                 val clickedUrl = image.largestSource()?.imgUri
@@ -172,7 +166,6 @@ fun ArticleReader(
 
     CompositionLocalProvider(LocalReaderStyle provides readerStyle) {
         ScrollableArticle(
-            articleID = article.id,
             scrollState = scrollState,
             pinToolbars = pinToolbars,
             onContentPositioned = { anchors.contentCoordinates = it },
@@ -191,15 +184,6 @@ fun ArticleReader(
         }
     }
 
-    if (shareLink != null) {
-        ShareLinkDialog(
-            onClose = {
-                setShareLink(null)
-            },
-            link = shareLink,
-        )
-    }
-
     if (shareImageUrl != null) {
         ShareImageDialog(
             onClose = {
@@ -214,14 +198,12 @@ fun ArticleReader(
 
 @Composable
 private fun ScrollableArticle(
-    articleID: String,
     scrollState: ScrollState,
     pinToolbars: Boolean,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
     content: @Composable () -> Unit,
 ) {
     var maxHeight by remember { mutableFloatStateOf(0f) }
-    var lastScrollYPercent by rememberSaveable(articleID) { mutableFloatStateOf(0f) }
 
     CornerTapGestureScroll(
         maxArticleHeight = maxHeight,
@@ -243,20 +225,6 @@ private fun ScrollableArticle(
                 }
                 content()
             }
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        snapshotFlow { scrollState.value to maxHeight }
-            .collect { (value, height) ->
-                if (value > 0 && height > 0f) {
-                    lastScrollYPercent = value / height
-                }
-            }
-    }
-    LaunchedEffect(scrollState.maxValue, maxHeight) {
-        if (scrollState.maxValue > 0 && maxHeight > 0) {
-            scrollState.scrollTo((lastScrollYPercent * maxHeight).roundToInt())
         }
     }
 }

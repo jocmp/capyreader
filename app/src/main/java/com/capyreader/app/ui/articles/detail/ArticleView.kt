@@ -86,6 +86,9 @@ fun ArticleView(
     val hasPrevious = previousArticleID != null
     val hasNext = nextArticleID != null
 
+    val articleScrollStates = rememberArticleScrollStates()
+
+
     var pendingDirection by remember { mutableStateOf<Pair<String, Int>?>(null) }
 
     fun selectPrevious() {
@@ -161,6 +164,7 @@ fun ArticleView(
                             ArticleReader(
                                 article = targetArticle,
                                 flattened = targetFlattened,
+                                scrollState = articleScrollStates.scrollState(targetArticle.id),
                                 pinToolbars = pinToolbars,
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
