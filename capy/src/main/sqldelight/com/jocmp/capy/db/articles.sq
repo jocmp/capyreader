@@ -7,6 +7,7 @@ SELECT
   feeds.open_articles_in_browser,
   feeds.feed_url,
   feeds.site_url,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
