@@ -694,6 +694,69 @@ class MalletTest {
     }
 
     @Test
+    fun `iframe with youtube short link`() {
+        val html = "<html><body><iframe src=\"https://youtu.be/cjxnVO9RpaQ?t=30\"></iframe></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(1, result.size, "Expected one item: $result")
+        assertEquals(
+            "https://www.youtube.com/watch?v=cjxnVO9RpaQ",
+            (result[0] as LinearVideo).firstSource.link,
+        )
+    }
+
+    @Test
+    fun `iframe with youtube nocookie embed`() {
+        val html =
+            "<html><body><iframe src=\"https://www.youtube-nocookie.com/embed/cjxnVO9RpaQ\"></iframe></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(1, result.size, "Expected one item: $result")
+        assertEquals(
+            "https://www.youtube.com/watch?v=cjxnVO9RpaQ",
+            (result[0] as LinearVideo).firstSource.link,
+        )
+    }
+
+    @Test
+    fun `iframe with youtube watch link`() {
+        val html =
+            "<html><body><iframe src=\"https://www.youtube.com/watch?feature=share&v=cjxnVO9RpaQ&t=10\"></iframe></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(1, result.size, "Expected one item: $result")
+        assertEquals(
+            "https://www.youtube.com/watch?v=cjxnVO9RpaQ",
+            (result[0] as LinearVideo).firstSource.link,
+        )
+    }
+
+    @Test
+    fun `iframe with legacy youtube v link`() {
+        val html = "<html><body><iframe src=\"https://www.youtube.com/v/cjxnVO9RpaQ?hl=en\"></iframe></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(1, result.size, "Expected one item: $result")
+        assertEquals(
+            "https://www.youtube.com/watch?v=cjxnVO9RpaQ",
+            (result[0] as LinearVideo).firstSource.link,
+        )
+    }
+
+    @Test
+    fun `iframe with non-youtube source is skipped`() {
+        val html = "<html><body><iframe src=\"https://player.vimeo.com/video/12345\"></iframe></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(emptyList(), result)
+    }
+
+    @Test
     fun `iframe inside figure with youtube video`() {
         // Seen on AlltOmElbil.se
         val html =
