@@ -412,7 +412,7 @@ fun BlockQuoteElement(
                 .background(MaterialTheme.colorScheme.onSurfaceVariant)
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(paragraphSpacing()),
             modifier = Modifier
                 .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
                 .fillMaxWidth(),
@@ -450,7 +450,7 @@ fun ListItemElement(
     ) {
         Text(text = marker)
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(paragraphSpacing()),
             modifier = Modifier.fillMaxWidth(),
         ) {
             listItem.content.forEach { element ->

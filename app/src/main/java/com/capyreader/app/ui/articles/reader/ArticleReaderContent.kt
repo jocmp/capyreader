@@ -48,11 +48,11 @@ fun ArticleReaderContent(
         modifier = modifier.fillMaxWidth(),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .widthIn(max = MAX_READER_WIDTH)
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 24.dp),
+                .padding(horizontal = 16.dp, vertical = 32.dp),
         ) {
             ArticleHeader(
                 article = article,
@@ -85,7 +85,7 @@ fun ArticleReaderContent(
                 }
             }
 
-            Spacer(Modifier.height(72.dp))
+            Spacer(Modifier.height(80.dp))
         }
     }
     }

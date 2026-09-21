@@ -6,7 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.capyreader.app.R
@@ -58,6 +60,13 @@ data class ReaderStyle(
 }
 
 val LocalReaderStyle = compositionLocalOf { ReaderStyle.default }
+
+@Composable
+fun paragraphSpacing(): Dp {
+    val fontSize = LocalReaderStyle.current.fontSize
+
+    return with(LocalDensity.current) { fontSize.toDp() }
+}
 
 @Composable
 fun rememberReaderStyle(

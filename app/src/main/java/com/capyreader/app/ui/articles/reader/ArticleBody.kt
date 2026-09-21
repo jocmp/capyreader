@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.dp
 import com.jocmp.mallet.LinearArticle
 
 @Composable
@@ -19,7 +18,7 @@ fun ArticleBody(
     onElementPositioned: (index: Int, coordinates: LayoutCoordinates) -> Unit = { _, _ -> },
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(paragraphSpacing()),
         modifier = modifier.fillMaxWidth(),
     ) {
         article.elements.forEachIndexed { index, element ->
