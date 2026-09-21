@@ -26,8 +26,8 @@ import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Audiotrack
-import androidx.compose.material.icons.outlined.PlayCircleOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
@@ -39,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -527,17 +528,39 @@ fun VideoElement(
     val source = video.firstSource
     val showImages = LocalReaderStyle.current.showImages
     val thumbnail = video.imageThumbnail
-    val aspectRatio = source.aspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
     val label = stringResource(R.string.reader_play_video)
+    val videoID = source.youtubeVideoID
+    var isPlaying by rememberSaveable(source.uri) { mutableStateOf(false) }
+
+    val aspectRatio = if (videoID == null) {
+        source.aspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
+    } else {
+        DEFAULT_VIDEO_ASPECT_RATIO
+    }
+
+    val frame = modifier
+        .fillMaxWidth()
+        .aspectRatio(aspectRatio)
+        .clip(CORNER_SHAPE)
+        .background(Color.Black)
+
+    if (isPlaying && videoID != null) {
+        YoutubePlayer(
+            videoID = videoID,
+            modifier = frame,
+        )
+        return
+    }
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(aspectRatio)
-            .clip(CORNER_SHAPE)
-            .background(Color.Black)
-            .clickable { actions.onLinkClick(source.link, null) },
+        modifier = frame.clickable {
+            if (videoID == null) {
+                actions.onLinkClick(source.link, null)
+            } else {
+                isPlaying = true
+            }
+        },
     ) {
         if (thumbnail != null && showImages) {
             AsyncImage(
@@ -547,14 +570,19 @@ fun VideoElement(
                 modifier = Modifier.fillMaxSize(),
             )
         }
-        Icon(
-            imageVector = Icons.Outlined.PlayCircleOutline,
-            contentDescription = label,
-            tint = Color.White,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(64.dp)
                 .background(Color.Black.copy(alpha = 0.6f), CircleShape),
-        )
+        ) {
+            Icon(
+                imageVector = Icons.Filled.PlayArrow,
+                contentDescription = label,
+                tint = Color.White,
+                modifier = Modifier.size(48.dp),
+            )
+        }
     }
 }
 
