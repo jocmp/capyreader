@@ -45,10 +45,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontFamily
@@ -212,6 +214,7 @@ fun TextElement(
         onLinkClick = actions.onLinkClick,
     )
     val links = remember(linearText) { linearText.links }
+    val haptics = LocalHapticFeedback.current
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
 
     BidiLayoutDirection(paragraph = linearText.text) {
@@ -223,6 +226,8 @@ fun TextElement(
                 enabled = links.isNotEmpty(),
                 linkAt = { position -> layout.linkAt(position, links) },
                 onLongPress = { link ->
+                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+
                     actions.onLinkLongPress(
                         ShareLink(
                             text = linearText.text.substring(link.start, link.endExclusive),

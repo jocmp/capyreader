@@ -2,7 +2,7 @@ package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.gestures.awaitLongPressOrCancellation
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
@@ -11,7 +11,6 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextLayoutResult
 import com.jocmp.mallet.LinearTextAnnotation
-import kotlinx.coroutines.withTimeoutOrNull
 
 fun Modifier.longPressLink(
     enabled: Boolean,
@@ -27,13 +26,7 @@ fun Modifier.longPressLink(
             val down = awaitFirstDown(requireUnconsumed = false)
             val link = linkAt(down.position) ?: return@awaitEachGesture
 
-            val released = withTimeoutOrNull(viewConfiguration.longPressTimeoutMillis) {
-                waitForUpOrCancellation()
-            }
-
-            if (released != null) {
-                return@awaitEachGesture
-            }
+            awaitLongPressOrCancellation(down.id) ?: return@awaitEachGesture
 
             down.consume()
             onLongPress(link)
