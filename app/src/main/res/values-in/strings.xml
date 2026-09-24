@@ -271,8 +271,6 @@
     <string name="add_link_feed_added">Umpan ditambahkan</string>
     <string name="add_link_page_saved">Halaman tersimpan</string>
     <string name="freshrss_nav_headline_categories">Kategori</string>
-    <string name="auth_fields_client_certificate">Sertifikat klien (opsional)</string>
-    <string name="auth_fields_remove_client_cert">Hapus sertifikat klien</string>
     <string name="add_account_miniflux_signup_prompt">Tidak punya instans Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Pelajari lebih lanjut.</string>
     <string name="theme_mode_system">Sistem</string>
@@ -299,7 +297,6 @@
     <string name="auth_fields_miniflux_api_token">Token API</string>
     <string name="auth_fields_miniflux_use_api_token">Gunakan Token API sebagai gantinya</string>
     <string name="auth_fields_miniflux_use_password">Gunakan Kata Sandi sebagai gantinya</string>
-    <string name="auth_fields_show_advanced">Opsi lanjutan</string>
     <string name="auth_fields_hide_advanced">Sembunyikan opsi lanjutan</string>
     <string name="freshrss_visibility_option_important">Penting</string>
     <string name="freshrss_visibility_option_folder">Kategori</string>

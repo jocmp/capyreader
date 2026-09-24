@@ -248,8 +248,6 @@
     <string name="theme_monochrome">Monochromatický</string>
     <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
     <string name="delete_folder_error">Složku se nepodařilo odstranit</string>
-    <string name="auth_fields_client_certificate">Klientský certifikát (nepovinné)</string>
-    <string name="auth_fields_remove_client_cert">Odebrat klientský certifikát</string>
     <string name="add_account_miniflux_signup_prompt">Nemáte nainstalovaný Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Zjistit více.</string>
     <string name="theme_mode_system">Podle systému</string>
@@ -331,7 +329,6 @@
     <string name="auth_fields_miniflux_api_token">API Klíč</string>
     <string name="auth_fields_miniflux_use_api_token">Použijte API klíč</string>
     <string name="auth_fields_miniflux_use_password">Použijte heslo</string>
-    <string name="auth_fields_show_advanced">Pokročilá nastavení</string>
     <string name="auth_fields_hide_advanced">Skrýt pokročilá nastavení</string>
     <string name="freshrss_visibility">Viditelnost</string>
     <string name="freshrss_visibility_option_main">Hlavní Kanál</string>

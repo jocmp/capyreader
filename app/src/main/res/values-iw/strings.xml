@@ -82,11 +82,9 @@
     <string name="auth_fields_email">אימייל</string>
     <string name="auth_fields_username">שם משתמש</string>
     <string name="auth_fields_api_url">שרת</string>
-    <string name="auth_fields_client_certificate">תעודת לקוח (אופציונלי)</string>
     <string name="auth_fields_hide_password">הסתר סיסמא</string>
     <string name="auth_fields_show_password">גלה סיסמא</string>
     <string name="auth_fields_log_in_button">התחבר</string>
-    <string name="auth_fields_remove_client_cert">הסר תעודת לקוח</string>
     <string name="settings_top_bar_title">אפשרויות</string>
     <string name="update_auth_success_message">התחברת בהצלחה</string>
     <string name="crash_reporting_checkbox_title">אפשר דיווח תקלות</string>
@@ -306,7 +304,6 @@
     <string name="auth_fields_miniflux_api_token">טוקן API</string>
     <string name="auth_fields_miniflux_use_api_token">השתמש בטוקן API במקום</string>
     <string name="auth_fields_miniflux_use_password">השתמש בסיסמה במקום</string>
-    <string name="auth_fields_show_advanced">אפשרויות מתקדמות</string>
     <string name="auth_fields_hide_advanced">הסתר אפשרויות מתקדמות</string>
     <string name="freshrss_visibility_option_important">חשוב</string>
     <string name="freshrss_visibility_option_folder">קטגוריה</string>

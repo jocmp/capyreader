@@ -72,11 +72,9 @@
     <string name="auth_fields_email">メールアドレス</string>
     <string name="auth_fields_username">ユーザー名</string>
     <string name="auth_fields_api_url">サーバー</string>
-    <string name="auth_fields_client_certificate">クライアント証明書 (オプション)</string>
     <string name="auth_fields_hide_password">パスワードを非表示にする</string>
     <string name="auth_fields_show_password">パスワードを表示する</string>
     <string name="auth_fields_log_in_button">ログイン</string>
-    <string name="auth_fields_remove_client_cert">クライアント証明書を削除</string>
     <string name="settings_top_bar_title">設定</string>
     <string name="update_auth_success_message">ログインに成功しました</string>
     <string name="crash_reporting_checkbox_title">クラッシュレポートを有効化</string>

@@ -279,8 +279,6 @@
     <string name="theme_newsprint">ورق الجرائد</string>
     <string name="theme_monochrome">أحادي اللون</string>
     <string name="settings_pure_black_dark_mode">الوضع المظلم الأسود النقي</string>
-    <string name="auth_fields_client_certificate">شهادة العميل (اختياري)</string>
-    <string name="auth_fields_remove_client_cert">أزِل شهادة العميل</string>
     <string name="theme_mode_system">نظام</string>
     <string name="theme_mode_light">فاتح</string>
     <string name="theme_mode_dark">داكن</string>
@@ -304,7 +302,6 @@
     <string name="auth_fields_miniflux_api_token">رمز API</string>
     <string name="auth_fields_miniflux_use_api_token">استخدم رمز API بدلاً من ذلك</string>
     <string name="auth_fields_miniflux_use_password">استخدم كلمة المرور بدلاً من ذلك</string>
-    <string name="auth_fields_show_advanced">خيارات متقدمة</string>
     <string name="auth_fields_hide_advanced">أخفِ الإعدادات المتقدمة</string>
     <string name="settings_panel_unread_counts_title">شارات غير مقروءة</string>
     <string name="settings_option_badge_style">نمط الشارة</string>

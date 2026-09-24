@@ -272,8 +272,6 @@
     <string name="mark_all_read_button_position">Позиция на бутона „Маркирай всички прочетени“</string>
     <string name="settings_display_miscellaneous_title">Разни</string>
     <string name="open_articles_in_browser">Отваряне на статии в браузъра</string>
-    <string name="auth_fields_client_certificate">Клиентски сертификат (по избор)</string>
-    <string name="auth_fields_remove_client_cert">Премахване на клиентски сертификат</string>
     <string name="selected">Избрано</string>
     <string name="theme_mode_system">Система</string>
     <string name="theme_mode_light">Светла</string>
@@ -303,7 +301,6 @@
     <string name="auth_fields_miniflux_api_token">API токен</string>
     <string name="auth_fields_miniflux_use_api_token">Използвайте API токен вместо това</string>
     <string name="auth_fields_miniflux_use_password">Използвайте парола вместо това</string>
-    <string name="auth_fields_show_advanced">Разширени опции</string>
     <string name="auth_fields_hide_advanced">Скриване на разширени опции</string>
     <string name="settings_panel_unread_counts_title">Непрочетени значки</string>
     <string name="settings_option_badge_style">Стил на значката</string>

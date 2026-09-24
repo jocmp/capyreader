@@ -80,11 +80,9 @@
     <string name="auth_fields_email">Email</string>
     <string name="auth_fields_username">Brugernavn</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_client_certificate">Brugercertifikat (valgfrit)</string>
     <string name="auth_fields_hide_password">Skjul adgangskode</string>
     <string name="auth_fields_show_password">Vis adgangskode</string>
     <string name="auth_fields_log_in_button">Log ind</string>
-    <string name="auth_fields_remove_client_cert">Fjern brugercertifikat</string>
     <string name="settings_top_bar_title">Indstillinger</string>
     <string name="update_auth_success_message">Login succesfuld</string>
     <string name="crash_reporting_checkbox_title">Tillad fejlrapportering</string>

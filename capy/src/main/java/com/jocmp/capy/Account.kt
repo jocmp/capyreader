@@ -61,7 +61,6 @@ data class Account(
     val preferences: AccountPreferences,
     val source: Source = Source.LOCAL,
     val faviconPolicy: FaviconPolicy,
-    private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: () -> String,
     private val acceptLanguage: String,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
@@ -88,7 +87,6 @@ data class Account(
                 path = cacheDirectory,
                 preferences = preferences,
                 source = source,
-                clientCertManager = clientCertManager,
             ),
             preferences = preferences,
         )
@@ -99,7 +97,6 @@ data class Account(
             database = database,
             path = cacheDirectory,
             preferences = preferences,
-            clientCertManager = clientCertManager,
         )
     }
 ) {

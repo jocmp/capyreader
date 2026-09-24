@@ -278,8 +278,6 @@
     <string name="theme_newsprint">Carta di giornale</string>
     <string name="theme_monochrome">Monocromatico</string>
     <string name="settings_pure_black_dark_mode">Modalità scura nero puro</string>
-    <string name="auth_fields_client_certificate">Certificato del client (opzionale)</string>
-    <string name="auth_fields_remove_client_cert">Rimuovi il certificato client</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="theme_mode_light">Chiaro</string>
     <string name="theme_mode_dark">Scuro</string>
@@ -314,7 +312,6 @@
     <string name="auth_fields_miniflux_api_token">Token API</string>
     <string name="auth_fields_miniflux_use_api_token">Utilizza invece il token API</string>
     <string name="auth_fields_miniflux_use_password">Utilizza la password</string>
-    <string name="auth_fields_show_advanced">Opzioni avanzate</string>
     <string name="auth_fields_hide_advanced">Nascondi opzioni avanzate</string>
     <string name="settings_panel_unread_counts_title">Badge non letti</string>
     <string name="settings_option_badge_style">Stile Badge</string>

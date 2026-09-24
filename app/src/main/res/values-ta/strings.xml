@@ -274,8 +274,6 @@
     <string name="add_link_feed_added">ஊட்டம் சேர்க்கப்பட்டது</string>
     <string name="add_link_page_saved">பக்கம் சேமிக்கப்பட்டது</string>
     <string name="freshrss_nav_headline_categories">வகைகள்</string>
-    <string name="auth_fields_client_certificate">வாடிக்கையாளர் சான்றிதழ் (விரும்பினால்)</string>
-    <string name="auth_fields_remove_client_cert">வாடிக்கையாளர் சான்றிதழை அகற்று</string>
     <string name="add_account_miniflux_signup_prompt">Miniflux சான்று இல்லையா?</string>
     <string name="add_account_miniflux_signup_link_text">மேலும் அறியவும்.</string>
     <string name="settings_account_refresh_value">%2$s இல் %1$s</string>
@@ -325,7 +323,6 @@
     <string name="auth_fields_miniflux_api_token">பநிஇ கிள்ளாக்கு</string>
     <string name="auth_fields_miniflux_use_api_token">அதற்குப் பதிலாக பநிஇ கிள்ளாக்கைப் பயன்படுத்தவும்</string>
     <string name="auth_fields_miniflux_use_password">அதற்கு பதிலாக கடவுச்சொல்லை பயன்படுத்தவும்</string>
-    <string name="auth_fields_show_advanced">மேம்பட்ட விருப்பங்கள்</string>
     <string name="auth_fields_hide_advanced">மேம்பட்ட விருப்பங்களை மறை</string>
     <string name="freshrss_visibility">விழிமை</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
