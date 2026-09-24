@@ -5,6 +5,7 @@ import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.orThrow
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers
@@ -72,7 +73,7 @@ internal class MinifluxAccountDelegate(
                     entry_ids = entryIDs,
                     status = EntryStatus.READ
                 )
-            )
+            ).orThrow()
             Unit
         }
     }
@@ -86,7 +87,7 @@ internal class MinifluxAccountDelegate(
                     entry_ids = entryIDs,
                     status = EntryStatus.UNREAD
                 )
-            )
+            ).orThrow()
             Unit
         }
     }
@@ -96,7 +97,7 @@ internal class MinifluxAccountDelegate(
 
         return withErrorHandling {
             entryIDs.forEach { entryID ->
-                miniflux.toggleBookmark(entryID)
+                miniflux.toggleBookmark(entryID).orThrow()
             }
             Unit
         }
@@ -107,7 +108,7 @@ internal class MinifluxAccountDelegate(
 
         return withErrorHandling {
             entryIDs.forEach { entryID ->
-                miniflux.toggleBookmark(entryID)
+                miniflux.toggleBookmark(entryID).orThrow()
             }
             Unit
         }
@@ -198,7 +199,7 @@ internal class MinifluxAccountDelegate(
         miniflux.updateFeed(
             feedID = feed.id.toLong(),
             request = UpdateFeedRequest(title = title, category_id = categoryId)
-        )
+        ).orThrow()
 
         database.transactionWithErrorHandling {
             feedRecords.update(
@@ -233,14 +234,14 @@ internal class MinifluxAccountDelegate(
         oldTitle: String,
         newTitle: String
     ): Result<Unit> = withErrorHandling {
-        val categories = miniflux.categories().body() ?: emptyList()
+        val categories = miniflux.categories().orThrow().body() ?: emptyList()
         val category = categories.find { it.title == oldTitle }
 
         if (category != null) {
             miniflux.updateCategory(
                 categoryID = category.id,
                 request = UpdateCategoryRequest(title = newTitle)
-            )
+            ).orThrow()
 
             taggingRecords.updateTitle(previousTitle = oldTitle, title = newTitle)
         }
@@ -249,17 +250,17 @@ internal class MinifluxAccountDelegate(
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {
-        miniflux.deleteFeed(feedID = feed.id.toLong())
+        miniflux.deleteFeed(feedID = feed.id.toLong()).orThrow()
 
         Unit
     }
 
     override suspend fun removeFolder(folderTitle: String): Result<Unit> = withErrorHandling {
-        val categories = miniflux.categories().body() ?: emptyList()
+        val categories = miniflux.categories().orThrow().body() ?: emptyList()
         val category = categories.find { it.title == folderTitle }
 
         if (category != null) {
-            miniflux.deleteCategory(categoryID = category.id)
+            miniflux.deleteCategory(categoryID = category.id).orThrow()
             taggingRecords.deleteByFolderName(folderTitle)
         }
 
@@ -450,7 +451,7 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun findOrCreateCategory(title: String): Long {
-        val categories = miniflux.categories().body() ?: emptyList()
+        val categories = miniflux.categories().orThrow().body() ?: emptyList()
         val existing = categories.find { it.title == title }
 
         return if (existing != null) {

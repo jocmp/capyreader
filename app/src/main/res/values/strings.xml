@@ -72,6 +72,7 @@
     <string name="add_link_feed_added">Feed added</string>
     <string name="add_link_page_saved">Page saved</string>
     <string name="delete_folder_error">Error deleting folder</string>
+    <string name="feed_action_unsubscribe_error">Error unsubscribing from feed</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>

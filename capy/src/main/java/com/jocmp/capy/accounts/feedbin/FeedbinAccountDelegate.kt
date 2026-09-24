@@ -7,6 +7,7 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
+import com.jocmp.capy.accounts.orThrow
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
@@ -74,7 +75,7 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).forEach { batchIDs ->
-                feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs))
+                feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs)).orThrow()
             }
         }
     }
@@ -83,7 +84,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+            feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -92,7 +93,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -101,7 +102,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -185,7 +186,7 @@ internal class FeedbinAccountDelegate(
             feedbin.updateSubscription(
                 subscriptionID = feed.subscriptionID,
                 body = UpdateSubscriptionRequest(title = title)
-            )
+            ).orThrow()
 
             feedRecords.update(
                 feedID = feed.id,
@@ -225,19 +226,19 @@ internal class FeedbinAccountDelegate(
         oldTitle: String,
         newTitle: String
     ): Result<Unit> = withErrorHandling {
-        feedbin.updateTag(UpdateTagRequest(old_name = oldTitle, new_name = newTitle))
+        feedbin.updateTag(UpdateTagRequest(old_name = oldTitle, new_name = newTitle)).orThrow()
 
         Unit
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {
-        feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
+        feedbin.deleteSubscription(subscriptionID = feed.subscriptionID).orThrow()
 
         Unit
     }
 
     override suspend fun removeFolder(folderTitle: String): Result<Unit> = withErrorHandling {
-        feedbin.deleteTag(DeleteTagRequest(name = folderTitle))
+        feedbin.deleteTag(DeleteTagRequest(name = folderTitle)).orThrow()
 
         Unit
     }
