@@ -14,7 +14,6 @@ class AccountManager(
     private val databaseProvider: DatabaseProvider,
     private val preferenceStoreProvider: PreferenceStoreProvider,
     private val faviconPolicy: FaviconPolicy,
-    private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: () -> String,
     private val acceptLanguage: String,
 ) {
@@ -32,7 +31,6 @@ class AccountManager(
         password: String,
         url: String,
         source: Source,
-        clientCertAlias: String = "",
     ): String {
         val accountID = createAccount(source = source)
 
@@ -40,7 +38,6 @@ class AccountManager(
             preferences.username.set(username)
             preferences.password.set(password)
             preferences.url.set(url)
-            preferences.clientCertAlias.set(clientCertAlias)
         }
 
         return accountID
@@ -93,7 +90,6 @@ class AccountManager(
             source = preferences.source.get(),
             preferences = preferences,
             faviconPolicy = faviconPolicy,
-            clientCertManager = clientCertManager,
             userAgent = userAgent,
             acceptLanguage = acceptLanguage,
         )

@@ -264,8 +264,6 @@
     <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
     <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
     <string name="settings_display_miscellaneous_title">Διάφορα</string>
-    <string name="auth_fields_client_certificate">Πιστοποιητικό πελάτη (προαιρετικό)</string>
-    <string name="auth_fields_remove_client_cert">Αφαίρεση πιστοποιητικού πελάτη</string>
     <string name="theme_mode_system">Σύστημα</string>
     <string name="theme_mode_light">Φωτεινό</string>
     <string name="theme_mode_dark">Σκοτεινό</string>
@@ -331,7 +329,6 @@
     <string name="widget_spotlight_see_all">Εμφάνιση όλων</string>
     <string name="auth_fields_miniflux_use_api_token">Χρήση API Token αντ \'αυτού</string>
     <string name="auth_fields_miniflux_use_password">Χρήση Κωδικού αντ \'αυτού</string>
-    <string name="auth_fields_show_advanced">Προχωρημένες ρυθμίσεις</string>
     <string name="settings_refresh_on_wifi_only">Ανανέωση στο Wi-Fi μόνο</string>
     <string name="refresh_skipped_mobile">Η ανανέωση παραλείφθηκε στο δίκτυο κινητής</string>
     <string name="auth_fields_hide_advanced">Απόκρυψη προηγμένων επιλογών</string>

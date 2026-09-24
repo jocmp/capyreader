@@ -71,11 +71,9 @@
     <string name="auth_fields_email">E-mail</string>
     <string name="auth_fields_username">Felhasználónév</string>
     <string name="auth_fields_api_url">Szerver</string>
-    <string name="auth_fields_client_certificate">Kliens tanúsítvány (opcionális)</string>
     <string name="auth_fields_hide_password">Jelszó elrejtése</string>
     <string name="auth_fields_show_password">Jelszó megjelenítése</string>
     <string name="auth_fields_log_in_button">Bejelentkezés</string>
-    <string name="auth_fields_remove_client_cert">Kliens tanúsítvány eltávolítása</string>
     <string name="settings_top_bar_title">Beállítások</string>
     <string name="update_auth_success_message">Sikeres bejelentkezés</string>
     <string name="crash_reporting_checkbox_title">Összeomlási jelentések engedélyezése</string>
@@ -328,7 +326,6 @@
     <string name="auth_fields_miniflux_api_token">API Token</string>
     <string name="auth_fields_miniflux_use_api_token">Használjon API tokent helyette</string>
     <string name="auth_fields_miniflux_use_password">Jelszó használata helyett</string>
-    <string name="auth_fields_show_advanced">Speciális beállítások</string>
     <string name="auth_fields_hide_advanced">Speciális beállítások elrejtése</string>
     <string name="freshrss_visibility">Láthatóság</string>
     <string name="freshrss_visibility_option_main">Fő</string>

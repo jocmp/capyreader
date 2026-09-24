@@ -2,7 +2,6 @@ package com.jocmp.capy.accounts.reader
 
 import com.jocmp.capy.AccountDelegate
 import com.jocmp.capy.AccountPreferences
-import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.db.Database
 import com.jocmp.readerclient.GoogleReader
@@ -13,9 +12,8 @@ internal fun buildReaderDelegate(
     database: Database,
     path: URI,
     preferences: AccountPreferences,
-    clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
 ): AccountDelegate {
-    val httpClient = ReaderOkHttpClient.forAccount(path, preferences, clientCertManager)
+    val httpClient = ReaderOkHttpClient.forAccount(path, preferences)
 
     return ReaderAccountDelegate(
         source = source,

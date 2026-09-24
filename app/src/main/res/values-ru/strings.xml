@@ -279,8 +279,6 @@
     <string name="theme_monochrome">Монохромная</string>
     <string name="settings_pure_black_dark_mode">Режим чистого чёрного</string>
     <string name="filter_today">Сегодня</string>
-    <string name="auth_fields_client_certificate">Сертификат клиента (необязательно)</string>
-    <string name="auth_fields_remove_client_cert">Удалить сертификат клиента</string>
     <string name="theme_mode_system">Как в системе</string>
     <string name="theme_mode_light">Светлая</string>
     <string name="theme_mode_dark">Тёмная</string>
@@ -302,7 +300,6 @@
     <string name="audio_player_skip_forward">Вперед 30 сек</string>
     <string name="article_list_empty">Здесь пусто</string>
     <string name="auth_fields_hide_advanced">Скрыть расширенные опции</string>
-    <string name="auth_fields_show_advanced">Расширенные опции</string>
     <string name="auth_fields_miniflux_use_password">Использовать пароль вместо этого</string>
     <string name="auth_fields_miniflux_use_api_token">Использовать API-токен вместо этого</string>
     <string name="auth_fields_miniflux_api_token">API-токен</string>

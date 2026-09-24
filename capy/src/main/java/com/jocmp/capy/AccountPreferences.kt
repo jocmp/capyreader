@@ -19,9 +19,6 @@ class AccountPreferences(
     val url: Preference<String>
         get() = store.getString("api_url", "")
 
-    val clientCertAlias: Preference<String>
-        get() = store.getString("client_cert_alias", "")
-
     val password: Preference<String>
         get() = store.getString("password", "")
 

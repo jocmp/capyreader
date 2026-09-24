@@ -77,11 +77,9 @@
     <string name="auth_fields_email">E-mail</string>
     <string name="auth_fields_username">Gebruikersnaam</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_client_certificate">Clientcertificaat (optioneel)</string>
     <string name="auth_fields_hide_password">Wachtwoord verbergen</string>
     <string name="auth_fields_show_password">Wachtwoord tonen</string>
     <string name="auth_fields_log_in_button">Inloggen</string>
-    <string name="auth_fields_remove_client_cert">Clientcertificaat verwijderen</string>
     <string name="settings_top_bar_title">Instellingen</string>
     <string name="update_auth_success_message">Succesvol ingelogd</string>
     <string name="crash_reporting_checkbox_title">Crashrapportage inschakelen</string>

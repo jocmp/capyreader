@@ -1,6 +1,5 @@
 package com.jocmp.capy.accounts
 
-import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.UserAgentInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -28,13 +27,3 @@ fun httpClientBuilder(cachePath: URI) =
                 maxSize = 50L * 1024L * 1024L // 50 MiB
             )
         )
-
-fun OkHttpClient.Builder.clientCertAlias(
-    clientCertManager: ClientCertManager,
-    certAlias: String
-): OkHttpClient.Builder {
-    if (certAlias.isNotEmpty()) {
-        return clientCertManager.configure(this, certAlias)
-    }
-    return this
-}

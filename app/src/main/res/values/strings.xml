@@ -72,6 +72,7 @@
     <string name="add_link_feed_added">Feed added</string>
     <string name="add_link_page_saved">Page saved</string>
     <string name="delete_folder_error">Error deleting folder</string>
+    <string name="feed_action_unsubscribe_error">Error unsubscribing from feed</string>
     <string name="relative_time_just_now">Just now</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -101,11 +102,9 @@
     <string name="auth_fields_username">Username</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
-    <string name="auth_fields_client_certificate">Client certificate (optional)</string>
     <string name="auth_fields_hide_password">Hide password</string>
     <string name="auth_fields_show_password">Show password</string>
     <string name="auth_fields_log_in_button">Log In</string>
-    <string name="auth_fields_remove_client_cert">Remove client certificate</string>
     <string name="settings_top_bar_title">Settings</string>
     <string name="update_auth_success_message">Successfully logged in</string>
     <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
@@ -340,7 +339,6 @@
     <string name="auth_fields_miniflux_api_token">API Token</string>
     <string name="auth_fields_miniflux_use_api_token">Use API Token instead</string>
     <string name="auth_fields_miniflux_use_password">Use Password instead</string>
-    <string name="auth_fields_show_advanced">Advanced options</string>
     <string name="auth_fields_hide_advanced">Hide advanced options</string>
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>

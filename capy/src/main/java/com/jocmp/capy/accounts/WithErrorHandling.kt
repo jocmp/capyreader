@@ -2,8 +2,17 @@ package com.jocmp.capy.accounts
 
 import com.jocmp.capy.logging.CapyLog
 import retrofit2.HttpException
+import retrofit2.Response
 
 class ValidationError(override val message: String? = null): Throwable(message)
+
+internal fun <T> Response<T>.orThrow(): Response<T> {
+    if (!isSuccessful) {
+        throw HttpException(this)
+    }
+
+    return this
+}
 
 internal suspend fun <T> withErrorHandling(func: suspend () -> T?): Result<T> {
     return try {
