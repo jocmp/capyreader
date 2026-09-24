@@ -22,7 +22,11 @@ Capy Reader is an RSS reader for Android split into several gradle modules
 ### Key Architectural Patterns
 - **Account System**: Pluggable account delegates for different sync services
 - **Feed Management**: Hierarchical folder/feed organization with OPML import/export using SQLite
-- **Article Rendering**: Template-based HTML rendering
+- **Article Rendering**: Native Compose reader over a flattened element list (see `technotes/Native Reader.md`)
+
+## Technotes
+
+`technotes/` is a collection of design and background notes, and it is where written output from this kind of work belongs — architecture decisions, hard-won constraints, API background. Put it there rather than in a scratch file or a comment block. Check it before researching something that looks like it has history.
 
 ## Code Style
 
