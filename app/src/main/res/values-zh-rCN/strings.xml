@@ -272,8 +272,6 @@
     <string name="mark_all_read_button_position">标记全部已读按钮位置</string>
     <string name="settings_display_miscellaneous_title">其他</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
-    <string name="auth_fields_client_certificate">客户端证书（可选）</string>
-    <string name="auth_fields_remove_client_cert">移除客户端证书</string>
     <string name="theme_dynamic">动态</string>
     <string name="theme_newsprint">新闻纸</string>
     <string name="theme_monochrome">单色</string>
@@ -301,7 +299,6 @@
     <string name="auth_fields_miniflux_api_token">API 令牌</string>
     <string name="auth_fields_miniflux_use_api_token">改为使用 API 令牌</string>
     <string name="auth_fields_miniflux_use_password">改为使用密码</string>
-    <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
     <string name="settings_panel_unread_counts_title">未读徽章</string>
     <string name="settings_option_badge_style">徽章样式</string>

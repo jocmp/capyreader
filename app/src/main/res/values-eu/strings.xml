@@ -96,11 +96,9 @@
     <string name="auth_fields_email">Eposta</string>
     <string name="auth_fields_username">Erabiltzailea</string>
     <string name="auth_fields_api_url">Zerbitzaria</string>
-    <string name="auth_fields_client_certificate">Bezeroaren ziurtagiria (aukerakoa)</string>
     <string name="auth_fields_hide_password">Ezkutatu pasahitza</string>
     <string name="auth_fields_show_password">Erakutsi pasahitza</string>
     <string name="auth_fields_log_in_button">Hasi saioa</string>
-    <string name="auth_fields_remove_client_cert">Ezabatu bezeroaren ziurtagiria</string>
     <string name="settings_top_bar_title">Ezarpenak</string>
     <string name="update_auth_success_message">Saioa arrakastaz hasi da</string>
     <string name="crash_reporting_checkbox_title">Gaitu hutsegiteen berri ematea</string>
@@ -267,7 +265,6 @@
     <string name="open_articles_in_browser">Ireki artikuluak nabigatzailean</string>
     <string name="auth_fields_freshrss_api_password">API pasahitza</string>
     <string name="auth_fields_miniflux_api_token">API fitxa</string>
-    <string name="auth_fields_show_advanced">Aukera aurreratuak</string>
     <string name="auth_fields_hide_advanced">Ezkutatu aukera aurreratuak</string>
     <string name="freshrss_visibility_option_important">Garrantzitsua</string>
     <string name="freshrss_visibility_option_folder">Karpeta</string>

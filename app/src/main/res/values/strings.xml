@@ -101,11 +101,9 @@
     <string name="auth_fields_username">Username</string>
     <string name="auth_fields_api_url">Server</string>
     <string name="auth_fields_api_url_placeholder" translatable="false">https://example.com/</string>
-    <string name="auth_fields_client_certificate">Client certificate (optional)</string>
     <string name="auth_fields_hide_password">Hide password</string>
     <string name="auth_fields_show_password">Show password</string>
     <string name="auth_fields_log_in_button">Log In</string>
-    <string name="auth_fields_remove_client_cert">Remove client certificate</string>
     <string name="settings_top_bar_title">Settings</string>
     <string name="update_auth_success_message">Successfully logged in</string>
     <string name="crash_reporting_checkbox_title">Enable crash reporting</string>
@@ -340,7 +338,6 @@
     <string name="auth_fields_miniflux_api_token">API Token</string>
     <string name="auth_fields_miniflux_use_api_token">Use API Token instead</string>
     <string name="auth_fields_miniflux_use_password">Use Password instead</string>
-    <string name="auth_fields_show_advanced">Advanced options</string>
     <string name="auth_fields_hide_advanced">Hide advanced options</string>
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>

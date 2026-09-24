@@ -268,11 +268,9 @@
     <string name="theme_mode_dark">Tumšs</string>
     <string name="theme_dynamic">Dinamisks</string>
     <string name="theme_sunset">Saulriets</string>
-    <string name="auth_fields_remove_client_cert">Noņemt klienta sertifikātu</string>
     <string name="filter_today">Šodienas</string>
     <string name="theme_newsprint">Laikraksts, avīze</string>
     <string name="settings_option_show_today_filter">Rādīt šodienas raksti atlases iespēju</string>
-    <string name="auth_fields_client_certificate">Klienta sertifikāts (neobligāti, pēc izvēles)</string>
     <string name="theme_default">Noklusētais</string>
     <string name="theme_monochrome">Vienkrāsains</string>
     <string name="settings_pure_black_dark_mode">Pilnīgi melns tumšais motīvs</string>
@@ -325,7 +323,6 @@
     <string name="settings_option_badge_style">Skaitītāja stils</string>
     <string name="freshrss_visibility_option_main">Galvenā plūsma</string>
     <string name="theme_mode_label">Režīms</string>
-    <string name="auth_fields_show_advanced">Papildu iestatījumi</string>
     <string name="auth_fields_hide_advanced">Paslēpt papildu iestatījumus</string>
     <string name="audio_player_pause">Iepauzēt</string>
     <string name="filter_read_later">Saglabāts vēlākam laikam</string>

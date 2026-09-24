@@ -17,7 +17,6 @@ val loginModule = module {
             routeSource = source,
             accountManager = get(),
             appPreferences = get(),
-            clientCertManager = get(),
             refreshScheduler = get(),
         )
     }
