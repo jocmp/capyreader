@@ -1,10 +1,15 @@
 package com.capyreader.app.ui.articles.reader
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -14,6 +19,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -24,7 +30,9 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.jocmp.capy.logging.CapyLog
 import com.jocmp.mallet.LinearVideoSource
+import java.net.URISyntaxException
 
 private const val REFERRER_URL = "https://capyreader.com"
 
@@ -42,10 +50,12 @@ private class FullscreenVideo(
 @Composable
 fun YoutubePlayer(
     videoID: String,
+    onOpenLink: (url: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val fullscreen = remember { mutableStateOf<FullscreenVideo?>(null) }
+    val openLink = rememberUpdatedState(onOpenLink)
 
     val webView = remember(videoID) {
         WebView(context).apply {
@@ -53,7 +63,20 @@ fun YoutubePlayer(
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.mediaPlaybackRequiresUserGesture = false
-            webViewClient = WebViewClient()
+            webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(
+                    view: WebView,
+                    request: WebResourceRequest,
+                ): Boolean {
+                    if (request.url.isEmbed) {
+                        return false
+                    }
+
+                    openExternally(context, request.url, openLink.value)
+
+                    return true
+                }
+            }
             webChromeClient = object : WebChromeClient() {
                 override fun onShowCustomView(view: View, callback: CustomViewCallback) {
                     fullscreen.value = FullscreenVideo(view = view, callback = callback)
@@ -163,4 +186,30 @@ private fun embedDocument(videoID: String): String {
           </body>
         </html>
     """.trimIndent()
+}
+
+private val Uri.isEmbed: Boolean
+    get() {
+        val isWeb = scheme == "https" || scheme == "http"
+
+        return isWeb &&
+                host?.endsWith("youtube-nocookie.com") == true &&
+                path?.startsWith("/embed/") == true
+    }
+
+private fun openExternally(context: Context, url: Uri, onOpenLink: (url: String) -> Unit) {
+    if (url.scheme == "https" || url.scheme == "http") {
+        onOpenLink(url.toString())
+        return
+    }
+
+    try {
+        val intent = Intent.parseUri(url.toString(), Intent.URI_INTENT_SCHEME)
+
+        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    } catch (e: ActivityNotFoundException) {
+        CapyLog.error("youtube_link", e)
+    } catch (e: URISyntaxException) {
+        CapyLog.error("youtube_link", e)
+    }
 }
