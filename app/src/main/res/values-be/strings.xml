@@ -268,4 +268,26 @@
     <string name="settings_panel_unread_counts_title">Значкі непрачытаных</string>
     <string name="settings_option_badge_style">Стыль значкоў</string>
     <string name="show_unread_badge">Паказваць значок непрачытаных</string>
+    <string name="settings_auto_delete_articles_title">Захоўваць прачытаныя артыкулы</string>
+    <string name="settings_auto_delete_option_keep_forever">Назаўжды</string>
+    <string name="settings_auto_delete_option_keep_for_one_week">1 тыдзень</string>
+    <string name="settings_auto_delete_option_keep_for_two_week">2 тыдні</string>
+    <string name="settings_auto_delete_option_keep_for_one_month">1 месяц</string>
+    <string name="settings_auto_delete_option_keep_for_three_month">3 месяцы</string>
+    <string name="starred_exporter_failure">Памылка экспарту</string>
+    <string name="settings_options_reader_pin_top_toolbar">Замацаваць панэлі інструментаў</string>
+    <string name="article_bottom_bar_next_article">Наступны артыкул</string>
+    <string name="article_vertical_swipe_previous_article">Папярэдні артыкул</string>
+    <string name="article_vertical_swipe_next_article">Наступны артыкул</string>
+    <string name="tag_action_edit">Рэдагаваць тэг</string>
+    <string name="article_vertical_swipe_disabled">Адключана</string>
+    <string name="article_vertical_open_article_in_browser">Адкрыць артыкул у браўзеры</string>
+    <string name="article_list_row_swipe_disabled">Адключана</string>
+    <string name="article_list_row_swipe_toggle_read">Пераключыць прачытанасць</string>
+    <string name="settings_gestures_list_back_navigation_system_back">Прадвызначана</string>
+    <string name="settings_section_mark_all_as_read">Пазначыць усё як прачытанае</string>
+    <string name="tag_action_delete_title">Выдаліць</string>
+    <string name="actions_copy_link">Скапіраваць спасылку</string>
+    <string name="actions_share_link">Абагуліць спасылку</string>
+    <string name="actions_share_link_with_title">Абагуліць тэкст і спасылку</string>
 </resources>
