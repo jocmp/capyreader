@@ -17,7 +17,7 @@
     <string name="feed_action_unsubscribe_confirm">Cancelar suscripción</string>
     <string name="edit_feed_submit">Guardar</string>
     <string name="dialog_cancel">Cancelar</string>
-    <string name="folder_action_delete_title">Eliminar etiqueta</string>
+    <string name="folder_action_delete_title">Eliminar carpeta</string>
     <string name="folder_action_edit">Renombrar</string>
     <string name="feed_action_unsubscribe_title">Cancelar suscripción</string>
     <string name="settings">Abrir los ajustes</string>
@@ -52,7 +52,7 @@
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Compartir el artículo</string>
     <string name="extract_full_content">Extraer todo el contenido</string>
-    <string name="action_mark_all_read">Marcar todo como leído</string>
+    <string name="action_mark_all_read">Mаrcаr todo como leído</string>
     <string name="mark_all_read_dialog_description">¿Marcar todos los elementos como leídos?</string>
     <string name="mark_all_read_dialog_submit">Confirmar</string>
     <string name="article_actions_open_menu">Abrir acciones del artículo</string>
@@ -207,7 +207,7 @@
     <string name="settings_gestures_reader_tap_to_page_title">Presione para desplazarse por la tinta electrónica</string>
     <string name="settings_enable_high_contrast_dark_theme">Activar tema oscuro con alto contraste</string>
     <string name="settings_mark_read_on_scroll">Marcar como leído al desplazarse</string>
-    <string name="settings_section_mark_all_as_read">Marcar todo como leído</string>
+    <string name="settings_section_mark_all_as_read">Marcar tоdо como leído</string>
     <string name="settings_section_browser">Navegador</string>
     <string name="reader_image_visibility_show_on_wifi">Mostrar imágenes solo en Wi-Fi</string>
     <string name="reader_image_visibility_always_hide">Bloquear imágenes</string>
@@ -344,4 +344,15 @@
     <string name="article_actions_save_for_later">Guardar para más tarde</string>
     <string name="saved_for_later_success">Guardado para más tarde</string>
     <string name="delete_folder_error">Error al eliminar carpeta</string>
+    <string name="settings_refresh_on_wifi_only">Actualizar solo con Wi-Fi</string>
+    <string name="refresh_skipped_mobile">Actualización omitida en red móvil</string>
+    <string name="article_list_swipe_mark_all_read">Мarcar todo como leído</string>
+    <string name="article_list_new_articles_pill">Artículos nuevos</string>
+    <string name="tag_action_delete_title">Eliminar</string>
+    <string name="tag_action_delete_message">¿Seguro que quieres eliminar la etiqueta «%1$s»?</string>
+    <string name="tag_action_delete_confirm">Eliminar</string>
+    <string name="actions_share_link_with_title">Compartir texto y enlace</string>
+    <string name="widget_receiver_spotlight_title">Spоtlight</string>
+    <string name="widget_spotlight_empty">No hay artículos sin leer</string>
+    <string name="freshrss_visibility_option_main">Flujo principal</string>
 </resources>

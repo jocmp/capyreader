@@ -246,7 +246,7 @@
     <string name="theme_dynamic">Dynamický</string>
     <string name="theme_newsprint">Novinový papír</string>
     <string name="theme_monochrome">Monochromatický</string>
-    <string name="settings_pure_black_dark_mode">Čistě černý tmavý režim</string>
+    <string name="settings_pure_black_dark_mode">Čistě černý tmavý motiv</string>
     <string name="delete_folder_error">Složku se nepodařilo odstranit</string>
     <string name="auth_fields_client_certificate">Klientský certifikát (nepovinné)</string>
     <string name="auth_fields_remove_client_cert">Odebrat klientský certifikát</string>
