@@ -12,8 +12,10 @@ class RefreshFeedsWorker(
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams), KoinComponent {
     private val refresher by inject<FeedRefresher>()
+    private val refreshScheduler by inject<RefreshScheduler>()
 
     override suspend fun doWork(): Result {
+        refreshScheduler.migrateLegacyInterval()
         CapyLog.info("refresh_feeds_worker:start")
         return try {
             refresher.refresh()

@@ -26,9 +26,6 @@
     <string name="account_settings_save_name">Name gespeichert</string>
     <string name="article_view_mark_as_read">Als gelesen markieren</string>
     <string name="article_view_star">Favorit</string>
-    <string name="refresh_manually_only">Nur manuell</string>
-    <string name="refresh_minutes">Alle %1$d Minuten</string>
-    <string name="refresh_feeds_menu_label">Feeds aktualisieren</string>
     <string name="nav_headline_folders">Bezeichnungen</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Feed hinzufügen</string>
@@ -39,10 +36,6 @@
     <string name="relative_time_hours">%1$dh</string>
     <string name="relative_time_days">%1$dd</string>
     <string name="article_share">Artikel teilen</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Jede Stunde</item>
-        <item quantity="other">Alle %d Stunden</item>
-    </plurals>
     <string name="mark_all_read_dialog_description">Alles als gelesen markieren?</string>
     <string name="mark_all_read_dialog_submit">Bestätigen</string>
     <string name="article_actions_open_menu">Artikeloptionen öffnen</string>
@@ -109,7 +102,6 @@
     <string name="article_byline_date_only">%1$s um %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Gelesene, nicht favorisierte Artikel nach 3 Monaten löschen</string>
     <string name="settings_option_auto_delete_articles_title">Artikel automatisch löschen</string>
-    <string name="refresh_every_day">Jeden Tag</string>
     <string name="feed_form_feed_url_title">Feed-URL</string>
     <string name="feed_action_edit">Feed bearbeiten</string>
     <string name="feed_action_reload_icon">Symbol neu laden</string>

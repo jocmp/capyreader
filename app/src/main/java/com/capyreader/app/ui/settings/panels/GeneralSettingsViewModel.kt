@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
 import com.jocmp.capy.accounts.AutoDelete
@@ -24,7 +23,7 @@ class GeneralSettingsViewModel(
 ) : ViewModel() {
     val source = account.source
 
-    var refreshInterval by mutableStateOf(refreshScheduler.refreshInterval)
+    var backgroundRefresh by mutableStateOf(refreshScheduler.isEnabled)
         private set
 
     var autoDelete by mutableStateOf(account.preferences.autoDelete.get())
@@ -61,10 +60,10 @@ class GeneralSettingsViewModel(
         .filterKeywords
         .stateIn(viewModelScope)
 
-    fun updateRefreshInterval(interval: RefreshInterval) {
-        refreshScheduler.update(interval)
+    fun updateBackgroundRefresh(enabled: Boolean) {
+        refreshScheduler.update(enabled)
 
-        this.refreshInterval = interval
+        this.backgroundRefresh = enabled
     }
 
     fun updateSortOrder(sort: SortOrder) {

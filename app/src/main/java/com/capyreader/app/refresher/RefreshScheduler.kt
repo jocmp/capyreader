@@ -8,60 +8,65 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.capyreader.app.preferences.AppPreferences
 import com.jocmp.capy.logging.CapyLog
+import java.util.concurrent.TimeUnit
 
 class RefreshScheduler(
     private val context: Context,
     private val appPreferences: AppPreferences,
 ) {
-    val refreshInterval
-        get() = appPreferences.refreshInterval.get()
+    val isEnabled: Boolean
+        get() = appPreferences.backgroundRefresh.get()
 
     fun initialize() {
-        val time = refreshInterval.toTime ?: return
+        if (!isEnabled) {
+            return
+        }
 
-        val (repeatInterval, timeUnit) = time
+        CapyLog.info("init_refresh")
 
-        val request = PeriodicWorkRequestBuilder<RefreshFeedsWorker>(repeatInterval, timeUnit)
+        enqueue(ExistingPeriodicWorkPolicy.KEEP)
+    }
+
+    fun update(enabled: Boolean) {
+        if (enabled == isEnabled) {
+            return
+        }
+
+        appPreferences.backgroundRefresh.set(enabled)
+
+        if (enabled) {
+            CapyLog.info("enable_refresh")
+            enqueue(ExistingPeriodicWorkPolicy.UPDATE)
+        } else {
+            CapyLog.info("cancel_refresh")
+            WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME)
+        }
+    }
+
+    fun migrateLegacyInterval() {
+        val legacyInterval = appPreferences.legacyRefreshInterval
+
+        if (!legacyInterval.isSet()) {
+            return
+        }
+
+        appPreferences.backgroundRefresh.set(isEnabled)
+        legacyInterval.delete()
+
+        if (isEnabled) {
+            CapyLog.info("migrate_refresh")
+            enqueue(ExistingPeriodicWorkPolicy.UPDATE)
+        }
+    }
+
+    private fun enqueue(policy: ExistingPeriodicWorkPolicy) {
+        val request = PeriodicWorkRequestBuilder<RefreshFeedsWorker>(REFRESH_INTERVAL_HOURS, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
-
-        CapyLog.info("init_refresh", mapOf("interval" to refreshInterval))
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            request
-        )
-    }
-
-    fun update(interval: RefreshInterval) {
-        if (interval == refreshInterval) {
-            return
-        }
-
-        appPreferences.refreshInterval.set(interval)
-
-        val workManager = WorkManager.getInstance(context)
-
-        val time = interval.toTime
-
-        if (time == null) {
-            CapyLog.info("cancel_refresh", mapOf("interval" to refreshInterval))
-            workManager.cancelUniqueWork(WORK_NAME)
-            return
-        }
-
-        CapyLog.info("enable_refresh", mapOf("interval" to refreshInterval))
-
-        val (repeatInterval, timeUnit) = time
-
-        val request = PeriodicWorkRequestBuilder<RefreshFeedsWorker>(repeatInterval, timeUnit)
-            .setConstraints(constraints)
-            .build()
-
-        workManager.enqueueUniquePeriodicWork(
-            WORK_NAME,
-            ExistingPeriodicWorkPolicy.UPDATE,
+            policy,
             request
         )
     }
@@ -71,8 +76,9 @@ class RefreshScheduler(
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-
     companion object {
         const val WORK_NAME = "refresher"
+
+        private const val REFRESH_INTERVAL_HOURS = 1L
     }
 }

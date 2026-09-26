@@ -53,7 +53,6 @@
     <string name="feed_form_feed_url_title">Yayın URL</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 aydan eski okunmuş, yıldızsız makaleleri sil</string>
     <string name="settings_option_auto_delete_articles_title">Makaleleri Otomatik Sil</string>
-    <string name="refresh_every_day">Hergün</string>
     <string name="relative_time_hours">%1$dsaat</string>
     <string name="add_feed_name_title">Ad</string>
     <string name="feed_form_cancel">Vazgeç</string>
@@ -70,10 +69,8 @@
     <string name="relative_time_just_now">Şimdi</string>
     <string name="settings_remove_account_button_service">Çıkış Yap</string>
     <string name="article_view_star">Yıldız</string>
-    <string name="refresh_feeds_menu_label">Yayınları Yenile</string>
     <string name="settings_remove_account_title_service">Çıkış Yap</string>
     <string name="article_view_mark_as_read">Okundu olarak işaretle</string>
-    <string name="refresh_manually_only">Sadece elle</string>
     <string name="relative_time_minutes">%1$ddakika</string>
     <string name="extract_full_content">Tam İçeriği Çıkar</string>
     <string name="action_mark_all_read">Tümünü okundu olarak işaretle</string>
@@ -110,11 +107,6 @@
     <string name="settings_remove_account_confirm_service">Çıkış Yap</string>
     <string name="settings_remove_account_button_local">Hesabı Sil</string>
     <string name="settings_remove_account_confirm_local">Doğrula</string>
-    <string name="refresh_minutes">Her %1$d dakikada bir</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Her saat</item>
-        <item quantity="other">Her %d saatte bir</item>
-    </plurals>
     <string name="nav_headline_feeds">Yayınlar</string>
     <string name="nav_add_feed">Yayın Ekle</string>
     <string name="unauthorized_dialog_description">Hesabınıza bağlanırken bir sorun oluştu. Lütfen tekrar giriş yapın.</string>

@@ -35,13 +35,6 @@
     <string name="article_view_mark_as_unread">Marker som ulæst</string>
     <string name="article_view_star">Tilføj til favoritter</string>
     <string name="article_view_unstar">Fjern fra favoritter</string>
-    <string name="refresh_manually_only">Kun manuelt</string>
-    <string name="refresh_minutes">Hvert %1$d. minut</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Hver time</item>
-        <item quantity="other">Hver %d. time</item>
-    </plurals>
-    <string name="refresh_feeds_menu_label">Opdater feeds</string>
     <string name="nav_headline_folders">Etiketter</string>
     <string name="nav_headline_saved_searches">Søgninger</string>
     <string name="freshrss_nav_headline_my_labels">Mine etiketter</string>
@@ -165,7 +158,6 @@
     <string name="article_byline_date_only">%1$s af %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Slet læste, ikke favoritmarkerede artikler ældre end 3 måneder</string>
     <string name="settings_option_auto_delete_articles_title">Automatisk sletning af artikler</string>
-    <string name="refresh_every_day">Hver dag</string>
     <string name="feed_form_feed_url_title">Feed-URL</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Kopier Feed-URL til udklipsholder</string>
     <string name="filter_action_menu_search_articles">Søg i artikler</string>

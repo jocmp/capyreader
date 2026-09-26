@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.common.FeedGroup
 import com.capyreader.app.common.ImagePreview
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
 import com.capyreader.app.ui.articles.MarkReadPosition
@@ -48,8 +47,11 @@ class AppPreferences(context: Context) {
             }
         )
 
-    val refreshInterval: Preference<RefreshInterval>
-        get() = preferenceStore.getEnum("refresh_interval", RefreshInterval.default)
+    val legacyRefreshInterval: Preference<String>
+        get() = preferenceStore.getString("refresh_interval", "")
+
+    val backgroundRefresh: Preference<Boolean>
+        get() = preferenceStore.getBoolean("background_refresh", legacyRefreshInterval.get() != "MANUALLY_ONLY")
 
     val crashReporting: Preference<Boolean>
         get() = preferenceStore.getBoolean("enable_crash_reporting", false)

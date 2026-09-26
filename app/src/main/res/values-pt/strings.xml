@@ -20,8 +20,6 @@
     <string name="feed_action_edit">Editar Feed</string>
     <string name="feed_action_reload_icon">Recarregar ícone</string>
     <string name="settings_remove_account_title_service">Sair da sessão</string>
-    <string name="refresh_minutes">Cada %1$d minuto(s)</string>
-    <string name="refresh_feeds_menu_label">Atualizar Feeds</string>
     <string name="nav_headline_folders">Etiquetas</string>
     <string name="nav_headline_saved_searches">Pesquisas</string>
     <string name="nav_headline_feeds">Feeds</string>
@@ -70,7 +68,6 @@
     <string name="article_view_mark_as_unread">Marcar como não lido</string>
     <string name="article_view_star">Favorito</string>
     <string name="article_view_unstar">Remover favorito</string>
-    <string name="refresh_manually_only">Apenas manualmente</string>
     <string name="relative_time_just_now">Agora</string>
     <string name="relative_time_minutes">%1$dm</string>
     <string name="relative_time_hours">%1$dh</string>
@@ -159,7 +156,6 @@
     <string name="article_byline_date_only">%1$s em %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Apagar artigos lidos e desfavoritados mais antigos que 3 meses</string>
     <string name="settings_option_auto_delete_articles_title">Apagar artigos automaticamente</string>
-    <string name="refresh_every_day">Todos os dias</string>
     <string name="feed_form_feed_url_title">URL do Feed</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copiar URL do Feed para área de transferência</string>
     <string name="settings_panel_notifications_title">Notificações</string>
@@ -238,11 +234,6 @@
     <string name="search_bar_placeholder">Pesquisar</string>
     <string name="delete_folder_error">Erro ao excluir etiqueta</string>
     <string name="settings_options_reader_pin_top_toolbar">Fixar Barras de Ferramentas</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">A cada hora</item>
-        <item quantity="many">A cada %d horas</item>
-        <item quantity="other">A cada %d horas</item>
-    </plurals>
     <string name="filters_title">Lista de bloqueio</string>
     <string name="filters_supporting_text">Remover artigos em que o título ou conteúdo batem com palavras-chave</string>
     <string name="filters_remove_keyword">Remover palavras-chave</string>

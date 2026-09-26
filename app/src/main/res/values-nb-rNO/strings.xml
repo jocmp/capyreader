@@ -22,8 +22,6 @@
     <string name="article_view_mark_as_read">Marker som lest</string>
     <string name="article_view_mark_as_unread">Marker som ulest</string>
     <string name="settings_remove_account_message_local">Er du sikker på at du vil slette kontoen din? Handlingen kan ikke angres.</string>
-    <string name="refresh_manually_only">Kun manuell</string>
-    <string name="refresh_minutes">Hvert %1$d. minutt</string>
     <string name="nav_headline_folders">Etiketter</string>
     <string name="article_share">Del artikkel</string>
     <string name="action_mark_all_read">Marker alle som lest</string>
@@ -69,7 +67,6 @@
     <string name="image_preview_label">Bildeforhåndsvisning</string>
     <string name="font_option_system_default">Systemstandard</string>
     <string name="article_font_menu_label">Skrifttype</string>
-    <string name="refresh_every_day">Hver dag</string>
     <string name="settings_panel_general_title">Generelt</string>
     <string name="settings_panel_notifications_title">Varsler</string>
     <string name="settings_account_title">Konto</string>
@@ -133,7 +130,6 @@
     <string name="folder_action_edit">Gi nytt navn</string>
     <string name="feed_action_edit">Rediger kanal</string>
     <string name="feed_action_reload_icon">Last inn ikon på nytt</string>
-    <string name="refresh_feeds_menu_label">Oppdater kanaler</string>
     <string name="nav_headline_feeds">Kanaler</string>
     <string name="nav_add_feed">Legg til kanal</string>
     <string name="add_feed_feed_not_error">Kunne ikke finne kanal</string>
@@ -207,10 +203,6 @@
     <string name="settings_select_none">Velg ingen</string>
     <string name="settings_gestures_reader_tap_to_page_title">Trykkskrolling for e-ink</string>
     <string name="settings_gestures_reader_tap_to_page_subtitle">Trykk nedre hjørner for å navigere i artikkelinnhold</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Hver time</item>
-        <item quantity="other">Hver %d. time</item>
-    </plurals>
     <string name="full_content_error_missing_response">Kunne ikke hente artikkel</string>
     <string name="full_content_error_generic">Kunne ikke behandle artikkel</string>
     <string name="full_content_error_forbidden">Henting blokkert av nettstedet</string>

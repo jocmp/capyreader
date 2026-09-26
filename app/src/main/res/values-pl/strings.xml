@@ -74,8 +74,6 @@
     <string name="settings_remove_account_button_local">Usuń konto</string>
     <string name="article_view_star">Dodaj gwiazdkę</string>
     <string name="article_view_unstar">Usuń gwiazdkę</string>
-    <string name="refresh_manually_only">Ręcznie</string>
-    <string name="refresh_minutes">Co %1$d minut</string>
     <string name="nav_headline_feeds">Kanały</string>
     <string name="add_feed_feed_not_error">Nie można znaleźć kanału</string>
     <string name="feed_form_cancel">Anuluj</string>
@@ -87,13 +85,6 @@
     <string name="settings_remove_account_message_local">Na pewno chcesz usunąć swoje konto? Nie można tego cofnąć.</string>
     <string name="article_view_mark_as_read">Oznacz jako przeczytane</string>
     <string name="nav_add_feed">Dodaj kanał</string>
-    <string name="refresh_feeds_menu_label">Odśwież kanały</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Co godzinę</item>
-        <item quantity="few">Co %d godzin</item>
-        <item quantity="many">Co %d godzin</item>
-        <item quantity="other">Co %d godzin</item>
-    </plurals>
     <string name="feed_action_unsubscribe">Anuluj subskrypcję</string>
     <string name="add_feed_save_error">Nie można zapisać kanału</string>
     <string name="add_feed_new_folder_title">Nowy folder</string>
@@ -122,7 +113,6 @@
     <string name="title_alignment_left">Wyrównaj do lewej</string>
     <string name="title_alignment_center">Wyśrodkuj</string>
     <string name="article_title_font_scale_label">Rozmiar czcionki</string>
-    <string name="refresh_every_day">Codziennie</string>
     <string name="feed_form_feed_url_title">Adres URL kanału</string>
     <string name="settings_auto_delete_option_keep_forever">Na zawsze</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 tydzień</string>

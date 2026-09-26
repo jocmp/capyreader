@@ -17,11 +17,6 @@
     <string name="folder_action_delete_title">ट्याग हटाउनुहोस्</string>
     <string name="article_view_star">ताराङ्कन गर्नुहोस्</string>
     <string name="article_view_unstar">तारा हटाउनुहोस्</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">प्रत्येक घण्टामा</item>
-        <item quantity="other">प्रत्येक %d घण्टामा</item>
-    </plurals>
-    <string name="refresh_feeds_menu_label">फिडहरू रिफ्रेस गर्नुहोस्</string>
     <string name="settings_remove_account_confirm_service">बाहिर निस्कनुहोस्</string>
     <string name="after_read_all_behavior_open_next_feed">अर्को फिड खोल्नुहोस्</string>
     <string name="full_content_error_missing_response">लेख ल्याउन असफल भयो</string>
@@ -32,7 +27,6 @@
     <string name="after_read_all_behavior_default">पूर्वनिर्धारित</string>
     <string name="settings_remove_account_button_service">बाहिर निस्कनुहोस्</string>
     <string name="feed_action_unsubscribe_title">सदस्यता रद्द गर्नुहोस्</string>
-    <string name="refresh_minutes">प्रत्येक %1$d मिनेटमा</string>
     <string name="add_feed_name_title">नाम</string>
     <string name="filter_starred">ताराङ्कित</string>
     <string name="filter_all">सबै</string>
@@ -62,7 +56,6 @@
     <string name="settings_section_version">संस्करण</string>
     <string name="font_option_system_default">सिस्टम पूर्वनिर्धारित</string>
     <string name="article_font_menu_label">फन्ट</string>
-    <string name="refresh_every_day">हरेक दिन</string>
     <string name="feed_form_feed_url_title">फिड URL</string>
     <string name="settings_article_list_title">लेख सूची</string>
     <string name="settings_donate_button">दान गर्नुहोस्</string>
@@ -104,7 +97,6 @@
     <string name="add_feed_network_error">फिड फेला पार्न सकिएन। आफ्नो जडान जाँच गर्नुहोस्।</string>
     <string name="settings_remove_account_message_local">के तपाइँ तपाइँको खाता मेटाउन निश्चित हुनुहुन्छ? यो पूर्ववत गर्न सकिँदैन।</string>
     <string name="nav_headline_feeds">फिडहरू</string>
-    <string name="refresh_manually_only">म्यानुअली मात्र</string>
     <string name="settings_section_account_server">सर्भर</string>
     <string name="settings_section_account">खाता</string>
     <string name="settings_section_import">आयात गर्नुहोस्</string>

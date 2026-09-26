@@ -5,7 +5,6 @@ import app.cash.turbine.test
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleFilter
@@ -73,7 +72,7 @@ class ArticleScreenViewModelTest {
 
         appPreferences = AppPreferences(RuntimeEnvironment.getApplication()).also {
             it.clearAll()
-            it.refreshInterval.set(RefreshInterval.EVERY_TWO_HOURS)
+            it.backgroundRefresh.set(true)
         }
 
         notificationHelper = mockk(relaxed = true)

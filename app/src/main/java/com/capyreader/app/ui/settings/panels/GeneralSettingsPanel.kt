@@ -45,7 +45,6 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.notifications.Notifications
 import com.capyreader.app.preferences.AfterReadAllBehavior
-import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
@@ -83,8 +82,8 @@ fun GeneralSettingsPanel(
         GeneralSettingsPanelView(
             source = viewModel.source,
             onNavigateToNotifications = onNavigateToNotifications,
-            refreshInterval = viewModel.refreshInterval,
-            updateRefreshInterval = viewModel::updateRefreshInterval,
+            backgroundRefresh = viewModel.backgroundRefresh,
+            updateBackgroundRefresh = viewModel::updateBackgroundRefresh,
             refreshOnWiFiOnly = viewModel.refreshOnWiFiOnly,
             updateRefreshOnWiFiOnly = viewModel::updateRefreshOnWiFiOnly,
             canOpenLinksInternally = viewModel.canOpenLinksInternally,
@@ -111,8 +110,8 @@ fun GeneralSettingsPanelView(
     source: Source,
     onNavigateToNotifications: () -> Unit,
     onClearArticles: () -> Unit,
-    refreshInterval: RefreshInterval,
-    updateRefreshInterval: (RefreshInterval) -> Unit,
+    backgroundRefresh: Boolean,
+    updateBackgroundRefresh: (enabled: Boolean) -> Unit,
     refreshOnWiFiOnly: Boolean,
     updateRefreshOnWiFiOnly: (enabled: Boolean) -> Unit,
     canOpenLinksInternally: Boolean,
@@ -152,10 +151,13 @@ fun GeneralSettingsPanelView(
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
             Column {
-                RefreshIntervalMenu(
-                    refreshInterval = refreshInterval,
-                    updateRefreshInterval = updateRefreshInterval,
-                )
+                RowItem {
+                    TextSwitch(
+                        checked = backgroundRefresh,
+                        onCheckedChange = updateBackgroundRefresh,
+                        title = stringResource(R.string.settings_background_refresh),
+                    )
+                }
                 RowItem {
                     TextSwitch(
                         checked = refreshOnWiFiOnly,
@@ -165,7 +167,7 @@ fun GeneralSettingsPanelView(
                 }
                 NotificationsListItem(
                     onNavigate = onNavigateToNotifications,
-                    refreshInterval = refreshInterval,
+                    backgroundRefresh = backgroundRefresh,
                 )
                 if (source == Source.LOCAL) {
                     FiltersItem()
@@ -281,10 +283,10 @@ fun GeneralSettingsPanelView(
 @Composable
 fun NotificationsListItem(
     onNavigate: () -> Unit,
-    refreshInterval: RefreshInterval,
+    backgroundRefresh: Boolean,
 ) {
     val defaultColors = ListItemDefaults.colors()
-    val enabled = refreshInterval.isPeriodic
+    val enabled = backgroundRefresh
     val snackbar = LocalSnackbarHost.current
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -363,8 +365,8 @@ private fun GeneralSettingsPanelPreview() {
         CapyTheme {
             GeneralSettingsPanelView(
                 source = Source.LOCAL,
-                refreshInterval = RefreshInterval.EVERY_HOUR,
-                updateRefreshInterval = {},
+                backgroundRefresh = true,
+                updateBackgroundRefresh = {},
                 refreshOnWiFiOnly = false,
                 updateRefreshOnWiFiOnly = {},
                 canOpenLinksInternally = false,

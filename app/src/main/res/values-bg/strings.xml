@@ -65,12 +65,6 @@
     <string name="settings_remove_account_button_service">Излизане</string>
     <string name="article_view_star">Звезда</string>
     <string name="article_view_unstar">Премахни звезда</string>
-    <string name="refresh_manually_only">Само ръчно</string>
-    <string name="refresh_minutes">На всеки %1$d минути</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Всеки час</item>
-        <item quantity="other">На всеки %d часа</item>
-    </plurals>
     <string name="nav_headline_feeds">Емисии</string>
     <string name="nav_add_feed">Добавяне на емисия</string>
     <string name="add_feed_save_error">Не можа да се запази емисия</string>
@@ -137,7 +131,6 @@
     <string name="image_error_text">Грешка при зареждане на изображение</string>
     <string name="article_byline">%1$s при %2$s от %3$s</string>
     <string name="article_byline_date_only">%1$s при %2$s</string>
-    <string name="refresh_every_day">Всеки ден</string>
     <string name="feed_form_feed_url_title">URL адрес на емисия</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Копиране на URL адреса на емисията в клипборда</string>
     <string name="filter_action_menu_search_articles">Търсене на статии</string>
@@ -175,7 +168,6 @@
     <string name="settings_gestures_list_back_navigation_system_back">По подразбиране</string>
     <string name="crash_log_export_item_title">Сподели дневници за срив</string>
     <string name="action_share">Сподели</string>
-    <string name="refresh_feeds_menu_label">Обновяване на емисии</string>
     <string name="notifications_channel_title_feed_update">Актуализации на емисия</string>
     <string name="settings_select_all">Избери всичко</string>
     <string name="settings_select_none">Няма избрано</string>

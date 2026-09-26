@@ -32,14 +32,6 @@
     <string name="account_settings_save_name">Nome salvo</string>
     <string name="article_view_mark_as_read">Marcar como lido</string>
     <string name="article_view_star">Favorito</string>
-    <string name="refresh_manually_only">Apenas manualmente</string>
-    <string name="refresh_minutes">Cada %1$d minuto(s)</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">A cada hora</item>
-        <item quantity="many">A cada %d horas</item>
-        <item quantity="other">A cada %d horas</item>
-    </plurals>
-    <string name="refresh_feeds_menu_label">Atualizar Feeds</string>
     <string name="nav_headline_folders">Etiquetas</string>
     <string name="nav_headline_feeds">Feeds</string>
     <string name="nav_add_feed">Adicionar Feed</string>
@@ -128,7 +120,6 @@
     <string name="article_byline_date_only">%1$s em %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Excluir artigos lidos e desfavoritados mais antigos que 3 meses</string>
     <string name="settings_option_auto_delete_articles_title">Excluir artigos automaticamente</string>
-    <string name="refresh_every_day">Todos os dias</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Copiar URL do Feed para área de transferência</string>
     <string name="feed_form_feed_url_title">URL do Feed</string>
     <string name="filter_action_menu_search_articles">Pesquisar artigos</string>

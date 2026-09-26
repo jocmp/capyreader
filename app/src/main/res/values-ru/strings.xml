@@ -19,8 +19,6 @@
     <string name="article_view_mark_as_unread">Отметить как непрочитанное</string>
     <string name="article_view_star">Избранное</string>
     <string name="article_view_unstar">Убрать из избранного</string>
-    <string name="refresh_manually_only">Только вручную</string>
-    <string name="refresh_feeds_menu_label">Обновить ленты</string>
     <string name="nav_headline_folders">Теги</string>
     <string name="nav_headline_feeds">Ленты</string>
     <string name="nav_add_feed">Добавить ленту</string>
@@ -34,13 +32,6 @@
     <string name="settings_remove_account_title_local">Удалить аккаунт</string>
     <string name="feed_action_unsubscribe_message">Вы уверены, что хотите отписаться от \"%1$s\"?</string>
     <string name="article_view_mark_as_read">Отметить как прочитанное</string>
-    <string name="refresh_minutes">Каждые %1$d минут</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Каждый %d час</item>
-        <item quantity="few">Каждые %d часа</item>
-        <item quantity="many">Каждые %d часов</item>
-        <item quantity="other">Каждые %d часов</item>
-    </plurals>
     <string name="add_feed_feed_not_error">Не удалось найти ленту</string>
     <string name="add_account_title">Добавить аккаунт</string>
     <string name="opml_export_button_text">Экспорт в OPML</string>
@@ -124,7 +115,6 @@
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="image_error_text">Ошибка загрузки изображения</string>
     <string name="article_byline_date_only">%1$s в %2$s</string>
-    <string name="refresh_every_day">Каждый день</string>
     <string name="filter_action_menu_search_articles">Поиск статей</string>
     <string name="feed_list_top_bar_close_search">Прекратить поиск</string>
     <string name="settings_panel_display_title">Отображение и Облик</string>

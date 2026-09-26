@@ -33,7 +33,6 @@
     <string name="article_view_mark_as_unread">വായിക്കാത്തതായി അടയാളപ്പെടുത്തുക</string>
     <string name="article_view_star">നക്ഷത്രം</string>
     <string name="article_view_unstar">നക്ഷത്രം നീക്കം ചെയ്യുക</string>
-    <string name="refresh_manually_only">സ്വമേധയാ മാത്രം</string>
     <string name="article_share">ലേഖനം പങ്കിടുക</string>
     <string name="mark_all_read_dialog_submit">സ്ഥിരീകരിക്കുക</string>
     <string name="article_actions_open_menu">ലേഖന പ്രവർത്തനങ്ങൾ തുറക്കുക</string>
@@ -63,7 +62,6 @@
     <string name="settings_option_copy_version">പതിപ്പ് പകർപ്പ്</string>
     <string name="settings_option_auto_delete_articles_title">ലേഖനങ്ങൾ സ്വയമേവ ഇല്ലാതാക്കുക</string>
     <string name="settings_option_auto_delete_articles_subtitle">3 മാസത്തിലധികം പഴക്കമുള്ള വായിച്ചതും നക്ഷത്രമിടാത്തതുമായ ലേഖനങ്ങൾ ഇല്ലാതാക്കുക</string>
-    <string name="refresh_every_day">എല്ലാ ദിവസവും</string>
     <string name="filter_action_menu_search_articles">ലേഖനങ്ങൾ തിരയുക</string>
     <string name="feed_list_top_bar_close_search">തിരയൽ നിരസിക്കുക</string>
     <string name="settings_panel_general_title">പൊതുവായ</string>
@@ -98,10 +96,6 @@
     <string name="edit_feed_submit">സംരക്ഷിക്കുക</string>
     <string name="account_settings_save_name">പേര് സംരക്ഷിച്ചു</string>
     <string name="article_view_mark_as_read">വായിച്ചതായി അടയാളപ്പെടുത്തുക</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">ഓരോ മണിക്കൂറിലും</item>
-        <item quantity="other">ഓരോ %d മണിക്കൂറിലും</item>
-    </plurals>
     <string name="relative_time_just_now">ഇപ്പോൾത്തന്നെ</string>
     <string name="action_mark_all_read">എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുക</string>
     <string name="auth_fields_username">ഉപയോക്തൃനാമം</string>

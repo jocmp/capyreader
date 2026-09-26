@@ -13,7 +13,6 @@
     <string name="settings_remove_account_message_local">Sigur dorești să ștergi contul? Acțiunea nu poate fi anulată.</string>
     <string name="settings_remove_account_confirm_local">Confirm</string>
     <string name="article_view_mark_as_read">Marchează ca citit</string>
-    <string name="refresh_feeds_menu_label">Reîmprospătează fluxul</string>
     <string name="opml_import_notification_title">Import abonamentele…</string>
     <string name="nav_headline_saved_searches">Căutări</string>
     <string name="add_account_freshrss_signup_link_text">Află mai multe.</string>
@@ -39,13 +38,6 @@
     <string name="settings_remove_account_confirm_service">Deconectează-te</string>
     <string name="settings_remove_account_title_local">Șterge cont</string>
     <string name="account_settings_save_name">Nume salvat</string>
-    <string name="refresh_manually_only">Doar manual</string>
-    <string name="refresh_minutes">La fiecare %1$d minute</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Din oră în oră</item>
-        <item quantity="few">La fiecare %d ore</item>
-        <item quantity="other">La fiecare %d de ore</item>
-    </plurals>
     <string name="nav_headline_folders">Etichete</string>
     <string name="add_feed_feed_not_error">Nu s-a putut găsi un flux</string>
     <string name="add_feed_save_error">Nu s-a putut salva fluxul</string>
@@ -126,7 +118,6 @@
     <string name="settings_article_list_feed_icons">Iconițe flux</string>
     <string name="empty_onboarding_title">Momentan niciun flux</string>
     <string name="article_font_menu_label">Font</string>
-    <string name="refresh_every_day">Zilnic</string>
     <string name="settings_list_top_bar_title">Setări</string>
     <string name="settings_auto_delete_option_keep_for_three_month">3 luni</string>
     <string name="settings_clear_all_articles_button">Șterge toate articolele</string>

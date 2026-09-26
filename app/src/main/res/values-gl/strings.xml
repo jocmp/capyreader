@@ -20,7 +20,6 @@
     <string name="settings_remove_account_title_service">Saír</string>
     <string name="action_mark_all_read">Marcar Todo como lido</string>
     <string name="auth_fields_api_url">Servidor</string>
-    <string name="refresh_manually_only">Manualmente</string>
     <string name="settings_remove_account_confirm_service">Saír</string>
     <string name="auth_fields_email">Correo-e</string>
     <string name="article_actions_mark_below_as_read">Marcar o de abaixo como lido</string>
@@ -29,10 +28,6 @@
     <string name="settings_remove_account_title_local">Eliminar conta</string>
     <string name="article_view_mark_as_unread">Marcar como sen ler</string>
     <string name="unauthorized_dialog_confirm_text">Acceder</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Cada hora</item>
-        <item quantity="other">Cada %d horas</item>
-    </plurals>
     <string name="account_source_feedbin">Feedbin</string>
     <string name="unauthorized_dialog_dismiss_text">Máis tarde</string>
     <string name="add_account_reader_subtitle">API Google Reader auto-hospedada</string>
@@ -44,7 +39,6 @@
     <string name="settings_section_version">Versión</string>
     <string name="font_option_system_default">Predeterminada do sistema</string>
     <string name="image_error_text">Erro ao cargar a imaxe</string>
-    <string name="refresh_every_day">Cada día</string>
     <string name="settings_gestures_list_back_navigation_system_back">Predeterminada</string>
     <string name="auth_fields_hide_password">Agochar contrasinal</string>
     <string name="notifications_channel_title_opml_import">Importación das subscricións</string>
@@ -71,8 +65,6 @@
     <string name="settings_remove_account_button_service">Saír</string>
     <string name="account_settings_save_name">Gardouse o nome</string>
     <string name="article_view_star">Estrela</string>
-    <string name="refresh_minutes">Cada %1$d minutos</string>
-    <string name="refresh_feeds_menu_label">Actualizar canles</string>
     <string name="add_feed_save_error">Non se puido gardar a canle</string>
     <string name="add_feed_network_error">Non se atopou a canle. Comproba a conexión.</string>
     <string name="relative_time_just_now">Xusto agora</string>

@@ -45,7 +45,6 @@
     <string name="add_feed_feed_not_error">Impossibile trovare il feed</string>
     <string name="add_feed_save_error">Impossibile salvare il feed</string>
     <string name="relative_time_days">%1$dg</string>
-    <string name="refresh_feeds_menu_label">Aggiorna i feed</string>
     <string name="nav_add_feed">Aggiungi un feed</string>
     <string name="update_auth_success_message">Accesso riuscito</string>
     <string name="account_source_feedbin">Feedbin</string>
@@ -91,7 +90,6 @@
     <string name="image_error_text">Errore nel caricamento dell\'immagine</string>
     <string name="article_byline">%1$s a %2$s da %3$s</string>
     <string name="article_byline_date_only">%1$s a %2$s</string>
-    <string name="refresh_every_day">Ogni giorno</string>
     <string name="filter_action_menu_search_articles">Cerca gli articoli</string>
     <string name="feed_list_top_bar_close_search">Interrompi la ricerca</string>
     <string name="settings_option_auto_delete_articles_subtitle">Elimina gli articoli letti e non contrassegnati più vecchi di 3 mesi</string>
@@ -103,14 +101,7 @@
     <string name="settings_remove_account_message_service">Sei sicuro/sicura di voler uscire?</string>
     <string name="settings_remove_account_confirm_service">Esci</string>
     <string name="article_view_mark_as_read">Contrassegna come letto</string>
-    <string name="refresh_minutes">Ogni %1$d minuti</string>
     <string name="article_view_star">Stella</string>
-    <string name="refresh_manually_only">Manualmente</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Ogni ora</item>
-        <item quantity="many">Ogni %d ore</item>
-        <item quantity="other">Ogni %d ore</item>
-    </plurals>
     <string name="settings_remove_account_title_service">Esci</string>
     <string name="auth_fields_log_in_button">Login</string>
     <string name="settings_top_bar_title">Impostazioni</string>

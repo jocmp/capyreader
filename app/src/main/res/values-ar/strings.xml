@@ -26,22 +26,11 @@
     <string name="settings_remove_account_confirm_local">تأكيد</string>
     <string name="account_settings_save_name">تم حفظ الأسم</string>
     <string name="article_view_mark_as_read">وضع علامة كمقروءة</string>
-    <string name="refresh_manually_only">يدوياً</string>
-    <string name="refresh_minutes">كل %1$d دقيقة</string>
-    <string name="refresh_feeds_menu_label">حدِّث الموجز</string>
     <string name="nav_headline_folders">المجلدات</string>
     <string name="nav_headline_feeds">الموجز</string>
     <string name="nav_add_feed">أضف موجز</string>
     <string name="add_feed_feed_not_error">تعذر العثور على الموجز</string>
     <string name="add_feed_save_error">تعذر حفظ الموجز</string>
-    <plurals name="refresh_hours">
-        <item quantity="zero">أقل من ساعة</item>
-        <item quantity="one">ساعة</item>
-        <item quantity="two">ساعتان</item>
-        <item quantity="few">ساعات</item>
-        <item quantity="many">كل %d ساعة</item>
-        <item quantity="other">ساعة</item>
-    </plurals>
     <string name="relative_time_just_now">الآن</string>
     <string name="relative_time_minutes">%1$d د</string>
     <string name="relative_time_hours">%1$d س</string>
@@ -122,7 +111,6 @@
     <string name="article_byline_date_only">%1$s في %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">حذف المقالات المقروءة وغير المميزة بنجمة والتي مضى عليها أكثر من 3 أشهر</string>
     <string name="settings_option_auto_delete_articles_title">الحذف التلقائي للمقالات</string>
-    <string name="refresh_every_day">كل يوم</string>
     <string name="feed_form_feed_url_title">رابط الموجز</string>
     <string name="feed_form_copy_feed_url_to_clipboard">إنسخ رابط الموجز للحافظة</string>
     <string name="filter_action_menu_search_articles">بحث في المقالات</string>

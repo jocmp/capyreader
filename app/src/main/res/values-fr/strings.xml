@@ -43,14 +43,6 @@
     <string name="article_view_mark_as_unread">Marquer comme non lu</string>
     <string name="article_view_star">Favori</string>
     <string name="article_view_unstar">Enlever des favoris</string>
-    <string name="refresh_manually_only">Seulement manuellement</string>
-    <string name="refresh_minutes">Toutes les %1$d minutes</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Toutes les heures</item>
-        <item quantity="many">Toutes les %d heures</item>
-        <item quantity="other">Toutes les %d heures</item>
-    </plurals>
-    <string name="refresh_feeds_menu_label">Rafraîchir les flux</string>
     <string name="nav_headline_feeds">Flux</string>
     <string name="nav_add_feed">Ajouter un flux</string>
     <string name="relative_time_just_now">À l’instant</string>
@@ -159,7 +151,6 @@
     <string name="settings_option_full_content_subtitle">Mémoriser le choix de chargement du contenu complet de l’article</string>
     <string name="empty_onboarding_title">Aucun flux pour l’instant</string>
     <string name="article_font_menu_label">Police</string>
-    <string name="refresh_every_day">Chaque jour</string>
     <string name="article_byline">%1$s à %2$s de %3$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Supprimer les articles lus et non favoris de plus de 3 mois</string>
     <string name="feed_list_top_bar_close_search">Annuler la recherche</string>

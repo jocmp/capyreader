@@ -23,13 +23,6 @@
     <string name="account_settings_save_name">Το όνομα αποθηκεύτηκε</string>
     <string name="article_view_mark_as_read">Επισήμανση ως αναγνωσμένο</string>
     <string name="article_view_unstar">Αφαίρεση αστεριού</string>
-    <string name="refresh_manually_only">Μόνο χειροκίνητα</string>
-    <string name="refresh_minutes">Κάθε %1$d λεπτά</string>
-    <plurals name="refresh_hours">
-        <item quantity="one">Κάθε ώρα</item>
-        <item quantity="other">Κάθε %d ώρες</item>
-    </plurals>
-    <string name="refresh_feeds_menu_label">Ανανέωση Ροών</string>
     <string name="nav_headline_folders">Ετικέτες</string>
     <string name="nav_headline_saved_searches">Αναζητήσεις</string>
     <string name="nav_headline_feeds">Ροές</string>
@@ -153,7 +146,6 @@
     <string name="article_byline">%1$s στις %2$s από %3$s</string>
     <string name="article_byline_date_only">%1$s στις %2$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Διαγραφή αναναγνωσμένων, χωρίς αστέρια άρθρων άνω των 3 μηνών</string>
-    <string name="refresh_every_day">Καθημερινά</string>
     <string name="feed_form_feed_url_title">URL Ροής</string>
     <string name="feed_form_copy_feed_url_to_clipboard">Αντιγραφή URL Ροής στο πρόχειρο</string>
     <string name="settings_panel_general_title">Γενικά</string>

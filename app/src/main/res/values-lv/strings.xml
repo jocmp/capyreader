@@ -19,8 +19,6 @@
     <string name="settings_remove_account_title_local">Dzēst kontu</string>
     <string name="settings_remove_account_confirm_local">Apstiprināt</string>
     <string name="article_view_mark_as_unread">Atzīmēt kā nelasītu</string>
-    <string name="refresh_minutes">Ik pēc %1$d minūtēm</string>
-    <string name="refresh_feeds_menu_label">Atsvaidzināt ziņu plūsmas</string>
     <string name="nav_headline_folders">Birkas</string>
     <string name="nav_headline_feeds">Ziņu plūsmas</string>
     <string name="nav_add_feed">Pievienot ziņu plūsmu</string>
@@ -43,11 +41,6 @@
     <string name="settings_section_export">Izgūt</string>
     <string name="settings_section_privacy">Konfidencialitātes politika</string>
     <string name="settings_section_refresh">Atsvaidzināts</string>
-    <plurals name="refresh_hours">
-        <item quantity="zero">Ik pēc %d stundām</item>
-        <item quantity="one">Ik pēc %d stundu</item>
-        <item quantity="other">Ik pēc %d stundām</item>
-    </plurals>
     <string name="filter_starred">Atzīmētie</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="add_feed_url_title">Ziņu plūsma vai vietnes URL</string>
@@ -72,7 +65,6 @@
     <string name="account_settings_save_name">Vārds saglabāts</string>
     <string name="article_view_star">Pievienot atzīmētiem</string>
     <string name="article_view_unstar">Noņemt no atzīmētiem</string>
-    <string name="refresh_manually_only">Tikai pašrocīgi</string>
     <string name="nav_headline_saved_searches">Meklējumi</string>
     <string name="add_feed_feed_not_error">Neizdevās atrast ziņu plūsmu</string>
     <string name="add_feed_save_error">Neizdevās saglabāt ziņu plūsmu</string>
@@ -130,7 +122,6 @@
     <string name="article_byline">%1$s publicēts %2$s pateicoties %3$s</string>
     <string name="settings_option_auto_delete_articles_subtitle">Dzēst lasītos, neatzīmētos rakstus, kas vecāki par 3 mēnešiem</string>
     <string name="settings_option_auto_delete_articles_title">Automātiski dzēst rakstus</string>
-    <string name="refresh_every_day">Katru dienu</string>
     <string name="settings_panel_general_title">Vispārīgie</string>
     <string name="settings_panel_display_title">Attēlojums un izskats</string>
     <string name="settings_panel_notifications_title">Paziņojumi</string>
