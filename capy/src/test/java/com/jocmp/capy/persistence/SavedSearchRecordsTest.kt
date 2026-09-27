@@ -123,4 +123,25 @@ class SavedSearchRecordsTest {
 
         assertEquals(actual = remainingArticleIDs.sorted(), expected = listOf(keepArticleID))
     }
+
+    @Test
+    fun deleteOrphanedEntries_acrossBatches() = runTest {
+        val search = savedSearchFixture.create()
+        val articleIDs = (1..1_200).map { it.toString() }
+        val keptArticleIDs = articleIDs.take(100)
+
+        articleIDs.forEach { articleID ->
+            savedSearchRecords.upsertArticle(articleID = articleID, savedSearchID = search.id)
+        }
+
+        savedSearchRecords.deleteOrphanedEntries(
+            savedSearchID = search.id,
+            excludedIDs = keptArticleIDs,
+        )
+
+        val remainingArticleIDs =
+            database.saved_searchesQueries.articlesBySavedSearchID(search.id).executeAsList()
+
+        assertEquals(actual = remainingArticleIDs.sorted(), expected = keptArticleIDs.sorted())
+    }
 }

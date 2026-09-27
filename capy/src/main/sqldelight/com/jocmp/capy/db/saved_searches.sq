@@ -59,10 +59,10 @@ deleteOrphaned {
     DELETE FROM saved_search_articles WHERE saved_search_id NOT IN :excludedIDs;
 }
 
-deleteOrphanedEntries:
+deleteArticles:
 DELETE FROM saved_search_articles
 WHERE saved_search_id = :savedSearchID
-AND article_id NOT IN :excludedIDs;
+AND article_id IN :articleIDs;
 
 deleteEntryBySavedSearchIDs:
 DELETE FROM saved_search_articles
