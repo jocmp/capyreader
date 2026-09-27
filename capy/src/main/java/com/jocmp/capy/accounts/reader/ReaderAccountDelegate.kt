@@ -354,7 +354,7 @@ internal class ReaderAccountDelegate(
     }
 
     private suspend fun refreshSavedSearchArticles(savedSearchID: String) {
-        val ids = fetchCompleteItemIDs(stream = UserLabel(savedSearchID)) ?: return
+        val ids = fetchAllItemIDs(stream = UserLabel(savedSearchID)) ?: return
 
         savedSearchRecords.deleteOrphanedEntries(savedSearchID, excludedIDs = ids)
     }
@@ -375,12 +375,14 @@ internal class ReaderAccountDelegate(
         val ids = fetchAllItemIDs(
             stream = Stream.ReadingList(),
             excludedStream = Read()
-        )
+        ) ?: return
+
         articleRecords.markAllUnread(articleIDs = ids)
     }
 
     private suspend fun refreshStarredItems() {
-        val ids = fetchAllItemIDs(stream = Stream.Starred())
+        val ids = fetchAllItemIDs(stream = Stream.Starred()) ?: return
+
         articleRecords.markAllStarred(articleIDs = ids)
     }
 
@@ -403,7 +405,10 @@ internal class ReaderAccountDelegate(
             refreshArticleState()
 
             val ids = fetchAllItemIDs(stream = stream)
-            articleRecords.createStatuses(articleIDs = ids)
+
+            if (ids != null) {
+                articleRecords.createStatuses(articleIDs = ids)
+            }
 
             fetchMissingArticles()
         }
@@ -412,31 +417,8 @@ internal class ReaderAccountDelegate(
     private suspend fun fetchAllItemIDs(
         stream: Stream,
         excludedStream: Stream? = null,
-    ): List<String> {
+    ): List<String>? {
         val allIDs = mutableListOf<String>()
-
-        paginateItemIDs(stream = stream, excludedStream = excludedStream) { allIDs.addAll(it) }
-
-        return allIDs
-    }
-
-    private suspend fun fetchCompleteItemIDs(stream: Stream): List<String>? {
-        val allIDs = mutableListOf<String>()
-
-        val isComplete = paginateItemIDs(stream = stream) { allIDs.addAll(it) }
-
-        if (!isComplete) {
-            return null
-        }
-
-        return allIDs
-    }
-
-    private suspend fun paginateItemIDs(
-        stream: Stream,
-        excludedStream: Stream? = null,
-        onPage: (ids: List<String>) -> Unit,
-    ): Boolean {
         var continuation: String? = null
 
         do {
@@ -454,14 +436,14 @@ internal class ReaderAccountDelegate(
             }
 
             if (!response.isSuccessful || result == null) {
-                return false
+                return null
             }
 
-            onPage(result.itemRefs.map { it.hexID })
+            allIDs.addAll(result.itemRefs.map { it.hexID })
             continuation = result.continuation
         } while (continuation != null)
 
-        return true
+        return allIDs
     }
 
     private suspend fun fetchMissingArticles() {

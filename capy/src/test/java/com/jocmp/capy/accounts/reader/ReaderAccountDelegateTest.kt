@@ -10,6 +10,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.fixtures.FolderFixture
 import com.jocmp.capy.logging.CapyLog
@@ -280,6 +281,35 @@ class ReaderAccountDelegateTest {
             .executeAsList()
 
         assertEquals(expected = listOf(articleID), actual = articleIDs)
+    }
+
+    @Test
+    fun refresh_keepsUnreadArticlesWhenUnreadRequestFails() = runTest {
+        ArticleFixture(database).create(
+            feed = feedFixture.create(feedID = arsTechnica.id),
+            read = false,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = Stream.ReadingList().id,
+                count = 10_000,
+                excludedStreamID = Stream.Read().id,
+            )
+        }.returns(Response.error(500, "Server Error".toResponseBody()))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val unreadArticles = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = unreadArticles.size)
     }
 
     @Test
