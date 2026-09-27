@@ -284,8 +284,6 @@
     <string name="freshrss_visibility_option_important">重要</string>
     <string name="theme_mode_light">淺色</string>
     <string name="theme_mode_dark">深色</string>
-    <string name="auth_fields_client_certificate">用戶端憑證 (可選)</string>
-    <string name="auth_fields_remove_client_cert">移除用戶端憑證</string>
     <string name="theme_mode_label">模式</string>
     <string name="article_list_empty">這裡什麼都沒有</string>
     <string name="audio_player_play">播放</string>
@@ -296,7 +294,6 @@
     <string name="auth_fields_miniflux_api_token">API 權杖</string>
     <string name="auth_fields_miniflux_use_password">改為使用密碼</string>
     <string name="auth_fields_miniflux_use_api_token">改為使用 API 權杖</string>
-    <string name="auth_fields_show_advanced">進階選項</string>
     <string name="auth_fields_hide_advanced">隱藏進階選項</string>
     <string name="freshrss_visibility_option_feed">訂閱源</string>
     <string name="audio_player_close">關閉播放器</string>

@@ -1,7 +1,5 @@
 package com.capyreader.app.ui.accounts
 
-import android.app.Activity
-import android.security.KeyChain
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,7 +9,6 @@ import com.capyreader.app.loadAccountModules
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.AccountManager
-import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.withFreshRSSPath
@@ -27,13 +24,11 @@ class LoginViewModel(
     private val routeSource: Source,
     private val accountManager: AccountManager,
     private val appPreferences: AppPreferences,
-    private val clientCertManager: ClientCertManager,
     private val refreshScheduler: RefreshScheduler,
 ) : ViewModel() {
     private var _username by mutableStateOf("")
     private var _password by mutableStateOf("")
     private var _url by mutableStateOf("")
-    private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
     private var _useApiToken by mutableStateOf(false)
 
@@ -72,19 +67,6 @@ class LoginViewModel(
 
     fun setURL(url: String) {
         _url = url
-    }
-
-    val clientCertAlias
-        get() = _clientCertAlias
-
-    fun chooseClientCert(activity: Activity) {
-        KeyChain.choosePrivateKeyAlias(activity, { alias ->
-            _clientCertAlias = alias ?: ""
-        }, null, null, null, null)
-    }
-
-    fun clearClientCert() {
-        _clientCertAlias = ""
     }
 
     fun updateUseApiToken(useToken: Boolean) {
@@ -140,8 +122,6 @@ class LoginViewModel(
             username = username,
             password = password,
             url = url,
-            clientCertAlias = clientCertAlias,
-            clientCertManager = clientCertManager,
         )
 
     private fun createAccount(credentials: Credentials) {
@@ -150,7 +130,6 @@ class LoginViewModel(
             password = credentials.secret,
             url = credentials.url,
             source = credentials.source,
-            clientCertAlias = clientCertAlias,
         )
 
         selectAccount(accountID)

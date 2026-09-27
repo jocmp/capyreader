@@ -267,8 +267,6 @@
     <string name="settings_options_reader_pin_top_toolbar">Werkzeugleisten anheften</string>
     <string name="add_account_miniflux_signup_prompt">Sie haben keine Miniflux-Instanz?</string>
     <string name="add_account_miniflux_signup_link_text">Mehr erfahren.</string>
-    <string name="auth_fields_client_certificate">Client-Zertifikat (optional)</string>
-    <string name="auth_fields_remove_client_cert">Client-Zertifikat entfernen</string>
     <string name="theme_mode_system">System</string>
     <string name="theme_mode_light">Hell</string>
     <string name="theme_mode_dark">Dunkel</string>
@@ -290,7 +288,6 @@
     <string name="auth_fields_miniflux_api_token">API Token</string>
     <string name="auth_fields_miniflux_use_api_token">API-Token stattdessen verwenden</string>
     <string name="auth_fields_miniflux_use_password">Passwort stattdessen verwenden</string>
-    <string name="auth_fields_show_advanced">Erweiterte Optionen</string>
     <string name="auth_fields_hide_advanced">Erweiterte Optionen ausblenden</string>
     <string name="freshrss_visibility_option_folder">Kategorie</string>
     <string name="audio_player_play">Abspielen</string>

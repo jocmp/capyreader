@@ -273,8 +273,6 @@
     <string name="theme_newsprint">Papier gazetowy</string>
     <string name="theme_monochrome">Monochromatyczny</string>
     <string name="settings_pure_black_dark_mode">Tryb czarny</string>
-    <string name="auth_fields_client_certificate">Certyfikat klienta (opcjonalnie)</string>
-    <string name="auth_fields_remove_client_cert">Usuń certyfikat klienta</string>
     <string name="theme_mode_system">Systemowy</string>
     <string name="theme_mode_light">Jasny</string>
     <string name="theme_mode_dark">Ciemny</string>
@@ -301,7 +299,6 @@
     <string name="auth_fields_miniflux_api_token">Token API</string>
     <string name="auth_fields_miniflux_use_api_token">Użyj tokenu API zamiast tego</string>
     <string name="auth_fields_miniflux_use_password">Użyj hasła zamiast tego</string>
-    <string name="auth_fields_show_advanced">Opcje zaawansowane</string>
     <string name="auth_fields_hide_advanced">Ukryj opcje zaawansowane</string>
     <string name="freshrss_visibility_option_important">Ważne</string>
     <string name="freshrss_visibility_option_folder">Kategoria</string>

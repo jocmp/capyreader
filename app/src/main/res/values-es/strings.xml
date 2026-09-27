@@ -273,8 +273,6 @@
     <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
     <string name="settings_display_miscellaneous_title">Misceláneo</string>
     <string name="filter_today">Hoy</string>
-    <string name="auth_fields_client_certificate">Certificado del cliente (opcional)</string>
-    <string name="auth_fields_remove_client_cert">Eliminar certificado del cliente</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_dark">Oscuro</string>
@@ -298,7 +296,6 @@
     <string name="freshrss_visibility_option_feed">Contenido</string>
     <string name="auth_fields_miniflux_api_token">Token de API</string>
     <string name="auth_fields_miniflux_use_password">Usar Contraseña en su lugar</string>
-    <string name="auth_fields_show_advanced">Opciones avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opciones avanzadas</string>
     <string name="auth_fields_miniflux_use_api_token">Utilizar token API en su lugar</string>
     <string name="add_link_title">Agregar enlace</string>

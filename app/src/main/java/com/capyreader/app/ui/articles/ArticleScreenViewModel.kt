@@ -414,12 +414,18 @@ class ArticleScreenViewModel(
 
     fun removeFeed(
         feedID: String,
+        completion: (result: Result<Unit>) -> Unit,
     ) {
         viewModelScope.launchIO {
-            account.removeFeed(feedID = feedID)
-                .onSuccess {
+            account.removeFeed(feedID = feedID).fold(
+                onSuccess = {
                     resetToDefaultFilter()
+                    completion(Result.success(Unit))
+                },
+                onFailure = {
+                    completion(Result.failure(it))
                 }
+            )
         }
     }
 

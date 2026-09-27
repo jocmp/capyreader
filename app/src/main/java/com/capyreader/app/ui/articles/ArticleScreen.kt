@@ -723,8 +723,8 @@ fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
             updateOpenInBrowser = { feedID, openInBrowser ->
                 viewModel.updateOpenInBrowser(feedID, openInBrowser)
             },
-            removeFeed = { feedID ->
-                viewModel.removeFeed(feedID)
+            removeFeed = { feedID, completion ->
+                viewModel.removeFeed(feedID, completion)
             },
             toggleUnreadBadge = { feedID, show ->
                 viewModel.toggleFeedUnreadBadge(feedID, show)

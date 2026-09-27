@@ -547,6 +547,7 @@ fun VideoElement(
     if (isPlaying && videoID != null) {
         YoutubePlayer(
             videoID = videoID,
+            onOpenLink = { url -> actions.onLinkClick(url, null) },
             modifier = frame,
         )
         return
