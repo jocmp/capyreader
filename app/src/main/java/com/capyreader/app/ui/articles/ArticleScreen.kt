@@ -460,7 +460,6 @@ fun ArticleScreen(
                     },
                     onFilterSelect = selectFilter,
                     onSelectToday = { selectToday() },
-                    onSelectStatus = { selectStatus(it) },
                     refreshState = refreshAllState,
                     onRefresh = {
                         refreshAll()
@@ -542,6 +541,12 @@ fun ArticleScreen(
                                     },
                                 )
                             }
+                        },
+                        bottomBar = {
+                            ArticleStatusBottomBar(
+                                status = filter.status,
+                                onSelectStatus = { selectStatus(it) },
+                            )
                         }
                     ) { innerPadding ->
                         ArticleListScaffold(
