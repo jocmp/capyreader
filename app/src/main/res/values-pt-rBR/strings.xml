@@ -265,10 +265,6 @@
     <string name="media_share">Compartilhar</string>
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem um instância Miniflux?</string>
-    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
-    <string name="mark_read_position_floating_action_button">Botão de Ação Flutuante</string>
-    <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
-    <string name="settings_display_miscellaneous_title">Diversos</string>
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_newsprint">Papel jornal</string>
     <string name="theme_monochrome">Monocromático</string>

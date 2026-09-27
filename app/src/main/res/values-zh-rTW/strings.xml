@@ -267,10 +267,6 @@
     <string name="settings_options_reader_pin_top_toolbar">固定頂部工具列</string>
     <string name="add_account_miniflux_signup_prompt">沒有 Miniflux 實例？</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
-    <string name="mark_read_position_toolbar">工具列</string>
-    <string name="settings_display_miscellaneous_title">雜類</string>
-    <string name="mark_all_read_button_position">全部標為已讀按鈕位置</string>
-    <string name="mark_read_position_floating_action_button">浮動操作按鈕</string>
     <string name="theme_dynamic">動態</string>
     <string name="theme_newsprint">新聞紙</string>
     <string name="theme_monochrome">單色</string>

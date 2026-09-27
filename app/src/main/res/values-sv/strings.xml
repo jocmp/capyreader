@@ -235,7 +235,6 @@
     <string name="freshrss_visibility_option_feed">Flöde</string>
     <string name="freshrss_visibility_option_important">Viktigt</string>
     <string name="auth_fields_freshrss_api_password">API-lösenord</string>
-    <string name="settings_display_miscellaneous_title">Diverse</string>
     <string name="widget_headlines_see_more_button">Se fler artiklar</string>
     <string name="widget_headlines_account_error">Lägg till ett konto först</string>
     <string name="widget_headlines_title">Senaste rubrikerna</string>

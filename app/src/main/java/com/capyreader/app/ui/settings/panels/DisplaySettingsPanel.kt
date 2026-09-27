@@ -29,7 +29,6 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
-import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.TextSwitch
@@ -45,7 +44,6 @@ fun DisplaySettingsPanel(
     onNavigateToArticleList: () -> Unit = {},
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
-    val markReadButtonPosition by viewModel.markReadButtonPosition.collectChangesWithCurrent()
     val appTheme by viewModel.appPreferences.appTheme.collectChangesWithCurrent()
 
     DisplaySettingsPanelView(
@@ -61,8 +59,6 @@ fun DisplaySettingsPanel(
         pinArticleBars = pinArticleBars,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
-        markReadButtonPosition = markReadButtonPosition,
-        updateMarkReadButtonPosition = viewModel::updateMarkReadButtonPosition,
         onNavigateToUnreadBadges = onNavigateToUnreadBadges,
         onNavigateToArticleList = onNavigateToArticleList,
     )
@@ -81,9 +77,7 @@ fun DisplaySettingsPanelView(
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
-    markReadButtonPosition: MarkReadPosition,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
-    updateMarkReadButtonPosition: (position: MarkReadPosition) -> Unit,
     onNavigateToUnreadBadges: () -> Unit = {},
     onNavigateToArticleList: () -> Unit = {},
 ) {
@@ -160,18 +154,6 @@ fun DisplaySettingsPanelView(
             }
         }
 
-        FormSection(title = stringResource(R.string.settings_display_miscellaneous_title)) {
-            PreferenceSelect(
-                selected = markReadButtonPosition,
-                update = updateMarkReadButtonPosition,
-                options = MarkReadPosition.entries,
-                label = R.string.mark_all_read_button_position,
-                optionText = {
-                    stringResource(it.translationKey)
-                }
-            )
-        }
-
         Spacer(Modifier.height(16.dp))
     }
 }
@@ -220,8 +202,6 @@ private fun DisplaySettingsPanelViewPreview() {
                 pinArticleBars = false,
                 updateImageVisibility = {},
                 imageVisibility = ReaderImageVisibility.ALWAYS_SHOW,
-                markReadButtonPosition = MarkReadPosition.TOOLBAR,
-                updateMarkReadButtonPosition = {}
             )
         }
     }

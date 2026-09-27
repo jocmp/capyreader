@@ -22,6 +22,7 @@ class AudioPlayerControllerTest {
     private lateinit var controller: AudioPlayerController
 
     private val testAudio = AudioEnclosure(
+        articleID = "test-article",
         url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
         title = "Test Audio",
         feedName = "Test Feed",
@@ -58,9 +59,15 @@ class AudioPlayerControllerTest {
     }
 
     @Test
-    fun initialState_positionIsZero() = runBlocking {
-        val position = controller.currentPosition.first()
-        assertEquals(0L, position)
+    fun initialState_isNotBuffering() = runBlocking {
+        val isBuffering = controller.isBuffering.first()
+        assertEquals(false, isBuffering)
+    }
+
+    @Test
+    fun initialState_hasNoPlayer() = runBlocking {
+        val player = controller.player.first()
+        assertNull(player)
     }
 
     @Test
@@ -108,29 +115,18 @@ class AudioPlayerControllerTest {
     }
 
     @Test
-    fun seekTo_updatesPosition() = runBlocking {
+    fun play_connectsPlayer() = runBlocking {
         withContext(Dispatchers.Main) {
             controller.play(testAudio)
         }
 
         withTimeout(5000) {
-            while (controller.currentAudio.value == null) {
+            while (controller.player.value == null) {
                 delay(100)
             }
         }
 
-        val seekPosition = 30_000L
-        withContext(Dispatchers.Main) {
-            controller.seekTo(seekPosition)
-        }
-
-        withTimeout(2000) {
-            while (controller.currentPosition.value != seekPosition) {
-                delay(100)
-            }
-        }
-
-        val position = controller.currentPosition.first()
-        assertEquals(seekPosition, position)
+        val player = controller.player.first()
+        assertNotNull(player)
     }
 }

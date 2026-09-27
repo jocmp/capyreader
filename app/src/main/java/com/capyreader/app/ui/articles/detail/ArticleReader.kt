@@ -62,6 +62,7 @@ fun ArticleReader(
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
+    isAudioBuffering: Boolean = false,
 ) {
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
@@ -153,6 +154,7 @@ fun ArticleReader(
             onAudioClick = { url ->
                 currentOnSelectAudio(
                     AudioEnclosure(
+                        articleID = currentArticle.id,
                         url = url,
                         title = currentArticle.title,
                         feedName = currentArticle.feedName,
@@ -180,6 +182,7 @@ fun ArticleReader(
                 onOpenExternalLink = openExternalLink,
                 currentAudioUrl = currentAudioUrl,
                 isAudioPlaying = isAudioPlaying,
+                isAudioBuffering = isAudioBuffering,
                 onSelectAudio = onSelectAudio,
                 onPauseAudio = onPauseAudio,
                 onElementPositioned = { index, coordinates -> anchors.register(index, coordinates) },

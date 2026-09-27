@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.articles.list.FeedActionMenu
 import com.capyreader.app.ui.articles.list.FolderActionMenu
 import com.capyreader.app.ui.articles.list.MarkAllReadButton
@@ -38,7 +37,6 @@ fun FilterActionMenu(
     hideSearchIcon: Boolean,
     source: Source,
 ) {
-    val markReadPosition = LocalMarkAllReadButtonPosition.current
     val (expanded, setMenuExpanded) = remember(filter) { mutableStateOf(false) }
 
     val closeMenu = {
@@ -56,9 +54,7 @@ fun FilterActionMenu(
             }
         }
 
-        if (markReadPosition == MarkReadPosition.TOOLBAR) {
-            MarkAllReadButton()
-        }
+        MarkAllReadButton()
 
         Box {
             if ((currentFeed != null && !currentFeed.isReadLater) || filter is ArticleFilter.Folders) {

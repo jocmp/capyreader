@@ -260,10 +260,6 @@
     <string name="actions_copy_link">Αντιγραφή συνδέσμου</string>
     <string name="actions_share_link">Κοινοποίηση συνδέσμου</string>
     <string name="widget_receiver_headlines_title">Επικεφαλίδες</string>
-    <string name="mark_read_position_toolbar">Γραμμή εργαλείων</string>
-    <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
-    <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
-    <string name="settings_display_miscellaneous_title">Διάφορα</string>
     <string name="theme_mode_system">Σύστημα</string>
     <string name="theme_mode_light">Φωτεινό</string>
     <string name="theme_mode_dark">Σκοτεινό</string>

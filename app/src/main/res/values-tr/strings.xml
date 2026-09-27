@@ -275,10 +275,6 @@
     <string name="theme_default">Öntanımlı</string>
     <string name="theme_sunset">Gün batımı</string>
     <string name="settings_option_show_today_filter">Bugün</string>
-    <string name="mark_read_position_toolbar">Araç çubuğu</string>
-    <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
-    <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
-    <string name="settings_display_miscellaneous_title">Çeşitli</string>
     <string name="open_articles_in_browser">Makaleleri Tarayıcıda Aç</string>
     <string name="selected">Seçilen</string>
     <string name="auth_fields_freshrss_api_password">API Parolası</string>

@@ -274,10 +274,6 @@
     <string name="widget_headlines_title">Nejnovější titulky</string>
     <string name="widget_headlines_see_more_button">Zobrazit více článků</string>
     <string name="widget_headlines_account_error">Nejprve přidat účet</string>
-    <string name="mark_read_position_toolbar">Panel</string>
-    <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
-    <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
-    <string name="settings_display_miscellaneous_title">Ostatní</string>
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
     <string name="filter_today">Dnešní</string>

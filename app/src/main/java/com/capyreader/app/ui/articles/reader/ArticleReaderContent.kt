@@ -34,6 +34,7 @@ fun ArticleReaderContent(
     onOpenExternalLink: () -> Unit,
     currentAudioUrl: String?,
     isAudioPlaying: Boolean,
+    isAudioBuffering: Boolean,
     onSelectAudio: (audio: AudioEnclosure) -> Unit,
     onPauseAudio: () -> Unit,
     modifier: Modifier = Modifier,
@@ -60,10 +61,13 @@ fun ArticleReaderContent(
             )
 
             audioEnclosures.forEach { enclosure ->
+                val isCurrentAudio = currentAudioUrl == enclosure.url.toString()
+
                 AudioEnclosureCard(
                     article = article,
                     enclosure = enclosure,
-                    isPlaying = isAudioPlaying && currentAudioUrl == enclosure.url.toString(),
+                    isPlaying = isAudioPlaying && isCurrentAudio,
+                    isBuffering = isAudioBuffering && isCurrentAudio,
                     onPlay = onSelectAudio,
                     onPause = onPauseAudio,
                 )

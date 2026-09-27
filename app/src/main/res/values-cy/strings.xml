@@ -262,10 +262,6 @@
     <string name="filters_title">Rhestr rhwystro</string>
     <string name="add_account_miniflux_signup_link_text">Dysgu mwy.</string>
     <string name="settings_article_list_shorten_titles">Byrhau teitlau</string>
-    <string name="mark_read_position_toolbar">Bar offer</string>
-    <string name="mark_read_position_floating_action_button">Botwm Gweithred Arnofiol</string>
-    <string name="settings_display_miscellaneous_title">Amrywiol</string>
-    <string name="mark_all_read_button_position">Lleoliad y botwm i nodi\'r cwbl fel eu darllen</string>
     <string name="add_account_miniflux_signup_prompt">Nad oes gennych gweinydd Miniflux?</string>
     <string name="filter_today">Heddiw</string>
     <string name="theme_mode_system">System</string>

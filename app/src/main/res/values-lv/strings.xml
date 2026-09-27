@@ -256,10 +256,6 @@
     <string name="widget_receiver_headlines_title">Rakstu virsraksti</string>
     <string name="widget_headlines_title">Svaigie rakstu virsraksti</string>
     <string name="settings_article_list_shorten_titles">Saīsināt virsrakstus</string>
-    <string name="mark_all_read_button_position">Pogas \"Atzīmēt visus kā lasītus\" pozīcija</string>
-    <string name="mark_read_position_toolbar">Rīkjosla</string>
-    <string name="mark_read_position_floating_action_button">Peldoša darbības poga</string>
-    <string name="settings_display_miscellaneous_title">Dažādi</string>
     <string name="add_account_miniflux_signup_prompt">Ja jums vēl nav Miniflux instances?</string>
     <string name="add_account_miniflux_signup_link_text">Vairāk informācijas.</string>
     <string name="settings_options_reader_pin_top_toolbar">Piespraust rīkjoslas</string>

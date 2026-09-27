@@ -287,10 +287,6 @@
     <string name="settings_section_experimental">Eksperimental</string>
     <string name="settings_option_enable_audio_player">Pemutar audio</string>
     <string name="settings_option_show_today_filter">Hari ini</string>
-    <string name="mark_read_position_toolbar">Bilah Alat</string>
-    <string name="mark_read_position_floating_action_button">Tombol Tindakan Mengambang</string>
-    <string name="mark_all_read_button_position">Posisi Tombol Tandai Semua Dibaca</string>
-    <string name="settings_display_miscellaneous_title">Lain-lain</string>
     <string name="open_articles_in_browser">Buka Artikel di Browser</string>
     <string name="selected">Dipilih</string>
     <string name="auth_fields_freshrss_api_password">Kata Sandi API</string>

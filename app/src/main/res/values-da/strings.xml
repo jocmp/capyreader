@@ -272,10 +272,6 @@
     <string name="widget_headlines_title">Seneste overskrifter</string>
     <string name="widget_headlines_see_more_button">Se flere artikler</string>
     <string name="widget_headlines_account_error">Tilføj en konto først</string>
-    <string name="mark_read_position_toolbar">Værktøjslinje</string>
-    <string name="mark_read_position_floating_action_button">Flydende handlingsknap</string>
-    <string name="mark_all_read_button_position">Position af marker alle som læst-knap</string>
-    <string name="settings_display_miscellaneous_title">Diverse</string>
     <string name="open_articles_in_browser">Åbn artikler i browser</string>
     <string name="selected">Valgt</string>
     <string name="auth_fields_freshrss_api_password">API adgangskode</string>

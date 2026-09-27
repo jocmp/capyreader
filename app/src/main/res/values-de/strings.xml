@@ -272,10 +272,6 @@
     <string name="theme_mode_dark">Dunkel</string>
     <string name="theme_default">Standard</string>
     <string name="settings_pure_black_dark_mode">Reiner schwarzer Dunkelmodus</string>
-    <string name="mark_read_position_toolbar">Werkzeugleiste</string>
-    <string name="mark_read_position_floating_action_button">Schwebender Aktionsknopf</string>
-    <string name="mark_all_read_button_position">Position des „Alle als gelesen markieren“ Knopfes</string>
-    <string name="settings_display_miscellaneous_title">Verschiedenes</string>
     <string name="open_articles_in_browser">Artikel im Browser öffnen</string>
     <string name="selected">Ausgewählt</string>
     <string name="filter_today">Heute</string>
