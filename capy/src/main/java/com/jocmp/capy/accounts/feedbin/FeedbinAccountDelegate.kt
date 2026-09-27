@@ -8,6 +8,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
 import com.jocmp.capy.accounts.orThrow
+import com.jocmp.capy.accounts.willAutoDelete
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
@@ -58,8 +59,8 @@ internal class FeedbinAccountDelegate(
         return try {
             refreshFeeds()
             refreshTaggings()
-            refreshSavedSearches()
-            refreshArticles(since = lastRefreshedAt())
+            refreshSavedSearches(cutoffDate = cutoffDate)
+            refreshArticles(since = lastRefreshedAt(), cutoffDate = cutoffDate)
             preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
@@ -254,11 +255,11 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String) {
+    private suspend fun refreshArticles(since: String, cutoffDate: ZonedDateTime? = null) {
         refreshStarredEntries()
         refreshUnreadEntries()
-        refreshAllArticles(since = since)
-        fetchMissingArticles()
+        refreshAllArticles(since = since, cutoffDate = cutoffDate)
+        fetchMissingArticles(cutoffDate = cutoffDate)
         refreshPages()
     }
 
@@ -324,7 +325,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshSavedSearches() {
+    private suspend fun refreshSavedSearches(cutoffDate: ZonedDateTime?) {
         withResult(feedbin.savedSearches()) { savedSearches ->
             database.transactionWithErrorHandling {
                 savedSearches.forEach {
@@ -341,13 +342,19 @@ internal class FeedbinAccountDelegate(
             savedSearchRecords.allIDs()
                 .forEach { savedSearchID ->
                     launch {
-                        fetchSavedSearchArticles(savedSearchID = savedSearchID)
+                        fetchSavedSearchArticles(
+                            savedSearchID = savedSearchID,
+                            cutoffDate = cutoffDate,
+                        )
                     }
                 }
         }
     }
 
-    private suspend fun fetchSavedSearchArticles(savedSearchID: String) {
+    private suspend fun fetchSavedSearchArticles(
+        savedSearchID: String,
+        cutoffDate: ZonedDateTime?,
+    ) {
         val ids = feedbin.savedSearchEntries(savedSearchID = savedSearchID).body() ?: return
 
         savedSearchRecords.deleteOrphanedEntries(
@@ -358,22 +365,26 @@ internal class FeedbinAccountDelegate(
         ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
             fetchPaginatedEntries(
                 ids = chunkedIDs,
-                savedSearchID = savedSearchID
+                savedSearchID = savedSearchID,
+                cutoffDate = cutoffDate,
             )
         }
     }
 
-    private suspend fun refreshAllArticles(since: String) {
-        fetchPaginatedEntries(since = since)
+    private suspend fun refreshAllArticles(since: String, cutoffDate: ZonedDateTime?) {
+        fetchPaginatedEntries(since = since, cutoffDate = cutoffDate)
     }
 
-    private suspend fun fetchMissingArticles() {
+    private suspend fun fetchMissingArticles(cutoffDate: ZonedDateTime?) {
         val ids = articleRecords.findMissingArticles()
 
         coroutineScope {
             ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
                 launch {
-                    fetchPaginatedEntries(ids = chunkedIDs.map { it.toLong() })
+                    fetchPaginatedEntries(
+                        ids = chunkedIDs.map { it.toLong() },
+                        cutoffDate = cutoffDate,
+                    )
                 }
             }
         }
@@ -423,6 +434,7 @@ internal class FeedbinAccountDelegate(
         nextPage: Int? = 1,
         ids: List<Long>? = null,
         savedSearchID: String? = null,
+        cutoffDate: ZonedDateTime? = null,
     ) {
         nextPage ?: return
 
@@ -434,13 +446,14 @@ internal class FeedbinAccountDelegate(
         val entries = response.body()
 
         if (entries != null) {
-            saveEntries(entries, savedSearchID = savedSearchID)
+            saveEntries(entries, savedSearchID = savedSearchID, cutoffDate = cutoffDate)
         }
 
         fetchPaginatedEntries(
             since = since,
             nextPage = response.pagingInfo?.nextPage,
-            ids = ids
+            ids = ids,
+            cutoffDate = cutoffDate,
         )
     }
 
@@ -448,11 +461,26 @@ internal class FeedbinAccountDelegate(
         entries: List<Entry>,
         savedSearchID: String? = null,
         read: Boolean = true,
+        cutoffDate: ZonedDateTime? = null,
     ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
                 val articleID = entry.id.toString()
+                val publishedAt = entry.published.toDateTime?.toEpochSecond() ?: updated.toEpochSecond()
+                val status = database.articlesQueries.findStatus(articleID).executeAsOneOrNull()
+
+                val skip = willAutoDelete(
+                    publishedAt = publishedAt,
+                    read = status?.read ?: read,
+                    starred = status?.starred ?: false,
+                    cutoffDate = cutoffDate,
+                )
+
+                if (skip) {
+                    return@forEach
+                }
+
                 val enclosure = entry.enclosure
                 val enclosureType = enclosure?.enclosure_type
 
@@ -466,7 +494,7 @@ internal class FeedbinAccountDelegate(
                     url = entry.url,
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
-                    published_at = entry.published.toDateTime?.toEpochSecond() ?: updated.toEpochSecond(),
+                    published_at = publishedAt,
                     enclosure_type = enclosureType,
                 )
 
