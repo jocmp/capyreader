@@ -347,6 +347,16 @@ internal class ReaderAccountDelegate(
                 savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
             }
         }
+
+        savedSearchRecords.allIDs().forEach { savedSearchID ->
+            refreshSavedSearchArticles(savedSearchID)
+        }
+    }
+
+    private suspend fun refreshSavedSearchArticles(savedSearchID: String) {
+        val ids = fetchCompleteItemIDs(stream = UserLabel(savedSearchID)) ?: return
+
+        savedSearchRecords.deleteOrphanedEntries(savedSearchID, excludedIDs = ids)
     }
 
     private fun upsertSavedSearch(tag: Tag) {
@@ -404,6 +414,29 @@ internal class ReaderAccountDelegate(
         excludedStream: Stream? = null,
     ): List<String> {
         val allIDs = mutableListOf<String>()
+
+        paginateItemIDs(stream = stream, excludedStream = excludedStream) { allIDs.addAll(it) }
+
+        return allIDs
+    }
+
+    private suspend fun fetchCompleteItemIDs(stream: Stream): List<String>? {
+        val allIDs = mutableListOf<String>()
+
+        val isComplete = paginateItemIDs(stream = stream) { allIDs.addAll(it) }
+
+        if (!isComplete) {
+            return null
+        }
+
+        return allIDs
+    }
+
+    private suspend fun paginateItemIDs(
+        stream: Stream,
+        excludedStream: Stream? = null,
+        onPage: (ids: List<String>) -> Unit,
+    ): Boolean {
         var continuation: String? = null
 
         do {
@@ -421,14 +454,14 @@ internal class ReaderAccountDelegate(
             }
 
             if (!response.isSuccessful || result == null) {
-                break
+                return false
             }
 
-            allIDs.addAll(result.itemRefs.map { it.hexID })
+            onPage(result.itemRefs.map { it.hexID })
             continuation = result.continuation
         } while (continuation != null)
 
-        return allIDs
+        return true
     }
 
     private suspend fun fetchMissingArticles() {
