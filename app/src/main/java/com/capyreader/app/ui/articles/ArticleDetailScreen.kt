@@ -85,6 +85,7 @@ fun ArticleDetailScreen(
 
     val audioController: AudioPlayerController = koinInject()
     val isAudioPlaying by audioController.isPlaying.collectAsState()
+    val isAudioBuffering by audioController.isBuffering.collectAsState()
     val currentAudio by audioController.currentAudio.collectAsState()
 
     val paneExpansion = LocalArticlePaneExpansion.current
@@ -128,6 +129,7 @@ fun ArticleDetailScreen(
                 onSelectArticle = onSelectArticle,
                 currentAudioUrl = currentAudio?.url,
                 isAudioPlaying = isAudioPlaying,
+                isAudioBuffering = isAudioBuffering,
                 isFullscreen = paneExpansion?.isFullscreen ?: false,
                 onToggleFullscreen = { paneExpansion?.toggleFullscreen() },
             )

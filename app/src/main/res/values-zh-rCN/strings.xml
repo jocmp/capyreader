@@ -267,10 +267,6 @@
     <string name="settings_options_reader_pin_top_toolbar">固定工具栏</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
     <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>
-    <string name="mark_read_position_toolbar">工具栏</string>
-    <string name="mark_read_position_floating_action_button">浮动操作按钮</string>
-    <string name="mark_all_read_button_position">标记全部已读按钮位置</string>
-    <string name="settings_display_miscellaneous_title">其他</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
     <string name="theme_dynamic">动态</string>
     <string name="theme_newsprint">新闻纸</string>

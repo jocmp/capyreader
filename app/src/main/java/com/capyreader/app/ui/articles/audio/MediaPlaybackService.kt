@@ -72,6 +72,8 @@ class MediaPlaybackService : MediaSessionService() {
                 true
             )
             .setHandleAudioBecomingNoisy(true)
+            .setSeekBackIncrementMs(SkipCalculator.SKIP_DURATION_MS)
+            .setSeekForwardIncrementMs(SkipCalculator.SKIP_DURATION_MS)
             .build()
 
         val notificationProvider = DefaultMediaNotificationProvider(this)

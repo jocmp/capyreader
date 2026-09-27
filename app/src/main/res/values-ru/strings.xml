@@ -270,10 +270,6 @@
     <string name="settings_options_reader_pin_top_toolbar">Закрепить панели инструментов</string>
     <string name="add_account_miniflux_signup_prompt">У вас нет сервера Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Узнать больше.</string>
-    <string name="mark_read_position_toolbar">Панель инструментов</string>
-    <string name="mark_read_position_floating_action_button">Плавающая кнопка действия</string>
-    <string name="mark_all_read_button_position">Положение кнопки «Отметить всё прочитанным»</string>
-    <string name="settings_display_miscellaneous_title">Разное</string>
     <string name="theme_dynamic">Динамическая</string>
     <string name="theme_newsprint">Газетная бумага</string>
     <string name="theme_monochrome">Монохромная</string>

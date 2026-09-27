@@ -261,7 +261,6 @@
     <string name="widget_spotlight_see_all">Ikusi guztiak</string>
     <string name="widget_spotlight_previous">Aurrekoa</string>
     <string name="widget_spotlight_next">Hurrengoa</string>
-    <string name="settings_display_miscellaneous_title">Askotarikoa</string>
     <string name="open_articles_in_browser">Ireki artikuluak nabigatzailean</string>
     <string name="auth_fields_freshrss_api_password">API pasahitza</string>
     <string name="auth_fields_miniflux_api_token">API fitxa</string>
@@ -312,9 +311,6 @@
     <string name="tag_action_delete_message">Ziur zaude \"%1$s\" etiketa ezabatu nahi duzula?</string>
     <string name="tag_action_edit_error">Errorea etiketa eguneratzean</string>
     <string name="widget_receiver_spotlight_title">Fokua</string>
-    <string name="mark_read_position_toolbar">Tresna-barra</string>
-    <string name="mark_read_position_floating_action_button">Ekintza-botoi flotagarria</string>
-    <string name="mark_all_read_button_position">Markatu dena irakurritako gisa botoiaren posizioa</string>
     <string name="selected">Hautatuta</string>
     <string name="auth_fields_miniflux_use_api_token">Erabili API Token haren ordez</string>
     <string name="freshrss_visibility">Ikusgarritasuna</string>

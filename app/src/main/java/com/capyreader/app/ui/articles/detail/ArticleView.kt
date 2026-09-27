@@ -67,6 +67,7 @@ fun ArticleView(
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
+    isAudioBuffering: Boolean = false,
     isFullscreen: Boolean = false,
     onToggleFullscreen: () -> Unit = {},
     appPreferences: AppPreferences = koinInject()
@@ -171,6 +172,7 @@ fun ArticleView(
                                 onPauseAudio = onPauseAudio,
                                 currentAudioUrl = currentAudioUrl,
                                 isAudioPlaying = isAudioPlaying,
+                                isAudioBuffering = isAudioBuffering,
                             )
                         }
                     }

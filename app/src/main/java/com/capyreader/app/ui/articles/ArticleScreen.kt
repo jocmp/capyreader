@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -56,11 +57,10 @@ import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
-import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
-import com.capyreader.app.ui.articles.audio.FloatingAudioPlayer
+import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
@@ -73,7 +73,6 @@ import com.capyreader.app.ui.articles.list.ArticleListTopBar
 import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.LocalMarkAllRead
-import com.capyreader.app.ui.articles.list.MarkAllReadButton
 import com.capyreader.app.ui.articles.list.MarkAllReadDialog
 import com.capyreader.app.ui.articles.list.SwipeUpActionBox
 import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
@@ -154,10 +153,6 @@ fun ArticleScreen(
     val appDrawer = LocalAppDrawer.current
     val drawerState = appDrawer?.state ?: rememberDrawerState(DrawerValue.Closed)
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
-    val markAllReadButtonPosition by appPreferences
-        .articleListOptions
-        .markReadButtonPosition
-        .collectChangesWithCurrent()
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
     val articles = viewModel.articles.collectAsLazyPagingItems()
@@ -195,7 +190,6 @@ fun ArticleScreen(
         LocalLabelsActions provides labelsActions,
         LocalConnectivity provides connectivity,
         LocalLinkOpener provides provideLinkOpener(context),
-        LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalBadgeStyle provides badgeStyle,
         LocalUnreadCount provides unreadCount,
         LocalSnackbarHost provides snackbarHostState,
@@ -217,6 +211,7 @@ fun ArticleScreen(
         val scrollBehavior = pinnedScrollBehavior()
         val audioController: AudioPlayerController = koinInject()
         val audioEnclosure by audioController.currentAudio.collectAsState()
+        val audioPlayer by audioController.player.collectAsState()
         val focusManager = LocalFocusManager.current
         val openUpdatePasswordDialog = {
             viewModel.dismissUnauthorizedMessage()
@@ -486,7 +481,6 @@ fun ArticleScreen(
 
         Box(modifier = Modifier.fillMaxSize()) {
                 val keyboardManager = LocalSoftwareKeyboardController.current
-                val markReadPosition = LocalMarkAllReadButtonPosition.current
 
                 CompositionLocalProvider(
                     LocalMarkAllRead provides { markAllRead(MarkRead.All) },
@@ -533,18 +527,16 @@ fun ArticleScreen(
                                 modifier = Modifier.padding(bottom = 56.dp),
                             )
                         },
+                        floatingActionButtonPosition = FabPosition.Center,
                         floatingActionButton = {
-                            if (markReadPosition == MarkReadPosition.FLOATING_ACTION_BUTTON) {
-                                MarkAllReadButton(
-                                    position = MarkReadPosition.FLOATING_ACTION_BUTTON,
-                                )
-                            }
-                        },
-                        bottomBar = {
-                            audioEnclosure?.let { audio ->
-                                FloatingAudioPlayer(
-                                    audio = audio,
-                                    controller = audioController,
+                            val audio = audioEnclosure
+                            val player = audioPlayer
+                            if (audio != null && player != null) {
+                                AudioMiniPlayer(
+                                    player = player,
+                                    onClick = {
+                                        onSelectArticle(audio.articleID, null)
+                                    },
                                     onDismiss = {
                                         audioController.dismiss()
                                     },

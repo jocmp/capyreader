@@ -263,10 +263,6 @@
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem uma instância do Miniflux?</string>
     <string name="settings_article_list_shorten_titles">Encurtar títulos</string>
-    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
-    <string name="mark_read_position_floating_action_button">Botão de ação flutuante</string>
-    <string name="mark_all_read_button_position">Posição do botão \"Marcar todos como lido\"</string>
-    <string name="settings_display_miscellaneous_title">Diversos</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_newsprint">Papel jornal</string>

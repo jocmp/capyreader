@@ -269,10 +269,6 @@
     <string name="settings_options_reader_pin_top_toolbar">Fissa la barra degli strumenti</string>
     <string name="add_account_miniflux_signup_link_text">Per saperne di più.</string>
     <string name="add_account_miniflux_signup_prompt">Hai un\'istanza Miniflux?</string>
-    <string name="mark_read_position_toolbar">Barra degli strumenti</string>
-    <string name="mark_read_position_floating_action_button">Pulsante azione fluttuante</string>
-    <string name="mark_all_read_button_position">Imposta la posizione del pulsante per segnare tutte le voci come lette</string>
-    <string name="settings_display_miscellaneous_title">Varie</string>
     <string name="open_articles_in_browser">Apri gli articoli nel browser</string>
     <string name="theme_dynamic">Dinamico</string>
     <string name="theme_newsprint">Carta di giornale</string>

@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Audiotrack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ fun AudioEnclosureCard(
     article: Article,
     enclosure: Enclosure,
     isPlaying: Boolean,
+    isBuffering: Boolean,
     onPlay: (audio: AudioEnclosure) -> Unit,
     onPause: () -> Unit,
     modifier: Modifier = Modifier,
@@ -81,12 +83,14 @@ fun AudioEnclosureCard(
             }
             PlayPauseButton(
                 isPlaying = isPlaying,
+                isBuffering = isBuffering,
                 onClick = {
-                    if (isPlaying) {
+                    if (isPlaying || isBuffering) {
                         onPause()
                     } else {
                         onPlay(
                             AudioEnclosure(
+                                articleID = article.id,
                                 url = url,
                                 title = article.title,
                                 feedName = article.feedName,
@@ -133,20 +137,29 @@ private fun Artwork(artworkUrl: String?) {
 }
 
 @Composable
-private fun PlayPauseButton(isPlaying: Boolean, onClick: () -> Unit) {
-    val icon = if (isPlaying) {
+private fun PlayPauseButton(isPlaying: Boolean, isBuffering: Boolean, onClick: () -> Unit) {
+    val showPause = isPlaying || isBuffering
+    val icon = if (showPause) {
         Icons.Filled.Pause
     } else {
         Icons.Filled.PlayArrow
     }
-    val label = if (isPlaying) {
+    val label = if (showPause) {
         stringResource(R.string.audio_player_pause)
     } else {
         stringResource(R.string.audio_player_play)
     }
 
-    FilledIconButton(onClick = onClick) {
-        Icon(imageVector = icon, contentDescription = label)
+    Box(contentAlignment = Alignment.Center) {
+        FilledIconButton(onClick = onClick) {
+            Icon(imageVector = icon, contentDescription = label)
+        }
+        if (isBuffering) {
+            CircularProgressIndicator(
+                strokeWidth = 3.dp,
+                modifier = Modifier.size(48.dp),
+            )
+        }
     }
 }
 
