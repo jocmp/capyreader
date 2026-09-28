@@ -343,6 +343,11 @@
     <string name="auth_fields_miniflux_use_password">Use Password instead</string>
     <string name="auth_fields_show_advanced">Advanced options</string>
     <string name="auth_fields_hide_advanced">Hide advanced options</string>
+    <string name="auth_fields_custom_headers">Custom Headers</string>
+    <string name="auth_fields_header_name">Header name</string>
+    <string name="auth_fields_header_value">Value</string>
+    <string name="auth_fields_add_header">Add header</string>
+    <string name="auth_fields_remove_header">Remove header</string>
     <string name="freshrss_visibility">Visibility</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>
     <string name="freshrss_visibility_option_important">Important</string>

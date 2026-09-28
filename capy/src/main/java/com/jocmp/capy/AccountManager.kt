@@ -33,6 +33,7 @@ class AccountManager(
         url: String,
         source: Source,
         clientCertAlias: String = "",
+        customHeaders: List<Pair<String, String>> = emptyList(),
     ): String {
         val accountID = createAccount(source = source)
 
@@ -41,6 +42,7 @@ class AccountManager(
             preferences.password.set(password)
             preferences.url.set(url)
             preferences.clientCertAlias.set(clientCertAlias)
+            preferences.customHeaders.set(customHeaders)
         }
 
         return accountID

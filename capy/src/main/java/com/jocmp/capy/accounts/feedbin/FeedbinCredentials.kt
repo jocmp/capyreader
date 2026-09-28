@@ -10,6 +10,7 @@ internal data class FeedbinCredentials(
 ) : Credentials {
     override val url = ""
     override val clientCertAlias = ""
+    override val customHeaders: Map<String, String> = emptyMap()
 
     override val source: Source = Source.FEEDBIN
 

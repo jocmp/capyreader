@@ -5,6 +5,7 @@ import com.jocmp.capy.accounts.Credentials
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.accounts.clientCertAlias
+import com.jocmp.capy.accounts.customHeaders
 import com.jocmp.minifluxclient.Miniflux
 
 internal data class MinifluxCredentials(
@@ -12,6 +13,7 @@ internal data class MinifluxCredentials(
     override val secret: String,
     override val url: String,
     override val clientCertAlias: String = "",
+    override val customHeaders: Map<String, String> = emptyMap(),
     override val source: Source,
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
 ) : Credentials {
@@ -19,6 +21,7 @@ internal data class MinifluxCredentials(
         val client = baseHttpClient()
             .newBuilder()
             .clientCertAlias(clientCertManager, clientCertAlias)
+            .customHeaders(customHeaders)
             .build()
 
         if (source == Source.MINIFLUX_TOKEN) {

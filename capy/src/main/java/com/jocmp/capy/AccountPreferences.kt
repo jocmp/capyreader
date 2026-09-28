@@ -25,6 +25,23 @@ class AccountPreferences(
     val password: Preference<String>
         get() = store.getString("password", "")
 
+    // Stored as "Name:Value" lines; colon cannot appear in header names (RFC 7230).
+    val customHeaders: Preference<List<Pair<String, String>>>
+        get() = store.getObject(
+            key = "custom_headers",
+            defaultValue = emptyList(),
+            serializer = { list ->
+                list.joinToString("\n") { (name, value) -> "$name:$value" }
+            },
+            deserializer = { s ->
+                if (s.isEmpty()) emptyList()
+                else s.split("\n").mapNotNull { entry ->
+                    val idx = entry.indexOf(':')
+                    if (idx < 0) null else entry.substring(0, idx) to entry.substring(idx + 1)
+                }
+            }
+        )
+
     val autoDelete: Preference<AutoDelete>
         get() = store.getEnum("auto_delete_articles", AutoDelete.default)
 

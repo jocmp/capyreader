@@ -11,6 +11,7 @@ interface Credentials {
     val secret: String
     val url: String
     val clientCertAlias: String
+    val customHeaders: Map<String, String>
     val source: Source
 
     suspend fun verify(): Result<Credentials>
@@ -22,6 +23,7 @@ interface Credentials {
             password: String,
             url: String,
             clientCertAlias: String = "",
+            customHeaders: Map<String, String> = emptyMap(),
             clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
         ): Credentials {
             return when (source) {
@@ -31,15 +33,17 @@ interface Credentials {
                     secret = password,
                     url = normalizeURL(url),
                     clientCertAlias = clientCertAlias,
+                    customHeaders = customHeaders,
                     source = source,
                     clientCertManager = clientCertManager,
                 )
                 Source.FRESHRSS,
                 Source.READER -> ReaderCredentials(
-                    username,
-                    password,
+                    username = username,
+                    secret = password,
                     url = normalizeURL(url),
                     clientCertAlias = clientCertAlias,
+                    customHeaders = customHeaders,
                     source = source,
                     clientCertManager = clientCertManager,
                 )

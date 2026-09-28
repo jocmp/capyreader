@@ -3,6 +3,7 @@ package com.capyreader.app.ui.accounts
 import android.app.Activity
 import android.security.KeyChain
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
@@ -39,6 +40,7 @@ class LoginViewModel(
     private var _clientCertAlias by mutableStateOf("")
     private var _result by mutableStateOf<Async<Unit>>(Async.Uninitialized)
     private var _useApiToken by mutableStateOf(false)
+    private val _customHeaders = mutableStateListOf<Pair<String, String>>()
     private val routeSource = handle.toRoute<Route.Login>().source
 
     val source: Source
@@ -80,6 +82,25 @@ class LoginViewModel(
 
     val clientCertAlias
         get() = _clientCertAlias
+
+    val customHeaders: List<Pair<String, String>>
+        get() = _customHeaders
+
+    fun addCustomHeader() {
+        _customHeaders.add("" to "")
+    }
+
+    fun removeCustomHeader(index: Int) {
+        _customHeaders.removeAt(index)
+    }
+
+    fun updateCustomHeaderName(index: Int, name: String) {
+        _customHeaders[index] = name to _customHeaders[index].second
+    }
+
+    fun updateCustomHeaderValue(index: Int, value: String) {
+        _customHeaders[index] = _customHeaders[index].first to value
+    }
 
     fun chooseClientCert(activity: Activity) {
         KeyChain.choosePrivateKeyAlias(activity, { alias ->
@@ -145,6 +166,7 @@ class LoginViewModel(
             password = password,
             url = url,
             clientCertAlias = clientCertAlias,
+            customHeaders = customHeaders.toMap(),
             clientCertManager = clientCertManager,
         )
 
@@ -155,6 +177,7 @@ class LoginViewModel(
             url = credentials.url,
             source = credentials.source,
             clientCertAlias = clientCertAlias,
+            customHeaders = _customHeaders,
         )
 
         selectAccount(accountID)

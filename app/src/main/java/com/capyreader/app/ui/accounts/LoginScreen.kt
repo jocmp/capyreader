@@ -33,5 +33,10 @@ fun LoginScreen(
         loading = viewModel.loading,
         errorMessage = viewModel.errorMessage,
         onUseApiTokenChange = viewModel::updateUseApiToken,
+        customHeaders = viewModel.customHeaders,
+        onAddCustomHeader = viewModel::addCustomHeader,
+        onRemoveCustomHeader = viewModel::removeCustomHeader,
+        onUpdateCustomHeaderName = viewModel::updateCustomHeaderName,
+        onUpdateCustomHeaderValue = viewModel::updateCustomHeaderValue,
     )
 }
