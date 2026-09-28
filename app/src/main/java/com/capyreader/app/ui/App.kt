@@ -144,7 +144,9 @@ fun App(
                             onSuccess = { backStack.resetToArticles(appPreferences) },
                         )
                     }
-                    entry<Route.Settings> {
+                    entry<Route.Settings>(
+                        metadata = sharedAxisXTransition(),
+                    ) {
                         SettingsScreen(
                             onRemoveAccount = {
                                 backStack.resetTo(Route.AddAccount)
@@ -181,19 +183,7 @@ fun App(
                         // animate it with the shared-axis-X motion the pane scaffold used originally
                         // instead of the default cross-fade. On tablet both panes share one scene,
                         // so this never fires there.
-                        metadata = ListDetailSceneStrategy.detailPane() +
-                            NavDisplay.transitionSpec {
-                                sharedAxisXEnter(forward = true) togetherWith
-                                    sharedAxisXExit(forward = true)
-                            } +
-                            NavDisplay.popTransitionSpec {
-                                sharedAxisXEnter(forward = false) togetherWith
-                                    sharedAxisXExit(forward = false)
-                            } +
-                            NavDisplay.predictivePopTransitionSpec {
-                                sharedAxisXEnter(forward = false) togetherWith
-                                    sharedAxisXExit(forward = false)
-                            },
+                        metadata = ListDetailSceneStrategy.detailPane() + sharedAxisXTransition(),
                     ) { key ->
                         ArticleDetailScreen(
                             articleID = key.articleID,
@@ -223,6 +213,17 @@ private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
 
 /** Matches the pane scaffold's original shared-axis offset (10% of the pane width). */
 private const val PANE_OFFSET_FACTOR = 0.10f
+
+private fun sharedAxisXTransition() =
+    NavDisplay.transitionSpec {
+        sharedAxisXEnter(forward = true) togetherWith sharedAxisXExit(forward = true)
+    } +
+        NavDisplay.popTransitionSpec {
+            sharedAxisXEnter(forward = false) togetherWith sharedAxisXExit(forward = false)
+        } +
+        NavDisplay.predictivePopTransitionSpec {
+            sharedAxisXEnter(forward = false) togetherWith sharedAxisXExit(forward = false)
+        }
 
 private fun sharedAxisXEnter(forward: Boolean) =
     materialSharedAxisXIn(initialOffsetX = { width ->
