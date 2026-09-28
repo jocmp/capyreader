@@ -10,6 +10,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.fixtures.FolderFixture
 import com.jocmp.capy.logging.CapyLog
@@ -219,6 +220,96 @@ class ReaderAccountDelegateTest {
 
         val enclosures = EnclosureRecords(database).findByArticle("0000000000000010")
         assertEquals(expected = 1, actual = enclosures.size)
+    }
+
+    @Test
+    fun refresh_removesSavedSearchArticlesMissingFromServer() = runTest {
+        val savedSearchID = chicagoTag.id
+        val keptItemRef = ItemRef("16")
+        val removedArticleID = "0000000000000001"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = keptItemRef.hexID,
+        )
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = removedArticleID,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread()
+        stubSavedSearchItemIDs(savedSearchID = savedSearchID, itemRefs = listOf(keptItemRef))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val articleIDs = database.saved_searchesQueries
+            .articlesBySavedSearchID(savedSearchID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(keptItemRef.hexID), actual = articleIDs)
+    }
+
+    @Test
+    fun refresh_keepsSavedSearchArticlesWhenLabelRequestFails() = runTest {
+        val savedSearchID = chicagoTag.id
+        val articleID = "0000000000000001"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = articleID,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread()
+
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = savedSearchID,
+                count = 10_000,
+            )
+        }.returns(Response.error(500, "Server Error".toResponseBody()))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val articleIDs = database.saved_searchesQueries
+            .articlesBySavedSearchID(savedSearchID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(articleID), actual = articleIDs)
+    }
+
+    @Test
+    fun refresh_keepsUnreadArticlesWhenUnreadRequestFails() = runTest {
+        ArticleFixture(database).create(
+            feed = feedFixture.create(feedID = arsTechnica.id),
+            read = false,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = Stream.ReadingList().id,
+                count = 10_000,
+                excludedStreamID = Stream.Read().id,
+            )
+        }.returns(Response.error(500, "Server Error".toResponseBody()))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val unreadArticles = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = unreadArticles.size)
     }
 
     @Test
@@ -806,6 +897,22 @@ class ReaderAccountDelegateTest {
         coEvery { googleReader.tagList() }.returns(
             Response.success(TagListResult(tags))
         )
+
+        tags.filter { it.type == Tag.Type.TAG }.forEach {
+            stubSavedSearchItemIDs(savedSearchID = it.id)
+        }
+    }
+
+    private fun stubSavedSearchItemIDs(
+        savedSearchID: String,
+        itemRefs: List<ItemRef> = emptyList(),
+    ) {
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = savedSearchID,
+                count = 10_000,
+            )
+        }.returns(Response.success(StreamItemIDsResult(itemRefs = itemRefs, continuation = null)))
     }
 
     private fun stubStarred(itemRefs: List<ItemRef> = emptyList()) {

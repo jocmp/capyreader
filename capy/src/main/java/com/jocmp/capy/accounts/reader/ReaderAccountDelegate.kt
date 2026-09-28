@@ -347,6 +347,16 @@ internal class ReaderAccountDelegate(
                 savedSearchRecords.deleteOrphaned(excludedIDs = tags.map { it.id })
             }
         }
+
+        savedSearchRecords.allIDs().forEach { savedSearchID ->
+            refreshSavedSearchArticles(savedSearchID)
+        }
+    }
+
+    private suspend fun refreshSavedSearchArticles(savedSearchID: String) {
+        val ids = fetchAllItemIDs(stream = UserLabel(savedSearchID)) ?: return
+
+        savedSearchRecords.deleteOrphanedEntries(savedSearchID, excludedIDs = ids)
     }
 
     private fun upsertSavedSearch(tag: Tag) {
@@ -365,12 +375,14 @@ internal class ReaderAccountDelegate(
         val ids = fetchAllItemIDs(
             stream = Stream.ReadingList(),
             excludedStream = Read()
-        )
+        ) ?: return
+
         articleRecords.markAllUnread(articleIDs = ids)
     }
 
     private suspend fun refreshStarredItems() {
-        val ids = fetchAllItemIDs(stream = Stream.Starred())
+        val ids = fetchAllItemIDs(stream = Stream.Starred()) ?: return
+
         articleRecords.markAllStarred(articleIDs = ids)
     }
 
@@ -393,7 +405,10 @@ internal class ReaderAccountDelegate(
             refreshArticleState()
 
             val ids = fetchAllItemIDs(stream = stream)
-            articleRecords.createStatuses(articleIDs = ids)
+
+            if (ids != null) {
+                articleRecords.createStatuses(articleIDs = ids)
+            }
 
             fetchMissingArticles()
         }
@@ -402,7 +417,7 @@ internal class ReaderAccountDelegate(
     private suspend fun fetchAllItemIDs(
         stream: Stream,
         excludedStream: Stream? = null,
-    ): List<String> {
+    ): List<String>? {
         val allIDs = mutableListOf<String>()
         var continuation: String? = null
 
@@ -421,7 +436,7 @@ internal class ReaderAccountDelegate(
             }
 
             if (!response.isSuccessful || result == null) {
-                break
+                return null
             }
 
             allIDs.addAll(result.itemRefs.map { it.hexID })
