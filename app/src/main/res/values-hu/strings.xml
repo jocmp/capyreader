@@ -346,4 +346,7 @@
     <string name="article_actions_delete_page_title">Töröl</string>
     <string name="article_actions_delete_page_message">Biztosan törölni szeretnéd ezt az oldalt?</string>
     <string name="article_actions_delete_page_confirm">Töröl</string>
+    <string name="settings_refresh_on_wifi_only">Frissítés csak Wi-Fi-n keresztül</string>
+    <string name="refresh_skipped_mobile">Frissítés kihagyva mobilhálózaton</string>
+    <string name="article_list_new_articles_pill">Új cikkek</string>
 </resources>
