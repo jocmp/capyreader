@@ -12,11 +12,11 @@ import androidx.compose.runtime.snapshotFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun resetScrollBehaviorListener(
+fun ResetScrollBehaviorListener(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior
-): () -> Unit {
-    val resetContentOffset by remember {
+) {
+    val resetContentOffset by remember(listState) {
         derivedStateOf {
             listState.firstVisibleItemScrollOffset == 0 &&
                     listState.firstVisibleItemIndex == 0
@@ -46,6 +46,4 @@ fun resetScrollBehaviorListener(
                 }
             }
     }
-
-    return resetScrollBehaviorOffset
 }

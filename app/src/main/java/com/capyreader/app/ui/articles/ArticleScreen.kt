@@ -28,12 +28,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -50,19 +49,19 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
-import com.capyreader.app.common.Media
 import com.capyreader.app.common.Saver
 import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.ui.LocalAppDrawer
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
-import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
+import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
@@ -76,13 +75,11 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.LocalMarkAllRead
 import com.capyreader.app.ui.articles.list.MarkAllReadDialog
+import com.capyreader.app.ui.articles.list.ResetScrollBehaviorListener
+import com.capyreader.app.ui.articles.list.SearchView
 import com.capyreader.app.ui.articles.list.SwipeUpActionBox
-import com.capyreader.app.ui.articles.list.resetScrollBehaviorListener
-import com.capyreader.app.ui.articles.media.ArticleMediaView
 import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.collectChangesWithDefault
-import com.capyreader.app.ui.LocalAppDrawer
-import com.capyreader.app.ui.articles.list.SearchView
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
@@ -223,7 +220,7 @@ fun ArticleScreen(
         }
         val listState = articles.rememberLazyListState()
 
-        val resetScrollBehaviorOffset = resetScrollBehaviorListener(
+        ResetScrollBehaviorListener(
             listState = listState,
             scrollBehavior = scrollBehavior
         )
@@ -231,7 +228,6 @@ fun ArticleScreen(
         val scrollToTop = {
             coroutineScope.launch {
                 listState.scrollToItem(0)
-                resetScrollBehaviorOffset()
             }
         }
 
@@ -274,7 +270,6 @@ fun ArticleScreen(
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
             markReadOnScroll = viewModel::markReadOnScroll,
-            resetScrollBehaviorOffset = resetScrollBehaviorOffset,
         )
 
         suspend fun openNextStatus(action: suspend () -> Unit) {
@@ -791,7 +786,6 @@ private fun MarkReadOnScroll(
     updateScrollHighWaterMark: (Int) -> Unit,
     clampScrollHighWaterMark: (Int) -> Unit,
     markReadOnScroll: (String) -> Unit,
-    resetScrollBehaviorOffset: () -> Unit,
 ) {
     val appPreferences = koinInject<AppPreferences>()
 
@@ -808,7 +802,6 @@ private fun MarkReadOnScroll(
                 .distinctUntilChanged()
                 .collect {
                     listState.scrollToItem(0)
-                    resetScrollBehaviorOffset()
                 }
         }
 
