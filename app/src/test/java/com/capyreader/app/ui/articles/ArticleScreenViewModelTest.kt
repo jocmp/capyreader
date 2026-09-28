@@ -223,6 +223,43 @@ class ArticleScreenViewModelTest {
         )
     }
 
+    @Test
+    fun `selectStatus updates the filter without waiting on preferences`() = runTest {
+        appPreferences.filter.set(ArticleFilter.Articles(articleStatus = ArticleStatus.STARRED))
+
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        val starredList = viewModel.articleList.value
+
+        viewModel.selectStatus(ArticleStatus.UNREAD)
+
+        val expected = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        assertEquals(expected, viewModel.filter.value)
+        assertEquals(expected, appPreferences.filter.get())
+
+        advanceUntilIdle()
+
+        assertEquals(expected, viewModel.articleList.value.filter)
+        assertTrue(starredList !== viewModel.articleList.value)
+    }
+
+    @Test
+    fun `applies filters persisted outside the view model`() = runTest {
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        val deepLinked = ArticleFilter.Feeds(
+            feedID = "1",
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD
+        )
+        appPreferences.filter.set(deepLinked)
+        advanceUntilIdle()
+
+        assertEquals(deepLinked, viewModel.filter.value)
+    }
+
     private fun buildViewModel(
         syncFlushInterval: kotlin.time.Duration? = null,
     ): ArticleScreenViewModel {
