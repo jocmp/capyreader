@@ -26,6 +26,7 @@ sqldelight {
 
 dependencies {
     implementation(libs.jsoup)
+    compileOnly(libs.jspecify)
     api(project(":mallet"))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)

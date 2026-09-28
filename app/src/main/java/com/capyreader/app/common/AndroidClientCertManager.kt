@@ -4,13 +4,15 @@ import android.content.Context
 import android.security.KeyChain
 import com.jocmp.capy.ClientCertManager
 import okhttp3.OkHttpClient
-import okhttp3.internal.platform.Platform
 import java.net.Socket
+import java.security.KeyStore
 import java.security.Principal
 import java.security.PrivateKey
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509KeyManager
+import javax.net.ssl.X509TrustManager
 
 class AndroidClientCertManager(private val context: Context) : ClientCertManager {
     override fun configure(builder: OkHttpClient.Builder, certAlias: String): OkHttpClient.Builder {
@@ -43,7 +45,9 @@ class AndroidClientCertManager(private val context: Context) : ClientCertManager
         }
 
         val sslContext = SSLContext.getInstance("TLS")
-        val trustManager = Platform.get().platformTrustManager()
+        val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        trustManagerFactory.init(null as KeyStore?)
+        val trustManager = trustManagerFactory.trustManagers.filterIsInstance<X509TrustManager>().first()
         sslContext.init(arrayOf(clientKeyManager), arrayOf(trustManager), null)
 
         return builder.sslSocketFactory(sslContext.socketFactory, trustManager)
