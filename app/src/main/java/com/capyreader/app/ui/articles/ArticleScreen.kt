@@ -23,10 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -155,7 +157,9 @@ fun ArticleScreen(
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
-    val articles = viewModel.articles.collectAsLazyPagingItems()
+    val articleList by viewModel.articleList.collectAsStateWithLifecycle()
+    val presentedArticles = rememberPresentedArticles(articleList)
+    val articles = presentedArticles.items
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
@@ -241,6 +245,15 @@ fun ArticleScreen(
             saver = ArticleFilter.Saver
         ) { mutableStateOf(null) }
 
+        val presentedFilter = presentedArticles.filter
+
+        if (presentedFilter != scrolledFilter) {
+            SideEffect {
+                listState.requestScrollToItem(0)
+                setScrolledFilter(presentedFilter)
+            }
+        }
+
         LaunchedEffect(viewModel.refreshSkipReason) {
             val reason = viewModel.refreshSkipReason ?: return@LaunchedEffect
             val message = when (reason) {
@@ -252,15 +265,6 @@ fun ArticleScreen(
                 duration = SnackbarDuration.Short,
             )
             viewModel.clearRefreshSkipReason()
-        }
-
-        LaunchedEffect(filter, articles.loadState.refresh) {
-            val refreshComplete = articles.loadState.refresh is LoadState.NotLoading
-            if (refreshComplete && filter != scrolledFilter) {
-                listState.scrollToItem(0)
-                resetScrollBehaviorOffset()
-                setScrolledFilter(filter)
-            }
         }
 
         MarkReadOnScroll(
@@ -587,7 +591,7 @@ fun ArticleScreen(
                                             selectedArticleKey = selectedArticleID,
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
-                                            dimReadArticles = filter.status != ArticleStatus.STARRED,
+                                            dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
                                             scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
@@ -796,6 +800,8 @@ private fun MarkReadOnScroll(
         .markReadOnScroll
         .collectChangesWithCurrent()
 
+    val currentArticles by rememberUpdatedState(articles)
+
     if (enabled) {
         LaunchedEffect(listState) {
             snapshotFlow { listState.layoutInfo.totalItemsCount }
@@ -807,7 +813,7 @@ private fun MarkReadOnScroll(
         }
 
         LaunchedEffect(listState) {
-            snapshotFlow { articles.itemCount }
+            snapshotFlow { currentArticles.itemCount }
                 .distinctUntilChanged()
                 .collect(clampScrollHighWaterMark)
         }
@@ -823,12 +829,12 @@ private fun MarkReadOnScroll(
                         "mark_read_on_scroll:collect", mapOf(
                             "scrolledPastIndex" to scrolledPastIndex,
                             "highWaterMark" to scrollHighWaterMark,
-                            "itemCount" to articles.itemCount,
+                            "itemCount" to currentArticles.itemCount,
                         )
                     )
-                    if (scrolledPastIndex > scrollHighWaterMark && scrolledPastIndex < articles.itemCount) {
+                    if (scrolledPastIndex > scrollHighWaterMark && scrolledPastIndex < currentArticles.itemCount) {
                         updateScrollHighWaterMark(scrolledPastIndex)
-                        val boundaryArticle = articles[scrolledPastIndex]
+                        val boundaryArticle = currentArticles[scrolledPastIndex]
                         if (boundaryArticle != null) {
                             CapyLog.debug(
                                 "mark_read_on_scroll:boundary", mapOf(
