@@ -9,6 +9,7 @@ import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
@@ -49,6 +50,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ReaderAccountDelegateTest {
@@ -337,6 +340,43 @@ class ReaderAccountDelegateTest {
             .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)
+    }
+
+    @Test
+    fun refresh_skipsArticlesPastAutoDeleteCutoff() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
+        val id = "feed/2"
+        val oldReadItem = readItem.copy(
+            id = "tag:google.com,2005:reader/item/0000000000000003",
+            categories = listOf("user/-/state/com.google/read"),
+        )
+        val itemRefs = listOf(ItemRef("1"), ItemRef("2"), ItemRef("3"))
+
+        feedFixture.create(feedID = "feed/2")
+        feedFixture.create(feedID = "feed/3")
+        stubStarred()
+        stubUnread()
+        stubStreamItemsIDs(
+            itemRefs,
+            responseItems = listOf(unreadStarredItem, readItem, oldReadItem),
+            stream = Stream.Feed(id),
+        )
+
+        delegate.refresh(
+            ArticleFilter.Feeds(
+                feedID = id,
+                feedStatus = ArticleStatus.ALL,
+                folderTitle = ""
+            ),
+            cutoffDate = nowUTC(),
+        )
+
+        val articleRecords = ArticleRecords(database)
+
+        assertNotNull(articleRecords.find(unreadStarredItem.hexID))
+        assertNotNull(articleRecords.find(readItem.hexID))
+        assertNull(articleRecords.find(oldReadItem.hexID))
     }
 
     @Test

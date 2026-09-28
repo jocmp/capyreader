@@ -8,6 +8,7 @@ import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
+import com.jocmp.capy.accounts.willAutoDelete
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
@@ -63,9 +64,9 @@ internal class ReaderAccountDelegate(
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return withErrorHandling {
             if (filter.hasArticlesSelected()) {
-                refreshTopLevelArticles()
+                refreshTopLevelArticles(cutoffDate = cutoffDate)
             } else {
-                refreshArticles(filter.toStream(source))
+                refreshArticles(filter.toStream(source), cutoffDate = cutoffDate)
             }
             preferences.touchLastRefreshedAt()
         }
@@ -289,11 +290,11 @@ internal class ReaderAccountDelegate(
         }
     }
 
-    private suspend fun refreshTopLevelArticles() {
+    private suspend fun refreshTopLevelArticles(cutoffDate: ZonedDateTime?) {
         refreshFeeds()
         refreshAllSavedSearches()
         refreshArticleState()
-        fetchMissingArticles()
+        fetchMissingArticles(cutoffDate = cutoffDate)
     }
 
     private fun upsertTaggings(subscription: Subscription) {
@@ -394,13 +395,13 @@ internal class ReaderAccountDelegate(
      *   - On result, the [fetchMissingArticles] will only fetch articles that are not already
      *     saved
      */
-    private suspend fun refreshArticles(stream: Stream) {
+    private suspend fun refreshArticles(stream: Stream, cutoffDate: ZonedDateTime? = null) {
         if (stream !is Stream.Feed) {
             refreshFeeds()
         }
 
         if (stream is UserLabel) {
-            fetchPaginatedArticles(stream = stream)
+            fetchPaginatedArticles(stream = stream, cutoffDate = cutoffDate)
         } else {
             refreshArticleState()
 
@@ -410,7 +411,7 @@ internal class ReaderAccountDelegate(
                 articleRecords.createStatuses(articleIDs = ids)
             }
 
-            fetchMissingArticles()
+            fetchMissingArticles(cutoffDate = cutoffDate)
         }
     }
 
@@ -446,7 +447,7 @@ internal class ReaderAccountDelegate(
         return allIDs
     }
 
-    private suspend fun fetchMissingArticles() {
+    private suspend fun fetchMissingArticles(cutoffDate: ZonedDateTime?) {
         val ids = articleRecords.findMissingArticles()
 
         if (ids.isEmpty()) {
@@ -468,7 +469,7 @@ internal class ReaderAccountDelegate(
 
                         val result = response.body() ?: return@launch
 
-                        saveArticles(result.items)
+                        saveArticles(result.items, cutoffDate = cutoffDate)
                     }
                 }
             }
@@ -479,6 +480,7 @@ internal class ReaderAccountDelegate(
         since: Long? = null,
         stream: Stream,
         continuation: String? = null,
+        cutoffDate: ZonedDateTime? = null,
     ) {
         val response = googleReader.streamItemsIDs(
             stream = stream,
@@ -494,7 +496,7 @@ internal class ReaderAccountDelegate(
 
         coroutineScope {
             launch {
-                fetchItemContents(result.itemRefs)
+                fetchItemContents(result.itemRefs, cutoffDate = cutoffDate)
             }
         }
 
@@ -503,11 +505,12 @@ internal class ReaderAccountDelegate(
         fetchPaginatedArticles(
             since = since,
             stream = stream,
-            continuation = nextContinuation
+            continuation = nextContinuation,
+            cutoffDate = cutoffDate,
         )
     }
 
-    private suspend fun fetchItemContents(items: List<ItemRef>) {
+    private suspend fun fetchItemContents(items: List<ItemRef>, cutoffDate: ZonedDateTime?) {
         val response = withPostToken {
             googleReader.streamItemsContents(
                 postToken = postToken.get(),
@@ -517,19 +520,28 @@ internal class ReaderAccountDelegate(
 
         val result = response.body() ?: return
 
-        saveArticles(result.items)
+        saveArticles(result.items, cutoffDate = cutoffDate)
     }
 
-    private fun saveArticles(items: List<Item>) {
+    private fun saveArticles(items: List<Item>, cutoffDate: ZonedDateTime?) {
+        val articles = items.filterNot { item ->
+            willAutoDelete(
+                publishedAt = item.published,
+                read = item.read,
+                starred = item.starred,
+                cutoffDate = cutoffDate,
+            )
+        }
+
         val summaries = mutableMapOf<String, String?>()
-        items.forEach { item ->
+        articles.forEach { item ->
             summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
         }
 
         database.transactionWithErrorHandling {
                 val labels = savedSearchRecords.allIDs()
 
-                items.forEach { item ->
+                articles.forEach { item ->
                     val updated = TimeHelpers.nowUTC()
                     val enclosures = ReaderEnclosureParsing.validEnclosures(item)
                     val enclosureType = enclosures.firstOrNull()?.type

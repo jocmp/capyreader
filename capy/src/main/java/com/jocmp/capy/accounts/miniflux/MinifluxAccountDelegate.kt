@@ -6,6 +6,7 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.orThrow
+import com.jocmp.capy.accounts.willAutoDelete
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers
@@ -53,7 +54,7 @@ internal class MinifluxAccountDelegate(
         return try {
             refreshIntegrationStatus()
             refreshFeeds()
-            refreshArticles()
+            refreshArticles(cutoffDate = cutoffDate)
             preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
@@ -305,12 +306,12 @@ internal class MinifluxAccountDelegate(
         database.feedsQueries.deleteAllExcept(feedsToKeep)
     }
 
-    private suspend fun refreshArticles() = coroutineScope {
+    private suspend fun refreshArticles(cutoffDate: ZonedDateTime? = null) = coroutineScope {
         val starred = async { refreshStarredEntries() }
         val unread = async { refreshUnreadEntries() }
         starred.await()
         unread.await()
-        fetchAllEntries()
+        fetchAllEntries(cutoffDate = cutoffDate)
     }
 
     private suspend fun refreshStarredEntries() {
@@ -350,7 +351,7 @@ internal class MinifluxAccountDelegate(
         return ids
     }
 
-    private suspend fun fetchAllEntries() = coroutineScope {
+    private suspend fun fetchAllEntries(cutoffDate: ZonedDateTime?) = coroutineScope {
         val changedAfter = preferences.lastRefreshedAt.get().takeIf { it > 0 }
 
         val firstResult = miniflux.entries(
@@ -363,7 +364,7 @@ internal class MinifluxAccountDelegate(
 
         val total = firstResult.total
 
-        saveEntries(firstResult.entries)
+        saveEntries(firstResult.entries, cutoffDate = cutoffDate)
 
         val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
 
@@ -378,17 +379,31 @@ internal class MinifluxAccountDelegate(
                             direction = "desc",
                             changedAfter = changedAfter,
                         ).body()?.entries ?: return@withPermit
-                        saveEntries(entries)
+                        saveEntries(entries, cutoffDate = cutoffDate)
                     }
                 }
             }
             .awaitAll()
     }
 
-    private fun saveEntries(entries: List<Entry>) {
+    private fun saveEntries(entries: List<Entry>, cutoffDate: ZonedDateTime?) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
+                val publishedAt = entry.published_at.toDateTime?.toEpochSecond() ?: updated.toEpochSecond()
+                val read = entry.status == EntryStatus.READ
+
+                val skip = willAutoDelete(
+                    publishedAt = publishedAt,
+                    read = read,
+                    starred = entry.starred,
+                    cutoffDate = cutoffDate,
+                )
+
+                if (skip) {
+                    return@forEach
+                }
+
                 val articleID = entry.id.toString()
                 val imageURL = MinifluxEnclosureParsing.parsedImageURL(entry)
                 val enclosures = entry.enclosures.orEmpty()
@@ -403,14 +418,14 @@ internal class MinifluxAccountDelegate(
                     url = entry.url,
                     summary = ContentFormatter.summary(entry.content),
                     image_url = imageURL,
-                    published_at = entry.published_at.toDateTime?.toEpochSecond() ?: updated.toEpochSecond(),
+                    published_at = publishedAt,
                     enclosure_type = enclosures.firstOrNull()?.mime_type,
                 )
 
                 articleRecords.createStatus(
                     articleID = articleID,
                     updatedAt = updated,
-                    read = entry.status == EntryStatus.READ
+                    read = read
                 )
 
                 enclosures.forEach { enclosure ->
