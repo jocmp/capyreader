@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +35,7 @@ fun SortOrderSection(
     update: (status: ArticleStatus, sortOrder: SortOrder) -> Unit,
 ) {
     FormSection(title = stringResource(R.string.article_list_sort_title)) {
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             ArticleStatus.entries.forEach { status ->
                 RowItem {
                     SortOrderRow(
@@ -47,39 +49,46 @@ fun SortOrderSection(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SortOrderRow(
     status: ArticleStatus,
     selected: SortOrder,
     update: (SortOrder) -> Unit,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+    val options = SortOrder.entries
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(24.dp),
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(24.dp),
-            ) {
-                ArticleStatusIcon(
-                    status = status,
-                    modifier = Modifier.size(iconSize(status)),
-                )
-            }
-            Text(text = stringResource(status.navigationTitle))
+            ArticleStatusIcon(
+                status = status,
+                modifier = Modifier.size(iconSize(status)),
+            )
         }
-        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-            SortOrder.entries.forEachIndexed { index, option ->
-                SegmentedButton(
-                    selected = option == selected,
-                    onClick = { update(option) },
-                    shape = SegmentedButtonDefaults.itemShape(
-                        index = index,
-                        count = SortOrder.entries.size,
-                    ),
-                    label = { Text(text = stringResource(translationKey(option))) },
-                )
+        Spacer(Modifier.width(12.dp))
+        Text(text = stringResource(status.navigationTitle))
+        Spacer(Modifier.weight(1f))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+        ) {
+            options.forEachIndexed { index, option ->
+                ToggleButton(
+                    checked = option == selected,
+                    onCheckedChange = { update(option) },
+                    shapes = when (index) {
+                        0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                        options.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                        else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                    },
+                ) {
+                    Text(text = stringResource(translationKey(option)))
+                }
             }
         }
     }
@@ -87,8 +96,8 @@ private fun SortOrderRow(
 
 private fun translationKey(sortOrder: SortOrder) =
     when (sortOrder) {
-        SortOrder.NEWEST_FIRST -> R.string.article_list_sort_newest_first
-        SortOrder.OLDEST_FIRST -> R.string.article_list_sort_oldest_first
+        SortOrder.NEWEST_FIRST -> R.string.article_list_sort_newest
+        SortOrder.OLDEST_FIRST -> R.string.article_list_sort_oldest
     }
 
 @Preview
