@@ -104,7 +104,8 @@ class MarkReadOnScrollTest {
     }
 
     private fun closeDrawer() {
-        device.click((device.displayWidth * 0.95).toInt(), device.displayHeight / 2)
+        device.pressBack()
+        device.wait(Until.gone(By.desc(string(R.string.feed_nav_drawer_refresh_all))), TIMEOUT_MILLIS)
         SystemClock.sleep(SETTLE_MILLIS)
     }
 
