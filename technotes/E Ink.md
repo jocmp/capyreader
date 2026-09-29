@@ -30,8 +30,8 @@ Prior art: EPUB readers on a web view (Readium, foliate/Readest) lay text out in
 - Vertical scrolling is off (`verticalScroll(enabled = false)`). Pages turn with a horizontal swipe, the tap zones, or the page keys.
 - The partial line below each page break is covered with the background, so every page ends on a whole line.
 - A trailing spacer the height of the screen lets the last page start on its break instead of clamping to the end of the content.
-- Page size uses the hidden-toolbar insets plus a strip for the "3 / 12" indicator. Toolbars overlay the page when shown, like Kindle's menus, so page breaks don't move when they toggle. Articles open with the toolbars hidden.
-- Turning past the last page opens the next article.
+- Page size uses the hidden-toolbar insets, 8dp of top padding, and a footer strip with the article title (cut at 100 characters or the last space before that) and "3 / 12". Toolbars overlay the page when shown, like Kindle's menus, so page breaks don't move when they toggle. Articles open with the toolbars hidden.
+- Turning past the last page opens the next article. Turning back from the first page opens the previous article on its last page, and it stays pinned there while images load until the next turn.
 - Footnote and anchor links jump to the page containing the target.
 - When the content height changes (an image loads, the font size changes), breaks are recomputed and the reader snaps to the page containing the current top.
 
@@ -82,6 +82,5 @@ Only `MainActivity` uses it. The share and add-link activities are small and sti
 ## Not done
 
 - Visible on-screen page buttons (a chunky Mac OS 9-style pager). Tap zones and keys cover input; a visible control could sit on the same `ReaderPages.turnPage`.
-- Previous article from the first page (#1236 covers both directions; only forward is done).
 - Full-screen flash to clear ghosting. The Onyx SDK (`EpdController`) is a vendor Maven dependency that has broken across Boox hardware; a manual black/white frame would avoid it.
 - Keyboard shortcuts beyond paging (#1597).

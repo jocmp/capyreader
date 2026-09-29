@@ -37,6 +37,7 @@ import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.articles.reader.AnchorRegistry
 import com.capyreader.app.ui.articles.reader.ArticleReaderContent
 import com.capyreader.app.ui.articles.reader.LocalReaderPages
+import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.ReaderActions
 import com.capyreader.app.ui.articles.reader.ReaderPages
@@ -63,7 +64,9 @@ fun ArticleReader(
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
-    onNextArticle: () -> Unit,
+    onTurnPastArticle: (PageDirection) -> Unit,
+    openAtLastPage: Boolean,
+    onOpenedAtLastPage: () -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -129,6 +132,14 @@ fun ArticleReader(
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
     val pages = remember(scrollState) { ReaderPages(scrollState) }
 
+    LaunchedEffect(openAtLastPage) {
+        if (openAtLastPage) {
+            pages.openAtLastPage()
+            pages.alignToPage()
+            onOpenedAtLastPage()
+        }
+    }
+
     val currentFlattened by rememberUpdatedState(flattened)
     val currentOnSelectMedia by rememberUpdatedState(onSelectMedia)
     val currentOnSelectAudio by rememberUpdatedState(onSelectAudio)
@@ -191,12 +202,13 @@ fun ArticleReader(
         ScrollableArticle(
             scrollState = scrollState,
             pages = pages,
+            title = article.title,
             paginate = paginate,
             pinToolbars = pinToolbars,
             showToolbars = showToolbars,
             onHideToolbars = onHideToolbars,
             onToggleToolbars = onToggleToolbars,
-            onNextArticle = onNextArticle,
+            onTurnPastArticle = onTurnPastArticle,
             onContentPositioned = {
                 anchors.contentCoordinates = it
                 pages.contentCoordinates = it
@@ -245,12 +257,13 @@ fun ArticleReader(
 private fun ScrollableArticle(
     scrollState: ScrollState,
     pages: ReaderPages,
+    title: String,
     paginate: Boolean,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
-    onNextArticle: () -> Unit,
+    onTurnPastArticle: (PageDirection) -> Unit,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -258,13 +271,14 @@ private fun ScrollableArticle(
 
     PageTurnGestures(
         pages = pages,
+        title = title,
         paginate = paginate,
         pagedInsets = pagedInsets,
         pinToolbars = pinToolbars,
         showToolbars = showToolbars,
         onHideToolbars = onHideToolbars,
         onToggleToolbars = onToggleToolbars,
-        onNextArticle = onNextArticle,
+        onTurnPastArticle = onTurnPastArticle,
     ) {
         BoxWithConstraints {
             val viewportHeight = maxHeight

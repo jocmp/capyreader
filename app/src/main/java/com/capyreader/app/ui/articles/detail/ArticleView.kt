@@ -42,6 +42,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.components.LocalSnackbarHost
@@ -89,6 +90,8 @@ fun ArticleView(
 
     val articleScrollStates = rememberArticleScrollStates()
 
+
+    var openAtLastPage by remember { mutableStateOf<String?>(null) }
 
     var pendingDirection by remember { mutableStateOf<Pair<String, Int>?>(null) }
 
@@ -176,7 +179,16 @@ fun ArticleView(
                                 showToolbars = showToolBar,
                                 onHideToolbars = { scrollState.hideToolbars() },
                                 onToggleToolbars = { scrollState.toggleToolbars() },
-                                onNextArticle = { selectNext() },
+                                onTurnPastArticle = { direction ->
+                                    if (direction == PageDirection.FORWARD) {
+                                        selectNext()
+                                    } else {
+                                        openAtLastPage = previousArticleID
+                                        selectPrevious()
+                                    }
+                                },
+                                openAtLastPage = targetArticle.id == openAtLastPage,
+                                onOpenedAtLastPage = { openAtLastPage = null },
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,

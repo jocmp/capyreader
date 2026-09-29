@@ -35,6 +35,7 @@ class ReaderPages(private val scrollState: ScrollState) {
         private set
 
     private var pageInsets = PageInsets(top = 0f, bottom = 0f)
+    private var holdLastPage = false
     private var pageLayoutKey: PageLayoutKey? = null
 
     val pageCount: Int
@@ -87,11 +88,21 @@ class ReaderPages(private val scrollState: ScrollState) {
         )
     }
 
+    fun openAtLastPage() {
+        holdLastPage = true
+    }
+
     suspend fun alignToPage() {
+        if (holdLastPage) {
+            showPage(pageCount - 1)
+            return
+        }
+
         showPage(currentPage)
     }
 
     suspend fun turnPage(direction: PageDirection): Boolean {
+        holdLastPage = false
         val page = currentPage
 
         if (direction == PageDirection.FORWARD) {
@@ -103,7 +114,11 @@ class ReaderPages(private val scrollState: ScrollState) {
             return true
         }
 
-        showPage((page - 1).coerceAtLeast(0))
+        if (page == 0) {
+            return false
+        }
+
+        showPage(page - 1)
         return true
     }
 
