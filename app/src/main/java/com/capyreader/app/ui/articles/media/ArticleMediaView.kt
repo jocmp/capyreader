@@ -67,6 +67,7 @@ import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.ui.theme.findStatusBarColor
 import com.capyreader.app.ui.theme.showAppearanceLightStatusBars
 import kotlinx.coroutines.launch
+import me.saket.telephoto.zoomable.DoubleClickToZoomListener
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.coil3.ZoomableAsyncImage
 import me.saket.telephoto.zoomable.rememberZoomableImageState
@@ -187,6 +188,7 @@ private fun ImagePage(
             state = imageState,
             contentDescription = imageItem.altText,
             onClick = { onToggleOverlay() },
+            onDoubleClick = DoubleClickToZoomListener.cycle(maxZoomFactor = 2f),
             modifier = Modifier.fillMaxSize(),
             alignment = Alignment.Center,
         )
