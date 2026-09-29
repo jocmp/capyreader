@@ -380,6 +380,38 @@ class ReaderAccountDelegateTest {
     }
 
     @Test
+    fun refresh_unwrapsCDATASummary() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
+        val id = "feed/3"
+        val cdataItem = readItem.copy(
+            summary = Summary("<![CDATA[ Apple’s tagline: <b>'It’s Glowtime.'</b> ]]>"),
+        )
+        val itemRefs = listOf(ItemRef("2"))
+
+        feedFixture.create(feedID = id)
+        stubStarred()
+        stubUnread()
+        stubStreamItemsIDs(
+            itemRefs,
+            responseItems = listOf(cdataItem),
+            stream = Stream.Feed(id),
+        )
+
+        delegate.refresh(
+            ArticleFilter.Feeds(
+                feedID = id,
+                feedStatus = ArticleStatus.ALL,
+                folderTitle = ""
+            ),
+        )
+
+        val article = ArticleRecords(database).find(cdataItem.hexID)
+
+        assertEquals(expected = "Apple’s tagline: 'It’s Glowtime.'", actual = article?.summary)
+    }
+
+    @Test
     fun refresh_folderOnly() = runTest {
         delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
 

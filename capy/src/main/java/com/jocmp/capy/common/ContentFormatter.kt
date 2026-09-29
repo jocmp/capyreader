@@ -12,7 +12,7 @@ internal object ContentFormatter {
         }
 
         return try {
-            val text = Jsoup.parse(content).text()
+            val text = Jsoup.parse(content.unwrapCDATA()).text()
 
             truncate(text)
         } catch (e: Exception) {

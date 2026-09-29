@@ -14,6 +14,7 @@ import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.transactionWithErrorHandling
+import com.jocmp.capy.common.unwrapCDATA
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
@@ -535,7 +536,7 @@ internal class ReaderAccountDelegate(
 
         val summaries = mutableMapOf<String, String?>()
         articles.forEach { item ->
-            summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it).text() }
+            summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it.unwrapCDATA()).text() }
         }
 
         database.transactionWithErrorHandling {
