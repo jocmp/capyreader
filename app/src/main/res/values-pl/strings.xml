@@ -223,7 +223,6 @@
     <string name="media_share">Udostępnij</string>
     <string name="settings_clear_all_articles_text">Czy na pewno chcesz usunąć wszystkie przeczytane i niezapisane artykuły ze swojego urządzenia? Nie można tego cofnąć.</string>
     <string name="settings_confirm_mark_all_read">Potwierdź oznaczenie wszystkich jako przeczytane</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Dotknij dolnych rogów, aby poruszać się po treści artykułu</string>
     <string name="reader_image_visibility_show_on_wifi">Wyświetlaj obrazy tylko przez Wi-Fi</string>
     <string name="full_content_error_generic">Nie udało się przetworzyć artykułu</string>
     <string name="full_content_error_forbidden">Pobieranie zablokowane przez stronę</string>
@@ -241,7 +240,6 @@
     <string name="settings_gestures_list_back_navigation_action">Działanie przycisku wstecz</string>
     <string name="end_of_feed_text">Wszystko przeczytane!</string>
     <string name="settings_enable_refresh_call_to_action">Najpierw włącz cykliczne odświeżanie</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Dotknij, aby przewinąć (wyświetlacz E Ink)</string>
     <string name="image_preview_menu_option_medium">Średni</string>
     <string name="filters_supporting_text">Usuń artykuły, których tytuł lub treść pasują do słów kluczowych</string>
     <string name="filters_title">Lista zablokowanych</string>

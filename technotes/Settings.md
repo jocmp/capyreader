@@ -73,9 +73,10 @@ Grouped by where the setting takes effect.
   - Text and Title: the same typography controls as the reader's style sheet
   - Content: images, sticky full content, pin toolbars
   - Browser: in-app browser
-  - Gestures: swipe down, swipe up, horizontal scroll, E Ink tap to scroll
+  - Gestures: swipe down, swipe up, horizontal scroll
 - **Display & Appearance**
   - Theme: mode, theme, pure black, accent colors
+  - E Ink: reduce animations, tap to turn pages, page turn buttons (see `technotes/E Ink.md`)
 - **Notifications**: top level. It stays disabled until periodic refresh is on, and it asks for the notification permission first.
 - **Advanced**
   - Storage: keep read articles, clear all articles

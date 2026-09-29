@@ -176,8 +176,6 @@
     <string name="settings_select_none">எதுவுமில்லை என்பதைத் தேர்ந்தெடுக்கவும்</string>
     <string name="settings_select_all">அனைத்தையும் தெரிவுசெய்</string>
     <string name="article_list_row_swipe_open_externally">உலாவியில் திறந்த கட்டுரை</string>
-    <string name="settings_gestures_reader_tap_to_page_title">உருட்ட மின் தட்டு</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">கட்டுரை உள்ளடக்கத்திற்கு செல்ல கீழே மூலைகளைத் தட்டவும்</string>
     <string name="settings_enable_high_contrast_dark_theme">உயர் மாறுபட்ட இருண்ட கருப்பொருளை இயக்கவும்</string>
     <string name="settings_section_mark_all_as_read">அனைத்தையும் படித்தபடி குறிக்கவும்</string>
     <string name="reader_image_visibility_show_on_wifi">வைஃபை படங்களை மட்டுமே காண்பி</string>

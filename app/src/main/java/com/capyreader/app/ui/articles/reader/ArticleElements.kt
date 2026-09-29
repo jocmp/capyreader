@@ -217,13 +217,14 @@ fun TextElement(
     val links = remember(linearText) { linearText.links }
     val haptics = LocalHapticFeedback.current
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+    val pageLines = LocalReaderPages.current?.lines { layout } ?: Modifier
 
     BidiLayoutDirection(paragraph = linearText.text) {
         Text(
             text = annotated,
             softWrap = softWrap,
             onTextLayout = { layout = it },
-            modifier = modifier.longPressLink(
+            modifier = modifier.then(pageLines).longPressLink(
                 enabled = links.isNotEmpty(),
                 linkAt = { position -> layout.linkAt(position, links) },
                 onLongPress = { link ->

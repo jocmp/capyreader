@@ -102,15 +102,3 @@ fun HorizontalPaginationRow(viewModel: GesturesSettingsViewModel = koinViewModel
         )
     }
 }
-
-@Composable
-fun TapToPageRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
-    RowItem {
-        TextSwitch(
-            onCheckedChange = viewModel::updatePagingTapGesture,
-            checked = viewModel.enablePagingTapGesture,
-            title = stringResource(R.string.settings_gestures_reader_tap_to_page_title),
-            subtitle = stringResource(R.string.settings_gestures_reader_tap_to_page_subtitle)
-        )
-    }
-}

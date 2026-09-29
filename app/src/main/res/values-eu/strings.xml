@@ -293,7 +293,6 @@
     <string name="settings_mark_read_on_scroll">Markatu irakurritakotzat korritzean</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Gaitu korritze horizontala</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Irristatu ezkerrera edo eskuinera artikuluen artean nabigatzeko</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Ukitu beheko izkinak artikuluaren edukian nabigatzeko</string>
     <string name="settings_enable_high_contrast_dark_theme">Gaitu kontraste handiko gai iluna</string>
     <string name="settings_section_mark_all_as_read">Markatu guztiak irakurritako gisa</string>
     <string name="reader_image_visibility_show_on_wifi">Erakutsi irudiak soilik Wi-Fi bidez</string>
@@ -326,7 +325,6 @@
     <string name="article_actions_delete_page_message">Ziur zaude orrialde hau ezabatu nahi duzula?</string>
     <string name="article_actions_delete_page_confirm">Ezabatu</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Ireki nabigazio-tiradera</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Sakatu tinta elektronikoan desplazatzeko</string>
     <string name="after_read_all_behavior_open_drawer">Ireki nabigazio-tiradera</string>
     <string name="auth_fields_miniflux_use_password">Erabili pasahitza haren ordez</string>
     <string name="settings_account_refresh_value">%1$s %2$s(e)tan</string>

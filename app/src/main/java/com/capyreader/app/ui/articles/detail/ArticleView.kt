@@ -126,6 +126,8 @@ fun ArticleView(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
+    HideNavigationBarWhilePaging(hide = !showToolBar)
+
     val contentPadding = rememberContentPadding(pinToolbars)
 
     CompositionLocalProvider(
@@ -167,6 +169,9 @@ fun ArticleView(
                                 flattened = targetFlattened,
                                 scrollState = articleScrollStates.scrollState(targetArticle.id),
                                 pinToolbars = pinToolbars,
+                                showToolbars = showToolBar,
+                                onHideToolbars = { scrollState.hideToolbars() },
+                                onToggleToolbars = { scrollState.toggleToolbars() },
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,

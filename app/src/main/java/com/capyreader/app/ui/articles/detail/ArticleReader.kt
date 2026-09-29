@@ -11,7 +11,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,8 +35,10 @@ import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.articles.reader.AnchorRegistry
 import com.capyreader.app.ui.articles.reader.ArticleReaderContent
+import com.capyreader.app.ui.articles.reader.LocalReaderPages
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.ReaderActions
+import com.capyreader.app.ui.articles.reader.ReaderPages
 import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
@@ -57,6 +58,9 @@ fun ArticleReader(
     flattened: LinearArticle?,
     scrollState: ScrollState,
     pinToolbars: Boolean,
+    showToolbars: Boolean,
+    onHideToolbars: () -> Unit,
+    onToggleToolbars: () -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -117,6 +121,7 @@ fun ArticleReader(
     }
 
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
+    val pages = remember(scrollState) { ReaderPages(scrollState) }
 
     val currentFlattened by rememberUpdatedState(flattened)
     val currentOnSelectMedia by rememberUpdatedState(onSelectMedia)
@@ -169,11 +174,21 @@ fun ArticleReader(
     val showImages = rememberImageVisibility()
     val readerStyle = rememberReaderStyle(showImages = showImages)
 
-    CompositionLocalProvider(LocalReaderStyle provides readerStyle) {
+    CompositionLocalProvider(
+        LocalReaderStyle provides readerStyle,
+        LocalReaderPages provides pages,
+    ) {
         ScrollableArticle(
             scrollState = scrollState,
+            pages = pages,
             pinToolbars = pinToolbars,
-            onContentPositioned = { anchors.contentCoordinates = it },
+            showToolbars = showToolbars,
+            onHideToolbars = onHideToolbars,
+            onToggleToolbars = onToggleToolbars,
+            onContentPositioned = {
+                anchors.contentCoordinates = it
+                pages.contentCoordinates = it
+            },
         ) {
             ArticleReaderContent(
                 article = article,
@@ -185,7 +200,10 @@ fun ArticleReader(
                 isAudioBuffering = isAudioBuffering,
                 onSelectAudio = onSelectAudio,
                 onPauseAudio = onPauseAudio,
-                onElementPositioned = { index, coordinates -> anchors.register(index, coordinates) },
+                onElementPositioned = { index, coordinates ->
+                    anchors.register(index, coordinates)
+                    pages.registerElement(index, coordinates)
+                },
             )
         }
     }
@@ -214,16 +232,20 @@ fun ArticleReader(
 @Composable
 private fun ScrollableArticle(
     scrollState: ScrollState,
+    pages: ReaderPages,
     pinToolbars: Boolean,
+    showToolbars: Boolean,
+    onHideToolbars: () -> Unit,
+    onToggleToolbars: () -> Unit,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
     content: @Composable () -> Unit,
 ) {
-    var maxHeight by remember { mutableFloatStateOf(0f) }
-
-    CornerTapGestureScroll(
-        maxArticleHeight = maxHeight,
-        scrollState = scrollState,
+    PageTurnGestures(
+        pages = pages,
         pinToolbars = pinToolbars,
+        showToolbars = showToolbars,
+        onHideToolbars = onHideToolbars,
+        onToggleToolbars = onToggleToolbars,
     ) {
         ColumnScrollbar(state = scrollState) {
             Column(
@@ -231,7 +253,6 @@ private fun ScrollableArticle(
                     .fillMaxSize()
                     .verticalScroll(scrollState)
                     .onGloballyPositioned { coordinates ->
-                        maxHeight = coordinates.size.height.toFloat()
                         onContentPositioned(coordinates)
                     }
             ) {

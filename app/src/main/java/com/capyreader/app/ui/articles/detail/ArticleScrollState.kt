@@ -42,6 +42,14 @@ internal class ArticleScrollState(
         }
     }
 
+    fun hideToolbars() {
+        _isScrollingDown.value = true
+    }
+
+    fun toggleToolbars() {
+        _isScrollingDown.value = !_isScrollingDown.value
+    }
+
     fun reset() {
         _isScrollingDown.value = false
         _contentOffset.floatValue = 0f

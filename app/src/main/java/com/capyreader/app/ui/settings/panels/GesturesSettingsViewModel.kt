@@ -34,6 +34,12 @@ class GesturesSettingsViewModel(
     var enablePagingTapGesture by mutableStateOf(readerOptions.enablePagingTapGesture.get())
         private set
 
+    var enablePageTurnKeys by mutableStateOf(readerOptions.enablePageTurnKeys.get())
+        private set
+
+    var reduceMotion by mutableStateOf(appPreferences.reduceMotion.get())
+        private set
+
     var enableHorizontalPagination by mutableStateOf(readerOptions.enableHorizontaPagination.get())
         private set
 
@@ -83,6 +89,18 @@ class GesturesSettingsViewModel(
         enablePagingTapGesture = enabled
 
         readerOptions.enablePagingTapGesture.set(enabled)
+    }
+
+    fun updatePageTurnKeys(enabled: Boolean) {
+        enablePageTurnKeys = enabled
+
+        readerOptions.enablePageTurnKeys.set(enabled)
+    }
+
+    fun updateReduceMotion(enabled: Boolean) {
+        reduceMotion = enabled
+
+        appPreferences.reduceMotion.set(enabled)
     }
 
     private val readerOptions: AppPreferences.ReaderOptions

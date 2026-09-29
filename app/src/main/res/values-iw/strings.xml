@@ -224,7 +224,6 @@
     <string name="settings_mark_read_on_scroll">סמן כנקרא בזמן גלילה</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">הפעל גלילה רוחבית</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">דפדף שמאלה או ימינה כדי לנווט בין מאמרים</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">לחץ על הפינות התחתונות כדי לנווט בתוכן המאמר</string>
     <string name="settings_enable_high_contrast_dark_theme">הפעל ערכת נושא עם ניגודיות גבוהה</string>
     <string name="settings_section_mark_all_as_read">סמן הכל כנקרא</string>
     <string name="settings_section_browser">דפדפן</string>
@@ -268,7 +267,6 @@
     <string name="widget_headlines_account_error">הוסף חשבון תחילה</string>
     <string name="article_byline">%1$s ב-%2$s על ידי %3$s</string>
     <string name="article_byline_date_only">%1$s ב- %2$s</string>
-    <string name="settings_gestures_reader_tap_to_page_title">הקש בדיו אלקטרוני כדי לגלול</string>
     <string name="add_link_title">הוסף קישור</string>
     <string name="tab_add_feed">הוסף פיד</string>
     <string name="tab_save_page">שמור עמוד</string>
