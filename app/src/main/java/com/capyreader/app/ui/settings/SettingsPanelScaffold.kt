@@ -48,7 +48,7 @@ fun SettingsPanelScaffold(
                         Text(stringResource(panel.title))
                     },
                     navigationIcon = {
-                        if (isSinglePane() || panel.isNested()) {
+                        if (isSinglePane()) {
                             IconButton(
                                 onClick = {
                                     onBack()

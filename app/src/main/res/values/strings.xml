@@ -285,6 +285,11 @@
     <string name="settings_gestures_reader_tap_to_page_subtitle">Tap bottom corners to navigate article content</string>
     <string name="settings_enable_high_contrast_dark_theme">Enable high contrast dark theme</string>
     <string name="settings_section_mark_all_as_read">Mark All As Read</string>
+    <string name="settings_section_layout">Layout</string>
+    <string name="settings_section_content">Content</string>
+    <string name="settings_section_storage">Storage</string>
+    <string name="settings_search_placeholder">Search settings</string>
+    <string name="settings_search_no_results">No results</string>
     <string name="settings_section_browser">Browser</string>
     <string name="settings_option_show_today_filter">Today</string>
     <string name="reader_image_visibility_show_on_wifi">Only show images on Wi-Fi</string>

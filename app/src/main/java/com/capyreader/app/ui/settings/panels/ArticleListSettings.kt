@@ -20,7 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +35,12 @@ import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppTheme
+import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.preferences.BackAction
+import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.ArticleRowOptions
 import com.capyreader.app.ui.articles.FaviconBadge
@@ -44,97 +50,207 @@ import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
 import com.capyreader.app.ui.components.TextSwitch
 import com.capyreader.app.ui.settings.PreferenceSelect
+import com.capyreader.app.ui.settings.filters.FilterKeywords
+import com.capyreader.app.ui.settings.filters.FiltersItem
+import com.capyreader.app.ui.settings.filters.LocalFilterKeywords
 import com.capyreader.app.ui.theme.LocalAppTheme
+import java.lang.String.CASE_INSENSITIVE_ORDER
 import kotlin.math.roundToInt
-
-@Immutable
-data class ArticleListOptions(
-    val imagePreview: ImagePreview,
-    val showFeedIcons: Boolean,
-    val showFeedName: Boolean,
-    val showSummary: Boolean,
-    val shortenTitles: Boolean,
-    val fontScale: ArticleListFontScale,
-    val updateFeedIcons: (show: Boolean) -> Unit,
-    val updateFeedName: (show: Boolean) -> Unit,
-    val updateImagePreview: (preview: ImagePreview) -> Unit,
-    val updateSummary: (show: Boolean) -> Unit,
-    val updateFontScale: (scale: ArticleListFontScale) -> Unit,
-    val updateShortenTitles: (show: Boolean) -> Unit,
-)
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ArticleListSettings(
-    options: ArticleListOptions,
-) {
+fun ArticleListPreviewRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    PreviewArticleRow(
+        rowOptions = ArticleRowOptions(
+            showIcon = viewModel.showFeedIcons,
+            showSummary = viewModel.showSummary,
+            showFeedName = viewModel.showFeedName,
+            imagePreview = viewModel.imagePreview,
+            fontScale = viewModel.fontScale,
+            shortenTitles = viewModel.shortenTitles,
+            dim = false,
+        )
+    )
+}
+
+@Composable
+fun ArticleListFontSizeRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
     val fontScales = ArticleListFontScale.entries
 
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        PreviewArticleRow(options = options)
-
-        FormSection(
-            title = stringResource(R.string.article_font_scale_label),
-            labelStyle = LabelStyle.COMPACT,
-        ) {
-            RowItem {
-                Slider(
-                    steps = fontScales.size - 2,
-                    valueRange = 0f..(fontScales.size - 1).toFloat(),
-                    value = options.fontScale.ordinal.toFloat(),
-                    onValueChange = {
-                        options.updateFontScale(fontScales[it.roundToInt()])
-                    }
-                )
-            }
-        }
-
+    FormSection(
+        title = stringResource(R.string.article_font_scale_label),
+        labelStyle = LabelStyle.COMPACT,
+    ) {
         RowItem {
-            TextSwitch(
-                onCheckedChange = options.updateFeedName,
-                checked = options.showFeedName,
-                title = stringResource(R.string.settings_article_list_feed_name)
-            )
-            TextSwitch(
-                onCheckedChange = options.updateFeedIcons,
-                checked = options.showFeedIcons,
-                title = stringResource(R.string.settings_article_list_feed_icons)
-            )
-            TextSwitch(
-                onCheckedChange = options.updateSummary,
-                checked = options.showSummary,
-                title = stringResource(R.string.settings_article_list_summary)
-            )
-            TextSwitch(
-                onCheckedChange = options.updateShortenTitles,
-                checked = options.shortenTitles,
-                title = stringResource(R.string.settings_article_list_shorten_titles)
+            Slider(
+                steps = fontScales.size - 2,
+                valueRange = 0f..(fontScales.size - 1).toFloat(),
+                value = viewModel.fontScale.ordinal.toFloat(),
+                onValueChange = {
+                    viewModel.updateFontScale(fontScales[it.roundToInt()])
+                }
             )
         }
+    }
+}
 
-        PreferenceSelect(
-            selected = options.imagePreview,
-            update = options.updateImagePreview,
-            options = ImagePreview.sorted,
-            label = R.string.image_preview_label,
-            disabledOption = ImagePreview.NONE,
-            optionText = {
-                stringResource(id = it.translationKey)
-            }
+@Composable
+fun ShowFeedNameRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateFeedName,
+            checked = viewModel.showFeedName,
+            title = stringResource(R.string.settings_article_list_feed_name)
         )
     }
 }
 
 @Composable
-private fun PreviewArticleRow(options: ArticleListOptions) {
-    val rowOptions = ArticleRowOptions(
-        showIcon = options.showFeedIcons,
-        showSummary = options.showSummary,
-        showFeedName = options.showFeedName,
-        imagePreview = options.imagePreview,
-        fontScale = options.fontScale,
-        shortenTitles = options.shortenTitles,
-        dim = false,
+fun ShowFeedIconsRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateFeedIcons,
+            checked = viewModel.showFeedIcons,
+            title = stringResource(R.string.settings_article_list_feed_icons)
+        )
+    }
+}
+
+@Composable
+fun ShowSummaryRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateSummary,
+            checked = viewModel.showSummary,
+            title = stringResource(R.string.settings_article_list_summary)
+        )
+    }
+}
+
+@Composable
+fun ShortenTitlesRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateShortenTitles,
+            checked = viewModel.shortenTitles,
+            title = stringResource(R.string.settings_article_list_shorten_titles)
+        )
+    }
+}
+
+@Composable
+fun ImagePreviewRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.imagePreview,
+        update = viewModel::updateImagePreview,
+        options = ImagePreview.sorted,
+        label = R.string.image_preview_label,
+        disabledOption = ImagePreview.NONE,
+        optionText = {
+            stringResource(id = it.translationKey)
+        }
     )
+}
+
+@Composable
+fun ListSwipeStartRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.rowSwipeStart,
+        update = viewModel::updateRowSwipeStart,
+        options = RowSwipeOption.sorted,
+        label = R.string.settings_gestures_list_row_swipe_start,
+        disabledOption = RowSwipeOption.DISABLED,
+        optionText = { stringResource(it.translationKey) }
+    )
+}
+
+@Composable
+fun ListSwipeEndRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.rowSwipeEnd,
+        update = viewModel::updateRowSwipeEnd,
+        options = RowSwipeOption.sorted,
+        label = R.string.settings_gestures_list_row_swipe_end,
+        disabledOption = RowSwipeOption.DISABLED,
+        optionText = { stringResource(it.translationKey) }
+    )
+}
+
+@Composable
+fun ListSwipeUpRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.listSwipeBottom,
+        update = viewModel::updateListSwipeBottom,
+        options = ArticleListVerticalSwipe.entries,
+        label = R.string.settings_gestures_list_swipe_up,
+        disabledOption = ArticleListVerticalSwipe.DISABLED,
+        optionText = { stringResource(it.translationKey) }
+    )
+}
+
+@Composable
+fun BackActionRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.backAction,
+        update = viewModel::updateBackAction,
+        options = BackAction.entries,
+        label = R.string.settings_gestures_list_back_navigation_action,
+        optionText = { stringResource(it.translationKey) }
+    )
+}
+
+@Composable
+fun MarkReadOnScrollRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateMarkReadOnScroll,
+            checked = viewModel.markReadOnScroll,
+            title = stringResource(R.string.settings_mark_read_on_scroll),
+        )
+    }
+}
+
+@Composable
+fun ConfirmMarkAllReadRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateConfirmMarkAllRead,
+            checked = viewModel.confirmMarkAllRead,
+            title = stringResource(R.string.settings_confirm_mark_all_read),
+        )
+    }
+}
+
+@Composable
+fun AfterReadAllRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.afterReadAll,
+        update = viewModel::updateAfterReadAll,
+        options = AfterReadAllBehavior.entries,
+        label = R.string.after_read_all_behavior_label,
+        optionText = {
+            stringResource(id = it.translationKey)
+        }
+    )
+}
+
+@Composable
+fun FiltersRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    val keywords by viewModel.filterKeywords.collectAsStateWithLifecycle()
+
+    val filterKeywords = FilterKeywords(
+        keywords = keywords.toList().sortedWith(compareBy(CASE_INSENSITIVE_ORDER) { it }),
+        remove = viewModel::removeFilterKeyword,
+        add = viewModel::addFilterKeyword,
+    )
+
+    CompositionLocalProvider(LocalFilterKeywords provides filterKeywords) {
+        FiltersItem()
+    }
+}
+
+@Composable
+private fun PreviewArticleRow(rowOptions: ArticleRowOptions) {
     val colors = ListItemDefaults.colors()
     val overlineColor = colors.overlineContentColor
 
@@ -152,7 +268,7 @@ private fun PreviewArticleRow(options: ArticleListOptions) {
             headlineContent = {
                 Text(
                     text = PREVIEW_TITLE,
-                    maxLines = if (options.shortenTitles) 3 else Int.MAX_VALUE,
+                    maxLines = if (rowOptions.shortenTitles) 3 else Int.MAX_VALUE,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Bold,
                 )
@@ -165,7 +281,7 @@ private fun PreviewArticleRow(options: ArticleListOptions) {
                         .fillMaxWidth()
                         .padding(bottom = 2.dp)
                 ) {
-                    if (options.showFeedName) {
+                    if (rowOptions.showFeedName) {
                         Text(
                             text = PREVIEW_FEED_NAME,
                             color = overlineColor,
@@ -182,34 +298,34 @@ private fun PreviewArticleRow(options: ArticleListOptions) {
                     )
                 }
             },
-            supportingContent = if (options.showSummary || options.imagePreview == ImagePreview.LARGE) {
+            supportingContent = if (rowOptions.showSummary || rowOptions.imagePreview == ImagePreview.LARGE) {
                 {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                         modifier = Modifier.padding(vertical = 4.dp),
                     ) {
-                        if (options.showSummary) {
+                        if (rowOptions.showSummary) {
                             Text(
                                 text = PREVIEW_SUMMARY,
                                 maxLines = 2,
                                 overflow = TextOverflow.Ellipsis,
                             )
                         }
-                        if (options.imagePreview == ImagePreview.LARGE) {
-                            PreviewImage(imagePreview = options.imagePreview)
+                        if (rowOptions.imagePreview == ImagePreview.LARGE) {
+                            PreviewImage(imagePreview = rowOptions.imagePreview)
                         }
                     }
                 }
             } else {
                 null
             },
-            leadingContent = if (options.showFeedIcons) {
+            leadingContent = if (rowOptions.showIcon) {
                 { FaviconBadge(url = null) }
             } else {
                 null
             },
-            trailingContent = if (options.imagePreview.showInline()) {
-                { PreviewImage(imagePreview = options.imagePreview) }
+            trailingContent = if (rowOptions.imagePreview.showInline()) {
+                { PreviewImage(imagePreview = rowOptions.imagePreview) }
             } else {
                 null
             },
@@ -272,21 +388,16 @@ private const val PREVIEW_SUMMARY = "Sed do eiusmod tempor incididunt ut labore 
 
 @Preview
 @Composable
-private fun ArticleListSettingsPreview() {
-    ArticleListSettings(
-        options = ArticleListOptions(
-            imagePreview = ImagePreview.default,
+private fun PreviewArticleRowPreview() {
+    PreviewArticleRow(
+        rowOptions = ArticleRowOptions(
+            showIcon = true,
             showSummary = true,
-            showFeedIcons = true,
-            fontScale = ArticleListFontScale.LARGE,
             showFeedName = false,
+            imagePreview = ImagePreview.default,
+            fontScale = ArticleListFontScale.LARGE,
             shortenTitles = true,
-            updateImagePreview = {},
-            updateSummary = {},
-            updateFeedName = {},
-            updateFeedIcons = {},
-            updateFontScale = {},
-            updateShortenTitles = {},
+            dim = false,
         )
     )
 }

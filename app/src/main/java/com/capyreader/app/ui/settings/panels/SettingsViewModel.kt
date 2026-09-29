@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val account: Account,
 ) : ViewModel() {
+    val source = account.source
     val feeds = account.allFeeds
 
     fun toggleNotifications(feedID: String, enabled: Boolean) {

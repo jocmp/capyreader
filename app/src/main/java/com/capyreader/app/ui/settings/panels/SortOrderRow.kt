@@ -23,27 +23,33 @@ import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.articles.ArticleStatusIcon
 import com.capyreader.app.ui.articles.iconSize
-import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.navigationTitle
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.articles.SortOrder
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SortOrderSection(
+fun SortOrderSetting(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    SortOrderRows(
+        sortOrders = viewModel.sortOrders,
+        update = viewModel::updateSortOrder,
+    )
+}
+
+@Composable
+private fun SortOrderRows(
     sortOrders: Map<ArticleStatus, SortOrder>,
     update: (status: ArticleStatus, sortOrder: SortOrder) -> Unit,
 ) {
-    FormSection(title = stringResource(R.string.article_list_sort_title)) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ArticleStatus.entries.forEach { status ->
-                RowItem {
-                    SortOrderRow(
-                        status = status,
-                        selected = sortOrders.getValue(status),
-                        update = { update(status, it) },
-                    )
-                }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        ArticleStatus.entries.forEach { status ->
+            RowItem {
+                SortOrderRow(
+                    status = status,
+                    selected = sortOrders.getValue(status),
+                    update = { update(status, it) },
+                )
             }
         }
     }
@@ -102,10 +108,10 @@ private fun translationKey(sortOrder: SortOrder) =
 
 @Preview
 @Composable
-private fun SortOrderSectionPreview() {
+private fun SortOrderRowsPreview() {
     CapyTheme {
         Surface {
-            SortOrderSection(
+            SortOrderRows(
                 sortOrders = mapOf(
                     ArticleStatus.ALL to SortOrder.NEWEST_FIRST,
                     ArticleStatus.UNREAD to SortOrder.OLDEST_FIRST,
