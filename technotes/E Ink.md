@@ -5,7 +5,7 @@ Display & Appearance > E Ink groups three settings. On a detected E Ink device, 
 | Setting            | Preference                             | Effect                                                         |
 |--------------------|----------------------------------------|----------------------------------------------------------------|
 | Reduce animations  | `reduce_motion`                        | Every Compose animation in `MainActivity` finishes instantly   |
-| Tap to turn pages  | `article_enable_paging_tap_gesture`    | Left third of the reader goes back a page, right third forward |
+| Tap to turn pages  | `article_enable_paging_tap_gesture`    | Left quarter goes back a page, right quarter forward           |
 | Page turn buttons  | `article_enable_page_turn_keys`        | Volume keys, Page Up/Down, and arrow keys turn pages           |
 
 The tap preference key predates this work (it was "E Ink tap to scroll", bottom-corner zones that jumped 96% of the screen), so existing users keep their setting.
@@ -35,7 +35,11 @@ The article header (title, byline) doesn't register lines. It only affects the f
 
 ## Taps
 
-`pageTapZones` reads taps in `PointerEventPass.Final` and ignores any tap a child consumed. Links, images, and buttons in the zones keep working. Long presses are ignored so text selection still works. A tap in the middle third toggles the toolbars (and the system navigation bar), since in page mode there's no scroll to bring them back.
+Kindle's zones: a strip about half an inch wide on the left goes back, a band about 1.25" tall across the top opens the menus, and the rest (about 80%) goes forward. Links and images there open on tap.
+
+Capy uses a left and right quarter. The edges always turn the page, even over a link or image: `pageTapZones` reads them in `PointerEventPass.Initial` and consumes the up, so the child's click never fires. Deferring to children made page taps easy to miss, since articles are dense with links and wide images. The middle half reads taps in `PointerEventPass.Final` and only acts on taps no child consumed, so links and images open there. A plain tap in the middle toggles the toolbars (and the system navigation bar), since in page mode there's no scroll to bring them back.
+
+Drags past touch slop and long presses are ignored in every zone, so scrolling and text selection still work from the edges.
 
 ## Keys
 

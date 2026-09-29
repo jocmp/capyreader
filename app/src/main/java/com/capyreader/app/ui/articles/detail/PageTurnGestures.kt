@@ -16,7 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.AwaitPointerEventScope
 import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
@@ -93,35 +96,61 @@ private fun Modifier.pageTapZones(
 
     return pointerInput(onTurn, onCenterTap) {
         awaitEachGesture {
-            val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Final)
+            val down = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+            val direction = edgeDirection(down.position.x / size.width)
 
-            if (down.isConsumed) {
-                return@awaitEachGesture
-            }
+            if (direction != null) {
+                val up = awaitEdgeTap(down) ?: return@awaitEachGesture
 
-            val up = waitForUpOrCancellation(pass = PointerEventPass.Final)
-
-            if (up == null || up.isConsumed) {
-                return@awaitEachGesture
-            }
-
-            val isLongPress = up.uptimeMillis - down.uptimeMillis > viewConfiguration.longPressTimeoutMillis
-
-            if (isLongPress) {
-                return@awaitEachGesture
-            }
-
-            val zone = up.position.x / size.width
-
-            if (zone < EDGE_ZONE) {
-                onTurn(PageDirection.BACK)
-            } else if (zone > 1f - EDGE_ZONE) {
-                onTurn(PageDirection.FORWARD)
-            } else {
+                up.consume()
+                onTurn(direction)
+            } else if (awaitUnhandledTap(down)) {
                 onCenterTap()
             }
         }
     }
+}
+
+private suspend fun AwaitPointerEventScope.awaitEdgeTap(down: PointerInputChange): PointerInputChange? {
+    while (true) {
+        val event = awaitPointerEvent(PointerEventPass.Initial)
+        val change = event.changes.firstOrNull { it.id == down.id } ?: return null
+        val distance = (change.position - down.position).getDistance()
+
+        if (distance > viewConfiguration.touchSlop || isLongPress(down, change)) {
+            return null
+        }
+
+        if (change.changedToUp()) {
+            return change
+        }
+    }
+}
+
+private suspend fun AwaitPointerEventScope.awaitUnhandledTap(down: PointerInputChange): Boolean {
+    val up = waitForUpOrCancellation(pass = PointerEventPass.Final)
+
+    if (up == null || up.isConsumed || isLongPress(down, up)) {
+        return false
+    }
+
+    return true
+}
+
+private fun AwaitPointerEventScope.isLongPress(down: PointerInputChange, change: PointerInputChange): Boolean {
+    return change.uptimeMillis - down.uptimeMillis > viewConfiguration.longPressTimeoutMillis
+}
+
+private fun edgeDirection(zone: Float): PageDirection? {
+    if (zone < EDGE_ZONE) {
+        return PageDirection.BACK
+    }
+
+    if (zone > 1f - EDGE_ZONE) {
+        return PageDirection.FORWARD
+    }
+
+    return null
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -150,4 +179,4 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
     }
 }
 
-private const val EDGE_ZONE = 1f / 3f
+private const val EDGE_ZONE = 1f / 4f
