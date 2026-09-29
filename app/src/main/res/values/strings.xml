@@ -306,6 +306,7 @@
     <string name="media_share_failure">Failed to share image</string>
     <string name="media_share">Share</string>
     <string name="feed_nav_drawer_refresh_all">Refresh all</string>
+    <string name="feed_nav_drawer_open">Open navigation drawer</string>
     <string name="filters_title">Filters</string>
     <string name="filters_supporting_text">Remove articles with title or content keyword matches</string>
     <string name="filters_remove_keyword">Remove keyword</string>

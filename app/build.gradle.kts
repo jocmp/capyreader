@@ -193,6 +193,7 @@ dependencies {
     androidTestImplementation(libs.tests.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.tests.androidx.ui.junit4)
+    androidTestImplementation(libs.tests.androidx.uiautomator)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.tests.androidx.ui.manifest)
 }
