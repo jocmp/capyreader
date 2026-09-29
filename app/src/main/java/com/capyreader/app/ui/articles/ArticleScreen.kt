@@ -795,6 +795,7 @@ private fun MarkReadOnScroll(
         .collectChangesWithCurrent()
 
     val currentArticles by rememberUpdatedState(articles)
+    val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
 
     if (enabled) {
         LaunchedEffect(listState) {
@@ -821,11 +822,11 @@ private fun MarkReadOnScroll(
                     CapyLog.debug(
                         "mark_read_on_scroll:collect", mapOf(
                             "scrolledPastIndex" to scrolledPastIndex,
-                            "highWaterMark" to scrollHighWaterMark,
+                            "highWaterMark" to currentHighWaterMark,
                             "itemCount" to currentArticles.itemCount,
                         )
                     )
-                    if (scrolledPastIndex > scrollHighWaterMark && scrolledPastIndex < currentArticles.itemCount) {
+                    if (scrolledPastIndex > currentHighWaterMark && scrolledPastIndex < currentArticles.itemCount) {
                         updateScrollHighWaterMark(scrolledPastIndex)
                         val boundaryArticle = currentArticles[scrolledPastIndex]
                         if (boundaryArticle != null) {
