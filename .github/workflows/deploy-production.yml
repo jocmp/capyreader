@@ -34,7 +34,9 @@ jobs:
           ENCODED_GOOGLE_PLAY_CREDENTIALS: ${{ secrets.ENCODED_GOOGLE_PLAY_CREDENTIALS }}
           ENCODED_GOOGLE_SERVICES: ${{ secrets.ENCODED_GOOGLE_SERVICES }}
           ENCODED_RELEASE_KEYSTORE: ${{ secrets.ENCODED_RELEASE_KEYSTORE }}
-          ENCODED_SECRETS_PROPERTIES: ${{ secrets.ENCODED_SECRETS_PROPERTIES }}
+          PROP_KEY_ALIAS: ${{ secrets.PROP_KEY_ALIAS }}
+          PROP_KEY_PASSWORD: ${{ secrets.PROP_KEY_PASSWORD }}
+          PROP_STORE_PASSWORD: ${{ secrets.PROP_STORE_PASSWORD }}
         run: make deploy-production
       - name: Sync versioning to Main
         run: git push --follow-tags

@@ -31,6 +31,7 @@ bench/data/
 google-play-service-account.json
 app/google-services.json
 secrets.properties
+.envrc
 release.keystore
 
 # Build

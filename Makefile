@@ -36,7 +36,11 @@ release-secrets: shared-release-secrets
 shared-release-secrets:
 	echo ${ENCODED_GOOGLE_SERVICES} | base64 --decode > ./app/google-services.json
 	echo ${ENCODED_RELEASE_KEYSTORE} | base64 --decode > ./release.keystore
-	echo ${ENCODED_SECRETS_PROPERTIES} | base64 --decode > ./secrets.properties
+	: > ./secrets.properties
+	for name in $$(compgen -e | grep '^PROP_'); do \
+		key=$$(echo "$${name#PROP_}" | tr '[:upper:]' '[:lower:]'); \
+		echo "$$key=$${!name}" >> ./secrets.properties; \
+	done
 
 .PHONY: bench-profile
 bench-profile: ## Run refresh profile benchmark
