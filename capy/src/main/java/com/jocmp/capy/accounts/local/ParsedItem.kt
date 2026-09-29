@@ -4,6 +4,7 @@ import com.jocmp.capy.Enclosure
 import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.stripTitleMarkup
 import com.jocmp.capy.common.unescapingHTMLCharacters
+import com.jocmp.capy.common.unwrapCDATA
 import com.jocmp.rssparser.model.RssItem
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
@@ -67,7 +68,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
             if (it.isBlank()) {
                 null
             } else {
-                Jsoup.clean(it, Safelist.none())
+                Jsoup.clean(it.unwrapCDATA(), Safelist.none())
             }
         }
 

@@ -11,9 +11,6 @@ private val VOID_ELEMENTS = setOf(
 )
 
 private val OPEN_TAG_REGEX = Regex("<([a-zA-Z][a-zA-Z0-9]*)(?:\\s[^>]*)?(?<!/)>")
-
-private val CDATA_REGEX = Regex("<!\\[CDATA\\[(.*?)]]>", RegexOption.DOT_MATCHES_ALL)
-
 /**
  * Strips embedded HTML from a title (some feeds put real markup, e.g. `<i>`, directly in
  * the title). Some feeds also put literal tag-shaped text in titles that was never meant as
@@ -23,7 +20,7 @@ private val CDATA_REGEX = Regex("<!\\[CDATA\\[(.*?)]]>", RegexOption.DOT_MATCHES
  * whole title as plain text and only decode entities, instead of risking that data loss.
  */
 fun String.stripTitleMarkup(): String {
-    val title = CDATA_REGEX.replace(this) { it.groupValues[1] }
+    val title = unwrapCDATA()
 
     val hasUnclosedTag = OPEN_TAG_REGEX.findAll(title).any { match ->
         val tagName = match.groupValues[1].lowercase()
