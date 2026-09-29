@@ -264,18 +264,10 @@
     <string name="widget_headlines_see_more_button">Вижте още статии</string>
     <string name="widget_headlines_account_error">Първо добавете акаунт</string>
     <string name="widget_receiver_headlines_title">Заглавия</string>
-    <string name="settings_gestures_improve_talkback_title">Подобряване на TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Деактивира някои настройки за подобряване на преобразуването на текст в реч на TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Фиксирана лента с инструменти</string>
     <string name="add_account_miniflux_signup_prompt">Не разполагате с инстанция на Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Научете повече.</string>
-    <string name="mark_read_position_toolbar">Лента с инструменти</string>
-    <string name="mark_read_position_floating_action_button">Плаващ бутон за действие</string>
-    <string name="mark_all_read_button_position">Позиция на бутона „Маркирай всички прочетени“</string>
-    <string name="settings_display_miscellaneous_title">Разни</string>
     <string name="open_articles_in_browser">Отваряне на статии в браузъра</string>
-    <string name="auth_fields_client_certificate">Клиентски сертификат (по избор)</string>
-    <string name="auth_fields_remove_client_cert">Премахване на клиентски сертификат</string>
     <string name="selected">Избрано</string>
     <string name="theme_mode_system">Система</string>
     <string name="theme_mode_light">Светла</string>
@@ -305,7 +297,6 @@
     <string name="auth_fields_miniflux_api_token">API токен</string>
     <string name="auth_fields_miniflux_use_api_token">Използвайте API токен вместо това</string>
     <string name="auth_fields_miniflux_use_password">Използвайте парола вместо това</string>
-    <string name="auth_fields_show_advanced">Разширени опции</string>
     <string name="auth_fields_hide_advanced">Скриване на разширени опции</string>
     <string name="settings_panel_unread_counts_title">Непрочетени значки</string>
     <string name="settings_option_badge_style">Стил на значката</string>

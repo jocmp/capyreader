@@ -82,11 +82,9 @@
     <string name="auth_fields_email">אימייל</string>
     <string name="auth_fields_username">שם משתמש</string>
     <string name="auth_fields_api_url">שרת</string>
-    <string name="auth_fields_client_certificate">תעודת לקוח (אופציונלי)</string>
     <string name="auth_fields_hide_password">הסתר סיסמא</string>
     <string name="auth_fields_show_password">גלה סיסמא</string>
     <string name="auth_fields_log_in_button">התחבר</string>
-    <string name="auth_fields_remove_client_cert">הסר תעודת לקוח</string>
     <string name="settings_top_bar_title">אפשרויות</string>
     <string name="update_auth_success_message">התחברת בהצלחה</string>
     <string name="crash_reporting_checkbox_title">אפשר דיווח תקלות</string>
@@ -268,12 +266,6 @@
     <string name="widget_headlines_title">כותרות אחרונות</string>
     <string name="widget_headlines_see_more_button">הצג עוד מאמרים</string>
     <string name="widget_headlines_account_error">הוסף חשבון תחילה</string>
-    <string name="settings_gestures_improve_talkback_title">שפר TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">בטל אפשרויות כדי לשפר TalkBack text-to-speech</string>
-    <string name="mark_read_position_toolbar">תפריט כלים</string>
-    <string name="mark_read_position_floating_action_button">כפתור פעולה מרחף</string>
-    <string name="mark_all_read_button_position">מיקום כפתור סמן הכל כנקרא</string>
-    <string name="settings_display_miscellaneous_title">שונות</string>
     <string name="article_byline">%1$s ב-%2$s על ידי %3$s</string>
     <string name="article_byline_date_only">%1$s ב- %2$s</string>
     <string name="settings_gestures_reader_tap_to_page_title">הקש בדיו אלקטרוני כדי לגלול</string>
@@ -308,7 +300,6 @@
     <string name="auth_fields_miniflux_api_token">טוקן API</string>
     <string name="auth_fields_miniflux_use_api_token">השתמש בטוקן API במקום</string>
     <string name="auth_fields_miniflux_use_password">השתמש בסיסמה במקום</string>
-    <string name="auth_fields_show_advanced">אפשרויות מתקדמות</string>
     <string name="auth_fields_hide_advanced">הסתר אפשרויות מתקדמות</string>
     <string name="freshrss_visibility_option_important">חשוב</string>
     <string name="freshrss_visibility_option_folder">קטגוריה</string>

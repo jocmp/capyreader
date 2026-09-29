@@ -9,6 +9,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.flowOf
 import com.capyreader.app.R
 import com.capyreader.app.common.isOnWifi
 import com.capyreader.app.common.toast
@@ -22,6 +24,7 @@ import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
@@ -38,17 +41,22 @@ import com.jocmp.capy.common.withUIContext
 import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import kotlin.time.Duration
@@ -60,12 +68,11 @@ class ArticleScreenViewModel(
     private val appPreferences: AppPreferences,
     private val application: Application,
     private val notificationHelper: NotificationHelper,
+    private val articleCutoff: ArticleSessionCutoff,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
-
-    private var fullContentJob: Job? = null
 
     var refreshSkipReason by mutableStateOf<RefreshSkipReason?>(null)
         private set
@@ -74,7 +81,13 @@ class ArticleScreenViewModel(
         refreshSkipReason = null
     }
 
-    val filter = appPreferences.filter.stateIn(viewModelScope)
+    private val listSession = MutableStateFlow(
+        ListSession(filter = appPreferences.filter.get(), since = OffsetDateTime.now())
+    )
+
+    private val _filter = MutableStateFlow(listSession.value.filter)
+
+    val filter: StateFlow<ArticleFilter> = _filter
 
     val listSwipeBottom =
         appPreferences.articleListOptions.swipeBottom.stateIn(viewModelScope)
@@ -82,8 +95,6 @@ class ArticleScreenViewModel(
     private val _searchQuery = MutableStateFlow("")
 
     private val _searchState = MutableStateFlow(SearchState.INACTIVE)
-
-    private var _article by mutableStateOf<Article?>(null)
 
     private val _refreshAllState = MutableStateFlow(AngleRefreshState.STOPPED)
 
@@ -107,8 +118,6 @@ class ArticleScreenViewModel(
     val markReadOnScrollEnabled: Boolean
         get() = appPreferences.articleListOptions.markReadOnScroll.get()
 
-    val articlesSince = MutableStateFlow<OffsetDateTime>(OffsetDateTime.now())
-
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
     val sortOrder = appPreferences.articleListOptions.sortOrder.stateIn(viewModelScope)
@@ -124,20 +133,48 @@ class ArticleScreenViewModel(
         account.countAllBySavedSearch(latestFilter.status)
     }
 
-    val articles: Flow<PagingData<Article>> =
-        combine(
-            filter,
-            _searchQuery,
-            articlesSince,
-            sortOrder
-        ) { filter, query, since, sort ->
-            account.buildArticlePager(
-                filter = filter,
-                query = query,
-                sortOrder = sort,
-                since = since
-            ).flow
-        }.flatMapLatest { it }
+    // The list pager is filter-only: it must stay in lockstep with the reader's neighbor query
+    // (which keys off the persisted filter), so search no longer participates here.
+    private var articleListScope: CoroutineScope? = null
+
+    private var articleListKey = listPagerKey(listSession.value, sortOrder.value)
+
+    private val _articleList = MutableStateFlow(buildArticleList(articleListKey))
+
+    val articleList: StateFlow<ArticleListPage> = _articleList
+
+    // Search has its own pager so it can filter freely without disturbing the list above.
+    val searchResults: Flow<PagingData<Article>> =
+        combine(_searchQuery, listSession, sortOrder) { query, session, sort ->
+            ArticlePagerKey(filter = session.filter, query = query, since = session.since, sort = sort)
+        }.flatMapLatest { key ->
+            if (key.query.isNullOrBlank()) flowOf(PagingData.empty()) else pagerFlow(key)
+        }.cachedIn(viewModelScope)
+
+    private fun listPagerKey(session: ListSession, sort: SortOrder) =
+        ArticlePagerKey(filter = session.filter, query = null, since = session.since, sort = sort)
+
+    private fun buildArticleList(key: ArticlePagerKey): ArticleListPage {
+        articleListScope?.cancel()
+
+        val parent = viewModelScope.coroutineContext
+        val scope = CoroutineScope(parent + SupervisorJob(parent.job))
+        articleListScope = scope
+        articleListKey = key
+
+        return ArticleListPage(
+            filter = key.filter,
+            articles = pagerFlow(key).cachedIn(scope),
+        )
+    }
+
+    private fun pagerFlow(key: ArticlePagerKey): Flow<PagingData<Article>> =
+        account.buildArticlePager(
+            filter = key.filter,
+            query = key.query,
+            sortOrder = key.sort,
+            since = key.since,
+        ).flow
 
     val folders: Flow<List<Folder>> = combine(
         account.folders,
@@ -272,9 +309,6 @@ class ArticleScreenViewModel(
     val showUnauthorizedMessage: Boolean
         get() = _showUnauthorizedMessage == UnauthorizedMessageState.SHOW
 
-    val article: Article?
-        get() = _article
-
     val searchQuery: Flow<String>
         get() = _searchQuery
 
@@ -284,6 +318,22 @@ class ArticleScreenViewModel(
     val nextFilter: Flow<SidebarItem?> = _sidebarItem.map { it?.next }
 
     init {
+        viewModelScope.launch {
+            combine(listSession, sortOrder, ::listPagerKey).collect { key ->
+                if (key != articleListKey) {
+                    _articleList.value = buildArticleList(key)
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            appPreferences.filter.changes().collect { persisted ->
+                if (persisted != latestFilter) {
+                    applyFilter(persisted)
+                }
+            }
+        }
+
         viewModelScope.launch {
             sidebarListener.collect {
                 _sidebarItem.value = it
@@ -363,6 +413,7 @@ class ArticleScreenViewModel(
                 range = range,
                 sortOrder = sortOrder.value,
                 query = query,
+                since = listSession.value.since,
             )
 
             account.markAllRead(articleIDs)
@@ -407,12 +458,18 @@ class ArticleScreenViewModel(
 
     fun removeFeed(
         feedID: String,
+        completion: (result: Result<Unit>) -> Unit,
     ) {
         viewModelScope.launchIO {
-            account.removeFeed(feedID = feedID)
-                .onSuccess {
+            account.removeFeed(feedID = feedID).fold(
+                onSuccess = {
                     resetToDefaultFilter()
+                    completion(Result.success(Unit))
+                },
+                onFailure = {
+                    completion(Result.failure(it))
                 }
+            )
         }
     }
 
@@ -555,6 +612,7 @@ class ArticleScreenViewModel(
                 range = range,
                 sortOrder = sortOrder.value,
                 query = _searchQuery.value,
+                since = listSession.value.since,
             )
 
             CapyLog.debug(
@@ -570,65 +628,8 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticle(articleID: String, onComplete: (article: Article) -> Unit = {}) {
-        if (_article?.id == articleID) {
-            return
-        }
-
-        viewModelScope.launchIO {
-            val article = buildArticle(articleID) ?: return@launchIO
-            _article = article
-
-            launchIO {
-                markRead(articleID)
-            }
-
-            launchUI {
-                onComplete(article)
-            }
-
-            if (article.fullContent == Article.FullContentState.LOADING) {
-                fullContentJob?.cancel()
-
-                fullContentJob = viewModelScope.launchIO { fetchFullContent(article) }
-            }
-        }
-    }
-
-    fun toggleArticleRead() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.read) {
-                    markUnread(article.id)
-                } else {
-                    markRead(article.id)
-                }
-            }
-
-            _article = article.copy(read = !article.read)
-        }
-    }
-
-    fun toggleArticleStar() {
-        _article?.let { article ->
-            viewModelScope.launch {
-                if (article.starred) {
-                    removeStar(article.id)
-                } else {
-                    addStar(article.id)
-                }
-
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
     fun dismissUnauthorizedMessage() {
         _showUnauthorizedMessage = UnauthorizedMessageState.LATER
-    }
-
-    fun clearArticle() {
-        _article = null
     }
 
     fun startSearch() {
@@ -636,37 +637,29 @@ class ArticleScreenViewModel(
     }
 
     fun clearSearch() {
-        if (_searchQuery.value.isNotBlank()) {
-            clearArticle()
-        }
         _searchQuery.value = ""
         _searchState.value = SearchState.INACTIVE
         resetScrollHighWaterMark()
     }
 
     fun updateSearch(query: String) {
-        clearArticle()
         _searchQuery.value = query
         resetScrollHighWaterMark()
     }
 
     fun addStarAsync(articleID: String) {
-        toggleCurrentStarred(articleID)
         addStar(articleID)
     }
 
     fun removeStarAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentStarred(articleID)
         removeStar(articleID)
     }
 
     fun markReadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
         markRead(articleID)
     }
 
     fun markUnreadAsync(articleID: String) = viewModelScope.launchIO {
-        toggleCurrentRead(articleID)
         markUnread(articleID)
     }
 
@@ -702,33 +695,29 @@ class ArticleScreenViewModel(
         updateFilter(ArticleFilter.default())
     }
 
-    private fun toggleCurrentStarred(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(starred = !article.starred)
-            }
-        }
-    }
-
-    private fun toggleCurrentRead(articleID: String) {
-        _article?.let { article ->
-            if (articleID == article.id) {
-                _article = article.copy(read = !article.read)
-            }
-        }
-    }
-
     private fun updateFilter(filter: ArticleFilter) {
-        appPreferences.filter.set(filter)
+        applyFilter(filter)
 
-        clearArticle()
+        appPreferences.filter.set(filter)
+    }
+
+    private fun applyFilter(filter: ArticleFilter) {
+        _filter.value = filter
+
         resetScrollHighWaterMark()
 
-        updateArticlesSince()
+        startListSession(filter)
     }
 
     private fun updateArticlesSince() {
-        articlesSince.value = OffsetDateTime.now().plusSeconds(1)
+        startListSession(latestFilter)
+    }
+
+    private fun startListSession(filter: ArticleFilter) {
+        val session = ListSession(filter = filter, since = OffsetDateTime.now().plusSeconds(1))
+        listSession.value = session
+        // Share the list's session cutoff so the reader's neighbor pinning matches the list exactly.
+        articleCutoff.set(session.since)
     }
 
     private fun copyFolderCounts(
@@ -753,91 +742,6 @@ class ArticleScreenViewModel(
         counts: Map<String, Long>
     ): SavedSearch {
         return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
-    }
-
-    private suspend fun buildArticle(articleID: String): Article? {
-        val article = account.findArticle(articleID = articleID) ?: return null
-
-        val fullContent = if (enableStickyFullContent && article.enableStickyFullContent) {
-            Article.FullContentState.LOADING
-        } else {
-            Article.FullContentState.NONE
-        }
-
-        val content = when (fullContent) {
-            Article.FullContentState.LOADING -> ""
-            else -> article.defaultContent
-        }
-
-        return article.copy(
-            read = true,
-            content = content,
-            fullContent = fullContent
-        )
-    }
-
-    fun fetchFullContentAsync(article: Article? = _article) {
-        article ?: return
-
-        viewModelScope.launchIO {
-            if (enableStickyFullContent && !account.isFullContentEnabled(feedID = article.feedID)) {
-                account.enableStickyContent(article.feedID)
-            }
-
-            _article = article.copy(fullContent = Article.FullContentState.LOADING)
-
-            _article?.let { fetchFullContent(it) }
-        }
-    }
-
-    fun resetFullContent() {
-        val article = _article ?: return
-
-        _article = article.copy(
-            content = article.defaultContent,
-            fullContent = Article.FullContentState.NONE
-        )
-
-        if (enableStickyFullContent) {
-            viewModelScope.launch {
-                account.disableStickyContent(article.feedID)
-            }
-        }
-    }
-
-    private suspend fun fetchFullContent(article: Article) {
-        account.fetchFullContent(article)
-            .fold(
-                onSuccess = { value ->
-                    if (_article?.id == article.id) {
-                        _article = article.copy(
-                            content = value,
-                            fullContent = Article.FullContentState.LOADED
-                        )
-                    }
-                },
-                onFailure = {
-                    if (_article?.id != article.id) {
-                        return
-                    }
-                    _article = article.copy(
-                        content = article.defaultContent,
-                        fullContent = Article.FullContentState.ERROR
-                    )
-
-                    CapyLog.warn(
-                        "full_content",
-                        mapOf(
-                            "error_type" to it::class.simpleName,
-                            "error_message" to it.message
-                        )
-                    )
-
-                    viewModelScope.launchUI {
-                        context.showFullContentErrorToast(it)
-                    }
-                }
-            )
     }
 
     private suspend fun openNextFeedOnAllRead(
@@ -896,8 +800,6 @@ class ArticleScreenViewModel(
     private val currentStatus: ArticleStatus
         get() = latestFilter.status
 
-    private val enableStickyFullContent: Boolean
-        get() = appPreferences.enableStickyFullContent.get()
     private val context: Context
         get() = application.applicationContext
 
@@ -962,3 +864,21 @@ fun countableStatus(filter: ArticleFilter): ArticleStatus {
         else -> UNREAD
     }
 }
+
+/** Reactive inputs that, when any changes, rebuild an article [PagingData] flow. */
+private data class ArticlePagerKey(
+    val filter: ArticleFilter,
+    val query: String?,
+    val since: OffsetDateTime,
+    val sort: SortOrder,
+)
+
+class ArticleListPage(
+    val filter: ArticleFilter,
+    val articles: Flow<PagingData<Article>>,
+)
+
+private data class ListSession(
+    val filter: ArticleFilter,
+    val since: OffsetDateTime,
+)

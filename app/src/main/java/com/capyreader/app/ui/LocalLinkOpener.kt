@@ -18,7 +18,7 @@ val LocalLinkOpener = compositionLocalOf { LinkOpener() }
 @Composable
 fun provideLinkOpener(context: Context, appPreferences: AppPreferences = koinInject()): LinkOpener {
     val openInternally by appPreferences.openLinksInternally.collectChangesWithDefault()
-    val openExternalAdjacent = !isCompact()
+    val openExternalAdjacent = !isSinglePane()
 
     return remember(openInternally, openExternalAdjacent) {
         LinkOpener { url ->

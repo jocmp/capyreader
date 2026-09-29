@@ -26,6 +26,8 @@ sqldelight {
 
 dependencies {
     implementation(libs.jsoup)
+    compileOnly(libs.jspecify)
+    api(project(":mallet"))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.retrofit)
@@ -36,6 +38,7 @@ dependencies {
     implementation(project(":minifluxclient"))
     implementation(project(":rssparser"))
     implementation(project(":readerclient"))
+    implementation(libs.mercury.parser)
     testImplementation(kotlin("test"))
     testImplementation(libs.sqldelight.sqlite.driver)
     testImplementation(libs.tests.junit)

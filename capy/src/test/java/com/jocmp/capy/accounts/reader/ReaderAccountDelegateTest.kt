@@ -9,7 +9,9 @@ import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
+import com.jocmp.capy.fixtures.ArticleFixture
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.fixtures.FolderFixture
 import com.jocmp.capy.logging.CapyLog
@@ -48,6 +50,8 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ReaderAccountDelegateTest {
@@ -222,6 +226,96 @@ class ReaderAccountDelegateTest {
     }
 
     @Test
+    fun refresh_removesSavedSearchArticlesMissingFromServer() = runTest {
+        val savedSearchID = chicagoTag.id
+        val keptItemRef = ItemRef("16")
+        val removedArticleID = "0000000000000001"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = keptItemRef.hexID,
+        )
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = removedArticleID,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread()
+        stubSavedSearchItemIDs(savedSearchID = savedSearchID, itemRefs = listOf(keptItemRef))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val articleIDs = database.saved_searchesQueries
+            .articlesBySavedSearchID(savedSearchID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(keptItemRef.hexID), actual = articleIDs)
+    }
+
+    @Test
+    fun refresh_keepsSavedSearchArticlesWhenLabelRequestFails() = runTest {
+        val savedSearchID = chicagoTag.id
+        val articleID = "0000000000000001"
+
+        database.saved_searchesQueries.upsertArticle(
+            saved_search_id = savedSearchID,
+            article_id = articleID,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread()
+
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = savedSearchID,
+                count = 10_000,
+            )
+        }.returns(Response.error(500, "Server Error".toResponseBody()))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val articleIDs = database.saved_searchesQueries
+            .articlesBySavedSearchID(savedSearchID)
+            .executeAsList()
+
+        assertEquals(expected = listOf(articleID), actual = articleIDs)
+    }
+
+    @Test
+    fun refresh_keepsUnreadArticlesWhenUnreadRequestFails() = runTest {
+        ArticleFixture(database).create(
+            feed = feedFixture.create(feedID = arsTechnica.id),
+            read = false,
+        )
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = Stream.ReadingList().id,
+                count = 10_000,
+                excludedStreamID = Stream.Read().id,
+            )
+        }.returns(Response.error(500, "Server Error".toResponseBody()))
+
+        delegate.refresh(ArticleFilter.default())
+
+        val unreadArticles = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsList()
+
+        assertEquals(expected = 1, actual = unreadArticles.size)
+    }
+
+    @Test
     fun refresh_feedOnly() = runTest {
         delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
 
@@ -246,6 +340,43 @@ class ReaderAccountDelegateTest {
             .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)
+    }
+
+    @Test
+    fun refresh_skipsArticlesPastAutoDeleteCutoff() = runTest {
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+
+        val id = "feed/2"
+        val oldReadItem = readItem.copy(
+            id = "tag:google.com,2005:reader/item/0000000000000003",
+            categories = listOf("user/-/state/com.google/read"),
+        )
+        val itemRefs = listOf(ItemRef("1"), ItemRef("2"), ItemRef("3"))
+
+        feedFixture.create(feedID = "feed/2")
+        feedFixture.create(feedID = "feed/3")
+        stubStarred()
+        stubUnread()
+        stubStreamItemsIDs(
+            itemRefs,
+            responseItems = listOf(unreadStarredItem, readItem, oldReadItem),
+            stream = Stream.Feed(id),
+        )
+
+        delegate.refresh(
+            ArticleFilter.Feeds(
+                feedID = id,
+                feedStatus = ArticleStatus.ALL,
+                folderTitle = ""
+            ),
+            cutoffDate = nowUTC(),
+        )
+
+        val articleRecords = ArticleRecords(database)
+
+        assertNotNull(articleRecords.find(unreadStarredItem.hexID))
+        assertNotNull(articleRecords.find(readItem.hexID))
+        assertNull(articleRecords.find(oldReadItem.hexID))
     }
 
     @Test
@@ -806,6 +937,22 @@ class ReaderAccountDelegateTest {
         coEvery { googleReader.tagList() }.returns(
             Response.success(TagListResult(tags))
         )
+
+        tags.filter { it.type == Tag.Type.TAG }.forEach {
+            stubSavedSearchItemIDs(savedSearchID = it.id)
+        }
+    }
+
+    private fun stubSavedSearchItemIDs(
+        savedSearchID: String,
+        itemRefs: List<ItemRef> = emptyList(),
+    ) {
+        coEvery {
+            googleReader.streamItemsIDs(
+                streamID = savedSearchID,
+                count = 10_000,
+            )
+        }.returns(Response.success(StreamItemIDsResult(itemRefs = itemRefs, continuation = null)))
     }
 
     private fun stubStarred(itemRefs: List<ItemRef> = emptyList()) {

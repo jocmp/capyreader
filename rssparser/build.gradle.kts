@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.okhttp.client)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.jsoup)
+    compileOnly(libs.jspecify)
     implementation(libs.moshi)
     implementation(libs.moshi.converter)
     ksp(libs.moshi.kotlin.codegen)

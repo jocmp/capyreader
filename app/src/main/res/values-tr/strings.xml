@@ -261,8 +261,6 @@
     <string name="account_source_reader">Reader</string>
     <string name="after_read_all_behavior_open_drawer">Gezinme Çekmecesini Aç</string>
     <string name="add_account_reader_subtitle">Kendi kendine barındırılan Google Reader API</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Talkback metnini iyileştirmek için bazı ayarları devre dışı bırakır</string>
-    <string name="settings_gestures_improve_talkback_title">Talkback\'i iyileştir</string>
     <string name="settings_options_reader_pin_top_toolbar">Araç Çubuklarını Sabitle</string>
     <string name="add_account_miniflux_signup_prompt">Miniflux örneğiniz yok mu?</string>
     <string name="add_account_miniflux_signup_link_text">Daha fazlasını öğrenin.</string>
@@ -271,18 +269,12 @@
     <string name="theme_monochrome">Tek renkli</string>
     <string name="settings_pure_black_dark_mode">Saf siyah karanlık mod</string>
     <string name="filter_today">Bugün</string>
-    <string name="auth_fields_client_certificate">İstemci sertifikası (isteğe bağlı)</string>
-    <string name="auth_fields_remove_client_cert">İstemci sertifikasını kaldır</string>
     <string name="theme_mode_system">Sistem</string>
     <string name="theme_mode_light">Açık</string>
     <string name="theme_mode_dark">Koyu</string>
     <string name="theme_default">Öntanımlı</string>
     <string name="theme_sunset">Gün batımı</string>
     <string name="settings_option_show_today_filter">Bugün</string>
-    <string name="mark_read_position_toolbar">Araç çubuğu</string>
-    <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
-    <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
-    <string name="settings_display_miscellaneous_title">Çeşitli</string>
     <string name="open_articles_in_browser">Makaleleri Tarayıcıda Aç</string>
     <string name="selected">Seçilen</string>
     <string name="auth_fields_freshrss_api_password">API Parolası</string>
@@ -305,7 +297,6 @@
     <string name="starred_exporter_success">Dışa aktarma tamamlandı</string>
     <string name="starred_exporter_failure">Dışa aktarma başarısız oldu</string>
     <string name="auth_fields_miniflux_use_password">Şifre kullan</string>
-    <string name="auth_fields_show_advanced">Gelişmiş seçenekler</string>
     <string name="auth_fields_hide_advanced">Gelişmiş seçenekleri gizle</string>
     <string name="freshrss_visibility">Görünürlük</string>
     <string name="freshrss_visibility_option_important">Önemli</string>

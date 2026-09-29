@@ -4,7 +4,9 @@ data class ArticleNotification(
     val id: Int,
     val articleID: String,
     val title: String,
+    val url: String?,
     val feedID: String,
     val feedTitle: String,
     val feedFaviconURL: String?,
+    val openInBrowser: Boolean,
 )

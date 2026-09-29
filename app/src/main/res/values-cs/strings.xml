@@ -248,8 +248,6 @@
     <string name="theme_monochrome">Monochromatický</string>
     <string name="settings_pure_black_dark_mode">Čistě černý tmavý motiv</string>
     <string name="delete_folder_error">Složku se nepodařilo odstranit</string>
-    <string name="auth_fields_client_certificate">Klientský certifikát (nepovinné)</string>
-    <string name="auth_fields_remove_client_cert">Odebrat klientský certifikát</string>
     <string name="add_account_miniflux_signup_prompt">Nemáte nainstalovaný Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Zjistit více.</string>
     <string name="theme_mode_system">Podle systému</string>
@@ -276,12 +274,6 @@
     <string name="widget_headlines_title">Nejnovější titulky</string>
     <string name="widget_headlines_see_more_button">Zobrazit více článků</string>
     <string name="widget_headlines_account_error">Nejprve přidat účet</string>
-    <string name="settings_gestures_improve_talkback_title">Vylepšit TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Zakáže určitá nastavení pro vylepšení převodu textu na řeč TalkBack</string>
-    <string name="mark_read_position_toolbar">Panel</string>
-    <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
-    <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
-    <string name="settings_display_miscellaneous_title">Ostatní</string>
     <string name="open_articles_in_browser">Otevřít články v prohlížeči</string>
     <string name="selected">Vybrané</string>
     <string name="filter_today">Dnešní</string>
@@ -333,7 +325,6 @@
     <string name="auth_fields_miniflux_api_token">API Klíč</string>
     <string name="auth_fields_miniflux_use_api_token">Použijte API klíč</string>
     <string name="auth_fields_miniflux_use_password">Použijte heslo</string>
-    <string name="auth_fields_show_advanced">Pokročilá nastavení</string>
     <string name="auth_fields_hide_advanced">Skrýt pokročilá nastavení</string>
     <string name="freshrss_visibility">Viditelnost</string>
     <string name="freshrss_visibility_option_main">Hlavní Kanál</string>

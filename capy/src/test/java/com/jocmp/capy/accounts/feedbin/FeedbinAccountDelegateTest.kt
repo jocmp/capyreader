@@ -9,6 +9,7 @@ import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.SubscriptionChoice
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
 import com.jocmp.capy.persistence.ArticleRecords
@@ -40,6 +41,8 @@ import java.net.SocketTimeoutException
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class FeedbinAccountDelegateTest {
@@ -195,6 +198,33 @@ class FeedbinAccountDelegateTest {
 
         val enclosures = EnclosureRecords(database).findByArticle(vergeArticle.id.toString())
         assertEquals(expected = 1, actual = enclosures.size)
+    }
+
+    @Test
+    fun refresh_skipsArticlesPastAutoDeleteCutoff() = runTest {
+        val starredReadArticle = vergeArticle.copy(id = vergeArticle.id + 1)
+
+        coEvery { feedbin.subscriptions() }.returns(Response.success(subscriptions))
+        coEvery { feedbin.unreadEntries() }.returns(Response.success(listOf(arsTechnicaArticle.id)))
+        coEvery { feedbin.starredEntries() }.returns(Response.success(listOf(starredReadArticle.id)))
+        coEvery { feedbin.taggings() }.returns(Response.success(taggings))
+        coEvery { feedbin.savedSearches() }.returns(Response.success(emptyList()))
+        coEvery {
+            feedbin.entries(
+                since = any(),
+                perPage = any(),
+                page = any(),
+                ids = null,
+            )
+        }.returns(Response.success(listOf(arsTechnicaArticle, vergeArticle, starredReadArticle)))
+
+        delegate.refresh(ArticleFilter.default(), cutoffDate = nowUTC())
+
+        val articleRecords = ArticleRecords(database)
+
+        assertNotNull(articleRecords.find(arsTechnicaArticle.id.toString()))
+        assertNotNull(articleRecords.find(starredReadArticle.id.toString()))
+        assertNull(articleRecords.find(vergeArticle.id.toString()))
     }
 
     @Test

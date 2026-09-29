@@ -79,11 +79,9 @@
     <string name="auth_fields_email">Електронна пошта</string>
     <string name="auth_fields_username">Користувацьке ім\'я</string>
     <string name="auth_fields_api_url">Сервер</string>
-    <string name="auth_fields_client_certificate">Клієнтський сертифікат (необов\'язково)</string>
     <string name="auth_fields_hide_password">Сховати пароль</string>
     <string name="auth_fields_show_password">Показати пароль</string>
     <string name="auth_fields_log_in_button">Увійти</string>
-    <string name="auth_fields_remove_client_cert">Вилучити клієнтський сертифікат</string>
     <string name="settings_top_bar_title">Параметри</string>
     <string name="update_auth_success_message">Вхід успішний</string>
     <string name="crash_reporting_checkbox_title">Звітувати про збої</string>
@@ -264,14 +262,8 @@
     <string name="widget_headlines_title">Нові заголовки</string>
     <string name="widget_headlines_see_more_button">Більше статей</string>
     <string name="widget_headlines_account_error">Спершу додайте обліковий запис</string>
-    <string name="mark_read_position_toolbar">На панелі</string>
-    <string name="settings_display_miscellaneous_title">Різне</string>
     <string name="open_articles_in_browser">Відкривати статті в браузері</string>
     <string name="selected">Вибрано</string>
-    <string name="mark_all_read_button_position">Кнопка позначення прочитаними</string>
-    <string name="mark_read_position_floating_action_button">Спливна</string>
-    <string name="settings_gestures_improve_talkback_title">Покращити TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Вимикає деякі параметри, щоб TalkBack краще озвучувала текст</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Горизонтальне гортання</string>
     <string name="settings_gestures_reader_swipe_down">Гортання вниз</string>
     <string name="settings_gestures_reader_swipe_up">Гортання вгору</string>
@@ -299,7 +291,6 @@
     <string name="auth_fields_miniflux_api_token">Ключ API</string>
     <string name="auth_fields_miniflux_use_api_token">Використати ключ API</string>
     <string name="auth_fields_miniflux_use_password">Використати пароль</string>
-    <string name="auth_fields_show_advanced">Додаткові опції</string>
     <string name="auth_fields_hide_advanced">Сховати додаткові опції</string>
     <string name="add_link_title">Додати посилання</string>
     <string name="tab_add_feed">Додати стрічку</string>

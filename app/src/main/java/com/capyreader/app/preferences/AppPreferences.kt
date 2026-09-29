@@ -7,7 +7,6 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
-import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
@@ -123,9 +122,6 @@ class AppPreferences(context: Context) {
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
-        val improveTalkback: Preference<Boolean>
-            get() = preferenceStore.getBoolean("article_improve_talkback", false)
-
         val titleTextAlignment: Preference<TextAlignment>
             get() = preferenceStore.getEnum("article_title_text_alignment", TextAlignment.default)
 
@@ -165,12 +161,6 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum(
                 "article_display_font_scale",
                 ArticleListFontScale.default
-            )
-
-        val markReadButtonPosition: Preference<MarkReadPosition>
-            get() = preferenceStore.getEnum(
-                "article_list_mark_read_position",
-                MarkReadPosition.default
             )
 
         val swipeStart: Preference<RowSwipeOption>

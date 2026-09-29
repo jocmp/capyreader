@@ -6,35 +6,27 @@ on:
       - main
   pull_request:
 
-jobs:
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.2.1
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-      - name: Type-check JavaScript
-        run: make check
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.1
+      - uses: actions/checkout@v7
       - name: Set up Java
-        uses: actions/setup-java@v4.4.0
+        uses: actions/setup-java@v6
         with:
           distribution: 'zulu'
           java-version: "21"
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+        uses: gradle/actions/setup-gradle@v6
       - name: Run tests
-        run: make test
+        run: ./gradlew test --build-cache
+      - name: Compile gplay flavor
+        if: github.event_name == 'push'
+        run: ./gradlew :app:compileGplayDebugKotlin --build-cache
       - name: Test report
         uses: test-summary/action@v2
         if: always()

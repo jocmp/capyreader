@@ -258,16 +258,10 @@
     <string name="after_read_all_behavior_open_next_feed">Agor y ffrwd nesaf</string>
     <string name="full_content_error_missing_response">Wedi methu nôl erthygl</string>
     <string name="filters_remove_keyword">Dileu allweddair</string>
-    <string name="settings_gestures_improve_talkback_title">Gwella TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Analluogi gosodiadau i wella testun-i-leferydd TalkBack</string>
     <string name="widget_receiver_headlines_title">Penawdau</string>
     <string name="filters_title">Rhestr rhwystro</string>
     <string name="add_account_miniflux_signup_link_text">Dysgu mwy.</string>
     <string name="settings_article_list_shorten_titles">Byrhau teitlau</string>
-    <string name="mark_read_position_toolbar">Bar offer</string>
-    <string name="mark_read_position_floating_action_button">Botwm Gweithred Arnofiol</string>
-    <string name="settings_display_miscellaneous_title">Amrywiol</string>
-    <string name="mark_all_read_button_position">Lleoliad y botwm i nodi\'r cwbl fel eu darllen</string>
     <string name="add_account_miniflux_signup_prompt">Nad oes gennych gweinydd Miniflux?</string>
     <string name="filter_today">Heddiw</string>
     <string name="theme_mode_system">System</string>
@@ -282,6 +276,4 @@
     <string name="settings_option_show_today_filter">Heddiw</string>
     <string name="open_articles_in_browser">Agor erthyglau yn y porwr</string>
     <string name="selected">Wedi\'i ddewis</string>
-    <string name="auth_fields_client_certificate">Tystysgrif y cleient (dewisol)</string>
-    <string name="auth_fields_remove_client_cert">Cael gwared ar dystysgrif y cleient</string>
 </resources>

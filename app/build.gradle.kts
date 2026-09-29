@@ -1,9 +1,8 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
+import com.android.build.api.variant.HostTestBuilder
 import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.compose.compiler)
@@ -23,7 +22,7 @@ if (rootProject.file("secrets.properties").exists()) {
 
 android {
     namespace = "com.capyreader.app"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.capyreader.app"
@@ -120,16 +119,24 @@ android {
     }
 }
 
+androidComponents {
+    beforeVariants(selector().withFlavor("license" to "gplay")) { variant ->
+        variant.hostTests[HostTestBuilder.UNIT_TEST_TYPE]?.enable = false
+    }
+}
+
 
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.layout)
     implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.adaptive.navigation3)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.material)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.material3)
@@ -137,7 +144,10 @@ dependencies {
     implementation(libs.androidx.media3.datasource.okhttp)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.ui.compose.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.palette)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime.ktx)
@@ -145,7 +155,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.webkit)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
@@ -204,4 +213,4 @@ tasks.register("useGMSDebugFile") {
     }
 }
 
-project.tasks.preBuild.dependsOn("useGMSDebugFile")
+tasks.named("preBuild") { dependsOn("useGMSDebugFile") }

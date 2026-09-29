@@ -264,15 +264,9 @@
     <string name="widget_headlines_title">最新頭條</string>
     <string name="widget_headlines_see_more_button">查看更多文章</string>
     <string name="widget_headlines_account_error">先新增一個帳戶</string>
-    <string name="settings_gestures_improve_talkback_subtitle">停用某些設定以改善 TalkBack 文字轉語音功能</string>
-    <string name="settings_gestures_improve_talkback_title">改善 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定頂部工具列</string>
     <string name="add_account_miniflux_signup_prompt">沒有 Miniflux 實例？</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
-    <string name="mark_read_position_toolbar">工具列</string>
-    <string name="settings_display_miscellaneous_title">雜類</string>
-    <string name="mark_all_read_button_position">全部標為已讀按鈕位置</string>
-    <string name="mark_read_position_floating_action_button">浮動操作按鈕</string>
     <string name="theme_dynamic">動態</string>
     <string name="theme_newsprint">新聞紙</string>
     <string name="theme_monochrome">單色</string>
@@ -286,8 +280,6 @@
     <string name="freshrss_visibility_option_important">重要</string>
     <string name="theme_mode_light">淺色</string>
     <string name="theme_mode_dark">深色</string>
-    <string name="auth_fields_client_certificate">用戶端憑證 (可選)</string>
-    <string name="auth_fields_remove_client_cert">移除用戶端憑證</string>
     <string name="theme_mode_label">模式</string>
     <string name="article_list_empty">這裡什麼都沒有</string>
     <string name="audio_player_play">播放</string>
@@ -298,7 +290,6 @@
     <string name="auth_fields_miniflux_api_token">API 權杖</string>
     <string name="auth_fields_miniflux_use_password">改為使用密碼</string>
     <string name="auth_fields_miniflux_use_api_token">改為使用 API 權杖</string>
-    <string name="auth_fields_show_advanced">進階選項</string>
     <string name="auth_fields_hide_advanced">隱藏進階選項</string>
     <string name="freshrss_visibility_option_feed">訂閱源</string>
     <string name="audio_player_close">關閉播放器</string>

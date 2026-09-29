@@ -68,6 +68,46 @@ class ByArticleStatus(private val database: Database) {
         )
     }
 
+    fun neighbors(
+        status: ArticleStatus,
+        sortOrder: SortOrder,
+        since: OffsetDateTime?,
+        articleID: String,
+        publishedSince: Long? = null,
+        query: String? = null,
+    ): Pair<String?, String?> {
+        val (read, starred) = status.toStatusPair
+        val newestFirst = isNewestFirst(sortOrder)
+        val queries = database.articlesByStatusQueries
+
+        val findBefore =
+            if (newestFirst) queries::articleBeforeNewestFirst else queries::articleBeforeOldestFirst
+        val findAfter =
+            if (newestFirst) queries::articleAfterNewestFirst else queries::articleAfterOldestFirst
+
+        val previous = findBefore(
+            articleID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            publishedSince,
+            query,
+        ).executeAsOneOrNull()
+
+        val next = findAfter(
+            articleID,
+            read,
+            mapLastRead(read, since),
+            starred,
+            mapLastUnstarred(starred, since),
+            publishedSince,
+            query,
+        ).executeAsOneOrNull()
+
+        return previous to next
+    }
+
     fun maxArrivedAt(): Long? {
         return database.articlesQueries.lastUpdatedAt().executeAsOne().MAX
     }

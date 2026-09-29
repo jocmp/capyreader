@@ -7,6 +7,7 @@ import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -14,10 +15,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+
+/**
+ * Bridges the list-detail [PaneExpansionState] (owned by the Scene at the [App] level) down into the
+ * reader entry, so the reader's top-bar toggle can expand/collapse the detail pane. `null` when no
+ * expandable pane is present (compact / single-pane).
+ */
+val LocalArticlePaneExpansion = compositionLocalOf<ArticlePaneExpansion?> { null }
 
 private val DetailFullscreenAnchor = PaneExpansionAnchor.Proportion(0f)
 private val ListFullscreenAnchor = PaneExpansionAnchor.Proportion(1f)
@@ -81,7 +89,7 @@ fun rememberArticlePaneExpansion(
         anchors = anchors,
         initialAnchoredIndex = savedIndex,
     )
-    val compact = isCompact()
+    val compact = isSinglePane()
     val scope = rememberCoroutineScope()
     var lastAnchorIndex by rememberSaveable { mutableIntStateOf(savedIndex) }
     val listFullscreenIndex = anchors.lastIndex

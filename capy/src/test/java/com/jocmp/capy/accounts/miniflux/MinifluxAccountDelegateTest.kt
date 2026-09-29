@@ -6,8 +6,10 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.fixtures.FeedFixture
+import com.jocmp.capy.persistence.ArticleRecords
 import com.jocmp.capy.persistence.EnclosureRecords
 import com.jocmp.minifluxclient.Category
 import com.jocmp.minifluxclient.CreateCategoryRequest
@@ -35,6 +37,8 @@ import retrofit2.Response
 import java.net.SocketTimeoutException
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class MinifluxAccountDelegateTest {
@@ -238,6 +242,46 @@ class MinifluxAccountDelegateTest {
 
         val enclosures = EnclosureRecords(database).findByArticle(vergeArticle.id.toString())
         assertEquals(expected = 1, actual = enclosures.size)
+    }
+
+    @Test
+    fun refresh_skipsArticlesPastAutoDeleteCutoff() = runTest {
+        val starredReadArticle = vergeArticle.copy(id = 4718104686, starred = true)
+
+        coEvery { miniflux.feeds() }.returns(Response.success(feeds))
+        coEvery { miniflux.icon(1) }.returns(
+            Response.success(IconData(id = 1, data = "image/png;base64,abc", mime_type = "image/png"))
+        )
+        coEvery { miniflux.entries(starred = true, limit = 250, offset = 0) }.returns(
+            Response.success(EntryResultSet(total = 1, entries = listOf(starredReadArticle)))
+        )
+        coEvery { miniflux.entries(status = EntryStatus.UNREAD.value, limit = 250, offset = 0) }.returns(
+            Response.success(EntryResultSet(total = 1, entries = listOf(arsTechnicaArticle)))
+        )
+        coEvery {
+            miniflux.entries(
+                limit = 250,
+                offset = 0,
+                order = "published_at",
+                direction = "desc",
+                changedAfter = null,
+            )
+        }.returns(
+            Response.success(
+                EntryResultSet(
+                    total = 3,
+                    entries = listOf(arsTechnicaArticle, vergeArticle, starredReadArticle)
+                )
+            )
+        )
+
+        delegate.refresh(ArticleFilter.default(), cutoffDate = nowUTC())
+
+        val articleRecords = ArticleRecords(database)
+
+        assertNotNull(articleRecords.find(arsTechnicaArticle.id.toString()))
+        assertNotNull(articleRecords.find(starredReadArticle.id.toString()))
+        assertNull(articleRecords.find(vergeArticle.id.toString()))
     }
 
     @Test

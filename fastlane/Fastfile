@@ -10,11 +10,6 @@ platform :android do
     validate_play_store_json_key
   end
 
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
   desc "Deploy a new version to the Google Play"
   lane :production do
     prepare_gplay_metadata

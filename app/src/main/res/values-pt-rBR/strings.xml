@@ -254,8 +254,6 @@
     <string name="folder_action_edit_error">Erro ao atualizar etiqueta</string>
     <string name="actions_copy_link">Copiar link</string>
     <string name="actions_share_link">Compartilhar link</string>
-    <string name="settings_gestures_improve_talkback_title">Melhorar TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Desabilitar algumas configurações para melhorar o leitor de tela TalkBack</string>
     <string name="widget_headlines_see_more_button">Ver mais artigos</string>
     <string name="widget_receiver_headlines_title">Manchetes</string>
     <string name="widget_headlines_title">Últimas Manchetes</string>
@@ -267,18 +265,12 @@
     <string name="media_share">Compartilhar</string>
     <string name="add_account_miniflux_signup_link_text">Saiba mais.</string>
     <string name="add_account_miniflux_signup_prompt">Não tem um instância Miniflux?</string>
-    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
-    <string name="mark_read_position_floating_action_button">Botão de Ação Flutuante</string>
-    <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
-    <string name="settings_display_miscellaneous_title">Diversos</string>
     <string name="theme_dynamic">Dinâmico</string>
     <string name="theme_newsprint">Papel jornal</string>
     <string name="theme_monochrome">Monocromático</string>
     <string name="settings_pure_black_dark_mode">Modo escuro preto puro</string>
     <string name="filter_today">Hoje</string>
     <string name="freshrss_nav_headline_categories">Categorias</string>
-    <string name="auth_fields_client_certificate">Certificado de Cliente (opcional)</string>
-    <string name="auth_fields_remove_client_cert">Remover certificado de cliente</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_dark">Escuro</string>
@@ -312,7 +304,6 @@
     <string name="auth_fields_miniflux_api_token">Token de API</string>
     <string name="auth_fields_miniflux_use_api_token">Usar Token de API</string>
     <string name="auth_fields_miniflux_use_password">Usar Senha</string>
-    <string name="auth_fields_show_advanced">Opções avançadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opções avançadas</string>
     <string name="badge_style_simple">Simples</string>
     <string name="badge_style_exact">Exato</string>

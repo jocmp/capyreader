@@ -256,19 +256,11 @@
     <string name="widget_receiver_headlines_title">Titulares</string>
     <string name="widget_headlines_title">Últimos titulares</string>
     <string name="widget_headlines_see_more_button">Ver máis artigos</string>
-    <string name="settings_gestures_improve_talkback_title">Mellorar TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Desactiva algúns axustes para mellorar o texto-a-palabra de TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">Fixar Ferramentas</string>
     <string name="add_account_miniflux_signup_prompt">Non tes unha instancia Miniflux?</string>
     <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>
-    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
-    <string name="mark_read_position_floating_action_button">Botón flotante de acción</string>
-    <string name="mark_all_read_button_position">Posición do botón para marcar todo lido</string>
-    <string name="settings_display_miscellaneous_title">Varios</string>
     <string name="settings_article_list_shorten_titles">Acurtar títulos</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
-    <string name="auth_fields_client_certificate">Certificado cliente (optativo)</string>
-    <string name="auth_fields_remove_client_cert">Retirar certificado cliente</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_dark">Escuro</string>
@@ -298,7 +290,6 @@
     <string name="auth_fields_miniflux_api_token">Token da API</string>
     <string name="auth_fields_miniflux_use_api_token">Alternativa, usar Token da API</string>
     <string name="auth_fields_miniflux_use_password">Alternativa, usar contrasinal</string>
-    <string name="auth_fields_show_advanced">Opcións avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opcións avanzadas</string>
     <string name="settings_panel_unread_counts_title">Marcas de non lidos</string>
     <string name="settings_option_badge_style">Estilo da marca</string>

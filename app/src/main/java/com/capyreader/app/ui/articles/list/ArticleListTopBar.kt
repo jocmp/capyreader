@@ -1,37 +1,18 @@
 package com.capyreader.app.ui.articles.list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.capyreader.app.R
 import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
-import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -53,87 +34,27 @@ fun ArticleListTopBar(
     folders: List<Folder>,
     source: Source,
 ) {
-    val enableSearch = search.isActive
-
-    val closeSearch = {
-        search.clear()
-    }
-
+    // Search runs in its own full-surface overlay (see SearchView), so the list top bar only needs
+    // to launch it; the active-search field/back-arrow used to live here.
     TopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
-            if (enableSearch) {
-                val focusRequester = remember { FocusRequester() }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    SearchTextField(
-                        placeholder = { Text(stringResource(R.string.search_bar_placeholder)) },
-                        value = search.query.orEmpty(),
-                        onValueChange = {
-                            search.update(it)
-                        },
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                        ),
-                        trailingIcon = {
-                            IconButton(onClick = closeSearch) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Close,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        singleLine = true,
-                        maxLines = 1,
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(48.dp)
-                            .focusRequester(focusRequester),
-                    )
-                }
-
-                LaunchedEffect(search.isActive) {
-                    if (search.isActive) {
-                        focusRequester.requestFocus()
-                    }
-                }
-            } else {
-                FilterAppBarTitle(
-                    filter = filter,
-                    allFeeds = feeds,
-                    allFolders = folders,
-                    allSavedSearches = savedSearches,
-                    onRequestJumpToTop = onRequestJumpToTop
-                )
-            }
+            FilterAppBarTitle(
+                filter = filter,
+                allFeeds = feeds,
+                allFolders = folders,
+                allSavedSearches = savedSearches,
+                onRequestJumpToTop = onRequestJumpToTop
+            )
         },
         navigationIcon = {
-            if (enableSearch) {
-                IconButton(
-                    onClick = {
-                        search.clear()
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = stringResource(R.string.feed_list_top_bar_close_search)
-                    )
-                }
-            } else {
-                IconButton(
-                    onClick = onNavigateToDrawer
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Menu,
-                        contentDescription = null
-                    )
-                }
+            IconButton(
+                onClick = onNavigateToDrawer
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Menu,
+                    contentDescription = null
+                )
             }
         },
         actions = {
@@ -142,7 +63,7 @@ fun ArticleListTopBar(
                 currentFeed = currentFeed,
                 onRemoveFolder = onRemoveFolder,
                 onRequestSearch = { search.start() },
-                hideSearchIcon = enableSearch,
+                hideSearchIcon = false,
                 source = source,
             )
         }

@@ -3,6 +3,7 @@ package com.jocmp.capy.persistence
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
+import com.jocmp.capy.Feed
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.RandomUUID
@@ -683,6 +684,173 @@ class ArticleRecordsTest {
 
         assertEquals(expected = 3, actual = counts[firstSearch.id])
         assertEquals(expected = 2, actual = counts[secondSearch.id])
+    }
+
+    @Test
+    fun neighbors_newestFirst_returnsAdjacentArticlesAndBoundaries() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        val filter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL,
+        )
+
+        // List order is [newest, middle, oldest]; previous is up the list, next is down.
+        assertEquals(
+            expected = newest.id to oldest.id,
+            actual = neighbors(filter, SortOrder.NEWEST_FIRST, middle.id),
+        )
+        assertEquals(
+            expected = null to middle.id,
+            actual = neighbors(filter, SortOrder.NEWEST_FIRST, newest.id),
+        )
+        assertEquals(
+            expected = middle.id to null,
+            actual = neighbors(filter, SortOrder.NEWEST_FIRST, oldest.id),
+        )
+    }
+
+    @Test
+    fun neighbors_oldestFirst_flipsTheOrder() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        val filter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL,
+        )
+
+        // List order is [oldest, middle, newest].
+        assertEquals(
+            expected = oldest.id to newest.id,
+            actual = neighbors(filter, SortOrder.OLDEST_FIRST, middle.id),
+        )
+        assertEquals(
+            expected = null to middle.id,
+            actual = neighbors(filter, SortOrder.OLDEST_FIRST, oldest.id),
+        )
+        assertEquals(
+            expected = middle.id to null,
+            actual = neighbors(filter, SortOrder.OLDEST_FIRST, newest.id),
+        )
+    }
+
+    @Test
+    fun neighbors_byArticleStatus() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        val filter = ArticleFilter.Articles(ArticleStatus.ALL)
+
+        assertEquals(
+            expected = newest.id to oldest.id,
+            actual = neighbors(filter, SortOrder.NEWEST_FIRST, middle.id),
+        )
+    }
+
+    @Test
+    fun neighbors_bySavedSearch() {
+        val savedSearch = SavedSearchFixture(database).create()
+        val savedSearchRecords = SavedSearchRecords(database)
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+
+        listOf(newest, middle, oldest).forEach {
+            savedSearchRecords.upsertArticle(articleID = it.id, savedSearchID = savedSearch.id)
+        }
+
+        val filter = ArticleFilter.SavedSearches(
+            savedSearchID = savedSearch.id,
+            savedSearchStatus = ArticleStatus.ALL,
+        )
+
+        assertEquals(
+            expected = newest.id to oldest.id,
+            actual = neighbors(filter, SortOrder.NEWEST_FIRST, middle.id),
+        )
+        assertEquals(
+            expected = oldest.id to newest.id,
+            actual = neighbors(filter, SortOrder.OLDEST_FIRST, middle.id),
+        )
+    }
+
+    @Test
+    fun neighbors_withSearchQuery_skipsNonMatchingArticles() {
+        val feed = FeedFixture(database).create()
+        val start = nowUTC()
+        val newest = articleFixture.create(
+            feed = feed,
+            title = "samsung event",
+            publishedAt = start.toEpochSecond(),
+        )
+        val middle = articleFixture.create(
+            feed = feed,
+            title = "pixel roundup",
+            publishedAt = start.minusDays(1).toEpochSecond(),
+        )
+        val oldest = articleFixture.create(
+            feed = feed,
+            title = "samsung recap",
+            publishedAt = start.minusDays(2).toEpochSecond(),
+        )
+        val feedFilter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.ALL,
+        )
+        val statusFilter = ArticleFilter.Articles(ArticleStatus.ALL)
+
+        // The query matches the newest and oldest titles but not the middle one,
+        // so neighbors hop over the middle article in both directions.
+        listOf(feedFilter, statusFilter).forEach { filter ->
+            assertEquals(
+                expected = null to oldest.id,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, newest.id, query = "samsung"),
+            )
+            assertEquals(
+                expected = newest.id to null,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, oldest.id, query = "samsung"),
+            )
+            assertEquals(
+                expected = newest.id to oldest.id,
+                actual = neighbors(filter, SortOrder.NEWEST_FIRST, middle.id, query = "samsung"),
+            )
+        }
+    }
+
+    private fun neighbors(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        articleID: String,
+        query: String? = null,
+    ): Pair<String?, String?> =
+        articleRecords.neighbors(
+            filter = filter,
+            sortOrder = sortOrder,
+            since = null,
+            articleID = articleID,
+            query = query,
+        )
+
+    /** Three articles in [feed], newest to oldest, one day apart. */
+    private fun threeArticles(feed: Feed): Triple<Article, Article, Article> {
+        val start = nowUTC()
+        val newest = articleFixture.create(
+            feed = feed,
+            title = "newest",
+            publishedAt = start.toEpochSecond(),
+        )
+        val middle = articleFixture.create(
+            feed = feed,
+            title = "middle",
+            publishedAt = start.minusDays(1).toEpochSecond(),
+        )
+        val oldest = articleFixture.create(
+            feed = feed,
+            title = "oldest",
+            publishedAt = start.minusDays(2).toEpochSecond(),
+        )
+        return Triple(newest, middle, oldest)
     }
 }
 

@@ -17,6 +17,7 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.MercuryParser
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
@@ -114,7 +115,7 @@ data class Account(
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
-    private val articleContent = ArticleContent(localHttpClient, userAgent, acceptLanguage)
+    private val mercuryParser = MercuryParser(ArticleContent(localHttpClient, userAgent, acceptLanguage))
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()
@@ -344,11 +345,33 @@ data class Account(
         range: MarkRead,
         sortOrder: SortOrder,
         query: String?,
+        since: java.time.OffsetDateTime? = null,
     ): List<String> {
         return articleRecords.unreadArticleIDs(
             filter = filter,
             range = range,
             sortOrder = sortOrder,
+            query = query,
+            since = since,
+        )
+    }
+
+    /**
+     * Previous/next article id relative to [articleID] for the reader's swipe navigation.
+     * Suspends onto IO so the (synchronous) query never runs on the main thread.
+     */
+    suspend fun neighbors(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: java.time.OffsetDateTime?,
+        articleID: String,
+        query: String? = null,
+    ): Pair<String?, String?> = withIOContext {
+        articleRecords.neighbors(
+            filter = filter,
+            sortOrder = sortOrder,
+            since = since,
+            articleID = articleID,
             query = query,
         )
     }
@@ -400,7 +423,7 @@ data class Account(
     }
 
     suspend fun fetchFullContent(article: Article): Result<String> {
-        return articleContent.fetch(article.url)
+        return mercuryParser.fetch(article.url)
     }
 
     suspend fun opmlDocument(): String {

@@ -17,7 +17,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v7
         with:
           ref: nightly
           ssh-key: ${{ secrets.RELEASE_SSH_KEY }}

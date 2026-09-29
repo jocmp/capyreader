@@ -7,6 +7,8 @@ import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
 import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.accounts.SubscriptionChoice
+import com.jocmp.capy.accounts.orThrow
+import com.jocmp.capy.accounts.willAutoDelete
 import com.jocmp.capy.accounts.withErrorHandling
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
@@ -57,8 +59,8 @@ internal class FeedbinAccountDelegate(
         return try {
             refreshFeeds()
             refreshTaggings()
-            refreshSavedSearches()
-            refreshArticles(since = lastRefreshedAt())
+            refreshSavedSearches(cutoffDate = cutoffDate)
+            refreshArticles(since = lastRefreshedAt(), cutoffDate = cutoffDate)
             preferences.touchLastRefreshedAt()
 
             Result.success(Unit)
@@ -74,7 +76,7 @@ internal class FeedbinAccountDelegate(
 
         return withErrorHandling {
             entryIDs.chunked(MAX_CREATE_UNREAD_LIMIT).forEach { batchIDs ->
-                feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs))
+                feedbin.deleteUnreadEntries(UnreadEntriesRequest(unread_entries = batchIDs)).orThrow()
             }
         }
     }
@@ -83,7 +85,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs))
+            feedbin.createUnreadEntries(UnreadEntriesRequest(unread_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -92,7 +94,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            feedbin.createStarredEntries(StarredEntriesRequest(starred_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -101,7 +103,7 @@ internal class FeedbinAccountDelegate(
         val entryIDs = articleIDs.map { it.toLong() }
 
         return withErrorHandling {
-            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs))
+            feedbin.deleteStarredEntries(StarredEntriesRequest(starred_entries = entryIDs)).orThrow()
             Unit
         }
     }
@@ -185,7 +187,7 @@ internal class FeedbinAccountDelegate(
             feedbin.updateSubscription(
                 subscriptionID = feed.subscriptionID,
                 body = UpdateSubscriptionRequest(title = title)
-            )
+            ).orThrow()
 
             feedRecords.update(
                 feedID = feed.id,
@@ -225,19 +227,19 @@ internal class FeedbinAccountDelegate(
         oldTitle: String,
         newTitle: String
     ): Result<Unit> = withErrorHandling {
-        feedbin.updateTag(UpdateTagRequest(old_name = oldTitle, new_name = newTitle))
+        feedbin.updateTag(UpdateTagRequest(old_name = oldTitle, new_name = newTitle)).orThrow()
 
         Unit
     }
 
     override suspend fun removeFeed(feed: Feed): Result<Unit> = withErrorHandling {
-        feedbin.deleteSubscription(subscriptionID = feed.subscriptionID)
+        feedbin.deleteSubscription(subscriptionID = feed.subscriptionID).orThrow()
 
         Unit
     }
 
     override suspend fun removeFolder(folderTitle: String): Result<Unit> = withErrorHandling {
-        feedbin.deleteTag(DeleteTagRequest(name = folderTitle))
+        feedbin.deleteTag(DeleteTagRequest(name = folderTitle)).orThrow()
 
         Unit
     }
@@ -253,11 +255,11 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshArticles(since: String) {
+    private suspend fun refreshArticles(since: String, cutoffDate: ZonedDateTime? = null) {
         refreshStarredEntries()
         refreshUnreadEntries()
-        refreshAllArticles(since = since)
-        fetchMissingArticles()
+        refreshAllArticles(since = since, cutoffDate = cutoffDate)
+        fetchMissingArticles(cutoffDate = cutoffDate)
         refreshPages()
     }
 
@@ -323,7 +325,7 @@ internal class FeedbinAccountDelegate(
         }
     }
 
-    private suspend fun refreshSavedSearches() {
+    private suspend fun refreshSavedSearches(cutoffDate: ZonedDateTime?) {
         withResult(feedbin.savedSearches()) { savedSearches ->
             database.transactionWithErrorHandling {
                 savedSearches.forEach {
@@ -340,13 +342,19 @@ internal class FeedbinAccountDelegate(
             savedSearchRecords.allIDs()
                 .forEach { savedSearchID ->
                     launch {
-                        fetchSavedSearchArticles(savedSearchID = savedSearchID)
+                        fetchSavedSearchArticles(
+                            savedSearchID = savedSearchID,
+                            cutoffDate = cutoffDate,
+                        )
                     }
                 }
         }
     }
 
-    private suspend fun fetchSavedSearchArticles(savedSearchID: String) {
+    private suspend fun fetchSavedSearchArticles(
+        savedSearchID: String,
+        cutoffDate: ZonedDateTime?,
+    ) {
         val ids = feedbin.savedSearchEntries(savedSearchID = savedSearchID).body() ?: return
 
         savedSearchRecords.deleteOrphanedEntries(
@@ -357,22 +365,26 @@ internal class FeedbinAccountDelegate(
         ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
             fetchPaginatedEntries(
                 ids = chunkedIDs,
-                savedSearchID = savedSearchID
+                savedSearchID = savedSearchID,
+                cutoffDate = cutoffDate,
             )
         }
     }
 
-    private suspend fun refreshAllArticles(since: String) {
-        fetchPaginatedEntries(since = since)
+    private suspend fun refreshAllArticles(since: String, cutoffDate: ZonedDateTime?) {
+        fetchPaginatedEntries(since = since, cutoffDate = cutoffDate)
     }
 
-    private suspend fun fetchMissingArticles() {
+    private suspend fun fetchMissingArticles(cutoffDate: ZonedDateTime?) {
         val ids = articleRecords.findMissingArticles()
 
         coroutineScope {
             ids.chunked(MAX_ENTRY_LIMIT).map { chunkedIDs ->
                 launch {
-                    fetchPaginatedEntries(ids = chunkedIDs.map { it.toLong() })
+                    fetchPaginatedEntries(
+                        ids = chunkedIDs.map { it.toLong() },
+                        cutoffDate = cutoffDate,
+                    )
                 }
             }
         }
@@ -422,6 +434,7 @@ internal class FeedbinAccountDelegate(
         nextPage: Int? = 1,
         ids: List<Long>? = null,
         savedSearchID: String? = null,
+        cutoffDate: ZonedDateTime? = null,
     ) {
         nextPage ?: return
 
@@ -433,13 +446,14 @@ internal class FeedbinAccountDelegate(
         val entries = response.body()
 
         if (entries != null) {
-            saveEntries(entries, savedSearchID = savedSearchID)
+            saveEntries(entries, savedSearchID = savedSearchID, cutoffDate = cutoffDate)
         }
 
         fetchPaginatedEntries(
             since = since,
             nextPage = response.pagingInfo?.nextPage,
-            ids = ids
+            ids = ids,
+            cutoffDate = cutoffDate,
         )
     }
 
@@ -447,11 +461,26 @@ internal class FeedbinAccountDelegate(
         entries: List<Entry>,
         savedSearchID: String? = null,
         read: Boolean = true,
+        cutoffDate: ZonedDateTime? = null,
     ) {
         database.transactionWithErrorHandling {
             entries.forEach { entry ->
                 val updated = TimeHelpers.nowUTC()
                 val articleID = entry.id.toString()
+                val publishedAt = entry.published.toDateTime?.toEpochSecond() ?: updated.toEpochSecond()
+                val status = database.articlesQueries.findStatus(articleID).executeAsOneOrNull()
+
+                val skip = willAutoDelete(
+                    publishedAt = publishedAt,
+                    read = status?.read ?: read,
+                    starred = status?.starred ?: false,
+                    cutoffDate = cutoffDate,
+                )
+
+                if (skip) {
+                    return@forEach
+                }
+
                 val enclosure = entry.enclosure
                 val enclosureType = enclosure?.enclosure_type
 
@@ -465,7 +494,7 @@ internal class FeedbinAccountDelegate(
                     url = entry.url,
                     summary = entry.summary,
                     image_url = entry.images?.size_1?.cdn_url,
-                    published_at = entry.published.toDateTime?.toEpochSecond() ?: updated.toEpochSecond(),
+                    published_at = publishedAt,
                     enclosure_type = enclosureType,
                 )
 

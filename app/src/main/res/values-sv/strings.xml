@@ -235,7 +235,6 @@
     <string name="freshrss_visibility_option_feed">Flöde</string>
     <string name="freshrss_visibility_option_important">Viktigt</string>
     <string name="auth_fields_freshrss_api_password">API-lösenord</string>
-    <string name="settings_display_miscellaneous_title">Diverse</string>
     <string name="widget_headlines_see_more_button">Se fler artiklar</string>
     <string name="widget_headlines_account_error">Lägg till ett konto först</string>
     <string name="widget_headlines_title">Senaste rubrikerna</string>
@@ -265,17 +264,10 @@
     <string name="tag_action_edit_error">Fel vid uppdatering av tagg</string>
     <string name="tag_action_edit">Redigera tagg</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Navigera till överordnad</string>
-    <string name="settings_gestures_improve_talkback_title">Förbättra TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Inaktiverar vissa inställningar för att förbättra TalkBacks text-till-tal</string>
     <string name="settings_options_reader_pin_top_toolbar">Fäst verktygsfält</string>
     <string name="add_account_miniflux_signup_prompt">Har du ingen Miniflux-instans?</string>
     <string name="add_account_miniflux_signup_link_text">Läs mer.</string>
-    <string name="mark_read_position_toolbar">Verktygsfält</string>
-    <string name="mark_read_position_floating_action_button">Flytande åtgärdsknapp</string>
-    <string name="mark_all_read_button_position">Placering av knappen Markera alla som lästa</string>
     <string name="open_articles_in_browser">Öppna artiklar i webbläsaren</string>
-    <string name="auth_fields_client_certificate">Klientcertifikat (valfritt)</string>
-    <string name="auth_fields_remove_client_cert">Ta bort klientcertifikat</string>
     <string name="theme_mode_system">System</string>
     <string name="theme_mode_light">Ljust</string>
     <string name="theme_mode_dark">Mörkt</string>
@@ -298,7 +290,6 @@
     <string name="auth_fields_miniflux_api_token">API-token</string>
     <string name="auth_fields_miniflux_use_api_token">Använd API-token i stället</string>
     <string name="auth_fields_miniflux_use_password">Använd lösenord i stället</string>
-    <string name="auth_fields_show_advanced">Avancerade alternativ</string>
     <string name="auth_fields_hide_advanced">Dölj avancerade alternativ</string>
     <string name="settings_panel_unread_counts_title">Märken för olästa</string>
     <string name="settings_option_badge_style">Märkesstil</string>

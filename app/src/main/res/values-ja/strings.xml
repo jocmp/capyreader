@@ -72,11 +72,9 @@
     <string name="auth_fields_email">メールアドレス</string>
     <string name="auth_fields_username">ユーザー名</string>
     <string name="auth_fields_api_url">サーバー</string>
-    <string name="auth_fields_client_certificate">クライアント証明書 (オプション)</string>
     <string name="auth_fields_hide_password">パスワードを非表示にする</string>
     <string name="auth_fields_show_password">パスワードを表示する</string>
     <string name="auth_fields_log_in_button">ログイン</string>
-    <string name="auth_fields_remove_client_cert">クライアント証明書を削除</string>
     <string name="settings_top_bar_title">設定</string>
     <string name="update_auth_success_message">ログインに成功しました</string>
     <string name="crash_reporting_checkbox_title">クラッシュレポートを有効化</string>
@@ -246,12 +244,6 @@
     <string name="widget_headlines_title">最新のヘッドライン</string>
     <string name="widget_headlines_see_more_button">記事をもっと見る</string>
     <string name="widget_headlines_account_error">まずアカウントを追加してください</string>
-    <string name="settings_gestures_improve_talkback_title">TalkBackを改善</string>
-    <string name="settings_gestures_improve_talkback_subtitle">一部の設定を無効化し、TalkBackの音声読み上げを改善します</string>
-    <string name="mark_read_position_toolbar">ツールバー</string>
-    <string name="mark_read_position_floating_action_button">フローティングアクションボタン</string>
-    <string name="mark_all_read_button_position">すべてを既読にするボタンの位置</string>
-    <string name="settings_display_miscellaneous_title">その他</string>
     <string name="open_articles_in_browser">ブラウザで記事を開く</string>
     <string name="settings_select_none">すべて選択解除</string>
     <string name="settings_confirm_mark_all_read">すべてを既読としてマークすることを確認</string>

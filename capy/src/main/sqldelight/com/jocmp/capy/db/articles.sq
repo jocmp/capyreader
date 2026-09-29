@@ -7,6 +7,7 @@ SELECT
   feeds.open_articles_in_browser,
   feeds.feed_url,
   feeds.site_url,
+  feeds.read_later,
   article_statuses.updated_at,
   article_statuses.starred,
   article_statuses.read
@@ -46,6 +47,11 @@ SELECT article_id
 FROM article_statuses
 LEFT OUTER JOIN articles ON article_statuses.article_id = articles.id
 WHERE articles.id IS NULL;
+
+findStatus:
+SELECT read, starred
+FROM article_statuses
+WHERE article_id = :articleID;
 
 filterUnreadStatuses:
 SELECT article_id

@@ -253,8 +253,6 @@
     <string name="widget_headlines_title">Τελευταίες Επικεφαλίδες</string>
     <string name="widget_headlines_see_more_button">Δες περισσότερα άρθρα</string>
     <string name="widget_headlines_account_error">Πρόσθεσε ένα λογαριασμό πρώτα</string>
-    <string name="settings_gestures_improve_talkback_title">Βελτίωση TalkBack</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Απενεργοποιεί κάποιες ρυθμίσεις για βελτίωση του κειμένου σε ομιλία TalkBack</string>
     <string name="folder_action_delete_confirm">Διαγραφή</string>
     <string name="folder_name_title">\'Ονομα</string>
     <string name="folder_action_edit_success">Ετικέτα ενημερώθηκε</string>
@@ -262,12 +260,6 @@
     <string name="actions_copy_link">Αντιγραφή συνδέσμου</string>
     <string name="actions_share_link">Κοινοποίηση συνδέσμου</string>
     <string name="widget_receiver_headlines_title">Επικεφαλίδες</string>
-    <string name="mark_read_position_toolbar">Γραμμή εργαλείων</string>
-    <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
-    <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
-    <string name="settings_display_miscellaneous_title">Διάφορα</string>
-    <string name="auth_fields_client_certificate">Πιστοποιητικό πελάτη (προαιρετικό)</string>
-    <string name="auth_fields_remove_client_cert">Αφαίρεση πιστοποιητικού πελάτη</string>
     <string name="theme_mode_system">Σύστημα</string>
     <string name="theme_mode_light">Φωτεινό</string>
     <string name="theme_mode_dark">Σκοτεινό</string>
@@ -333,7 +325,6 @@
     <string name="widget_spotlight_see_all">Εμφάνιση όλων</string>
     <string name="auth_fields_miniflux_use_api_token">Χρήση API Token αντ \'αυτού</string>
     <string name="auth_fields_miniflux_use_password">Χρήση Κωδικού αντ \'αυτού</string>
-    <string name="auth_fields_show_advanced">Προχωρημένες ρυθμίσεις</string>
     <string name="settings_refresh_on_wifi_only">Ανανέωση στο Wi-Fi μόνο</string>
     <string name="refresh_skipped_mobile">Η ανανέωση παραλείφθηκε στο δίκτυο κινητής</string>
     <string name="auth_fields_hide_advanced">Απόκρυψη προηγμένων επιλογών</string>

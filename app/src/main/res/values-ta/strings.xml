@@ -256,8 +256,6 @@
     <string name="notification_mark_as_read_action">படித்தபடி குறி</string>
     <string name="media_save">சேமி</string>
     <string name="media_share">பங்கு</string>
-    <string name="settings_gestures_improve_talkback_title">டாக் பேக்கை மேம்படுத்தவும்</string>
-    <string name="settings_gestures_improve_talkback_subtitle">டாக் பேக் உரை-க்கு-பேச்சை மேம்படுத்த சில அமைப்புகளை முடக்குகிறது</string>
     <string name="filter_read_later">பிறகு சேமிக்கப்பட்டது</string>
     <string name="article_actions_save_for_later">பின்னர் சேமிக்கவும்</string>
     <string name="saved_for_later_success">பிறகு சேமிக்கப்பட்டது</string>
@@ -276,8 +274,6 @@
     <string name="add_link_feed_added">ஊட்டம் சேர்க்கப்பட்டது</string>
     <string name="add_link_page_saved">பக்கம் சேமிக்கப்பட்டது</string>
     <string name="freshrss_nav_headline_categories">வகைகள்</string>
-    <string name="auth_fields_client_certificate">வாடிக்கையாளர் சான்றிதழ் (விரும்பினால்)</string>
-    <string name="auth_fields_remove_client_cert">வாடிக்கையாளர் சான்றிதழை அகற்று</string>
     <string name="add_account_miniflux_signup_prompt">Miniflux சான்று இல்லையா?</string>
     <string name="add_account_miniflux_signup_link_text">மேலும் அறியவும்.</string>
     <string name="settings_account_refresh_value">%2$s இல் %1$s</string>
@@ -317,17 +313,12 @@
     <string name="widget_spotlight_see_all">அனைத்தையும் பார்க்கவும்</string>
     <string name="widget_spotlight_previous">முந்தைய</string>
     <string name="widget_spotlight_next">அடுத்தது</string>
-    <string name="mark_read_position_toolbar">கருவிப்பட்டி</string>
-    <string name="mark_read_position_floating_action_button">Floating செயல் Button</string>
-    <string name="mark_all_read_button_position">அனைத்தையும் படிக்கும் பொத்தான் நிலையைக் குறிக்கவும்</string>
-    <string name="settings_display_miscellaneous_title">மற்றவை</string>
     <string name="open_articles_in_browser">உலாவியில் கட்டுரைகளைத் திறக்கவும்</string>
     <string name="selected">தேர்ந்தெடுக்கப்பட்டது</string>
     <string name="auth_fields_freshrss_api_password">பநிஇ கடவுச்சொல்</string>
     <string name="auth_fields_miniflux_api_token">பநிஇ கிள்ளாக்கு</string>
     <string name="auth_fields_miniflux_use_api_token">அதற்குப் பதிலாக பநிஇ கிள்ளாக்கைப் பயன்படுத்தவும்</string>
     <string name="auth_fields_miniflux_use_password">அதற்கு பதிலாக கடவுச்சொல்லை பயன்படுத்தவும்</string>
-    <string name="auth_fields_show_advanced">மேம்பட்ட விருப்பங்கள்</string>
     <string name="auth_fields_hide_advanced">மேம்பட்ட விருப்பங்களை மறை</string>
     <string name="freshrss_visibility">விழிமை</string>
     <string name="freshrss_visibility_option_main">Main Stream</string>

@@ -1,17 +1,9 @@
 package com.capyreader.app.ui.accounts
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -19,11 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -31,16 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.autofill.contentType
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -50,7 +36,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.R
-import com.capyreader.app.ui.articles.feeds.IconDropdown
 import com.capyreader.app.ui.theme.CapyTheme
 import com.jocmp.capy.accounts.Source
 
@@ -66,9 +51,6 @@ fun AuthFields(
     errorMessage: String? = null,
     prompt: (@Composable () -> Unit)? = null,
     source: Source,
-    onChooseClientCert: () -> Unit = {},
-    onClearClientCert: () -> Unit = {},
-    clientCertAlias: String = "",
     setApiTokenPreference: (Boolean) -> Unit = {},
 ) {
     val hasApiToken = source == Source.MINIFLUX_TOKEN
@@ -77,10 +59,6 @@ fun AuthFields(
 
     val (showPassword, setPasswordVisibility) = rememberSaveable {
         mutableStateOf(false)
-    }
-
-    val (showAdvanced, setShowAdvanced) = rememberSaveable {
-        mutableStateOf(clientCertAlias.isNotBlank())
     }
 
     val passwordTransformation = if (hasApiToken || showPassword) {
@@ -193,19 +171,6 @@ fun AuthFields(
                         )
                     }
                 }
-
-                if (source.hasCustomURL) {
-                    AdvancedOptions(
-                        expanded = showAdvanced,
-                        onToggle = { setShowAdvanced(!showAdvanced) },
-                    ) {
-                        CertificateField(
-                            onChooseClientCert = onChooseClientCert,
-                            onClearClientCert = onClearClientCert,
-                            certAlias = clientCertAlias,
-                        )
-                    }
-                }
             }
         }
 
@@ -225,88 +190,6 @@ fun AuthFields(
         }
 
         prompt?.invoke()
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CertificateField(
-    onChooseClientCert: () -> Unit,
-    onClearClientCert: () -> Unit,
-    certAlias: String,
-) {
-    TextField(
-        value = certAlias,
-        onValueChange = {},
-        singleLine = true,
-        label = {
-            Text(stringResource(R.string.auth_fields_client_certificate))
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .focusProperties { canFocus = false },
-        readOnly = true,
-        trailingIcon = {
-            if (certAlias.isNotBlank()) {
-                IconButton(
-                    onClick = onClearClientCert
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.RemoveCircleOutline,
-                        stringResource(R.string.auth_fields_remove_client_cert)
-                    )
-                }
-            }
-        },
-        interactionSource = remember { MutableInteractionSource() }
-            .also { interactionSource ->
-                LaunchedEffect(interactionSource) {
-                    interactionSource.interactions.collect {
-                        if (it is PressInteraction.Release) {
-                            onChooseClientCert()
-                        }
-                    }
-                }
-            }
-    )
-}
-
-@Composable
-private fun AdvancedOptions(
-    expanded: Boolean,
-    onToggle: () -> Unit,
-    content: @Composable () -> Unit,
-) {
-    Column(
-        Modifier.padding(top = 8.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .clickable { onToggle() }
-                .padding(end = 12.dp)
-        ) {
-            IconDropdown(
-                expanded = expanded,
-                onClick = {},
-                enabled = false,
-            )
-            Text(
-                text = stringResource(R.string.auth_fields_show_advanced),
-            )
-        }
-        AnimatedVisibility(
-            visible = expanded,
-            enter = expandVertically(expandFrom = Alignment.Top),
-            exit = shrinkVertically(animationSpec = tween()),
-        ) {
-            Box(
-                Modifier.padding(top = 8.dp, bottom = 4.dp),
-            ) {
-                content()
-            }
-        }
     }
 }
 

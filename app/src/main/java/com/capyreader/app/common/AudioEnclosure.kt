@@ -8,6 +8,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class AudioEnclosure(
+    val articleID: String,
     val url: String,
     val title: String,
     val feedName: String,

@@ -264,18 +264,10 @@
     <string name="widget_headlines_see_more_button">查看更多文章</string>
     <string name="widget_receiver_headlines_title">标题</string>
     <string name="widget_headlines_title">最新标题</string>
-    <string name="settings_gestures_improve_talkback_subtitle">禁用部分设置以改进 TalkBack 文本转语音功能</string>
-    <string name="settings_gestures_improve_talkback_title">改进 TalkBack</string>
     <string name="settings_options_reader_pin_top_toolbar">固定工具栏</string>
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
     <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>
-    <string name="mark_read_position_toolbar">工具栏</string>
-    <string name="mark_read_position_floating_action_button">浮动操作按钮</string>
-    <string name="mark_all_read_button_position">标记全部已读按钮位置</string>
-    <string name="settings_display_miscellaneous_title">其他</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
-    <string name="auth_fields_client_certificate">客户端证书（可选）</string>
-    <string name="auth_fields_remove_client_cert">移除客户端证书</string>
     <string name="theme_dynamic">动态</string>
     <string name="theme_newsprint">新闻纸</string>
     <string name="theme_monochrome">单色</string>
@@ -303,7 +295,6 @@
     <string name="auth_fields_miniflux_api_token">API 令牌</string>
     <string name="auth_fields_miniflux_use_api_token">改为使用 API 令牌</string>
     <string name="auth_fields_miniflux_use_password">改为使用密码</string>
-    <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
     <string name="settings_panel_unread_counts_title">未读徽章</string>
     <string name="settings_option_badge_style">徽章样式</string>

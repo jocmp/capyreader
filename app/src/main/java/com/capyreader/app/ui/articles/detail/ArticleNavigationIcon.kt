@@ -8,7 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.theme.CapyTheme
 
 @Composable
@@ -17,7 +17,7 @@ fun ArticleNavigationIcon(
     onToggleFullscreen: () -> Unit = {},
     onClose: () -> Unit,
 ) {
-    if (isCompact()) {
+    if (isSinglePane()) {
         IconButton(onClick = onClose) {
             Icon(
                 imageVector = Icons.Rounded.Close,

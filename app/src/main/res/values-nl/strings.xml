@@ -77,11 +77,9 @@
     <string name="auth_fields_email">E-mail</string>
     <string name="auth_fields_username">Gebruikersnaam</string>
     <string name="auth_fields_api_url">Server</string>
-    <string name="auth_fields_client_certificate">Clientcertificaat (optioneel)</string>
     <string name="auth_fields_hide_password">Wachtwoord verbergen</string>
     <string name="auth_fields_show_password">Wachtwoord tonen</string>
     <string name="auth_fields_log_in_button">Inloggen</string>
-    <string name="auth_fields_remove_client_cert">Clientcertificaat verwijderen</string>
     <string name="settings_top_bar_title">Instellingen</string>
     <string name="update_auth_success_message">Succesvol ingelogd</string>
     <string name="crash_reporting_checkbox_title">Crashrapportage inschakelen</string>
@@ -272,12 +270,6 @@
     <string name="widget_headlines_title">Laatste koppen</string>
     <string name="widget_headlines_see_more_button">Meer artikelen bekijken</string>
     <string name="widget_headlines_account_error">Voeg eerst een account toe</string>
-    <string name="settings_gestures_improve_talkback_title">TalkBack verbeteren</string>
-    <string name="settings_gestures_improve_talkback_subtitle">Schakelt enkele instellingen uit om TalkBack tekst-naar-spraak te verbeteren</string>
-    <string name="mark_read_position_toolbar">Werkbalk</string>
-    <string name="mark_read_position_floating_action_button">Zwevende actieknop</string>
-    <string name="mark_all_read_button_position">Alles gelezen markeren knop positie</string>
-    <string name="settings_display_miscellaneous_title">Diversen</string>
     <string name="open_articles_in_browser">Artikelen openen in browser</string>
     <string name="selected">Geselecteerd</string>
     <string name="filter_today">Vandaag</string>

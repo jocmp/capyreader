@@ -25,7 +25,7 @@ import com.capyreader.app.setupCommonModules
 import com.capyreader.app.ui.CrashReporting
 import com.capyreader.app.ui.components.Spacing
 import com.capyreader.app.ui.components.safeEdgePadding
-import com.capyreader.app.ui.isCompact
+import com.capyreader.app.ui.isSinglePane
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.widthMaxSingleColumn
 import com.jocmp.capy.accounts.Source
@@ -104,7 +104,7 @@ fun SyncServiceRow(
 
 @Composable
 private fun contentAlignment(): Alignment {
-    return if (isCompact()) {
+    return if (isSinglePane()) {
         Alignment.TopCenter
     } else {
         Alignment.Center
@@ -113,7 +113,7 @@ private fun contentAlignment(): Alignment {
 
 @Composable
 private fun titlePadding(): PaddingValues {
-    return if (isCompact()) {
+    return if (isSinglePane()) {
         PaddingValues(top = Spacing.topBarHeight, start = 16.dp, end = 16.dp)
     } else {
         PaddingValues(start = 16.dp, end = 16.dp)

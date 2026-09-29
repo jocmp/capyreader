@@ -18,6 +18,6 @@ fun isLarge(): Boolean {
 }
 
 @Composable
-fun isCompact(): Boolean {
+fun isSinglePane(): Boolean {
     return currentWindowSizeClass().minWidthDp < WIDTH_DP_EXPANDED_LOWER_BOUND
 }

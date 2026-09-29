@@ -30,6 +30,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
@@ -39,7 +40,7 @@ import java.time.LocalDateTime
 @Composable
 fun ArticleList(
     articles: LazyPagingItems<Article>,
-    onSelect: (articleID: String) -> Unit,
+    onSelect: (article: Article) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
     onMarkAllRead: (range: MarkRead) -> Unit = {},
@@ -77,7 +78,7 @@ fun ArticleList(
                                     index = index,
                                     selected = selectedArticleKey == item.id,
                                     onSelect = {
-                                        onSelect(it)
+                                        onSelect(item)
                                     },
                                     onMarkAllRead = onMarkAllRead,
                                     currentTime = currentTime,
@@ -100,6 +101,28 @@ fun ArticleList(
             }
         }
 
+    }
+}
+
+/**
+ * In a two-pane layout the list stays beside the reader, so keep the selected article in view
+ * (e.g. when stepping next/previous) by scrolling to it when it isn't already visible.
+ */
+@Composable
+fun ScrollToSelectedArticleEffect(
+    selectedArticleKey: String?,
+    articles: LazyPagingItems<Article>,
+    listState: LazyListState,
+) {
+    val isSinglePane = isSinglePane()
+
+    LaunchedEffect(selectedArticleKey, isSinglePane, articles.itemCount) {
+        if (isSinglePane) return@LaunchedEffect
+        val id = selectedArticleKey ?: return@LaunchedEffect
+        val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
+        if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
+            listState.animateScrollToItem(index)
+        }
     }
 }
 
