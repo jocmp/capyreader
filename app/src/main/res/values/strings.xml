@@ -349,11 +349,6 @@
     <string name="audio_player_close">Close player</string>
     <string name="audio_player_skip_back">Skip back 30 seconds</string>
     <string name="audio_player_skip_forward">Skip forward 30 seconds</string>
-    <string name="settings_panel_unread_counts_title">Unread Badges</string>
-    <string name="settings_option_badge_style">Badge style</string>
-    <string name="badge_style_simple">Simple</string>
-    <string name="badge_style_exact">Exact</string>
-    <string name="show_unread_badge">Show Unread Badge</string>
     <string name="article_actions_save_externally">Save</string>
     <string name="article_actions_save_externally_success">Saved</string>
     <string name="article_actions_save_externally_failure">Failed to save</string>

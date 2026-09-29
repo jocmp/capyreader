@@ -35,7 +35,6 @@ import com.capyreader.app.ui.settings.panels.GesturesSettingPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
-import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.jocmp.capy.common.launchUI
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
@@ -56,7 +55,6 @@ fun SettingsView(
     )
     val currentPanel = navigator.currentDestination?.contentKey
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(emptyList())
-    val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(emptyList())
 
     val navigateToPanel = { panel: SettingsPanel ->
         coroutineScope.launchUI {
@@ -143,9 +141,6 @@ fun SettingsView(
                                 )
 
                                 SettingsPanel.Display -> DisplaySettingsPanel(
-                                    onNavigateToUnreadBadges = {
-                                        navigateToPanel(SettingsPanel.UnreadBadges)
-                                    },
                                     onNavigateToArticleList = {
                                         navigateToPanel(SettingsPanel.ArticleList)
                                     }
@@ -154,17 +149,6 @@ fun SettingsView(
                                 SettingsPanel.Account -> AccountSettingsPanel(onRemoveAccount = onRemoveAccount)
                                 SettingsPanel.About -> AboutSettingsPanel()
                                 SettingsPanel.ArticleList -> ArticleListSettingsPanel()
-                                SettingsPanel.UnreadBadges -> UnreadBadgesSettingsPanel(
-                                    badgeStyle = viewModel.badgeStyle,
-                                    updateBadgeStyle = viewModel::updateBadgeStyle,
-                                    source = viewModel.source,
-                                    feeds = feeds,
-                                    savedSearches = savedSearches,
-                                    onSelectAll = viewModel::selectAllBadges,
-                                    onSelectNone = viewModel::selectNoBadges,
-                                    onToggleFeed = viewModel::toggleFeedUnreadBadge,
-                                    onToggleSavedSearch = viewModel::toggleSavedSearchUnreadBadge,
-                                )
                             }
                         }
                     }

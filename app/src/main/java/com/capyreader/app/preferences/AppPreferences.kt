@@ -82,9 +82,6 @@ class AppPreferences(context: Context) {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)
     }
 
-    val badgeStyle: Preference<BadgeStyle>
-        get() = preferenceStore.getEnum("badge_style", BadgeStyle.default)
-
     fun clearAll() {
         preferenceStore.clearAll()
     }

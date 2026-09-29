@@ -491,27 +491,6 @@ data class Account(
         feedRecords.updateOpenInBrowser(feedID, enabled)
     }
 
-    suspend fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
-        feedRecords.updateShowUnreadBadge(feedID, enabled)
-    }
-
-    suspend fun toggleAllFeedUnreadBadges(enabled: Boolean) {
-        feedRecords.toggleAllShowUnreadBadge(enabled)
-    }
-
-    suspend fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
-        savedSearchRecords.updateShowUnreadBadge(id, enabled)
-    }
-
-    suspend fun toggleAllSavedSearchUnreadBadges(enabled: Boolean) {
-        savedSearchRecords.toggleAllShowUnreadBadge(enabled)
-    }
-
-    suspend fun toggleAllUnreadBadges(enabled: Boolean) {
-        toggleAllFeedUnreadBadges(enabled)
-        toggleAllSavedSearchUnreadBadges(enabled)
-    }
-
     suspend fun disableStickyContent(feedID: String) {
         feedRecords.updateStickyFullContent(enabled = false, feedID = feedID)
     }
