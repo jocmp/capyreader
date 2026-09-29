@@ -289,7 +289,7 @@
     <string name="settings_section_content">Content</string>
     <string name="settings_section_storage">Storage</string>
     <string name="settings_search_placeholder">Search settings</string>
-    <string name="settings_search_no_results">No matching settings</string>
+    <string name="settings_search_no_results">No results</string>
     <string name="settings_section_browser">Browser</string>
     <string name="settings_option_show_today_filter">Today</string>
     <string name="reader_image_visibility_show_on_wifi">Only show images on Wi-Fi</string>

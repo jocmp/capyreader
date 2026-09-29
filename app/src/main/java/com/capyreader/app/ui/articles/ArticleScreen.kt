@@ -318,7 +318,6 @@ fun ArticleScreen(
         fun openNextList(action: suspend () -> Unit) {
             coroutineScope.launchUI {
                 drawerState.close()
-                delay(300)
                 openNextStatus(action)
             }
         }
@@ -446,7 +445,6 @@ fun ArticleScreen(
                     onNavigateToSettings = {
                         onNavigateToSettings()
                         coroutineScope.launchUI {
-                            delay(100)
                             drawerState.close()
                         }
                     },
