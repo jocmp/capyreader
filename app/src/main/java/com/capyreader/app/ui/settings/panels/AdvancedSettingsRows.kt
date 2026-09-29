@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.ui.settings.CrashReportingCheckbox
@@ -74,7 +75,7 @@ fun CrashLogsRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
 
 @Composable
 fun TestNotificationSettingRow() {
-    if (LocalView.current.isInEditMode) {
+    if (!BuildConfig.DEBUG || LocalView.current.isInEditMode) {
         return
     }
 
