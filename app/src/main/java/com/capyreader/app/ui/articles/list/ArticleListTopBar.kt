@@ -9,7 +9,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.capyreader.app.R
 import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.components.ArticleSearch
@@ -53,7 +55,7 @@ fun ArticleListTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Menu,
-                    contentDescription = null
+                    contentDescription = stringResource(R.string.feed_nav_drawer_open)
                 )
             }
         },
