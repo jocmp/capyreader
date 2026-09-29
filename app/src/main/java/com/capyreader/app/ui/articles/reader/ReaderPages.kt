@@ -48,6 +48,9 @@ class ReaderPages(private val scrollState: ScrollState) {
             return pageTops.indexOfLast { it <= scroll + 1f }.coerceAtLeast(0)
         }
 
+    val pageStart: Float
+        get() = pageTops.getOrElse(currentPage) { 0f } - scrollState.value
+
     val pageCut: Float?
         get() {
             val next = pageTops.getOrNull(currentPage + 1) ?: return null

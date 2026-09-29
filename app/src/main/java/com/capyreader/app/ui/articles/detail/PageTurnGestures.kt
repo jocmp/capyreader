@@ -128,9 +128,21 @@ fun PageTurnGestures(
             modifier = Modifier.drawWithContent {
                 drawContent()
 
+                if (!paginate) {
+                    return@drawWithContent
+                }
+
+                val start = pages.pageStart
                 val cut = pages.pageCut
 
-                if (paginate && cut != null && cut < size.height) {
+                if (start > 0f) {
+                    drawRect(
+                        color = background,
+                        size = Size(size.width, start),
+                    )
+                }
+
+                if (cut != null && cut < size.height) {
                     drawRect(
                         color = background,
                         topLeft = Offset(0f, cut),
