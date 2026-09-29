@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,7 @@ import com.capyreader.app.ui.articles.reader.ReaderPages
 import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
+import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.jocmp.capy.Article
@@ -61,13 +63,17 @@ fun ArticleReader(
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
+    onNextArticle: () -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
     isAudioPlaying: Boolean = false,
     isAudioBuffering: Boolean = false,
+    appPreferences: AppPreferences = koinInject(),
 ) {
+    val paginate by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
+    val currentPaginate by rememberUpdatedState(paginate)
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
     val linkOpener = LocalLinkOpener.current
@@ -138,10 +144,14 @@ fun ArticleReader(
         ReaderActions(
             onLinkClick = { url, elementIndex ->
                 scope.launch {
-                    val scrolled = elementIndex != null && anchors.scrollTo(elementIndex)
+                    val offset = elementIndex?.let { anchors.offset(it) }
 
-                    if (!scrolled) {
+                    if (offset == null) {
                         linkOpener.open(url.toUri())
+                    } else if (currentPaginate) {
+                        pages.showPageContaining(offset)
+                    } else {
+                        anchors.scrollTo(elementIndex)
                     }
                 }
             },
@@ -181,10 +191,12 @@ fun ArticleReader(
         ScrollableArticle(
             scrollState = scrollState,
             pages = pages,
+            paginate = paginate,
             pinToolbars = pinToolbars,
             showToolbars = showToolbars,
             onHideToolbars = onHideToolbars,
             onToggleToolbars = onToggleToolbars,
+            onNextArticle = onNextArticle,
             onContentPositioned = {
                 anchors.contentCoordinates = it
                 pages.contentCoordinates = it
@@ -233,33 +245,60 @@ fun ArticleReader(
 private fun ScrollableArticle(
     scrollState: ScrollState,
     pages: ReaderPages,
+    paginate: Boolean,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
+    onNextArticle: () -> Unit,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
     content: @Composable () -> Unit,
 ) {
+    val pagedInsets = rememberPagedInsets(pinToolbars)
+
     PageTurnGestures(
         pages = pages,
+        paginate = paginate,
+        pagedInsets = pagedInsets,
         pinToolbars = pinToolbars,
         showToolbars = showToolbars,
         onHideToolbars = onHideToolbars,
         onToggleToolbars = onToggleToolbars,
+        onNextArticle = onNextArticle,
     ) {
-        ColumnScrollbar(state = scrollState) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
-                    .onGloballyPositioned { coordinates ->
-                        onContentPositioned(coordinates)
+        BoxWithConstraints {
+            val viewportHeight = maxHeight
+
+            val column = @Composable {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(scrollState, enabled = !paginate)
+                        .onGloballyPositioned { coordinates ->
+                            onContentPositioned(coordinates)
+
+                            if (paginate) {
+                                pages.layoutPages(pagedInsets)
+                            }
+                        }
+                ) {
+                    if (!pinToolbars) {
+                        Spacer(Modifier.height(ArticleBarDefaults.topBarOffset))
                     }
-            ) {
-                if (!pinToolbars) {
-                    Spacer(Modifier.height(ArticleBarDefaults.topBarOffset))
+                    content()
+
+                    if (paginate) {
+                        Spacer(Modifier.height(viewportHeight))
+                    }
                 }
-                content()
+            }
+
+            if (paginate) {
+                column()
+            } else {
+                ColumnScrollbar(state = scrollState) {
+                    column()
+                }
             }
         }
     }

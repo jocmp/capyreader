@@ -1,6 +1,9 @@
 package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -15,12 +18,107 @@ data class PageInsets(val top: Float, val bottom: Float)
 
 private data class PageJump(val from: Int, val to: Int)
 
+private data class PageLayoutKey(
+    val contentHeight: Int,
+    val viewportSize: Int,
+    val insets: PageInsets,
+)
+
 class ReaderPages(private val scrollState: ScrollState) {
     private val texts = mutableMapOf<LayoutCoordinates, () -> TextLayoutResult?>()
     private val elements = mutableMapOf<Int, LayoutCoordinates>()
     private val history = ArrayDeque<PageJump>()
 
     var contentCoordinates: LayoutCoordinates? = null
+
+    var pageTops by mutableStateOf(listOf(0f))
+        private set
+
+    private var pageInsets = PageInsets(top = 0f, bottom = 0f)
+    private var pageLayoutKey: PageLayoutKey? = null
+
+    val pageCount: Int
+        get() = pageTops.size
+
+    val currentPage: Int
+        get() {
+            val scroll = scrollState.value + pageInsets.top
+
+            return pageTops.indexOfLast { it <= scroll + 1f }.coerceAtLeast(0)
+        }
+
+    val pageCut: Float?
+        get() {
+            val next = pageTops.getOrNull(currentPage + 1) ?: return null
+
+            return next - scrollState.value
+        }
+
+    fun layoutPages(insets: PageInsets) {
+        val content = contentCoordinates?.takeIf { it.isAttached } ?: return
+        val key = PageLayoutKey(
+            contentHeight = content.size.height,
+            viewportSize = scrollState.viewportSize,
+            insets = insets,
+        )
+
+        if (key == pageLayoutKey) {
+            return
+        }
+
+        val height = scrollState.viewportSize - insets.top - insets.bottom
+
+        if (height <= 0f) {
+            return
+        }
+
+        val lines = textLines(content)
+        val blocks = elementBlocks(content)
+        val contentBottom = (lines + blocks).maxOfOrNull { it.bottom } ?: 0f
+
+        pageLayoutKey = key
+        pageInsets = insets
+        pageTops = PageTurn.breaks(
+            start = insets.top,
+            height = height,
+            contentBottom = contentBottom,
+            lines = lines,
+            blocks = blocks,
+        )
+    }
+
+    suspend fun alignToPage() {
+        showPage(currentPage)
+    }
+
+    suspend fun turnPage(direction: PageDirection): Boolean {
+        val page = currentPage
+
+        if (direction == PageDirection.FORWARD) {
+            if (page + 1 >= pageCount) {
+                return false
+            }
+
+            showPage(page + 1)
+            return true
+        }
+
+        showPage((page - 1).coerceAtLeast(0))
+        return true
+    }
+
+    suspend fun showPageContaining(offset: Float) {
+        val top = offset + pageInsets.top
+        val page = pageTops.indexOfLast { it <= top + 1f }.coerceAtLeast(0)
+
+        showPage(page)
+    }
+
+    private suspend fun showPage(page: Int) {
+        val top = pageTops.getOrNull(page) ?: return
+
+        scrollState.scrollTo((top - pageInsets.top).roundToInt())
+    }
 
     fun registerElement(index: Int, coordinates: LayoutCoordinates) {
         elements[index] = coordinates

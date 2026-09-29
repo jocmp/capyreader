@@ -5,7 +5,7 @@ Display & Appearance > E Ink groups three settings. On a detected E Ink device, 
 | Setting            | Preference                             | Effect                                                         |
 |--------------------|----------------------------------------|----------------------------------------------------------------|
 | Reduce animations  | `reduce_motion`                        | Every Compose animation in `MainActivity` finishes instantly   |
-| Tap to turn pages  | `article_enable_paging_tap_gesture`    | Left quarter goes back a page, right quarter forward           |
+| Tap to turn pages  | `article_enable_paging_tap_gesture`    | Articles show as pages; left quarter goes back, right forward  |
 | Page turn buttons  | `article_enable_page_turn_keys`        | Volume keys, Page Up/Down, and arrow keys turn pages           |
 
 The tap preference key predates this work (it was "E Ink tap to scroll", bottom-corner zones that jumped 96% of the screen), so existing users keep their setting.
@@ -21,7 +21,23 @@ The tap preference key predates this work (it was "E Ink tap to scroll", bottom-
 
 Related issues: #445 (reduce animation), #1247 (overlap), #1856 (tap scroll goes a line too far), #1236 (tap zones for next/previous article, not done), #1597 (keyboard shortcuts and page turners).
 
-## Paging
+## Pages
+
+With Tap to turn pages on, the reader shows discrete pages instead of a scrolling column. There's no separate setting.
+
+Prior art: EPUB readers on a web view (Readium, foliate/Readest) lay text out in CSS columns and move between them sideways. Native readers (Moon+, Librera) measure text and cut pages at line boundaries. Capy's reader is native Compose, so it takes the second route: the article lays out once as a column, `PageTurn.breaks` computes every page start from the same line boundaries as scroll-mode paging, and `ReaderPages` shows one page at a time with an instant `scrollTo`.
+
+- Vertical scrolling is off (`verticalScroll(enabled = false)`). Pages turn with a horizontal swipe, the tap zones, or the page keys.
+- The partial line below each page break is covered with the background, so every page ends on a whole line.
+- A trailing spacer the height of the screen lets the last page start on its break instead of clamping to the end of the content.
+- Page size uses the hidden-toolbar insets plus a strip for the "3 / 12" indicator. Toolbars overlay the page when shown, like Kindle's menus, so page breaks don't move when they toggle. Articles open with the toolbars hidden.
+- Turning past the last page opens the next article.
+- Footnote and anchor links jump to the page containing the target.
+- When the content height changes (an image loads, the font size changes), breaks are recomputed and the reader snaps to the page containing the current top.
+
+There's no slide animation between pages. On E Ink that's the goal; elsewhere it could come from recording the content into a `GraphicsLayer` and drawing it at two offsets during a drag.
+
+## Scroll-mode paging
 
 The reader is a `Column` in `verticalScroll(ScrollState)`, so a page turn is one instant `scrollTo`. No animation, regardless of Reduce animations.
 
@@ -65,8 +81,7 @@ Only `MainActivity` uses it. The share and add-link activities are small and sti
 
 ## Not done
 
-- Visible on-screen page buttons (a chunky Mac OS 9-style pager). Tap zones and keys cover input; a visible control could sit on the same `ReaderPages.turn`.
-- Page indicator ("3 / 12").
-- Next/previous article from the tap zones or keys at the end of an article (#1236).
+- Visible on-screen page buttons (a chunky Mac OS 9-style pager). Tap zones and keys cover input; a visible control could sit on the same `ReaderPages.turnPage`.
+- Previous article from the first page (#1236 covers both directions; only forward is done).
 - Full-screen flash to clear ghosting. The Onyx SDK (`EpdController`) is a vendor Maven dependency that has broken across Boox hardware; a manual black/white frame would avoid it.
 - Keyboard shortcuts beyond paging (#1597).

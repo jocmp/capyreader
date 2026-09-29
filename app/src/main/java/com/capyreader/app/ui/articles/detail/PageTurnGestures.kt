@@ -1,8 +1,19 @@
 package com.capyreader.app.ui.articles.detail
 
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.res.stringResource
+import com.capyreader.app.R
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
@@ -35,10 +46,13 @@ import org.koin.compose.koinInject
 @Composable
 fun PageTurnGestures(
     pages: ReaderPages,
+    paginate: Boolean,
+    pagedInsets: PageInsets,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
+    onNextArticle: () -> Unit,
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
@@ -46,18 +60,30 @@ fun PageTurnGestures(
     val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithDefault()
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
+    val currentPaginate by rememberUpdatedState(paginate)
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
+    val currentOnNextArticle by rememberUpdatedState(onNextArticle)
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
+    val background = MaterialTheme.colorScheme.background
 
     val turn = remember(pages, scope) {
         { direction: PageDirection ->
             scope.launch {
-                if (direction == PageDirection.FORWARD) {
+                if (currentPaginate) {
+                    val turned = pages.turnPage(direction)
+
+                    if (!turned) {
+                        currentOnNextArticle()
+                    }
+                } else if (direction == PageDirection.FORWARD) {
                     pages.turn(direction, visible = visibleInsets, next = hiddenInsets)
-                    currentOnHideToolbars()
                 } else {
                     pages.turn(direction, visible = visibleInsets, next = visibleInsets)
+                }
+
+                if (direction == PageDirection.FORWARD) {
+                    currentOnHideToolbars()
                 }
             }
             Unit
@@ -74,14 +100,102 @@ fun PageTurnGestures(
         onDispose { unregister() }
     }
 
+    LaunchedEffect(paginate, pages.pageTops) {
+        if (paginate) {
+            pages.alignToPage()
+        }
+    }
+
     Box(
-        modifier = Modifier.pageTapZones(
-            enabled = enableTaps,
-            onTurn = turn,
-            onCenterTap = onToggleToolbars,
-        )
+        modifier = Modifier
+            .pageTapZones(
+                enabled = enableTaps,
+                onTurn = turn,
+                onCenterTap = onToggleToolbars,
+            )
+            .pageSwipes(
+                enabled = paginate,
+                onTurn = turn,
+            )
     ) {
-        content()
+        Box(
+            modifier = Modifier.drawWithContent {
+                drawContent()
+
+                val cut = pages.pageCut
+
+                if (paginate && cut != null && cut < size.height) {
+                    drawRect(
+                        color = background,
+                        topLeft = Offset(0f, cut),
+                        size = Size(size.width, size.height - cut),
+                    )
+                }
+            }
+        ) {
+            content()
+        }
+
+        if (paginate && (pinToolbars || !showToolbars)) {
+            PageIndicator(
+                page = pages.currentPage + 1,
+                count = pages.pageCount,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .height(PageIndicatorHeight)
+                    .padding(top = 8.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun PageIndicator(page: Int, count: Int, modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(R.string.reader_page_indicator, page, count),
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun rememberPagedInsets(pinToolbars: Boolean): PageInsets {
+    val insets = pageInsets(pinToolbars, showToolbars = false)
+    val indicator = with(LocalDensity.current) { PageIndicatorHeight.toPx() }
+
+    return remember(insets, indicator) {
+        insets.copy(bottom = insets.bottom + indicator)
+    }
+}
+
+private fun Modifier.pageSwipes(
+    enabled: Boolean,
+    onTurn: (PageDirection) -> Unit,
+): Modifier {
+    if (!enabled) {
+        return this
+    }
+
+    return pointerInput(onTurn) {
+        var distance = 0f
+
+        detectHorizontalDragGestures(
+            onDragStart = { distance = 0f },
+            onDragEnd = {
+                val threshold = SwipeThreshold.toPx()
+
+                if (distance < -threshold) {
+                    onTurn(PageDirection.FORWARD)
+                } else if (distance > threshold) {
+                    onTurn(PageDirection.BACK)
+                }
+            },
+            onHorizontalDrag = { change, amount ->
+                change.consume()
+                distance += amount
+            },
+        )
     }
 }
 
@@ -112,8 +226,21 @@ private fun Modifier.pageTapZones(
 }
 
 private suspend fun AwaitPointerEventScope.awaitEdgeTap(down: PointerInputChange): PointerInputChange? {
+    return awaitTap(down, PointerEventPass.Initial)
+}
+
+private suspend fun AwaitPointerEventScope.awaitUnhandledTap(down: PointerInputChange): Boolean {
+    val up = awaitTap(down, PointerEventPass.Final) ?: return false
+
+    return !up.isConsumed
+}
+
+private suspend fun AwaitPointerEventScope.awaitTap(
+    down: PointerInputChange,
+    pass: PointerEventPass,
+): PointerInputChange? {
     while (true) {
-        val event = awaitPointerEvent(PointerEventPass.Initial)
+        val event = awaitPointerEvent(pass)
         val change = event.changes.firstOrNull { it.id == down.id } ?: return null
         val distance = (change.position - down.position).getDistance()
 
@@ -125,16 +252,6 @@ private suspend fun AwaitPointerEventScope.awaitEdgeTap(down: PointerInputChange
             return change
         }
     }
-}
-
-private suspend fun AwaitPointerEventScope.awaitUnhandledTap(down: PointerInputChange): Boolean {
-    val up = waitForUpOrCancellation(pass = PointerEventPass.Final)
-
-    if (up == null || up.isConsumed || isLongPress(down, up)) {
-        return false
-    }
-
-    return true
 }
 
 private fun AwaitPointerEventScope.isLongPress(down: PointerInputChange, change: PointerInputChange): Boolean {
@@ -180,3 +297,7 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
 }
 
 private const val EDGE_ZONE = 1f / 4f
+
+private val PageIndicatorHeight = 32.dp
+
+private val SwipeThreshold = 48.dp

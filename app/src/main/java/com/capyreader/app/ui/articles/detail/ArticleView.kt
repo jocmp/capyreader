@@ -122,6 +122,10 @@ fun ArticleView(
 
     LaunchedEffect(article.id) {
         scrollState.reset()
+
+        if (appPreferences.readerOptions.enablePagingTapGesture.get()) {
+            scrollState.hideToolbars()
+        }
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -172,6 +176,7 @@ fun ArticleView(
                                 showToolbars = showToolBar,
                                 onHideToolbars = { scrollState.hideToolbars() },
                                 onToggleToolbars = { scrollState.toggleToolbars() },
+                                onNextArticle = { selectNext() },
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,
