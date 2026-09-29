@@ -40,7 +40,6 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun DisplaySettingsPanel(
     viewModel: DisplaySettingsViewModel = koinViewModel(),
-    onNavigateToUnreadBadges: () -> Unit = {},
     onNavigateToArticleList: () -> Unit = {},
 ) {
     val pinArticleBars by viewModel.pinArticleBars.collectChangesWithCurrent()
@@ -59,7 +58,6 @@ fun DisplaySettingsPanel(
         pinArticleBars = pinArticleBars,
         updateImageVisibility = viewModel::updateImageVisibility,
         imageVisibility = viewModel.imageVisibility,
-        onNavigateToUnreadBadges = onNavigateToUnreadBadges,
         onNavigateToArticleList = onNavigateToArticleList,
     )
 }
@@ -78,7 +76,6 @@ fun DisplaySettingsPanelView(
     pinArticleBars: Boolean,
     imageVisibility: ReaderImageVisibility,
     updateImageVisibility: (option: ReaderImageVisibility) -> Unit,
-    onNavigateToUnreadBadges: () -> Unit = {},
     onNavigateToArticleList: () -> Unit = {},
 ) {
     Column(
@@ -120,17 +117,10 @@ fun DisplaySettingsPanelView(
                 }
             }
 
-            Column {
-                SettingsDisclosureRow(
-                    title = stringResource(R.string.settings_article_list_title),
-                    onClick = onNavigateToArticleList,
-                )
-
-                SettingsDisclosureRow(
-                    title = stringResource(R.string.settings_panel_unread_counts_title),
-                    onClick = onNavigateToUnreadBadges,
-                )
-            }
+            SettingsDisclosureRow(
+                title = stringResource(R.string.settings_article_list_title),
+                onClick = onNavigateToArticleList,
+            )
         }
 
         FormSection(

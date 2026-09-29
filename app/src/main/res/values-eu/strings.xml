@@ -269,7 +269,6 @@
     <string name="freshrss_visibility_option_folder">Karpeta</string>
     <string name="freshrss_visibility_option_feed">Jarioa</string>
     <string name="audio_player_pause">Pausatu</string>
-    <string name="badge_style_simple">Sinplea</string>
     <string name="account_settings_save_name">Izena gorde da</string>
     <string name="settings_accent_colors">Nabarmendu kolorea</string>
     <string name="font_option_system_default">Sistemaren defektuzkoa</string>
@@ -319,10 +318,6 @@
     <string name="audio_player_close">Itxi erreduzitzailea</string>
     <string name="audio_player_skip_back">Egin atzera 30 segundo</string>
     <string name="audio_player_skip_forward">Egin aurrera 30 segundo</string>
-    <string name="settings_panel_unread_counts_title">Irakurri gabekoen adierazleak</string>
-    <string name="settings_option_badge_style">Adierazlearen estiloa</string>
-    <string name="badge_style_exact">Zehatza</string>
-    <string name="show_unread_badge">Erakutsi irakurri gabekoen adierazlea</string>
     <string name="article_actions_save_externally">Gorde</string>
     <string name="article_actions_save_externally_success">Gordeta</string>
     <string name="article_actions_save_externally_failure">Ezin izan da gorde</string>

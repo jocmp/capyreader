@@ -2,8 +2,7 @@ all:
 SELECT
   id,
   name,
-  query_text,
-  show_unread_badge
+  query_text
 FROM saved_searches
 ORDER BY id;
 
@@ -26,8 +25,7 @@ find:
 SELECT
   id,
   name,
-  query_text,
-  show_unread_badge
+  query_text
 FROM saved_searches
 WHERE id = :id;
 
@@ -73,9 +71,3 @@ deleteArticle:
 DELETE FROM saved_search_articles
 WHERE saved_search_id = :savedSearchID
 AND article_id = :articleID;
-
-updateShowUnreadBadge:
-UPDATE saved_searches SET show_unread_badge = :enabled WHERE id = :id;
-
-toggleAllShowUnreadBadge:
-UPDATE saved_searches SET show_unread_badge = :enabled;

@@ -13,8 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.capyreader.app.R
-import com.capyreader.app.preferences.BadgeStyle
-import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.fixtures.FeedSample
 import com.jocmp.capy.Feed
 
@@ -26,7 +24,6 @@ fun FeedActionMenuItems(
     onEdit: () -> Unit,
     onReloadIcon: () -> Unit,
     onToggleOpenInBrowser: () -> Unit,
-    onToggleUnreadBadge: () -> Unit,
     onMarkAllRead: () -> Unit,
     showMarkAllRead: Boolean = true,
     showReloadIcon: Boolean = false,
@@ -91,22 +88,6 @@ fun FeedActionMenuItems(
         },
         onClick = onToggleOpenInBrowser
     )
-    if (LocalBadgeStyle.current == BadgeStyle.SIMPLE) {
-        val unreadBadgeIcon = @Composable {
-            if (feed.showUnreadBadge) {
-                Icon(Icons.Rounded.CheckBox, contentDescription = null)
-            } else {
-                Icon(Icons.Rounded.CheckBoxOutlineBlank, contentDescription = null)
-            }
-        }
-        DropdownMenuItem(
-            trailingIcon = unreadBadgeIcon,
-            text = {
-                Text(stringResource(R.string.show_unread_badge))
-            },
-            onClick = onToggleUnreadBadge
-        )
-    }
 }
 
 @Preview
@@ -120,7 +101,6 @@ fun FeedActionMenuPreview(@PreviewParameter(FeedSample::class) feed: Feed) {
             onReloadIcon = {},
             onRemoveRequest = {},
             onToggleOpenInBrowser = {},
-            onToggleUnreadBadge = {},
             onMarkAllRead = {},
         )
     }

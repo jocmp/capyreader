@@ -19,6 +19,5 @@ data class Feed(
     val openArticlesInBrowser: Boolean = false,
     val folderExpanded: Boolean = false,
     val priority: FeedPriority? = null,
-    val showUnreadBadge: Boolean = true,
     val isReadLater: Boolean = false,
 ): Countable

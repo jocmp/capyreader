@@ -191,8 +191,6 @@
     <string name="audio_player_play">Прайграць</string>
     <string name="audio_player_pause">Прыпыніць</string>
     <string name="audio_player_close">Закрыць прайгравальнік</string>
-    <string name="badge_style_simple">Просты</string>
-    <string name="badge_style_exact">Дакладны</string>
     <string name="extract_full_content">Выняць поўны змест</string>
     <string name="article_actions_mark_below_as_read">Пазначыць ніжэй як прачытанае</string>
     <string name="article_actions_mark_after_as_read">Пазначыць вышэй як прачытанае</string>
@@ -257,9 +255,6 @@
     <string name="freshrss_visibility_option_main">Асноўны паток</string>
     <string name="audio_player_skip_back">Перайсці на 30 секунд назад</string>
     <string name="audio_player_skip_forward">Перайсці на 30 секунд наперад</string>
-    <string name="settings_panel_unread_counts_title">Значкі непрачытаных</string>
-    <string name="settings_option_badge_style">Стыль значкоў</string>
-    <string name="show_unread_badge">Паказваць значок непрачытаных</string>
     <string name="settings_auto_delete_articles_title">Захоўваць прачытаныя артыкулы</string>
     <string name="settings_auto_delete_option_keep_forever">Назаўжды</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 тыдзень</string>

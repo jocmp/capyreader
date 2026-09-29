@@ -49,12 +49,6 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     }
 
     @Parcelize
-    data object UnreadBadges : SettingsPanel(title = R.string.settings_panel_unread_counts_title),
-        Parcelable {
-        override fun icon() = Icons.Rounded.Visibility
-    }
-
-    @Parcelize
     data object ArticleList : SettingsPanel(title = R.string.settings_article_list_title),
         Parcelable {
         override fun icon() = Icons.Rounded.Visibility
