@@ -97,9 +97,10 @@ class ArticleViewModel(
         }
 
         viewModelScope.launchIO {
+            val filter = appPreferences.filter.get()
             val (previous, next) = account.neighbors(
-                filter = appPreferences.filter.get(),
-                sortOrder = appPreferences.articleListOptions.sortOrder.get(),
+                filter = filter,
+                sortOrder = appPreferences.articleListOptions.getSortOrder(filter).get(),
                 since = articleCutoff.value,
                 articleID = articleID,
                 query = searchQuery,

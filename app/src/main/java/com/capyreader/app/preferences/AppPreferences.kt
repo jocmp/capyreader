@@ -8,6 +8,7 @@ import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.articles.FontOption
 import com.jocmp.capy.articles.FontSize
 import com.jocmp.capy.articles.SortOrder
@@ -136,7 +137,18 @@ class AppPreferences(context: Context) {
         val backAction: Preference<BackAction>
             get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
 
-        val sortOrder: Preference<SortOrder>
+        fun getSortOrder(status: ArticleStatus): Preference<SortOrder> {
+            return preferenceStore.getEnum(
+                "article_list_sort_order_${status.name.lowercase()}",
+                legacySortOrder.get()
+            )
+        }
+
+        fun getSortOrder(filter: ArticleFilter): Preference<SortOrder> {
+            return getSortOrder(filter.status)
+        }
+
+        private val legacySortOrder: Preference<SortOrder>
             get() = preferenceStore.getEnum(
                 "article_list_sort_order",
                 SortOrder.default

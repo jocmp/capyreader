@@ -10,6 +10,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
 import com.jocmp.capy.Account
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.preferences.getAndSet
@@ -33,7 +34,11 @@ class GeneralSettingsViewModel(
     var canOpenLinksInternally by mutableStateOf(appPreferences.openLinksInternally.get())
         private set
 
-    var sortOrder by mutableStateOf(appPreferences.articleListOptions.sortOrder.get())
+    var sortOrders by mutableStateOf(
+        ArticleStatus.entries.associateWith { status ->
+            appPreferences.articleListOptions.getSortOrder(status).get()
+        }
+    )
         private set
 
     var confirmMarkAllRead by mutableStateOf(appPreferences.articleListOptions.confirmMarkAllRead.get())
@@ -67,10 +72,10 @@ class GeneralSettingsViewModel(
         this.refreshInterval = interval
     }
 
-    fun updateSortOrder(sort: SortOrder) {
-        appPreferences.articleListOptions.sortOrder.set(sort)
+    fun updateSortOrder(status: ArticleStatus, sort: SortOrder) {
+        appPreferences.articleListOptions.getSortOrder(status).set(sort)
 
-        this.sortOrder = sort
+        this.sortOrders += status to sort
     }
 
     fun updateAutoDelete(autoDelete: AutoDelete) {
