@@ -57,6 +57,7 @@ import com.capyreader.app.ui.settings.filters.FilterKeywords
 import com.capyreader.app.ui.settings.filters.FiltersItem
 import com.capyreader.app.ui.settings.filters.LocalFilterKeywords
 import com.capyreader.app.ui.theme.CapyTheme
+import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
@@ -93,7 +94,7 @@ fun GeneralSettingsPanel(
             autoDelete = viewModel.autoDelete,
             onClearArticles = viewModel::clearAllArticles,
             updateSortOrder = viewModel::updateSortOrder,
-            sortOrder = viewModel.sortOrder,
+            sortOrders = viewModel.sortOrders,
             updateConfirmMarkAllRead = viewModel::updateConfirmMarkAllRead,
             confirmMarkAllRead = viewModel.confirmMarkAllRead,
             afterReadAll = viewModel.afterReadAll,
@@ -119,8 +120,8 @@ fun GeneralSettingsPanelView(
     updateOpenLinksInternally: (canOpenLinksInternally: Boolean) -> Unit,
     updateAutoDelete: (AutoDelete) -> Unit,
     autoDelete: AutoDelete,
-    updateSortOrder: (SortOrder) -> Unit,
-    sortOrder: SortOrder,
+    updateSortOrder: (status: ArticleStatus, sortOrder: SortOrder) -> Unit,
+    sortOrders: Map<ArticleStatus, SortOrder>,
     updateStickyFullContent: (enable: Boolean) -> Unit,
     enableStickyFullContent: Boolean,
     updateConfirmMarkAllRead: (enable: Boolean) -> Unit,
@@ -145,9 +146,9 @@ fun GeneralSettingsPanelView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
-        SortOrderSelect(
-            sortOrder,
-            updateSortOrder
+        SortOrderSection(
+            sortOrders = sortOrders,
+            update = updateSortOrder,
         )
 
         FormSection(title = stringResource(R.string.settings_section_refresh)) {
@@ -372,8 +373,8 @@ private fun GeneralSettingsPanelPreview() {
                 updateOpenLinksInternally = {},
                 updateAutoDelete = {},
                 autoDelete = AutoDelete.WEEKLY,
-                sortOrder = SortOrder.NEWEST_FIRST,
-                updateSortOrder = {},
+                sortOrders = ArticleStatus.entries.associateWith { SortOrder.default },
+                updateSortOrder = { _, _ -> },
                 onNavigateToNotifications = {},
                 updateConfirmMarkAllRead = {},
                 confirmMarkAllRead = true,

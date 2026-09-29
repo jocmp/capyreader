@@ -120,8 +120,6 @@ class ArticleScreenViewModel(
 
     private var _showUnauthorizedMessage by mutableStateOf(UnauthorizedMessageState.HIDE)
 
-    val sortOrder = appPreferences.articleListOptions.sortOrder.stateIn(viewModelScope)
-
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
@@ -137,7 +135,7 @@ class ArticleScreenViewModel(
     // (which keys off the persisted filter), so search no longer participates here.
     private var articleListScope: CoroutineScope? = null
 
-    private var articleListKey = listPagerKey(listSession.value, sortOrder.value)
+    private var articleListKey = listPagerKey(listSession.value, sortOrder(listSession.value.filter))
 
     private val _articleList = MutableStateFlow(buildArticleList(articleListKey))
 
@@ -145,14 +143,22 @@ class ArticleScreenViewModel(
 
     // Search has its own pager so it can filter freely without disturbing the list above.
     val searchResults: Flow<PagingData<Article>> =
-        combine(_searchQuery, listSession, sortOrder) { query, session, sort ->
-            ArticlePagerKey(filter = session.filter, query = query, since = session.since, sort = sort)
+        combine(_searchQuery, listSession.flatMapLatest(::listPagerKeys)) { query, key ->
+            key.copy(query = query)
         }.flatMapLatest { key ->
             if (key.query.isNullOrBlank()) flowOf(PagingData.empty()) else pagerFlow(key)
         }.cachedIn(viewModelScope)
 
     private fun listPagerKey(session: ListSession, sort: SortOrder) =
         ArticlePagerKey(filter = session.filter, query = null, since = session.since, sort = sort)
+
+    private fun listPagerKeys(session: ListSession): Flow<ArticlePagerKey> =
+        appPreferences.articleListOptions.getSortOrder(session.filter).changes().map { sort ->
+            listPagerKey(session, sort)
+        }
+
+    private fun sortOrder(filter: ArticleFilter) =
+        appPreferences.articleListOptions.getSortOrder(filter).get()
 
     private fun buildArticleList(key: ArticlePagerKey): ArticleListPage {
         articleListScope?.cancel()
@@ -319,7 +325,7 @@ class ArticleScreenViewModel(
 
     init {
         viewModelScope.launch {
-            combine(listSession, sortOrder, ::listPagerKey).collect { key ->
+            listSession.flatMapLatest(::listPagerKeys).collect { key ->
                 if (key != articleListKey) {
                     _articleList.value = buildArticleList(key)
                 }
@@ -411,7 +417,7 @@ class ArticleScreenViewModel(
             val articleIDs = account.unreadArticleIDs(
                 filter = filter,
                 range = range,
-                sortOrder = sortOrder.value,
+                sortOrder = sortOrder(filter),
                 query = query,
                 since = listSession.value.since,
             )
@@ -601,7 +607,7 @@ class ArticleScreenViewModel(
             mapOf(
                 "articleID" to articleID,
                 "range" to range.toString(),
-                "sortOrder" to sortOrder.value.toString(),
+                "sortOrder" to sortOrder(latestFilter).toString(),
                 "highWaterMark" to _scrollHighWaterMark,
             )
         )
@@ -610,7 +616,7 @@ class ArticleScreenViewModel(
             val articleIDs = account.unreadArticleIDs(
                 filter = latestFilter,
                 range = range,
-                sortOrder = sortOrder.value,
+                sortOrder = sortOrder(latestFilter),
                 query = _searchQuery.value,
                 since = listSession.value.since,
             )

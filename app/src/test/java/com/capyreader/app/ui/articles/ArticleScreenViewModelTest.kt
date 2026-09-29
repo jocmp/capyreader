@@ -13,9 +13,11 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.articles.SortOrder
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import java.time.ZonedDateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -258,6 +260,39 @@ class ArticleScreenViewModelTest {
         advanceUntilIdle()
 
         assertEquals(deepLinked, viewModel.filter.value)
+    }
+
+    @Test
+    fun `markAllRead uses the sort order for the filter status`() = runTest {
+        appPreferences.articleListOptions.getSortOrder(ArticleStatus.UNREAD).set(SortOrder.OLDEST_FIRST)
+        val unread = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        val starred = ArticleFilter.Articles(articleStatus = ArticleStatus.STARRED)
+        appPreferences.filter.set(unread)
+
+        val viewModel = buildViewModel()
+
+        viewModel.markAllRead(filter = unread)
+        viewModel.markAllRead(filter = starred)
+        advanceUntilIdle()
+
+        verify {
+            account.unreadArticleIDs(
+                filter = unread,
+                range = any(),
+                sortOrder = SortOrder.OLDEST_FIRST,
+                query = any(),
+                since = any(),
+            )
+        }
+        verify {
+            account.unreadArticleIDs(
+                filter = starred,
+                range = any(),
+                sortOrder = SortOrder.NEWEST_FIRST,
+                query = any(),
+                since = any(),
+            )
+        }
     }
 
     private fun buildViewModel(

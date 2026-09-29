@@ -114,7 +114,7 @@ private fun StatusButton(
     }
 }
 
-private fun iconSize(status: ArticleStatus) = when (status) {
+internal fun iconSize(status: ArticleStatus) = when (status) {
     ArticleStatus.UNREAD -> 12.dp
     else -> 20.dp
 }
