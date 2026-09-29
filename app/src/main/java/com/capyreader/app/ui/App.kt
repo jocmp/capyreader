@@ -104,6 +104,10 @@ fun App(
         AppDrawerController(state = drawerState, setContent = { drawerContent = it })
     }
 
+    val hideSystemBars by appPreferences.hideSystemBars.collectChangesWithCurrent()
+
+    SystemBarsVisibility(hidden = hideSystemBars)
+
     CapyTheme(appPreferences) {
         Surface(
             modifier = Modifier.fillMaxSize(),

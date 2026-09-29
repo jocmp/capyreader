@@ -65,6 +65,9 @@ class AppPreferences(context: Context) {
     val accentColors: Preference<Boolean>
         get() = preferenceStore.getBoolean("accent_colors", false)
 
+    val hideSystemBars: Preference<Boolean>
+        get() = preferenceStore.getBoolean("hide_system_bars", false)
+
     val openLinksInternally: Preference<Boolean>
         get() = preferenceStore.getBoolean("open_links_internally", true)
 

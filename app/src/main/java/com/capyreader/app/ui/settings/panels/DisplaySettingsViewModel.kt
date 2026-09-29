@@ -27,6 +27,9 @@ class DisplaySettingsViewModel(
     var accentColors by mutableStateOf(appPreferences.accentColors.get())
         private set
 
+    var hideSystemBars by mutableStateOf(appPreferences.hideSystemBars.get())
+        private set
+
     private val _imagePreview = mutableStateOf(appPreferences.articleListOptions.imagePreview.get())
 
     private val _showSummary = mutableStateOf(appPreferences.articleListOptions.showSummary.get())
@@ -74,6 +77,11 @@ class DisplaySettingsViewModel(
     fun updateAccentColors(enable: Boolean) {
         appPreferences.accentColors.set(enable)
         this.accentColors = enable
+    }
+
+    fun updateHideSystemBars(hide: Boolean) {
+        appPreferences.hideSystemBars.set(hide)
+        this.hideSystemBars = hide
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {

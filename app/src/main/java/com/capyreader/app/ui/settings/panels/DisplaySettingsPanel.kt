@@ -54,6 +54,8 @@ fun DisplaySettingsPanel(
         updatePureBlackDarkMode = viewModel::updatePureBlackDarkMode,
         accentColors = viewModel.accentColors,
         updateAccentColors = viewModel::updateAccentColors,
+        hideSystemBars = viewModel.hideSystemBars,
+        updateHideSystemBars = viewModel::updateHideSystemBars,
         appPreferences = viewModel.appPreferences,
         updatePinArticleBars = viewModel::updatePinArticleBars,
         pinArticleBars = pinArticleBars,
@@ -73,6 +75,8 @@ fun DisplaySettingsPanelView(
     updatePureBlackDarkMode: (Boolean) -> Unit,
     accentColors: Boolean = false,
     updateAccentColors: (Boolean) -> Unit = {},
+    hideSystemBars: Boolean = false,
+    updateHideSystemBars: (Boolean) -> Unit = {},
     appPreferences: AppPreferences?,
     updatePinArticleBars: (enable: Boolean) -> Unit,
     pinArticleBars: Boolean,
@@ -118,6 +122,13 @@ fun DisplaySettingsPanelView(
                         title = stringResource(R.string.settings_accent_colors)
                     )
                 }
+            }
+            RowItem {
+                TextSwitch(
+                    onCheckedChange = updateHideSystemBars,
+                    checked = hideSystemBars,
+                    title = stringResource(R.string.settings_hide_system_bars)
+                )
             }
 
             Column {
