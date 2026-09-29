@@ -1,6 +1,6 @@
 # E Ink
 
-Display & Appearance > E Ink groups three settings. On a detected E Ink device, all three turn on once, the first time the app starts.
+Display & Appearance > E Ink groups three settings. On a detected E Ink device, all three turn on once, the first time the app starts. The theme also switches to Monochrome, unless the user already picked one.
 
 | Setting            | Preference                             | Effect                                                         |
 |--------------------|----------------------------------------|----------------------------------------------------------------|

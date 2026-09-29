@@ -27,6 +27,11 @@ object EInkDevice {
         appPreferences.reduceMotion.set(true)
         appPreferences.readerOptions.enablePagingTapGesture.set(true)
         appPreferences.readerOptions.enablePageTurnKeys.set(true)
+
+        if (!appPreferences.appTheme.isSet()) {
+            appPreferences.appTheme.set(AppTheme.MONOCHROME)
+        }
+
         appPreferences.eInkDefaultsApplied.set(true)
     }
 

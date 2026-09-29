@@ -1,6 +1,7 @@
 package com.capyreader.app.preferences
 
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -48,11 +49,21 @@ class EInkDeviceTest {
         assertTrue(appPreferences.reduceMotion.get())
         assertTrue(appPreferences.readerOptions.enablePagingTapGesture.get())
         assertTrue(appPreferences.readerOptions.enablePageTurnKeys.get())
+        assertEquals(AppTheme.MONOCHROME, appPreferences.appTheme.get())
 
         appPreferences.reduceMotion.set(false)
         EInkDevice.applyDefaults(appPreferences, isEInk = true)
 
         assertFalse(appPreferences.reduceMotion.get())
+    }
+
+    @Test
+    fun `keeps a theme the user already picked`() {
+        appPreferences.appTheme.set(AppTheme.SUNSET)
+
+        EInkDevice.applyDefaults(appPreferences, isEInk = true)
+
+        assertEquals(AppTheme.SUNSET, appPreferences.appTheme.get())
     }
 
     @Test
@@ -62,5 +73,6 @@ class EInkDeviceTest {
         assertFalse(appPreferences.reduceMotion.get())
         assertFalse(appPreferences.readerOptions.enablePageTurnKeys.get())
         assertFalse(appPreferences.eInkDefaultsApplied.get())
+        assertFalse(appPreferences.appTheme.isSet())
     }
 }
