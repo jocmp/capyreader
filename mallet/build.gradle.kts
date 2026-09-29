@@ -10,6 +10,7 @@ java {
 
 dependencies {
     implementation(libs.jsoup)
+    compileOnly(libs.jspecify)
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-common"))
     testImplementation(kotlin("test-annotations-common"))

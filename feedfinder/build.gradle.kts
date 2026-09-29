@@ -11,6 +11,7 @@ java {
 
 dependencies {
     implementation(libs.jsoup)
+    compileOnly(libs.jspecify)
     implementation(libs.moshi)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.okhttp.client)
