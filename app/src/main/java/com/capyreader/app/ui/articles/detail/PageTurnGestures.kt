@@ -56,34 +56,53 @@ fun PageTurnGestures(
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
 
-    val turn = remember(scrollState, scope) {
+    val scrollPage = remember(scrollState) {
+        suspend { direction: PageDirection ->
+            val current = scrollState.value
+            val viewport = scrollState.viewportSize.toFloat()
+
+            if (direction == PageDirection.FORWARD) {
+                val step = pageStep(
+                    viewport = viewport,
+                    leading = visibleInsets.bottom,
+                    trailing = hiddenInsets.top,
+                )
+                scrollState.scrollBy(step)
+            } else {
+                val step = pageStep(
+                    viewport = viewport,
+                    leading = visibleInsets.top,
+                    trailing = visibleInsets.bottom,
+                )
+                scrollState.scrollBy(-step)
+            }
+
+            val moved = scrollState.value != current
+
+            if (moved && direction == PageDirection.FORWARD) {
+                currentOnHideToolbars()
+            }
+
+            moved
+        }
+    }
+
+    val turn = remember(scope, scrollPage) {
         { direction: PageDirection ->
             scope.launch {
-                val current = scrollState.value
-                val viewport = scrollState.viewportSize.toFloat()
+                val moved = scrollPage(direction)
 
-                if (direction == PageDirection.FORWARD) {
-                    val step = pageStep(
-                        viewport = viewport,
-                        leading = visibleInsets.bottom,
-                        trailing = hiddenInsets.top,
-                    )
-                    scrollState.scrollBy(step)
-                } else {
-                    val step = pageStep(
-                        viewport = viewport,
-                        leading = visibleInsets.top,
-                        trailing = visibleInsets.bottom,
-                    )
-                    scrollState.scrollBy(-step)
-                }
-
-                if (scrollState.value == current) {
+                if (!moved) {
                     currentOnTurnPastArticle(direction)
-                } else if (direction == PageDirection.FORWARD) {
-                    currentOnHideToolbars()
                 }
             }
+            Unit
+        }
+    }
+
+    val scrollbarTurn = remember(scope, scrollPage) {
+        { direction: PageDirection ->
+            scope.launch { scrollPage(direction) }
             Unit
         }
     }
@@ -114,8 +133,8 @@ fun PageTurnGestures(
         if (enableScrollbar) {
             EInkScrollbar(
                 state = rememberEInkScrollbarState(scrollState),
-                onPage = turn,
-                onLine = turn,
+                onPage = scrollbarTurn,
+                onLine = scrollbarTurn,
                 modifier = Modifier.padding(scrollbarPadding(pinToolbars)),
             )
         }

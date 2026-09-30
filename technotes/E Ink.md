@@ -43,7 +43,7 @@ Tap zones, page keys, and the scrollbar's arrows and track taps all call the sam
 - 96% matches the tap-to-scroll from before this branch and leaves about a line of overlap (#1247). #1856 (a line too far) came from miscounted toolbar offsets, fixed in #1860, not from the proportion.
 - EinkBro pages by `webView.height - 80dp` ("Page reserved height", `WebViewNavigationHelper.shiftOffset()`). That was tried here and read as too slow: about three lines of overlap on every turn.
 - A page can end mid-line; the overlap means the full line shows at the top of the next page.
-- At the end of an article, forward opens the next article; at the top, back opens the previous article scrolled to its end.
+- At the end of an article, the tap zones and page keys open the next article; at the top, back opens the previous article scrolled to its end. The scrollbar's arrows and track stop at the ends instead, like a scrollbar.
 - A forward turn hides the toolbars and the system navigation bar.
 - Images are capped at one screen tall, keeping their aspect ratio.
 
