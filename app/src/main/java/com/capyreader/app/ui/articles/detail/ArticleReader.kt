@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import com.capyreader.app.R
@@ -36,6 +37,7 @@ import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.articles.reader.AnchorRegistry
 import com.capyreader.app.ui.articles.reader.ArticleReaderContent
+import com.capyreader.app.ui.articles.reader.LocalReaderPageHeight
 import com.capyreader.app.ui.articles.reader.LocalReaderPages
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
@@ -282,6 +284,9 @@ private fun ScrollableArticle(
     ) {
         BoxWithConstraints {
             val viewportHeight = maxHeight
+            val pageHeight = with(LocalDensity.current) {
+                viewportHeight - (pagedInsets.top + pagedInsets.bottom).toDp()
+            }
 
             val column = @Composable {
                 Column(
@@ -299,7 +304,13 @@ private fun ScrollableArticle(
                     if (!pinToolbars) {
                         Spacer(Modifier.height(ArticleBarDefaults.topBarOffset))
                     }
-                    content()
+                    if (paginate) {
+                        CompositionLocalProvider(LocalReaderPageHeight provides pageHeight) {
+                            content()
+                        }
+                    } else {
+                        content()
+                    }
 
                     if (paginate) {
                         Spacer(Modifier.height(viewportHeight))

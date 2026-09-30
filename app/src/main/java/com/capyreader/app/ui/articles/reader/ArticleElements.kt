@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -329,12 +330,22 @@ fun ImageElement(
             ?: ImageAspectRatios[source.imgUri]
             ?: PLACEHOLDER_ASPECT_RATIO
 
+        val pageHeight = LocalReaderPageHeight.current
+        val unsplittable = LocalReaderPages.current?.unsplittable() ?: Modifier
+
         val sizeModifier = if (failed) {
             Modifier.fillMaxWidth()
+        } else if (pageHeight != null) {
+            Modifier
+                .widthIn(max = pageHeight * aspectRatio)
+                .fillMaxWidth()
+                .aspectRatio(aspectRatio)
+                .then(unsplittable)
         } else {
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
+                .then(unsplittable)
         }
 
         Column(
@@ -542,6 +553,7 @@ fun VideoElement(
     val frame = modifier
         .fillMaxWidth()
         .aspectRatio(aspectRatio)
+        .then(LocalReaderPages.current?.unsplittable() ?: Modifier)
         .clip(CORNER_SHAPE)
         .background(Color.Black)
 

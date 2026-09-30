@@ -21,17 +21,13 @@ object PageTurn {
 
         val line = lines
             .filter { it.straddles(edge) && it.top > minimum }
-            .minByOrNull { it.top }
-
-        if (line != null) {
-            return line.top
-        }
+            .minOfOrNull { it.top }
 
         val block = blocks
-            .filter { it.straddles(edge) && it.top > minimum }
-            .minByOrNull { it.top }
+            .filter { it.straddles(edge) && it.top > top && it.bottom - it.top <= height }
+            .minOfOrNull { it.top }
 
-        return block?.top ?: edge
+        return listOfNotNull(line, block).minOrNull() ?: edge
     }
 
     fun breaks(

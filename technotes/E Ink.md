@@ -29,6 +29,9 @@ Prior art: EPUB readers on a web view (Readium, foliate/Readest) lay text out in
 
 - Vertical scrolling is off (`verticalScroll(enabled = false)`). Pages turn with a horizontal swipe, the tap zones, or the page keys.
 - The partial line below each page break is covered with the background, so every page ends on a whole line.
+- Images and videos register as unsplittable boxes (the media itself, not the whole element, so captions still flow). An image that doesn't fit in what's left of a page starts the next page, leaving blank space like a book. In page mode, images are capped at one page tall, keeping their aspect ratio, so none has to split. Only a box taller than a page, which can't happen for images, falls back to cutting at the edge.
+
+Android has no general pagination for native layouts. `StaticLayout`/`TextMeasurer` split plain text into lines, and the print framework (`PrintedPdfDocument`) leaves page layout to the app. The only built-in fragmentation for mixed content is a WebView with CSS columns, which is what EPUB readers use. With a native reader, page breaking is the app's job, as it is for Moon+ and KOReader's crengine.
 - A trailing spacer the height of the screen lets the last page start on its break instead of clamping to the end of the content.
 - Page size uses the hidden-toolbar insets, 8dp of top padding, and a footer strip with the article title (cut at 100 characters or the last space before that) and "3 / 12". Toolbars overlay the page when shown, like Kindle's menus, so page breaks don't move when they toggle. Articles open with the toolbars hidden.
 - Turning past the last page opens the next article. Turning back from the first page opens the previous article on its last page, and it stays pinned there while images load until the next turn.

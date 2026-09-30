@@ -32,21 +32,30 @@ class PageTurnTest {
     }
 
     @Test
-    fun `next skips through an image taller than half a page`() {
+    fun `next moves an image that fits to the next page`() {
+        val image = PageBox(top = 300f, bottom = 1100f)
+
+        val next = PageTurn.next(top = 0f, height = 1000f, lines = emptyList(), blocks = listOf(image))
+
+        assertEquals(300f, next)
+    }
+
+    @Test
+    fun `next moves an image ahead of the cut line`() {
+        val image = PageBox(top = 950f, bottom = 1500f)
+
+        val next = PageTurn.next(top = 0f, height = 1000f, lines = lines, blocks = listOf(image))
+
+        assertEquals(950f, next)
+    }
+
+    @Test
+    fun `next splits an image taller than a page`() {
         val image = PageBox(top = 200f, bottom = 1800f)
 
         val next = PageTurn.next(top = 0f, height = 1000f, lines = emptyList(), blocks = listOf(image))
 
         assertEquals(1000f, next)
-    }
-
-    @Test
-    fun `lines win over the element that contains them`() {
-        val paragraph = PageBox(top = 600f, bottom = 1500f)
-
-        val next = PageTurn.next(top = 0f, height = 1000f, lines = lines, blocks = listOf(paragraph))
-
-        assertEquals(990f, next)
     }
 
     @Test

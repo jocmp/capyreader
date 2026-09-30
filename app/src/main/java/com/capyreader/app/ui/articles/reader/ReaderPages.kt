@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,9 +11,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.Dp
 import kotlin.math.roundToInt
 
 val LocalReaderPages = staticCompositionLocalOf<ReaderPages?> { null }
+
+val LocalReaderPageHeight = compositionLocalOf<Dp?> { null }
 
 data class PageInsets(val top: Float, val bottom: Float)
 
@@ -27,6 +31,7 @@ private data class PageLayoutKey(
 class ReaderPages(private val scrollState: ScrollState) {
     private val texts = mutableMapOf<LayoutCoordinates, () -> TextLayoutResult?>()
     private val elements = mutableMapOf<Int, LayoutCoordinates>()
+    private val unsplittables = mutableSetOf<LayoutCoordinates>()
     private val history = ArrayDeque<PageJump>()
 
     var contentCoordinates: LayoutCoordinates? = null
@@ -77,8 +82,8 @@ class ReaderPages(private val scrollState: ScrollState) {
         }
 
         val lines = textLines(content)
-        val blocks = elementBlocks(content)
-        val contentBottom = (lines + blocks).maxOfOrNull { it.bottom } ?: 0f
+        val blocks = unsplittableBlocks(content)
+        val contentBottom = (lines + blocks + elementBlocks(content)).maxOfOrNull { it.bottom } ?: 0f
 
         pageLayoutKey = key
         pageInsets = insets
@@ -146,6 +151,10 @@ class ReaderPages(private val scrollState: ScrollState) {
         return Modifier.onPlaced { coordinates -> texts[coordinates] = layout }
     }
 
+    fun unsplittable(): Modifier {
+        return Modifier.onPlaced { coordinates -> unsplittables.add(coordinates) }
+    }
+
     suspend fun turn(direction: PageDirection, visible: PageInsets, next: PageInsets) {
         val content = contentCoordinates?.takeIf { it.isAttached } ?: return
         val current = scrollState.value
@@ -167,7 +176,7 @@ class ReaderPages(private val scrollState: ScrollState) {
         }
 
         val lines = textLines(content)
-        val blocks = elementBlocks(content)
+        val blocks = unsplittableBlocks(content)
 
         if (direction == PageDirection.BACK) {
             val previousTop = PageTurn.previous(top, height, lines, blocks)
@@ -198,6 +207,18 @@ class ReaderPages(private val scrollState: ScrollState) {
                 )
             }
         }
+    }
+
+    private fun unsplittableBlocks(content: LayoutCoordinates): List<PageBox> {
+        unsplittables.removeAll { !it.isAttached }
+
+        return unsplittables.map { coordinates -> box(content, coordinates) }
+    }
+
+    private fun box(content: LayoutCoordinates, coordinates: LayoutCoordinates): PageBox {
+        val offset = content.localPositionOf(coordinates, Offset.Zero).y
+
+        return PageBox(top = offset, bottom = offset + coordinates.size.height)
     }
 
     private fun elementBlocks(content: LayoutCoordinates): List<PageBox> {
