@@ -6,7 +6,7 @@ Display & Appearance > E Ink groups four settings. On a detected E Ink device, a
 |--------------------|----------------------------------------|----------------------------------------------------------------|
 | Reduce animations  | `reduce_motion`                        | Every Compose animation in `MainActivity` finishes instantly   |
 | Tap to turn pages  | `article_enable_paging_tap_gesture`    | Left quarter goes back a page, right quarter forward           |
-| E Ink scrollbar    | `article_enable_e_ink_scrollbar`       | Large scrollbar with page and line buttons (reader and list)   |
+| E Ink scrollbar    | `article_enable_e_ink_scrollbar`       | Large scrollbar with page buttons in the article list          |
 | Page turn buttons  | `article_enable_page_turn_keys`        | Volume keys, Page Up/Down, and arrow keys turn pages           |
 
 The tap preference key predates this work (it was "E Ink tap to scroll", bottom-corner zones that jumped 96% of the screen), so existing users keep their setting.
@@ -30,20 +30,23 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 ## Scrollbar
 
-`EInkScrollbar` follows the Windows 95 scrollbar's behavior, drawn in Material 3: arrows at each end move one line, a tap on the track above or below the thumb moves one page, and the thumb drags. It's one outlined capsule (`surfaceContainerLow` with an `outlineVariant` border), 28dp wide, since light grey fills disappear in the Monochrome theme.
+`EInkScrollbar` shows in the article list only. It follows the Windows 95 scrollbar's layout, drawn in Material 3: arrows at each end, a track where a tap above or below the thumb moves a page, and a draggable thumb. It's one outlined capsule (`surfaceContainerLow` with an `outlineVariant` border), 28dp wide, since light grey fills disappear in the Monochrome theme.
 
-- Reader: the arrows and track taps both turn a page like the tap zones and keys (see Page turns).
-- Article list: page down makes the cut-off row the first row; page up moves a screen and aligns to a row. Arrows move one row. The thumb size and position are estimated from the average visible row height, since `LazyColumn` doesn't know the total height.
-- The thin library scrollbar is hidden while the E Ink scrollbar shows.
+- Page down makes the cut-off row the first row; page up moves a screen and aligns to a row. Arrows move one row. The thumb size and position are estimated from the average visible row height, since `LazyColumn` doesn't know the total height.
+- It was tried in the reader too and dropped: a permanent 28dp column on a 7" screen for controls the tap zones and keys already cover. The reader keeps the thin library scrollbar.
+
+## Tap zone hint
+
+Following Mihon (`ReaderNavigationOverlayView`, shown for new users and when the tap layout changes), the reader draws the zones once with labels (Previous page, Menu, Next page) over the article. The first touch dismisses it and clears `article_show_tap_zone_hint`. Turning Tap to turn pages on sets it again, so the hint shows the next time an article opens. It defaults to on, so the E Ink bundle and a fresh login both show it once.
 
 ## Page turns
 
-Tap zones, page keys, and the scrollbar's arrows and track taps all call the same `scrollBy`: 96% of the visible height, measured from the current bottom edge to the next top edge. A forward turn hides the toolbars, so the next top edge is the one without them. No animation, regardless of Reduce animations.
+Tap zones and page keys call the same `scrollBy`: 96% of the visible height, measured from the current bottom edge to the next top edge. A forward turn hides the toolbars, so the next top edge is the one without them. No animation, regardless of Reduce animations.
 
 - 96% matches the tap-to-scroll from before this branch and leaves about a line of overlap (#1247). #1856 (a line too far) came from miscounted toolbar offsets, fixed in #1860, not from the proportion.
 - EinkBro pages by `webView.height - 80dp` ("Page reserved height", `WebViewNavigationHelper.shiftOffset()`). That was tried here and read as too slow: about three lines of overlap on every turn.
 - A page can end mid-line; the overlap means the full line shows at the top of the next page.
-- At the end of an article, the tap zones and page keys open the next article; at the top, back opens the previous article scrolled to its end. The scrollbar's arrows and track stop at the ends instead, like a scrollbar.
+- At the end of an article, forward opens the next article; at the top, back opens the previous article scrolled to its end.
 - A forward turn hides the toolbars and the system navigation bar.
 - Images are capped at one screen tall, keeping their aspect ratio.
 

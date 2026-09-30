@@ -260,11 +260,8 @@ private fun ScrollableArticle(
     onToggleToolbars: () -> Unit,
     onTurnPastArticle: (PageDirection) -> Unit,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
-    appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
-    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
-
     PageTurnGestures(
         scrollState = scrollState,
         pinToolbars = pinToolbars,
@@ -276,7 +273,7 @@ private fun ScrollableArticle(
         BoxWithConstraints {
             val pageHeight = maxHeight - WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
-            val column = @Composable {
+            ColumnScrollbar(state = scrollState) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -291,14 +288,6 @@ private fun ScrollableArticle(
                     CompositionLocalProvider(LocalReaderPageHeight provides pageHeight) {
                         content()
                     }
-                }
-            }
-
-            if (enableScrollbar) {
-                column()
-            } else {
-                ColumnScrollbar(state = scrollState) {
-                    column()
                 }
             }
         }

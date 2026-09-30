@@ -92,6 +92,10 @@ class GesturesSettingsViewModel(
         enablePagingTapGesture = enabled
 
         readerOptions.enablePagingTapGesture.set(enabled)
+
+        if (enabled) {
+            readerOptions.showTapZoneHint.set(true)
+        }
     }
 
     fun updatePageTurnKeys(enabled: Boolean) {

@@ -18,9 +18,8 @@ fun HideNavigationBarWhilePaging(
 ) {
     val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithCurrent()
     val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
-    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
     val window = LocalActivity.current?.window ?: return
-    val hideNavigationBar = hide && (enableTaps || enableKeys || enableScrollbar)
+    val hideNavigationBar = hide && (enableTaps || enableKeys)
 
     DisposableEffect(window, hideNavigationBar) {
         val controller = WindowCompat.getInsetsController(window, window.decorView)

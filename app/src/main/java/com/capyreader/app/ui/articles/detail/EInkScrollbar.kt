@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles.detail
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,11 +51,6 @@ interface EInkScrollbarState {
     val visibleFraction: Float
 
     fun scrollTo(fraction: Float)
-}
-
-@Composable
-fun rememberEInkScrollbarState(scrollState: ScrollState): EInkScrollbarState {
-    return remember(scrollState) { ColumnScrollbarState(scrollState) }
 }
 
 @Composable
@@ -188,34 +182,6 @@ private fun ScrollbarTrack(
                 .clip(RoundedCornerShape(ThumbCorner))
                 .background(MaterialTheme.colorScheme.outline)
         )
-    }
-}
-
-private class ColumnScrollbarState(private val scrollState: ScrollState) : EInkScrollbarState {
-    override val position: Float
-        get() {
-            if (scrollState.maxValue <= 0) {
-                return 0f
-            }
-
-            return scrollState.value.toFloat() / scrollState.maxValue
-        }
-
-    override val visibleFraction: Float
-        get() {
-            val content = scrollState.viewportSize + scrollState.maxValue
-
-            if (content <= 0) {
-                return 1f
-            }
-
-            return scrollState.viewportSize.toFloat() / content
-        }
-
-    override fun scrollTo(fraction: Float) {
-        val target = fraction.coerceIn(0f, 1f) * scrollState.maxValue
-
-        scrollState.dispatchRawDelta(target - scrollState.value)
     }
 }
 

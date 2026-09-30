@@ -6,12 +6,9 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -48,7 +45,7 @@ fun PageTurnGestures(
 ) {
     val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithCurrent()
     val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
-    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
+    val showTapZoneHint by appPreferences.readerOptions.showTapZoneHint.collectChangesWithCurrent()
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
@@ -100,13 +97,6 @@ fun PageTurnGestures(
         }
     }
 
-    val scrollbarTurn = remember(scope, scrollPage) {
-        { direction: PageDirection ->
-            scope.launch { scrollPage(direction) }
-            Unit
-        }
-    }
-
     DisposableEffect(keys, enableKeys, turn) {
         if (!enableKeys) {
             return@DisposableEffect onDispose {}
@@ -117,25 +107,19 @@ fun PageTurnGestures(
         onDispose { unregister() }
     }
 
-    Row {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .pageTapZones(
-                    enabled = enableTaps,
-                    onTurn = turn,
-                    onCenterTap = onToggleToolbars,
-                )
-        ) {
-            content()
-        }
+    Box(
+        modifier = Modifier.pageTapZones(
+            enabled = enableTaps,
+            onTurn = turn,
+            onCenterTap = onToggleToolbars,
+        )
+    ) {
+        content()
 
-        if (enableScrollbar) {
-            EInkScrollbar(
-                state = rememberEInkScrollbarState(scrollState),
-                onPage = scrollbarTurn,
-                onLine = scrollbarTurn,
-                modifier = Modifier.padding(scrollbarPadding(pinToolbars)),
+        if (enableTaps && showTapZoneHint) {
+            TapZoneOverlay(
+                edgeFraction = EDGE_ZONE,
+                onDismiss = { appPreferences.readerOptions.showTapZoneHint.set(false) },
             )
         }
     }
@@ -145,20 +129,6 @@ fun pageStep(viewport: Float, leading: Float, trailing: Float): Float {
     val visible = (viewport - leading - trailing).coerceAtLeast(0f)
 
     return visible * PAGE_PROPORTION
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun scrollbarPadding(pinToolbars: Boolean): PaddingValues {
-    if (pinToolbars) {
-        return PaddingValues()
-    }
-
-    return PaddingValues(
-        top = ArticleBarDefaults.topBarOffset,
-        bottom = ArticleBarDefaults.BottomBarHeight +
-                WindowInsets.navigationBarsIgnoringVisibility.asPaddingValues().calculateBottomPadding(),
-    )
 }
 
 private fun Modifier.pageTapZones(
