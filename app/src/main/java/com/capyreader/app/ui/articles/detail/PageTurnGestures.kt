@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.PageInsets
 import com.capyreader.app.ui.articles.reader.ReaderPages
@@ -54,7 +56,7 @@ fun PageTurnGestures(
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
-    val lineFallback = with(LocalDensity.current) { LineFallback.toPx() }
+    val lineStep = with(LocalDensity.current) { LocalReaderStyle.current.bodyTextStyle.lineHeight.toPx() }
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
 
@@ -74,10 +76,14 @@ fun PageTurnGestures(
         }
     }
 
-    val line = remember(pages, scope, lineFallback) {
+    val line = remember(scrollState, scope, lineStep) {
         { direction: PageDirection ->
             scope.launch {
-                pages.line(direction, visible = visibleInsets, fallback = lineFallback)
+                if (direction == PageDirection.FORWARD) {
+                    scrollState.scrollBy(lineStep)
+                } else {
+                    scrollState.scrollBy(-lineStep)
+                }
             }
             Unit
         }
@@ -238,4 +244,3 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
 
 private const val EDGE_ZONE = 1f / 4f
 
-private val LineFallback = 48.dp

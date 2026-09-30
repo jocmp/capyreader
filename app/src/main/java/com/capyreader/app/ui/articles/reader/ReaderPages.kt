@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
@@ -78,29 +77,6 @@ class ReaderPages(private val scrollState: ScrollState) {
         return true
     }
 
-    suspend fun line(direction: PageDirection, visible: PageInsets, fallback: Float) {
-        val content = contentCoordinates?.takeIf { it.isAttached } ?: return
-        val top = scrollState.value + visible.top
-        val target = lineTop(direction, top, textLines(content))
-
-        if (target == null) {
-            scrollState.scrollBy(fallback * direction.sign)
-            return
-        }
-
-        scrollState.scrollTo((target - visible.top).roundToInt())
-    }
-
-    private fun lineTop(direction: PageDirection, top: Float, lines: List<PageBox>): Float? {
-        val tops = lines.map { it.top }
-
-        if (direction == PageDirection.FORWARD) {
-            return tops.filter { it > top + 1f }.minOrNull()
-        }
-
-        return tops.filter { it < top - 1f }.maxOrNull()
-    }
-
     private fun textLines(content: LayoutCoordinates): List<PageBox> {
         texts.keys.removeAll { !it.isAttached }
 
@@ -127,12 +103,3 @@ class ReaderPages(private val scrollState: ScrollState) {
         }
     }
 }
-
-private val PageDirection.sign: Float
-    get() {
-        if (this == PageDirection.FORWARD) {
-            return 1f
-        }
-
-        return -1f
-    }
