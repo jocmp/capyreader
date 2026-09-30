@@ -42,11 +42,9 @@ import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.articles.reader.AnchorRegistry
 import com.capyreader.app.ui.articles.reader.ArticleReaderContent
 import com.capyreader.app.ui.articles.reader.LocalReaderPageHeight
-import com.capyreader.app.ui.articles.reader.LocalReaderPages
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.ReaderActions
-import com.capyreader.app.ui.articles.reader.ReaderPages
 import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
@@ -134,7 +132,6 @@ fun ArticleReader(
     }
 
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
-    val pages = remember(scrollState) { ReaderPages(scrollState) }
 
     LaunchedEffect(openAtEnd) {
         if (!openAtEnd) {
@@ -206,11 +203,9 @@ fun ArticleReader(
 
     CompositionLocalProvider(
         LocalReaderStyle provides readerStyle,
-        LocalReaderPages provides pages,
     ) {
         ScrollableArticle(
             scrollState = scrollState,
-            pages = pages,
             pinToolbars = pinToolbars,
             showToolbars = showToolbars,
             onHideToolbars = onHideToolbars,
@@ -218,7 +213,6 @@ fun ArticleReader(
             onTurnPastArticle = onTurnPastArticle,
             onContentPositioned = {
                 anchors.contentCoordinates = it
-                pages.contentCoordinates = it
             },
         ) {
             ArticleReaderContent(
@@ -260,7 +254,6 @@ fun ArticleReader(
 @Composable
 private fun ScrollableArticle(
     scrollState: ScrollState,
-    pages: ReaderPages,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
@@ -273,7 +266,6 @@ private fun ScrollableArticle(
     val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
 
     PageTurnGestures(
-        pages = pages,
         scrollState = scrollState,
         pinToolbars = pinToolbars,
         showToolbars = showToolbars,

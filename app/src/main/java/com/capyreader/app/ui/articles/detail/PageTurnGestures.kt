@@ -32,14 +32,12 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.PageInsets
-import com.capyreader.app.ui.articles.reader.ReaderPages
 import com.capyreader.app.ui.collectChangesWithCurrent
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
 fun PageTurnGestures(
-    pages: ReaderPages,
     scrollState: ScrollState,
     pinToolbars: Boolean,
     showToolbars: Boolean,
@@ -53,20 +51,30 @@ fun PageTurnGestures(
     val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
     val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
-    val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
     val lineStep = with(LocalDensity.current) { LocalReaderStyle.current.bodyTextStyle.lineHeight.toPx() }
+    val pageOverlap = with(LocalDensity.current) { PageOverlap.toPx() }
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
 
-    val turn = remember(pages, scope) {
+    val turn = remember(scrollState, scope, pageOverlap) {
         { direction: PageDirection ->
             scope.launch {
-                val next = nextInsets(direction, visible = visibleInsets, hidden = hiddenInsets)
-                val turned = pages.turn(direction, visible = visibleInsets, next = next)
+                val current = scrollState.value
+                val step = pageStep(
+                    viewport = scrollState.viewportSize.toFloat(),
+                    insets = visibleInsets,
+                    overlap = pageOverlap,
+                )
 
-                if (!turned) {
+                if (direction == PageDirection.FORWARD) {
+                    scrollState.scrollBy(step)
+                } else {
+                    scrollState.scrollBy(-step)
+                }
+
+                if (scrollState.value == current) {
                     currentOnTurnPastArticle(direction)
                 } else if (direction == PageDirection.FORWARD) {
                     currentOnHideToolbars()
@@ -89,7 +97,7 @@ fun PageTurnGestures(
         }
     }
 
-    DisposableEffect(keys, enableKeys, pages) {
+    DisposableEffect(keys, enableKeys, turn) {
         if (!enableKeys) {
             return@DisposableEffect onDispose {}
         }
@@ -123,12 +131,10 @@ fun PageTurnGestures(
     }
 }
 
-private fun nextInsets(direction: PageDirection, visible: PageInsets, hidden: PageInsets): PageInsets {
-    if (direction == PageDirection.FORWARD) {
-        return hidden
-    }
+fun pageStep(viewport: Float, insets: PageInsets, overlap: Float): Float {
+    val visible = (viewport - insets.top - insets.bottom).coerceAtLeast(0f)
 
-    return visible
+    return (visible - overlap).coerceAtLeast(visible / 2)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -244,3 +250,4 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
 
 private const val EDGE_ZONE = 1f / 4f
 
+private val PageOverlap = 80.dp

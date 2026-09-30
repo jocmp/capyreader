@@ -218,14 +218,13 @@ fun TextElement(
     val links = remember(linearText) { linearText.links }
     val haptics = LocalHapticFeedback.current
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
-    val pageLines = LocalReaderPages.current?.lines { layout } ?: Modifier
 
     BidiLayoutDirection(paragraph = linearText.text) {
         Text(
             text = annotated,
             softWrap = softWrap,
             onTextLayout = { layout = it },
-            modifier = modifier.then(pageLines).longPressLink(
+            modifier = modifier.longPressLink(
                 enabled = links.isNotEmpty(),
                 linkAt = { position -> layout.linkAt(position, links) },
                 onLongPress = { link ->
@@ -331,7 +330,6 @@ fun ImageElement(
             ?: PLACEHOLDER_ASPECT_RATIO
 
         val pageHeight = LocalReaderPageHeight.current
-        val unsplittable = LocalReaderPages.current?.unsplittable() ?: Modifier
 
         val sizeModifier = if (failed) {
             Modifier.fillMaxWidth()
@@ -340,12 +338,10 @@ fun ImageElement(
                 .widthIn(max = pageHeight * aspectRatio)
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
-                .then(unsplittable)
         } else {
             Modifier
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
-                .then(unsplittable)
         }
 
         Column(
@@ -553,7 +549,6 @@ fun VideoElement(
     val frame = modifier
         .fillMaxWidth()
         .aspectRatio(aspectRatio)
-        .then(LocalReaderPages.current?.unsplittable() ?: Modifier)
         .clip(CORNER_SHAPE)
         .background(Color.Black)
 

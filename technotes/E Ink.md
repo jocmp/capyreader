@@ -32,23 +32,21 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 `EInkScrollbar` follows the Windows 95 scrollbar's behavior, drawn in Material 3: arrows at each end move one line, a tap on the track above or below the thumb moves one page, and the thumb drags. It's one outlined capsule (`surfaceContainerLow` with an `outlineVariant` border), 28dp wide, since light grey fills disappear in the Monochrome theme.
 
-- Reader: page taps go through `ReaderPages.turn`, so they snap to lines like the tap zones and keys. Arrows scroll a fixed one body line height (`scrollBy`). Snapping arrows to text made the distance uneven: short caption lines, whole-image jumps, and a jump past the unregistered header.
+- Reader: track taps turn a page like the tap zones and keys (see Page turns). Arrows scroll a fixed one body line height (`scrollBy`); EinkBro has no line step to copy.
 - Article list: page down makes the cut-off row the first row; page up moves a screen and aligns to a row. Arrows move one row. The thumb size and position are estimated from the average visible row height, since `LazyColumn` doesn't know the total height.
 - The thin library scrollbar is hidden while the E Ink scrollbar shows.
 
-## Scroll-mode paging
+## Page turns
 
-The reader is a `Column` in `verticalScroll(ScrollState)`, so a page turn is one instant `scrollTo`. No animation, regardless of Reduce animations.
+Tap zones, page keys and scrollbar track taps all call the same `scrollBy`: the visible height (between the toolbars, when they aren't pinned) minus 80dp, floored at half the visible height for short screens. No animation, regardless of Reduce animations.
 
-`PageTurn` is the pure math, `ReaderPages` feeds it. Text elements register their `TextLayoutResult` and `LayoutCoordinates` through `LocalReaderPages`; body elements register their boxes from `ArticleBody`'s `onElementPositioned`.
-
-- Forward: the line cut off at the bottom edge becomes the first line of the next page. This is the overlap from #1247 and fixes #1856, since a page never skips a partial line.
-- Images and videos register as unsplittable boxes (the media itself, not the whole element, so captions still flow). An image that doesn't fit in what's left of the screen starts the next jump, as long as that moves at least a third of a screen. Without that minimum, an image just below the top made each jump crawl a few pixels. Images are capped at one screen tall, keeping their aspect ratio, so none has to split.
+- The step follows EinkBro, which pages by `webView.height - 80dp` by default (`WebViewNavigationHelper.shiftOffset()`, "Page reserved height" setting). 80dp is about three lines of overlap at the default text size, which covers #1247. #1856 (a line too far) came from miscounted toolbar offsets, fixed in #1860, not from the step size.
+- A page can end mid-line; the overlap means the full line shows at the top of the next page.
 - At the end of an article, forward opens the next article; at the top, back opens the previous article scrolled to its end.
-- Back: mirrors forward, hiding the line cut off at the new top edge. If the reader hasn't scrolled by hand since the last forward turn, back returns to the exact previous position instead of recomputing. Forward and back then retrace the same pages.
-- Visible area: when toolbars aren't pinned, the top bar and floating bottom bar cover content, so their heights come off the page. A forward turn hides the toolbars and the system navigation bar, so the landing position uses the hidden-toolbar insets.
+- A forward turn hides the toolbars and the system navigation bar.
+- Images are capped at one screen tall, keeping their aspect ratio.
 
-The article header (title, byline) doesn't register lines. It only affects the first page.
+An earlier version snapped each turn to text lines and moved images whole to the next jump. It needed every text element and image to register its layout, and it produced uneven steps: short caption lines, crawling when an image sat just below the top, and a jump past the unregistered header. Plain `scrollBy` avoids all of that.
 
 ## Taps
 
