@@ -37,6 +37,9 @@ class GesturesSettingsViewModel(
     var enablePageTurnKeys by mutableStateOf(readerOptions.enablePageTurnKeys.get())
         private set
 
+    var enableEInkScrollbar by mutableStateOf(readerOptions.enableEInkScrollbar.get())
+        private set
+
     var reduceMotion by mutableStateOf(appPreferences.reduceMotion.get())
         private set
 
@@ -95,6 +98,12 @@ class GesturesSettingsViewModel(
         enablePageTurnKeys = enabled
 
         readerOptions.enablePageTurnKeys.set(enabled)
+    }
+
+    fun updateEInkScrollbar(enabled: Boolean) {
+        enableEInkScrollbar = enabled
+
+        readerOptions.enableEInkScrollbar.set(enabled)
     }
 
     fun updateReduceMotion(enabled: Boolean) {

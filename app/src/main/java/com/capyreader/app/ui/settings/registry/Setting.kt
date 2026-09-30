@@ -44,6 +44,7 @@ enum class Setting {
 
     REDUCE_MOTION,
     TAP_TO_PAGE,
+    E_INK_SCROLLBAR,
     PAGE_TURN_KEYS,
 
     AUTO_DELETE,

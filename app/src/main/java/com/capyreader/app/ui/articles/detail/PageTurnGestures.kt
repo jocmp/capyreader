@@ -1,29 +1,17 @@
 package com.capyreader.app.ui.articles.detail
 
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import com.capyreader.app.ui.articles.reader.PageFooterTitle
-import com.capyreader.app.R
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -44,16 +32,14 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.PageInsets
 import com.capyreader.app.ui.articles.reader.ReaderPages
-import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.collectChangesWithCurrent
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
 fun PageTurnGestures(
     pages: ReaderPages,
-    title: String,
-    paginate: Boolean,
-    pagedInsets: PageInsets,
+    scrollState: ScrollState,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
@@ -62,35 +48,37 @@ fun PageTurnGestures(
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
-    val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
-    val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithDefault()
+    val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithCurrent()
+    val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
+    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
-    val currentPaginate by rememberUpdatedState(paginate)
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
+    val lineFallback = with(LocalDensity.current) { LineFallback.toPx() }
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
-    val background = MaterialTheme.colorScheme.background
 
     val turn = remember(pages, scope) {
         { direction: PageDirection ->
             scope.launch {
-                if (currentPaginate) {
-                    val turned = pages.turnPage(direction)
+                val next = nextInsets(direction, visible = visibleInsets, hidden = hiddenInsets)
+                val turned = pages.turn(direction, visible = visibleInsets, next = next)
 
-                    if (!turned) {
-                        currentOnTurnPastArticle(direction)
-                    }
+                if (!turned) {
+                    currentOnTurnPastArticle(direction)
                 } else if (direction == PageDirection.FORWARD) {
-                    pages.turn(direction, visible = visibleInsets, next = hiddenInsets)
-                } else {
-                    pages.turn(direction, visible = visibleInsets, next = visibleInsets)
-                }
-
-                if (direction == PageDirection.FORWARD) {
                     currentOnHideToolbars()
                 }
+            }
+            Unit
+        }
+    }
+
+    val line = remember(pages, scope, lineFallback) {
+        { direction: PageDirection ->
+            scope.launch {
+                pages.line(direction, visible = visibleInsets, fallback = lineFallback)
             }
             Unit
         }
@@ -106,140 +94,48 @@ fun PageTurnGestures(
         onDispose { unregister() }
     }
 
-    LaunchedEffect(paginate, pages.pageTops) {
-        if (paginate) {
-            pages.alignToPage()
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .pageTapZones(
-                enabled = enableTaps,
-                onTurn = turn,
-                onCenterTap = onToggleToolbars,
-            )
-            .pageSwipes(
-                enabled = paginate,
-                onTurn = turn,
-            )
-    ) {
+    Row {
         Box(
-            modifier = Modifier.drawWithContent {
-                drawContent()
-
-                if (!paginate) {
-                    return@drawWithContent
-                }
-
-                val start = pages.pageStart
-                val cut = pages.pageCut
-
-                if (start > 0f) {
-                    drawRect(
-                        color = background,
-                        size = Size(size.width, start),
-                    )
-                }
-
-                if (cut != null && cut < size.height) {
-                    drawRect(
-                        color = background,
-                        topLeft = Offset(0f, cut),
-                        size = Size(size.width, size.height - cut),
-                    )
-                }
-            }
+            modifier = Modifier
+                .weight(1f)
+                .pageTapZones(
+                    enabled = enableTaps,
+                    onTurn = turn,
+                    onCenterTap = onToggleToolbars,
+                )
         ) {
             content()
         }
 
-        if (paginate && (pinToolbars || !showToolbars)) {
-            PageFooter(
-                title = title,
-                page = pages.currentPage + 1,
-                count = pages.pageCount,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .height(PageFooterHeight)
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp),
+        if (enableScrollbar) {
+            EInkScrollbar(
+                state = rememberEInkScrollbarState(scrollState),
+                onPage = turn,
+                onLine = line,
+                modifier = Modifier.padding(scrollbarPadding(pinToolbars)),
             )
         }
     }
 }
 
-@Composable
-private fun PageFooter(
-    title: String,
-    page: Int,
-    count: Int,
-    modifier: Modifier = Modifier,
-) {
-    val style = MaterialTheme.typography.labelMedium
-    val color = MaterialTheme.colorScheme.onSurfaceVariant
-
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = modifier,
-    ) {
-        Text(
-            text = PageFooterTitle.truncate(title),
-            style = style,
-            color = color,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = stringResource(R.string.reader_page_indicator, page, count),
-            style = style,
-            color = color,
-        )
+private fun nextInsets(direction: PageDirection, visible: PageInsets, hidden: PageInsets): PageInsets {
+    if (direction == PageDirection.FORWARD) {
+        return hidden
     }
+
+    return visible
 }
 
 @Composable
-fun rememberPagedInsets(pinToolbars: Boolean): PageInsets {
-    val insets = pageInsets(pinToolbars, showToolbars = false)
-    val density = LocalDensity.current
-    val top = with(density) { PageTopPadding.toPx() }
-    val footer = with(density) { PageFooterHeight.toPx() }
-
-    return remember(insets, top, footer) {
-        insets.copy(top = insets.top + top, bottom = insets.bottom + footer)
-    }
-}
-
-private fun Modifier.pageSwipes(
-    enabled: Boolean,
-    onTurn: (PageDirection) -> Unit,
-): Modifier {
-    if (!enabled) {
-        return this
+private fun scrollbarPadding(pinToolbars: Boolean): PaddingValues {
+    if (pinToolbars) {
+        return PaddingValues()
     }
 
-    return pointerInput(onTurn) {
-        var distance = 0f
-
-        detectHorizontalDragGestures(
-            onDragStart = { distance = 0f },
-            onDragEnd = {
-                val threshold = SwipeThreshold.toPx()
-
-                if (distance < -threshold) {
-                    onTurn(PageDirection.FORWARD)
-                } else if (distance > threshold) {
-                    onTurn(PageDirection.BACK)
-                }
-            },
-            onHorizontalDrag = { change, amount ->
-                change.consume()
-                distance += amount
-            },
-        )
-    }
+    return PaddingValues(
+        top = ArticleBarDefaults.topBarOffset,
+        bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+    )
 }
 
 private fun Modifier.pageTapZones(
@@ -341,8 +237,4 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
 
 private const val EDGE_ZONE = 1f / 4f
 
-private val PageFooterHeight = 32.dp
-
-private val PageTopPadding = 8.dp
-
-private val SwipeThreshold = 48.dp
+private val LineFallback = 48.dp

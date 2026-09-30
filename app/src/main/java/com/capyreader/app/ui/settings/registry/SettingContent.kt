@@ -13,6 +13,7 @@ import com.capyreader.app.ui.settings.panels.ClearArticlesRow
 import com.capyreader.app.ui.settings.panels.ConfirmMarkAllReadRow
 import com.capyreader.app.ui.settings.panels.CrashLogsRow
 import com.capyreader.app.ui.settings.panels.CrashReportingRow
+import com.capyreader.app.ui.settings.panels.EInkScrollbarRow
 import com.capyreader.app.ui.settings.panels.FiltersRow
 import com.capyreader.app.ui.settings.panels.HorizontalPaginationRow
 import com.capyreader.app.ui.settings.panels.ImagePreviewRow
@@ -92,6 +93,7 @@ fun SettingContent(
         Setting.ACCENT_COLORS -> AccentColorsRow()
         Setting.REDUCE_MOTION -> ReduceMotionRow()
         Setting.TAP_TO_PAGE -> TapToPageRow()
+        Setting.E_INK_SCROLLBAR -> EInkScrollbarRow()
         Setting.PAGE_TURN_KEYS -> PageTurnKeysRow()
         Setting.AUTO_DELETE -> AutoDeleteRow()
         Setting.CLEAR_ARTICLES -> ClearArticlesRow()

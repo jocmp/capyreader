@@ -8,7 +8,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.collectChangesWithCurrent
 import org.koin.compose.koinInject
 
 @Composable
@@ -16,10 +16,11 @@ fun HideNavigationBarWhilePaging(
     hide: Boolean,
     appPreferences: AppPreferences = koinInject(),
 ) {
-    val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
-    val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithDefault()
+    val enableTaps by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithCurrent()
+    val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
+    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
     val window = LocalActivity.current?.window ?: return
-    val hideNavigationBar = hide && (enableTaps || enableKeys)
+    val hideNavigationBar = hide && (enableTaps || enableKeys || enableScrollbar)
 
     DisposableEffect(window, hideNavigationBar) {
         val controller = WindowCompat.getInsetsController(window, window.decorView)

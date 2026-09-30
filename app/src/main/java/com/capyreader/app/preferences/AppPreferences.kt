@@ -123,6 +123,9 @@ class AppPreferences(context: Context) {
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
 
+        val enableEInkScrollbar: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_enable_e_ink_scrollbar", false)
+
         val enablePageTurnKeys: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_page_turn_keys", false)
 

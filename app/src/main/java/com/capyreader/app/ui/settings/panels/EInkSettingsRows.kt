@@ -32,6 +32,18 @@ fun TapToPageRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
 }
 
 @Composable
+fun EInkScrollbarRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateEInkScrollbar,
+            checked = viewModel.enableEInkScrollbar,
+            title = stringResource(R.string.settings_e_ink_scrollbar_title),
+            subtitle = stringResource(R.string.settings_e_ink_scrollbar_subtitle)
+        )
+    }
+}
+
+@Composable
 fun PageTurnKeysRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
     RowItem {
         TextSwitch(

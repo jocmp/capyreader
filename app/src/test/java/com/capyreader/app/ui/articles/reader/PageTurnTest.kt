@@ -79,30 +79,4 @@ class PageTurnTest {
 
         assertEquals(0f, previous)
     }
-
-    @Test
-    fun `breaks split content into pages that start on whole lines`() {
-        val breaks = PageTurn.breaks(
-            start = 0f,
-            height = 1000f,
-            contentBottom = 3000f,
-            lines = lines,
-            blocks = emptyList(),
-        )
-
-        assertEquals(listOf(0f, 990f, 1980f, 2970f), breaks)
-    }
-
-    @Test
-    fun `breaks keep short content on one page`() {
-        val breaks = PageTurn.breaks(
-            start = 0f,
-            height = 1000f,
-            contentBottom = 600f,
-            lines = lines,
-            blocks = emptyList(),
-        )
-
-        assertEquals(listOf(0f), breaks)
-    }
 }

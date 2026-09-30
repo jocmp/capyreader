@@ -91,7 +91,7 @@ fun ArticleView(
     val articleScrollStates = rememberArticleScrollStates()
 
 
-    var openAtLastPage by remember { mutableStateOf<String?>(null) }
+    var openAtEnd by remember { mutableStateOf<String?>(null) }
 
     var pendingDirection by remember { mutableStateOf<Pair<String, Int>?>(null) }
 
@@ -125,10 +125,6 @@ fun ArticleView(
 
     LaunchedEffect(article.id) {
         scrollState.reset()
-
-        if (appPreferences.readerOptions.enablePagingTapGesture.get()) {
-            scrollState.hideToolbars()
-        }
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -183,12 +179,12 @@ fun ArticleView(
                                     if (direction == PageDirection.FORWARD) {
                                         selectNext()
                                     } else {
-                                        openAtLastPage = previousArticleID
+                                        openAtEnd = previousArticleID
                                         selectPrevious()
                                     }
                                 },
-                                openAtLastPage = targetArticle.id == openAtLastPage,
-                                onOpenedAtLastPage = { openAtLastPage = null },
+                                openAtEnd = targetArticle.id == openAtEnd,
+                                onOpenedAtEnd = { openAtEnd = null },
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,

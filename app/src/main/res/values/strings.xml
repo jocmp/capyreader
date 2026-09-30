@@ -288,9 +288,12 @@
     <string name="settings_section_e_ink">E Ink</string>
     <string name="settings_reduce_motion_title">Reduce animations</string>
     <string name="settings_reduce_motion_subtitle">Skip transitions and motion effects</string>
-    <string name="reader_page_indicator">%1$d / %2$d</string>
     <string name="settings_e_ink_tap_to_page_title">Tap to turn pages</string>
-    <string name="settings_e_ink_tap_to_page_subtitle">Show articles as pages. Tap the left or right edge to turn them</string>
+    <string name="settings_e_ink_tap_to_page_subtitle">Tap the left or right edge of an article to go back or forward a page</string>
+    <string name="settings_e_ink_scrollbar_title">E Ink scrollbar</string>
+    <string name="settings_e_ink_scrollbar_subtitle">Show a large scrollbar with page and line buttons</string>
+    <string name="reader_scroll_line_up">Scroll up one line</string>
+    <string name="reader_scroll_line_down">Scroll down one line</string>
     <string name="settings_e_ink_page_turn_keys_title">Page turn buttons</string>
     <string name="settings_e_ink_page_turn_keys_subtitle">Volume keys, page turners, and Page Up/Down turn article pages</string>
     <string name="settings_section_storage">Storage</string>

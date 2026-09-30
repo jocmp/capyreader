@@ -140,6 +140,7 @@ object SettingsRegistry {
                     settings = listOf(
                         Setting.REDUCE_MOTION,
                         Setting.TAP_TO_PAGE,
+                        Setting.E_INK_SCROLLBAR,
                         Setting.PAGE_TURN_KEYS,
                     ),
                 ),
@@ -217,6 +218,7 @@ object SettingsRegistry {
             Setting.HORIZONTAL_PAGINATION -> R.string.settings_gestures_enable_horizontal_pagination_title
             Setting.REDUCE_MOTION -> R.string.settings_reduce_motion_title
             Setting.TAP_TO_PAGE -> R.string.settings_e_ink_tap_to_page_title
+            Setting.E_INK_SCROLLBAR -> R.string.settings_e_ink_scrollbar_title
             Setting.PAGE_TURN_KEYS -> R.string.settings_e_ink_page_turn_keys_title
             Setting.THEME_MODE -> R.string.theme_mode_label
             Setting.THEME -> R.string.theme_menu_label
@@ -256,6 +258,7 @@ object SettingsRegistry {
             Setting.HORIZONTAL_PAGINATION -> listOf(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
             Setting.REDUCE_MOTION -> listOf(R.string.settings_reduce_motion_subtitle)
             Setting.TAP_TO_PAGE -> listOf(R.string.settings_e_ink_tap_to_page_subtitle)
+            Setting.E_INK_SCROLLBAR -> listOf(R.string.settings_e_ink_scrollbar_subtitle)
             Setting.PAGE_TURN_KEYS -> listOf(R.string.settings_e_ink_page_turn_keys_subtitle)
             Setting.AUTO_DELETE -> listOf(R.string.settings_option_auto_delete_articles_title)
             Setting.FILTERS -> listOf(R.string.filters_supporting_text)

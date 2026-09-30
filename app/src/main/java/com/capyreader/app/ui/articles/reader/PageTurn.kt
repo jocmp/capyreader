@@ -30,28 +30,6 @@ object PageTurn {
         return listOfNotNull(line, block).minOrNull() ?: edge
     }
 
-    fun breaks(
-        start: Float,
-        height: Float,
-        contentBottom: Float,
-        lines: List<PageBox>,
-        blocks: List<PageBox>,
-    ): List<Float> {
-        val tops = mutableListOf(start)
-
-        while (tops.size < MAX_PAGES) {
-            val top = next(tops.last(), height, lines, blocks)
-
-            if (top >= contentBottom || top <= tops.last()) {
-                return tops
-            }
-
-            tops.add(top)
-        }
-
-        return tops
-    }
-
     fun previous(
         top: Float,
         height: Float,
@@ -80,5 +58,3 @@ object PageTurn {
         return block?.bottom ?: edge
     }
 }
-
-private const val MAX_PAGES = 1000

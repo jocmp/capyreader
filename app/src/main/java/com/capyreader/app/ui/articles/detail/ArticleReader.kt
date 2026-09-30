@@ -2,6 +2,9 @@ package com.capyreader.app.ui.articles.detail
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -46,7 +50,7 @@ import com.capyreader.app.ui.articles.reader.ReaderPages
 import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
-import com.capyreader.app.ui.collectChangesWithDefault
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.rememberSaveableShareLink
 import com.jocmp.capy.Article
@@ -67,8 +71,8 @@ fun ArticleReader(
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
     onTurnPastArticle: (PageDirection) -> Unit,
-    openAtLastPage: Boolean,
-    onOpenedAtLastPage: () -> Unit,
+    openAtEnd: Boolean,
+    onOpenedAtEnd: () -> Unit,
     onSelectMedia: (media: Media) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
@@ -77,8 +81,6 @@ fun ArticleReader(
     isAudioBuffering: Boolean = false,
     appPreferences: AppPreferences = koinInject(),
 ) {
-    val paginate by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
-    val currentPaginate by rememberUpdatedState(paginate)
     val (shareLink, setShareLink) = rememberSaveableShareLink()
     val (shareImageUrl, setImageUrl) = rememberSaveable { mutableStateOf<String?>(null) }
     val linkOpener = LocalLinkOpener.current
@@ -134,11 +136,20 @@ fun ArticleReader(
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
     val pages = remember(scrollState) { ReaderPages(scrollState) }
 
-    LaunchedEffect(openAtLastPage) {
-        if (openAtLastPage) {
-            pages.openAtLastPage()
-            pages.alignToPage()
-            onOpenedAtLastPage()
+    LaunchedEffect(openAtEnd) {
+        if (!openAtEnd) {
+            return@LaunchedEffect
+        }
+
+        onOpenedAtEnd()
+
+        var pinnedEnd = 0
+
+        snapshotFlow { scrollState.maxValue }.collect { end ->
+            if (scrollState.value >= pinnedEnd) {
+                scrollState.scrollTo(end)
+                pinnedEnd = end
+            }
         }
     }
 
@@ -157,14 +168,10 @@ fun ArticleReader(
         ReaderActions(
             onLinkClick = { url, elementIndex ->
                 scope.launch {
-                    val offset = elementIndex?.let { anchors.offset(it) }
+                    val scrolled = elementIndex != null && anchors.scrollTo(elementIndex)
 
-                    if (offset == null) {
+                    if (!scrolled) {
                         linkOpener.open(url.toUri())
-                    } else if (currentPaginate) {
-                        pages.showPageContaining(offset)
-                    } else {
-                        anchors.scrollTo(elementIndex)
                     }
                 }
             },
@@ -204,8 +211,6 @@ fun ArticleReader(
         ScrollableArticle(
             scrollState = scrollState,
             pages = pages,
-            title = article.title,
-            paginate = paginate,
             pinToolbars = pinToolbars,
             showToolbars = showToolbars,
             onHideToolbars = onHideToolbars,
@@ -226,10 +231,7 @@ fun ArticleReader(
                 isAudioBuffering = isAudioBuffering,
                 onSelectAudio = onSelectAudio,
                 onPauseAudio = onPauseAudio,
-                onElementPositioned = { index, coordinates ->
-                    anchors.register(index, coordinates)
-                    pages.registerElement(index, coordinates)
-                },
+                onElementPositioned = { index, coordinates -> anchors.register(index, coordinates) },
             )
         }
     }
@@ -259,23 +261,20 @@ fun ArticleReader(
 private fun ScrollableArticle(
     scrollState: ScrollState,
     pages: ReaderPages,
-    title: String,
-    paginate: Boolean,
     pinToolbars: Boolean,
     showToolbars: Boolean,
     onHideToolbars: () -> Unit,
     onToggleToolbars: () -> Unit,
     onTurnPastArticle: (PageDirection) -> Unit,
     onContentPositioned: (coordinates: androidx.compose.ui.layout.LayoutCoordinates) -> Unit,
+    appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
-    val pagedInsets = rememberPagedInsets(pinToolbars)
+    val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
 
     PageTurnGestures(
         pages = pages,
-        title = title,
-        paginate = paginate,
-        pagedInsets = pagedInsets,
+        scrollState = scrollState,
         pinToolbars = pinToolbars,
         showToolbars = showToolbars,
         onHideToolbars = onHideToolbars,
@@ -283,42 +282,27 @@ private fun ScrollableArticle(
         onTurnPastArticle = onTurnPastArticle,
     ) {
         BoxWithConstraints {
-            val viewportHeight = maxHeight
-            val pageHeight = with(LocalDensity.current) {
-                viewportHeight - (pagedInsets.top + pagedInsets.bottom).toDp()
-            }
+            val pageHeight = maxHeight - WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
             val column = @Composable {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(scrollState, enabled = !paginate)
+                        .verticalScroll(scrollState)
                         .onGloballyPositioned { coordinates ->
                             onContentPositioned(coordinates)
-
-                            if (paginate) {
-                                pages.layoutPages(pagedInsets)
-                            }
                         }
                 ) {
                     if (!pinToolbars) {
                         Spacer(Modifier.height(ArticleBarDefaults.topBarOffset))
                     }
-                    if (paginate) {
-                        CompositionLocalProvider(LocalReaderPageHeight provides pageHeight) {
-                            content()
-                        }
-                    } else {
+                    CompositionLocalProvider(LocalReaderPageHeight provides pageHeight) {
                         content()
-                    }
-
-                    if (paginate) {
-                        Spacer(Modifier.height(viewportHeight))
                     }
                 }
             }
 
-            if (paginate) {
+            if (enableScrollbar) {
                 column()
             } else {
                 ColumnScrollbar(state = scrollState) {
