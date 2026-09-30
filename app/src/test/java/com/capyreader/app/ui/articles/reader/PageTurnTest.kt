@@ -33,11 +33,20 @@ class PageTurnTest {
 
     @Test
     fun `next moves an image that fits to the next page`() {
-        val image = PageBox(top = 300f, bottom = 1100f)
+        val image = PageBox(top = 400f, bottom = 1100f)
 
         val next = PageTurn.next(top = 0f, height = 1000f, lines = emptyList(), blocks = listOf(image))
 
-        assertEquals(300f, next)
+        assertEquals(400f, next)
+    }
+
+    @Test
+    fun `next keeps moving when an image starts near the top`() {
+        val image = PageBox(top = 60f, bottom = 1040f)
+
+        val next = PageTurn.next(top = 0f, height = 1000f, lines = lines, blocks = listOf(image))
+
+        assertEquals(990f, next)
     }
 
     @Test

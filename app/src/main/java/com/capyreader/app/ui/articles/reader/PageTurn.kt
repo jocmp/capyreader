@@ -23,8 +23,10 @@ object PageTurn {
             .filter { it.straddles(edge) && it.top > minimum }
             .minOfOrNull { it.top }
 
+        val minimumBlockTop = top + height * MIN_BLOCK_PROGRESS
+
         val block = blocks
-            .filter { it.straddles(edge) && it.top > top && it.bottom - it.top <= height }
+            .filter { it.straddles(edge) && it.top > minimumBlockTop && it.bottom - it.top <= height }
             .minOfOrNull { it.top }
 
         return listOfNotNull(line, block).minOrNull() ?: edge
@@ -58,3 +60,5 @@ object PageTurn {
         return block?.bottom ?: edge
     }
 }
+
+private const val MIN_BLOCK_PROGRESS = 1f / 3f
