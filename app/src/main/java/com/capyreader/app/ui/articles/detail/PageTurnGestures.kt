@@ -53,11 +53,10 @@ fun PageTurnGestures(
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
-    val pageOverlap = with(LocalDensity.current) { PageOverlap.toPx() }
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
 
-    val turn = remember(scrollState, scope, pageOverlap) {
+    val turn = remember(scrollState, scope) {
         { direction: PageDirection ->
             scope.launch {
                 val current = scrollState.value
@@ -68,7 +67,6 @@ fun PageTurnGestures(
                         viewport = viewport,
                         leading = visibleInsets.bottom,
                         trailing = hiddenInsets.top,
-                        overlap = pageOverlap,
                     )
                     scrollState.scrollBy(step)
                 } else {
@@ -76,7 +74,6 @@ fun PageTurnGestures(
                         viewport = viewport,
                         leading = visibleInsets.top,
                         trailing = visibleInsets.bottom,
-                        overlap = pageOverlap,
                     )
                     scrollState.scrollBy(-step)
                 }
@@ -125,10 +122,10 @@ fun PageTurnGestures(
     }
 }
 
-fun pageStep(viewport: Float, leading: Float, trailing: Float, overlap: Float): Float {
+fun pageStep(viewport: Float, leading: Float, trailing: Float): Float {
     val visible = (viewport - leading - trailing).coerceAtLeast(0f)
 
-    return (visible - overlap).coerceAtLeast(visible / 2)
+    return visible * PAGE_PROPORTION
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -244,4 +241,4 @@ private fun pageInsets(pinToolbars: Boolean, showToolbars: Boolean): PageInsets 
 
 private const val EDGE_ZONE = 1f / 4f
 
-private val PageOverlap = 80.dp
+private const val PAGE_PROPORTION = 0.96f

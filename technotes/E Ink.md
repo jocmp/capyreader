@@ -38,9 +38,10 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 ## Page turns
 
-Tap zones, page keys and scrollbar track taps all call the same `scrollBy`: the visible height (between the toolbars, when they aren't pinned) minus 80dp, floored at half the visible height for short screens. No animation, regardless of Reduce animations.
+Tap zones, page keys, and the scrollbar's arrows and track taps all call the same `scrollBy`: 96% of the visible height, measured from the current bottom edge to the next top edge. A forward turn hides the toolbars, so the next top edge is the one without them. No animation, regardless of Reduce animations.
 
-- The step follows EinkBro, which pages by `webView.height - 80dp` by default (`WebViewNavigationHelper.shiftOffset()`, "Page reserved height" setting). 80dp is about three lines of overlap at the default text size, which covers #1247. #1856 (a line too far) came from miscounted toolbar offsets, fixed in #1860, not from the step size.
+- 96% matches the tap-to-scroll from before this branch and leaves about a line of overlap (#1247). #1856 (a line too far) came from miscounted toolbar offsets, fixed in #1860, not from the proportion.
+- EinkBro pages by `webView.height - 80dp` ("Page reserved height", `WebViewNavigationHelper.shiftOffset()`). That was tried here and read as too slow: about three lines of overlap on every turn.
 - A page can end mid-line; the overlap means the full line shows at the top of the next page.
 - At the end of an article, forward opens the next article; at the top, back opens the previous article scrolled to its end.
 - A forward turn hides the toolbars and the system navigation bar.
