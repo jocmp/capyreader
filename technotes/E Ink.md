@@ -37,7 +37,7 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 ## Tap zone hint
 
-Following Mihon (`ReaderNavigationOverlayView`, shown for new users and when the tap layout changes), the reader draws the zones once with labels (Scroll up, Show or hide toolbars, Scroll down) over the article. The first touch dismisses it and clears `article_show_tap_zone_hint`. Turning Tap to turn pages on sets it again, so the hint shows the next time an article opens. It defaults to on, so the E Ink bundle and a fresh login both show it once.
+Following Mihon (`ReaderNavigationOverlayView`, shown for new users and when the tap layout changes), the reader draws the two edge zones once, shaded and labeled Scroll up and Scroll down, over the article. The middle stays clear: links, images and selection work there as usual, and a plain tap shows or hides the toolbars. The first touch dismisses it and clears `article_show_tap_zone_hint`. Turning Tap to turn pages on sets it again, so the hint shows the next time an article opens. It defaults to on, so the E Ink bundle and a fresh login both show it once.
 
 ## Page turns
 

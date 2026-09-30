@@ -294,7 +294,6 @@
     <string name="settings_e_ink_scrollbar_subtitle">Show a large scrollbar with page buttons in the article list</string>
     <string name="reader_tap_zone_previous">Scroll up</string>
     <string name="reader_tap_zone_next">Scroll down</string>
-    <string name="reader_tap_zone_menu">Show or hide toolbars</string>
     <string name="reader_scroll_line_up">Scroll up one line</string>
     <string name="reader_scroll_line_down">Scroll down one line</string>
     <string name="settings_e_ink_page_turn_keys_title">Page turn buttons</string>

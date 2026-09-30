@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -46,12 +47,7 @@ fun TapZoneOverlay(
             textColor = colors.inverseOnSurface,
             modifier = Modifier.weight(edgeFraction),
         )
-        TapZone(
-            label = stringResource(R.string.reader_tap_zone_menu),
-            color = colors.surfaceVariant.copy(alpha = MENU_ALPHA),
-            textColor = colors.onSurfaceVariant,
-            modifier = Modifier.weight(1f - edgeFraction * 2),
-        )
+        Spacer(Modifier.weight(1f - edgeFraction * 2))
         TapZone(
             label = stringResource(R.string.reader_tap_zone_next),
             color = colors.inverseSurface.copy(alpha = EDGE_ALPHA),
@@ -84,5 +80,3 @@ private fun TapZone(
 }
 
 private const val EDGE_ALPHA = 0.8f
-
-private const val MENU_ALPHA = 0.8f
