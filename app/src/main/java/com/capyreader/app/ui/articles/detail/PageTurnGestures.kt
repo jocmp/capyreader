@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
@@ -126,6 +125,7 @@ private fun nextInsets(direction: PageDirection, visible: PageInsets, hidden: Pa
     return visible
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun scrollbarPadding(pinToolbars: Boolean): PaddingValues {
     if (pinToolbars) {
@@ -134,7 +134,8 @@ private fun scrollbarPadding(pinToolbars: Boolean): PaddingValues {
 
     return PaddingValues(
         top = ArticleBarDefaults.topBarOffset,
-        bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+        bottom = ArticleBarDefaults.BottomBarHeight +
+                WindowInsets.navigationBarsIgnoringVisibility.asPaddingValues().calculateBottomPadding(),
     )
 }
 

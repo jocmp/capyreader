@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-internal object ArticleBarDefaults {
+object ArticleBarDefaults {
     val TopBarHeight = 64.dp
     val FloatingToolbarHeight = 64.dp
     val FloatingToolbarBottomGap = 12.dp
