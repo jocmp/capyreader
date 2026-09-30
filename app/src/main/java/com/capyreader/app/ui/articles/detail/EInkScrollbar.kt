@@ -4,10 +4,10 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.verticalDrag
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -51,7 +51,7 @@ interface EInkScrollbarState {
 
     val visibleFraction: Float
 
-    fun drag(fraction: Float)
+    fun scrollTo(fraction: Float)
 }
 
 @Composable
@@ -143,16 +143,37 @@ private fun ScrollbarTrack(
         val travel = (trackHeight - thumbHeight).coerceAtLeast(1f)
         val thumbTop = travel * state.position
 
+        val currentThumbTop by rememberUpdatedState(thumbTop)
+        val currentThumbHeight by rememberUpdatedState(thumbHeight)
+        val currentTravel by rememberUpdatedState(travel)
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .pointerInput(thumbTop, thumbHeight) {
-                    detectTapGestures { tap ->
-                        if (tap.y < thumbTop) {
-                            currentOnPage(PageDirection.BACK)
-                        } else if (tap.y > thumbTop + thumbHeight) {
-                            currentOnPage(PageDirection.FORWARD)
+                .pointerInput(state) {
+                    awaitEachGesture {
+                        val down = awaitFirstDown()
+                        val top = currentThumbTop
+                        val onThumb = down.position.y in top..(top + currentThumbHeight)
+
+                        if (!onThumb) {
+                            val up = waitForUpOrCancellation() ?: return@awaitEachGesture
+
+                            if (up.position.y < top) {
+                                currentOnPage(PageDirection.BACK)
+                            } else {
+                                currentOnPage(PageDirection.FORWARD)
+                            }
+                            return@awaitEachGesture
+                        }
+
+                        val grab = down.position.y - top
+                        down.consume()
+
+                        verticalDrag(down.id) { change ->
+                            change.consume()
+                            state.scrollTo((change.position.y - grab) / currentTravel)
                         }
                     }
                 }
@@ -163,12 +184,6 @@ private fun ScrollbarTrack(
                 .offset { IntOffset(0, thumbTop.roundToInt()) }
                 .fillMaxWidth()
                 .height(with(density) { thumbHeight.toDp() })
-                .draggable(
-                    orientation = Orientation.Vertical,
-                    state = rememberDraggableState { delta ->
-                        state.drag(delta / travel)
-                    },
-                )
                 .padding(horizontal = 6.dp, vertical = 4.dp)
                 .clip(RoundedCornerShape(ThumbCorner))
                 .background(MaterialTheme.colorScheme.outline)
@@ -197,8 +212,10 @@ private class ColumnScrollbarState(private val scrollState: ScrollState) : EInkS
             return scrollState.viewportSize.toFloat() / content
         }
 
-    override fun drag(fraction: Float) {
-        scrollState.dispatchRawDelta(fraction * scrollState.maxValue)
+    override fun scrollTo(fraction: Float) {
+        val target = fraction.coerceIn(0f, 1f) * scrollState.maxValue
+
+        scrollState.dispatchRawDelta(target - scrollState.value)
     }
 }
 
@@ -244,8 +261,12 @@ private class LazyListScrollbarState(private val listState: LazyListState) : EIn
             return (viewportHeight / contentHeight).coerceIn(0f, 1f)
         }
 
-    override fun drag(fraction: Float) {
-        listState.dispatchRawDelta(fraction * scrollRange)
+    override fun scrollTo(fraction: Float) {
+        val target = fraction.coerceIn(0f, 1f) * scrollRange
+        val scrolled = listState.firstVisibleItemIndex * averageItemHeight +
+                listState.firstVisibleItemScrollOffset
+
+        listState.dispatchRawDelta(target - scrolled)
     }
 }
 
