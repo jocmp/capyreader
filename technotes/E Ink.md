@@ -32,7 +32,7 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 `EInkScrollbar` follows the Windows 95 scrollbar's behavior, drawn in Material 3: arrows at each end move one line, a tap on the track above or below the thumb moves one page, and the thumb drags. It's one outlined capsule (`surfaceContainerLow` with an `outlineVariant` border), 28dp wide, since light grey fills disappear in the Monochrome theme.
 
-- Reader: track taps turn a page like the tap zones and keys (see Page turns). Arrows scroll a fixed one body line height (`scrollBy`); EinkBro has no line step to copy.
+- Reader: the arrows and track taps both turn a page like the tap zones and keys (see Page turns).
 - Article list: page down makes the cut-off row the first row; page up moves a screen and aligns to a row. Arrows move one row. The thumb size and position are estimated from the average visible row height, since `LazyColumn` doesn't know the total height.
 - The thin library scrollbar is hidden while the E Ink scrollbar shows.
 

@@ -29,7 +29,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.PageInsets
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -51,9 +50,9 @@ fun PageTurnGestures(
     val enableKeys by appPreferences.readerOptions.enablePageTurnKeys.collectChangesWithCurrent()
     val enableScrollbar by appPreferences.readerOptions.enableEInkScrollbar.collectChangesWithCurrent()
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
+    val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
-    val lineStep = with(LocalDensity.current) { LocalReaderStyle.current.bodyTextStyle.lineHeight.toPx() }
     val pageOverlap = with(LocalDensity.current) { PageOverlap.toPx() }
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
@@ -62,15 +61,23 @@ fun PageTurnGestures(
         { direction: PageDirection ->
             scope.launch {
                 val current = scrollState.value
-                val step = pageStep(
-                    viewport = scrollState.viewportSize.toFloat(),
-                    insets = visibleInsets,
-                    overlap = pageOverlap,
-                )
+                val viewport = scrollState.viewportSize.toFloat()
 
                 if (direction == PageDirection.FORWARD) {
+                    val step = pageStep(
+                        viewport = viewport,
+                        leading = visibleInsets.bottom,
+                        trailing = hiddenInsets.top,
+                        overlap = pageOverlap,
+                    )
                     scrollState.scrollBy(step)
                 } else {
+                    val step = pageStep(
+                        viewport = viewport,
+                        leading = visibleInsets.top,
+                        trailing = visibleInsets.bottom,
+                        overlap = pageOverlap,
+                    )
                     scrollState.scrollBy(-step)
                 }
 
@@ -78,19 +85,6 @@ fun PageTurnGestures(
                     currentOnTurnPastArticle(direction)
                 } else if (direction == PageDirection.FORWARD) {
                     currentOnHideToolbars()
-                }
-            }
-            Unit
-        }
-    }
-
-    val line = remember(scrollState, scope, lineStep) {
-        { direction: PageDirection ->
-            scope.launch {
-                if (direction == PageDirection.FORWARD) {
-                    scrollState.scrollBy(lineStep)
-                } else {
-                    scrollState.scrollBy(-lineStep)
                 }
             }
             Unit
@@ -124,15 +118,15 @@ fun PageTurnGestures(
             EInkScrollbar(
                 state = rememberEInkScrollbarState(scrollState),
                 onPage = turn,
-                onLine = line,
+                onLine = turn,
                 modifier = Modifier.padding(scrollbarPadding(pinToolbars)),
             )
         }
     }
 }
 
-fun pageStep(viewport: Float, insets: PageInsets, overlap: Float): Float {
-    val visible = (viewport - insets.top - insets.bottom).coerceAtLeast(0f)
+fun pageStep(viewport: Float, leading: Float, trailing: Float, overlap: Float): Float {
+    val visible = (viewport - leading - trailing).coerceAtLeast(0f)
 
     return (visible - overlap).coerceAtLeast(visible / 2)
 }
