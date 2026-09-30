@@ -29,8 +29,11 @@ fun UpdateAuthView(
     onPasswordChange: (password: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     username: String,
     password: String,
+    clientCertAlias: String = "",
     loading: Boolean = false,
     errorMessage: String? = null
 ) {
@@ -67,6 +70,9 @@ fun UpdateAuthView(
                 loading = loading,
                 errorMessage = errorMessage,
                 source = source,
+                onChooseClientCert = onChooseClientCert,
+                onClearClientCert = onClearClientCert,
+                clientCertAlias = clientCertAlias,
             )
         }
     }
