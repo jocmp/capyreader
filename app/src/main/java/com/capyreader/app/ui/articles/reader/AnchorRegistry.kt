@@ -16,6 +16,8 @@ class AnchorRegistry(private val scrollState: ScrollState) {
         offsets[index] = coordinates.positionInWindow().y - content.positionInWindow().y
     }
 
+    fun offset(index: Int): Float? = offsets[index]
+
     suspend fun scrollTo(index: Int): Boolean {
         val offset = offsets[index] ?: return false
 

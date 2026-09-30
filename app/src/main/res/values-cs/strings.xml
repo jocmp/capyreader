@@ -196,8 +196,6 @@
     <string name="settings_section_account_server">Server</string>
     <string name="account_source_freshrss">FreshRSS</string>
     <string name="edit_feed_notifications_title">Zapnout upozornění</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Posouvat článek doteky ve spodních rozích</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Skrolování dotykem</string>
     <string name="settings_enable_refresh_call_to_action">Nejdříve je nutno zapnout pravidelné aktualizace kanálů</string>
     <string name="article_list_row_swipe_open_externally">Otevřít článek v prohlížeči</string>
     <string name="settings_enable_high_contrast_dark_theme">Zobrazení s vysokým kontrastem</string>

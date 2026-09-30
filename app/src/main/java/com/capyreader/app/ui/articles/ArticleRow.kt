@@ -1,5 +1,11 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -126,6 +132,7 @@ fun ArticleRow(
             onClick = { onSelect(article.id) },
             onLongClick = openArticleMenu,
             article = article,
+            outlined = selected && isMonochrome,
         ) {
             ArticleListItem(
                 headlineContent = {
@@ -363,9 +370,10 @@ private fun listItemColors(
     val defaults = ListItemDefaults.colors()
     val isMonochrome = LocalAppTheme.current.value == AppTheme.MONOCHROME
     val dimColors = read && !isMonochrome
+    val showSelectedFill = selected && !isMonochrome
 
     return ListItemDefaults.colors(
-        containerColor = if (selected) colorScheme.surfaceVariant else defaults.containerColor,
+        containerColor = if (showSelectedFill) colorScheme.surfaceVariant else defaults.containerColor,
         headlineColor = if (dimColors) defaults.disabledContentColor else defaults.contentColor,
         supportingColor = if (dimColors) defaults.disabledContentColor else defaults.supportingContentColor
     )
@@ -417,8 +425,11 @@ private fun ArticleBox(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     article: Article,
+    outlined: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    val outlineColor = MaterialTheme.colorScheme.onSurface
+
     ArticleRowSwipeBox(article) {
         Box(
             Modifier
@@ -426,12 +437,38 @@ private fun ArticleBox(
                     onClick = onClick,
                     onLongClick = onLongClick,
                     onLongClickLabel = stringResource(R.string.article_actions_open_menu)
-                ),
+                )
+                .drawWithContent {
+                    drawContent()
+
+                    if (outlined) {
+                        drawSelectedOutline(outlineColor)
+                    }
+                },
         ) {
             content()
         }
     }
 }
+
+private fun DrawScope.drawSelectedOutline(color: Color) {
+    val stroke = SELECTED_OUTLINE_WIDTH.toPx()
+    val horizontal = SELECTED_OUTLINE_HORIZONTAL_INSET.toPx() + stroke / 2
+    val vertical = SELECTED_OUTLINE_VERTICAL_INSET.toPx() + stroke / 2
+
+    drawRoundRect(
+        color = color,
+        topLeft = Offset(horizontal, vertical),
+        size = Size(size.width - horizontal * 2, size.height - vertical * 2),
+        cornerRadius = CornerRadius(SELECTED_OUTLINE_CORNER.toPx()),
+        style = Stroke(width = stroke),
+    )
+}
+
+private val SELECTED_OUTLINE_HORIZONTAL_INSET = 4.dp
+private val SELECTED_OUTLINE_VERTICAL_INSET = 2.dp
+private val SELECTED_OUTLINE_WIDTH = 2.dp
+private val SELECTED_OUTLINE_CORNER = 12.dp
 
 private val SMALL_IMAGE_SIZE = 56.dp
 private val MEDIUM_IMAGE_SIZE = 84.dp

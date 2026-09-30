@@ -121,7 +121,6 @@ object SettingsRegistry {
                         Setting.READER_SWIPE_DOWN,
                         Setting.READER_SWIPE_UP,
                         Setting.HORIZONTAL_PAGINATION,
-                        Setting.TAP_TO_PAGE,
                     ),
                 ),
             )
@@ -134,6 +133,15 @@ object SettingsRegistry {
                         Setting.THEME,
                         Setting.PURE_BLACK,
                         Setting.ACCENT_COLORS,
+                    ),
+                ),
+                SettingsSection(
+                    title = R.string.settings_section_e_ink,
+                    settings = listOf(
+                        Setting.REDUCE_MOTION,
+                        Setting.TAP_TO_PAGE,
+                        Setting.E_INK_SCROLLBAR,
+                        Setting.PAGE_TURN_KEYS,
                     ),
                 ),
             )
@@ -208,7 +216,10 @@ object SettingsRegistry {
             Setting.READER_SWIPE_DOWN -> R.string.settings_gestures_reader_swipe_down
             Setting.READER_SWIPE_UP -> R.string.settings_gestures_reader_swipe_up
             Setting.HORIZONTAL_PAGINATION -> R.string.settings_gestures_enable_horizontal_pagination_title
-            Setting.TAP_TO_PAGE -> R.string.settings_gestures_reader_tap_to_page_title
+            Setting.REDUCE_MOTION -> R.string.settings_reduce_motion_title
+            Setting.TAP_TO_PAGE -> R.string.settings_e_ink_tap_to_page_title
+            Setting.E_INK_SCROLLBAR -> R.string.settings_e_ink_scrollbar_title
+            Setting.PAGE_TURN_KEYS -> R.string.settings_e_ink_page_turn_keys_title
             Setting.THEME_MODE -> R.string.theme_mode_label
             Setting.THEME -> R.string.theme_menu_label
             Setting.PURE_BLACK -> R.string.settings_pure_black_dark_mode
@@ -245,7 +256,10 @@ object SettingsRegistry {
             Setting.PURE_BLACK -> listOf(R.string.theme_mode_dark)
             Setting.STICKY_FULL_CONTENT -> listOf(R.string.settings_option_full_content_subtitle)
             Setting.HORIZONTAL_PAGINATION -> listOf(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
-            Setting.TAP_TO_PAGE -> listOf(R.string.settings_gestures_reader_tap_to_page_subtitle)
+            Setting.REDUCE_MOTION -> listOf(R.string.settings_reduce_motion_subtitle)
+            Setting.TAP_TO_PAGE -> listOf(R.string.settings_e_ink_tap_to_page_subtitle)
+            Setting.E_INK_SCROLLBAR -> listOf(R.string.settings_e_ink_scrollbar_subtitle)
+            Setting.PAGE_TURN_KEYS -> listOf(R.string.settings_e_ink_page_turn_keys_subtitle)
             Setting.AUTO_DELETE -> listOf(R.string.settings_option_auto_delete_articles_title)
             Setting.FILTERS -> listOf(R.string.filters_supporting_text)
             Setting.CRASH_LOGS -> listOf(R.string.crash_log_export_item_subtitle)

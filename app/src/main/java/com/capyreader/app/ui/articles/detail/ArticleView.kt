@@ -42,6 +42,7 @@ import com.capyreader.app.preferences.ArticleVerticalSwipe.OPEN_ARTICLE_IN_BROWS
 import com.capyreader.app.preferences.ArticleVerticalSwipe.PREVIOUS_ARTICLE
 import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.LocalFullContent
+import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.collectChangesWithDefault
 import com.capyreader.app.ui.components.pullrefresh.SwipeRefresh
 import com.capyreader.app.ui.components.LocalSnackbarHost
@@ -90,6 +91,8 @@ fun ArticleView(
     val articleScrollStates = rememberArticleScrollStates()
 
 
+    var openAtEnd by remember { mutableStateOf<String?>(null) }
+
     var pendingDirection by remember { mutableStateOf<Pair<String, Int>?>(null) }
 
     fun selectPrevious() {
@@ -125,6 +128,8 @@ fun ArticleView(
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
+
+    HideNavigationBarWhilePaging(hide = !showToolBar)
 
     val contentPadding = rememberContentPadding(pinToolbars)
 
@@ -167,6 +172,19 @@ fun ArticleView(
                                 flattened = targetFlattened,
                                 scrollState = articleScrollStates.scrollState(targetArticle.id),
                                 pinToolbars = pinToolbars,
+                                showToolbars = showToolBar,
+                                onHideToolbars = { scrollState.hideToolbars() },
+                                onToggleToolbars = { scrollState.toggleToolbars() },
+                                onTurnPastArticle = { direction ->
+                                    if (direction == PageDirection.FORWARD) {
+                                        selectNext()
+                                    } else {
+                                        openAtEnd = previousArticleID
+                                        selectPrevious()
+                                    }
+                                },
+                                openAtEnd = targetArticle.id == openAtEnd,
+                                onOpenedAtEnd = { openAtEnd = null },
                                 onSelectMedia = onSelectMedia,
                                 onSelectAudio = onSelectAudio,
                                 onPauseAudio = onPauseAudio,

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.EInkDevice
 import com.capyreader.app.transfers.OPMLImportWorker
 import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_CURRENT_COUNT
 import com.capyreader.app.transfers.OPMLImportWorker.Companion.PROGRESS_TOTAL
@@ -45,6 +46,7 @@ class AccountSettingsViewModel(
 
     fun removeAccount() {
         appPreferences.clearAll()
+        EInkDevice.applyDefaults(appPreferences)
         accountManager.removeAccount(accountID = account.id)
     }
 

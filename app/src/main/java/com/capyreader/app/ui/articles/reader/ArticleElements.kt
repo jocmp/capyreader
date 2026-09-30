@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -328,8 +329,15 @@ fun ImageElement(
             ?: ImageAspectRatios[source.imgUri]
             ?: PLACEHOLDER_ASPECT_RATIO
 
+        val pageHeight = LocalReaderPageHeight.current
+
         val sizeModifier = if (failed) {
             Modifier.fillMaxWidth()
+        } else if (pageHeight != null) {
+            Modifier
+                .widthIn(max = pageHeight * aspectRatio)
+                .fillMaxWidth()
+                .aspectRatio(aspectRatio)
         } else {
             Modifier
                 .fillMaxWidth()

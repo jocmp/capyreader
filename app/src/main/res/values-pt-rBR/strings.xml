@@ -180,12 +180,10 @@
     <string name="action_share">Compartilhar</string>
     <string name="crash_log_export_item_title">Compartilhar logs de erro</string>
     <string name="crash_log_export_item_subtitle">Salva logs de erro em um arquivo para compartilhar com o desenvolvedor</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Toque E-Ink para rolar</string>
     <string name="settings_panel_notifications_title">Notificações</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 semana</string>
     <string name="article_view_open_externally">Abrir externamente</string>
     <string name="article_vertical_swipe_disabled">Desabilitado</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar nos cantos inferiores para navegar pelo conteúdo do artigo</string>
     <string name="settings_panel_gestures_title">Gestos</string>
     <string name="settings_account_title">Conta</string>
     <string name="settings_about_title">Sobre</string>

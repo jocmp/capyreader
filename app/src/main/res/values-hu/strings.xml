@@ -216,10 +216,8 @@
     <string name="article_view_open_externally">Megnyitás külsőleg</string>
     <string name="settings_confirm_mark_all_read">Összes olvasottként való megjelölés megerősítése</string>
     <string name="settings_mark_read_on_scroll">Megjelölés olvasottként görgetéskor</string>
-    <string name="settings_gestures_reader_tap_to_page_title">E Ink érintés a lapozáshoz</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Vízszintes görgetés engedélyezése</string>
     <string name="settings_gestures_enable_horizontal_pagination_subtitle">Húzza balra vagy jobbra a cikkek közötti navigáláshoz</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Érintse meg az alsó sarkokat a cikk tartalmában való navigáláshoz</string>
     <string name="settings_enable_high_contrast_dark_theme">Magas kontrasztú sötét téma engedélyezése</string>
     <string name="settings_section_mark_all_as_read">Összes megjelölése olvasottként</string>
     <string name="settings_section_browser">Böngésző</string>

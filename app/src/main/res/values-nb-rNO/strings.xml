@@ -205,8 +205,6 @@
     <string name="settings_clear_all_articles_text">Er du sikker på at du vil slette alle leste artikler uten stjernemerke fra enheten din? Denne handlingen kan ikke angres.</string>
     <string name="settings_gestures_list_back_navigation_action">Handling for tilbakenavigering</string>
     <string name="settings_select_none">Velg ingen</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Trykkskrolling for e-ink</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Trykk nedre hjørner for å navigere i artikkelinnhold</string>
     <plurals name="refresh_hours">
         <item quantity="one">Hver time</item>
         <item quantity="other">Hver %d. time</item>

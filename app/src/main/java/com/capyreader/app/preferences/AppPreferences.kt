@@ -75,6 +75,12 @@ class AppPreferences(context: Context) {
     val refreshOnWiFiOnly: Preference<Boolean>
         get() = preferenceStore.getBoolean("refresh_on_wifi_only", false)
 
+    val reduceMotion: Preference<Boolean>
+        get() = preferenceStore.getBoolean("reduce_motion", false)
+
+    val eInkDefaultsApplied: Preference<Boolean>
+        get() = preferenceStore.getBoolean("e_ink_defaults_applied", false)
+
     val paneExpansionIndex: Preference<Int>
         get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
 
@@ -116,6 +122,15 @@ class AppPreferences(context: Context) {
 
         val enablePagingTapGesture: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_paging_tap_gesture", false)
+
+        val showTapZoneHint: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_show_tap_zone_hint", true)
+
+        val enableEInkScrollbar: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_enable_e_ink_scrollbar", false)
+
+        val enablePageTurnKeys: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_enable_page_turn_keys", false)
 
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)

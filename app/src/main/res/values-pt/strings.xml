@@ -218,9 +218,7 @@
     <string name="article_view_open_externally">Abrir externamente</string>
     <string name="settings_confirm_mark_all_read">Confirmar ao marcar todos como lido</string>
     <string name="settings_mark_read_on_scroll">Marcar como lido ao rolar</string>
-    <string name="settings_gestures_reader_tap_to_page_title">Toque E-Ink para rolar</string>
     <string name="settings_gestures_enable_horizontal_pagination_title">Ativar rolagem horizontal</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">Tocar no canto inferior para navegar para o conteúdo do artigo</string>
     <string name="settings_enable_high_contrast_dark_theme">Ativar tema escuro de alto contraste</string>
     <string name="settings_section_mark_all_as_read">Marcar Todos como Lido</string>
     <string name="settings_section_browser">Navegador</string>

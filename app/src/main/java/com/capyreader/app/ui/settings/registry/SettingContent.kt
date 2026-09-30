@@ -13,6 +13,7 @@ import com.capyreader.app.ui.settings.panels.ClearArticlesRow
 import com.capyreader.app.ui.settings.panels.ConfirmMarkAllReadRow
 import com.capyreader.app.ui.settings.panels.CrashLogsRow
 import com.capyreader.app.ui.settings.panels.CrashReportingRow
+import com.capyreader.app.ui.settings.panels.EInkScrollbarRow
 import com.capyreader.app.ui.settings.panels.FiltersRow
 import com.capyreader.app.ui.settings.panels.HorizontalPaginationRow
 import com.capyreader.app.ui.settings.panels.ImagePreviewRow
@@ -24,9 +25,11 @@ import com.capyreader.app.ui.settings.panels.ListSwipeUpRow
 import com.capyreader.app.ui.settings.panels.MarkReadOnScrollRow
 import com.capyreader.app.ui.settings.panels.OPMLExportRow
 import com.capyreader.app.ui.settings.panels.OPMLImportRow
+import com.capyreader.app.ui.settings.panels.PageTurnKeysRow
 import com.capyreader.app.ui.settings.panels.PinToolbarsRow
 import com.capyreader.app.ui.settings.panels.PureBlackRow
 import com.capyreader.app.ui.settings.panels.ReaderImagesRow
+import com.capyreader.app.ui.settings.panels.ReduceMotionRow
 import com.capyreader.app.ui.settings.panels.ReaderStyleRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeDownRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeUpRow
@@ -84,11 +87,14 @@ fun SettingContent(
         Setting.READER_SWIPE_DOWN -> ReaderSwipeDownRow()
         Setting.READER_SWIPE_UP -> ReaderSwipeUpRow()
         Setting.HORIZONTAL_PAGINATION -> HorizontalPaginationRow()
-        Setting.TAP_TO_PAGE -> TapToPageRow()
         Setting.THEME_MODE -> ThemeModeRow()
         Setting.THEME -> ThemeRow()
         Setting.PURE_BLACK -> PureBlackRow()
         Setting.ACCENT_COLORS -> AccentColorsRow()
+        Setting.REDUCE_MOTION -> ReduceMotionRow()
+        Setting.TAP_TO_PAGE -> TapToPageRow()
+        Setting.E_INK_SCROLLBAR -> EInkScrollbarRow()
+        Setting.PAGE_TURN_KEYS -> PageTurnKeysRow()
         Setting.AUTO_DELETE -> AutoDeleteRow()
         Setting.CLEAR_ARTICLES -> ClearArticlesRow()
         Setting.CRASH_REPORTING -> CrashReportingRow()

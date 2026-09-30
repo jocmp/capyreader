@@ -201,8 +201,6 @@
     <string name="add_account_freshrss_signup_link_text">了解更多。</string>
     <string name="add_account_freshrss_subtitle">freshrss.org</string>
     <string name="add_account_reader_subtitle">自托管的 Google Reader API</string>
-    <string name="settings_gestures_reader_tap_to_page_title">轻按电子墨水屏滚动</string>
-    <string name="settings_gestures_reader_tap_to_page_subtitle">轻按底部角落查看文章内容</string>
     <string name="settings_enable_high_contrast_dark_theme">启用高对比度深色主题</string>
     <string name="settings_section_mark_all_as_read">全部标记为已读</string>
     <string name="settings_mark_read_on_scroll">滚动时标记为已读</string>

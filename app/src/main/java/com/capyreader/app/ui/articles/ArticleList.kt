@@ -57,7 +57,7 @@ fun ArticleList(
 
     Box(Modifier.fillMaxSize()) {
         key(listState) {
-            LazyScrollbar(state = listState) {
+            ArticleListScrollbar(listState = listState) {
                 LazyColumn(
                     state = listState,
                     modifier = Modifier
