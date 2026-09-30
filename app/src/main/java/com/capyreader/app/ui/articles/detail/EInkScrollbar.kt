@@ -77,7 +77,7 @@ fun EInkScrollbar(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         modifier = modifier
             .padding(vertical = 8.dp)
-            .padding(end = 12.dp)
+            .padding(end = 8.dp)
             .width(ScrollbarWidth)
             .fillMaxHeight(),
     ) {
