@@ -259,6 +259,8 @@
     <string name="add_account_miniflux_signup_link_text">Coñece máis.</string>
     <string name="settings_article_list_shorten_titles">Acurtar títulos</string>
     <string name="open_articles_in_browser">Abrir artigos no navegador</string>
+    <string name="auth_fields_client_certificate">Certificado cliente (optativo)</string>
+    <string name="auth_fields_remove_client_cert">Retirar certificado cliente</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_dark">Escuro</string>
@@ -288,6 +290,7 @@
     <string name="auth_fields_miniflux_api_token">Token da API</string>
     <string name="auth_fields_miniflux_use_api_token">Alternativa, usar Token da API</string>
     <string name="auth_fields_miniflux_use_password">Alternativa, usar contrasinal</string>
+    <string name="auth_fields_show_advanced">Opcións avanzadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opcións avanzadas</string>
     <string name="add_link_title">Engadir Ligazón</string>
     <string name="tab_add_feed">Engadir Canle</string>

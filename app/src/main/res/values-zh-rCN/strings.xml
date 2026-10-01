@@ -266,6 +266,8 @@
     <string name="add_account_miniflux_signup_link_text">了解更多。</string>
     <string name="add_account_miniflux_signup_prompt">没有 Miniflux 实例？</string>
     <string name="open_articles_in_browser">在浏览器中打开文章</string>
+    <string name="auth_fields_client_certificate">客户端证书（可选）</string>
+    <string name="auth_fields_remove_client_cert">移除客户端证书</string>
     <string name="theme_dynamic">动态</string>
     <string name="theme_newsprint">新闻纸</string>
     <string name="theme_monochrome">单色</string>
@@ -293,6 +295,7 @@
     <string name="auth_fields_miniflux_api_token">API 令牌</string>
     <string name="auth_fields_miniflux_use_api_token">改为使用 API 令牌</string>
     <string name="auth_fields_miniflux_use_password">改为使用密码</string>
+    <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
     <string name="add_link_title">添加链接</string>
     <string name="tab_add_feed">添加订阅源</string>

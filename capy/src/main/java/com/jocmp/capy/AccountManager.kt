@@ -32,6 +32,7 @@ class AccountManager(
         password: String,
         url: String,
         source: Source,
+        clientCertAlias: String = "",
     ): String {
         val accountID = createAccount(source = source)
 
@@ -39,6 +40,7 @@ class AccountManager(
             preferences.username.set(username)
             preferences.password.set(password)
             preferences.url.set(url)
+            preferences.clientCertAlias.set(clientCertAlias)
         }
 
         return accountID

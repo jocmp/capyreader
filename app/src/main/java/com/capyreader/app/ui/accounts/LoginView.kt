@@ -48,9 +48,12 @@ fun LoginView(
     onUrlChange: (url: String) -> Unit = {},
     onSubmit: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
+    onChooseClientCert: () -> Unit = {},
+    onClearClientCert: () -> Unit = {},
     url: String,
     username: String,
     password: String,
+    clientCertAlias: String = "",
     loading: Boolean = false,
     errorMessage: String? = null,
     onUseApiTokenChange: (Boolean) -> Unit = {},
@@ -117,6 +120,9 @@ fun LoginView(
                                 ServiceSignup(source)
                             },
                             source = source,
+                            onChooseClientCert = onChooseClientCert,
+                            onClearClientCert = onClearClientCert,
+                            clientCertAlias = clientCertAlias,
                             setApiTokenPreference = onUseApiTokenChange,
                         )
                     }
