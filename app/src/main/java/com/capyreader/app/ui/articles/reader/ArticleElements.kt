@@ -54,6 +54,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -198,7 +200,7 @@ fun ParagraphElement(
             linearText = linearText,
             idToIndex = idToIndex,
             actions = actions,
-            modifier = modifier,
+            modifier = modifier.semantics { heading() },
         )
     }
 }
