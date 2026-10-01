@@ -9,6 +9,7 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.refresher.RefreshScheduler
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.Account
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.accounts.AutoDelete
@@ -45,6 +46,9 @@ class GeneralSettingsViewModel(
         private set
 
     var afterReadAll by mutableStateOf(appPreferences.articleListOptions.afterReadAllBehavior.get())
+        private set
+
+    var markReadButtonPosition by mutableStateOf(appPreferences.articleListOptions.markReadButtonPosition.get())
         private set
 
     var enableStickyFullContent by mutableStateOf(appPreferences.enableStickyFullContent.get())
@@ -100,6 +104,12 @@ class GeneralSettingsViewModel(
         appPreferences.articleListOptions.afterReadAllBehavior.set(behavior)
 
         afterReadAll = behavior
+    }
+
+    fun updateMarkReadButtonPosition(position: MarkReadPosition) {
+        appPreferences.articleListOptions.markReadButtonPosition.set(position)
+
+        markReadButtonPosition = position
     }
 
     fun updateMarkReadOnScroll(enabled: Boolean) {

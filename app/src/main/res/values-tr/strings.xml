@@ -341,4 +341,7 @@
     <string name="audio_player_play">Oynat</string>
     <string name="audio_player_pause">Duraklat</string>
     <string name="audio_player_close">Oynatıcıyı kapat</string>
+    <string name="mark_read_position_toolbar">Araç çubuğu</string>
+    <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
+    <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
 </resources>

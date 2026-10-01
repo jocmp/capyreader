@@ -339,4 +339,7 @@
     <string name="settings_refresh_on_wifi_only">Atsvaidzināt tikai Wi-Fi tīklā</string>
     <string name="refresh_skipped_mobile">Neatsvaidzināt, ja izmanto mobilo tīklu</string>
     <string name="article_list_new_articles_pill">Jauni raksti</string>
+    <string name="mark_all_read_button_position">Pogas \"Atzīmēt visus kā lasītus\" pozīcija</string>
+    <string name="mark_read_position_toolbar">Rīkjosla</string>
+    <string name="mark_read_position_floating_action_button">Peldoša darbības poga</string>
 </resources>

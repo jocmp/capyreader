@@ -306,4 +306,7 @@
     <string name="auth_fields_miniflux_use_password">Usar Senha</string>
     <string name="auth_fields_show_advanced">Opções avançadas</string>
     <string name="auth_fields_hide_advanced">Ocultar opções avançadas</string>
+    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
+    <string name="mark_read_position_floating_action_button">Botão de Ação Flutuante</string>
+    <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
 </resources>

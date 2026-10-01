@@ -22,6 +22,7 @@ import com.capyreader.app.ui.settings.panels.LastRefreshedRow
 import com.capyreader.app.ui.settings.panels.ListSwipeEndRow
 import com.capyreader.app.ui.settings.panels.ListSwipeStartRow
 import com.capyreader.app.ui.settings.panels.ListSwipeUpRow
+import com.capyreader.app.ui.settings.panels.MarkAllReadPositionRow
 import com.capyreader.app.ui.settings.panels.MarkReadOnScrollRow
 import com.capyreader.app.ui.settings.panels.OPMLExportRow
 import com.capyreader.app.ui.settings.panels.OPMLImportRow
@@ -78,6 +79,7 @@ fun SettingContent(
         Setting.MARK_READ_ON_SCROLL -> MarkReadOnScrollRow()
         Setting.CONFIRM_MARK_ALL_READ -> ConfirmMarkAllReadRow()
         Setting.AFTER_READ_ALL -> AfterReadAllRow()
+        Setting.MARK_ALL_READ_POSITION -> MarkAllReadPositionRow()
         Setting.FILTERS -> FiltersRow()
         Setting.READER_STYLE -> ReaderStyleRow()
         Setting.READER_IMAGES -> ReaderImagesRow()

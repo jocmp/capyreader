@@ -342,4 +342,7 @@
     <string name="article_actions_delete_page_title">Odstranit</string>
     <string name="article_actions_delete_page_message">Jste si jisti, že chcete tuto stránku odstranit?</string>
     <string name="article_actions_delete_page_confirm">Odstranit</string>
+    <string name="mark_read_position_toolbar">Panel</string>
+    <string name="mark_read_position_floating_action_button">Plovoucí akční tlačítko</string>
+    <string name="mark_all_read_button_position">Pozice tlačítka Označit vše jako přečtené</string>
 </resources>

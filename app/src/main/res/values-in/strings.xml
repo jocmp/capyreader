@@ -334,4 +334,7 @@
     <string name="widget_spotlight_next">Berikutnya</string>
     <string name="freshrss_visibility">Visibilitas</string>
     <string name="freshrss_visibility_option_main">Aliran Utama</string>
+    <string name="mark_read_position_toolbar">Bilah Alat</string>
+    <string name="mark_read_position_floating_action_button">Tombol Tindakan Mengambang</string>
+    <string name="mark_all_read_button_position">Posisi Tombol Tandai Semua Dibaca</string>
 </resources>

@@ -90,7 +90,11 @@ object SettingsRegistry {
                 ),
                 SettingsSection(
                     title = R.string.settings_section_mark_all_as_read,
-                    settings = listOf(Setting.CONFIRM_MARK_ALL_READ, Setting.AFTER_READ_ALL),
+                    settings = listOf(
+                        Setting.CONFIRM_MARK_ALL_READ,
+                        Setting.AFTER_READ_ALL,
+                        Setting.MARK_ALL_READ_POSITION,
+                    ),
                 ),
                 SettingsSection(
                     title = null,
@@ -207,6 +211,7 @@ object SettingsRegistry {
             Setting.MARK_READ_ON_SCROLL -> R.string.settings_mark_read_on_scroll
             Setting.CONFIRM_MARK_ALL_READ -> R.string.settings_confirm_mark_all_read
             Setting.AFTER_READ_ALL -> R.string.after_read_all_behavior_label
+            Setting.MARK_ALL_READ_POSITION -> R.string.mark_all_read_button_position
             Setting.FILTERS -> R.string.filters_title
             Setting.READER_STYLE -> R.string.article_style_options
             Setting.READER_IMAGES -> R.string.reader_image_visibility_label
@@ -254,6 +259,10 @@ object SettingsRegistry {
             )
 
             Setting.PURE_BLACK -> listOf(R.string.theme_mode_dark)
+            Setting.MARK_ALL_READ_POSITION -> listOf(
+                R.string.mark_read_position_toolbar,
+                R.string.mark_read_position_floating_action_button,
+            )
             Setting.STICKY_FULL_CONTENT -> listOf(R.string.settings_option_full_content_subtitle)
             Setting.HORIZONTAL_PAGINATION -> listOf(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
             Setting.REDUCE_MOTION -> listOf(R.string.settings_reduce_motion_subtitle)

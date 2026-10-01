@@ -283,4 +283,7 @@
     <string name="audio_player_close">Luk lydafspiller</string>
     <string name="audio_player_skip_back">Gå 30 sekunder tilbage</string>
     <string name="audio_player_skip_forward">Gå 30 sekunder frem</string>
+    <string name="mark_read_position_toolbar">Værktøjslinje</string>
+    <string name="mark_read_position_floating_action_button">Flydende handlingsknap</string>
+    <string name="mark_all_read_button_position">Position af marker alle som læst-knap</string>
 </resources>

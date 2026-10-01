@@ -338,4 +338,7 @@
     <string name="article_actions_delete_page_title">நீக்கு</string>
     <string name="article_actions_delete_page_message">இந்தப் பக்கத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?</string>
     <string name="article_actions_delete_page_confirm">நீக்கு</string>
+    <string name="mark_read_position_toolbar">கருவிப்பட்டி</string>
+    <string name="mark_read_position_floating_action_button">Floating செயல் Button</string>
+    <string name="mark_all_read_button_position">அனைத்தையும் படிக்கும் பொத்தான் நிலையைக் குறிக்கவும்</string>
 </resources>

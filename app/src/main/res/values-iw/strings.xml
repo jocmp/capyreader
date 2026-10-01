@@ -317,4 +317,7 @@
     <string name="article_actions_delete_page_title">הסרה</string>
     <string name="article_actions_delete_page_message">האם אתה בטוח שאתה רוצה למחוק את הדף הזה?</string>
     <string name="article_actions_delete_page_confirm">הסרה</string>
+    <string name="mark_read_position_toolbar">תפריט כלים</string>
+    <string name="mark_read_position_floating_action_button">כפתור פעולה מרחף</string>
+    <string name="mark_all_read_button_position">מיקום כפתור סמן הכל כנקרא</string>
 </resources>

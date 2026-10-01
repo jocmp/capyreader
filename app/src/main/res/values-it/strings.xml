@@ -345,4 +345,7 @@
     <string name="article_list_new_articles_pill">Nuovi articoli</string>
     <string name="settings_refresh_on_wifi_only">Aggiorna solo tramite Wi-Fi</string>
     <string name="refresh_skipped_mobile">Aggiornamento saltato sulla rete mobile</string>
+    <string name="mark_read_position_toolbar">Barra degli strumenti</string>
+    <string name="mark_read_position_floating_action_button">Pulsante azione fluttuante</string>
+    <string name="mark_all_read_button_position">Imposta la posizione del pulsante per segnare tutte le voci come lette</string>
 </resources>

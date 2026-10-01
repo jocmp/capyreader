@@ -58,6 +58,7 @@ import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalAppDrawer
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
+import com.capyreader.app.ui.LocalMarkAllReadButtonPosition
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
@@ -176,6 +177,7 @@ fun ArticleScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val confirmMarkAllReadEnabled by appPreferences.articleListOptions.confirmMarkAllRead.asState()
+    val markAllReadButtonPosition by appPreferences.articleListOptions.markReadButtonPosition.asState()
     var isMarkAllReadDialogOpen by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
@@ -185,6 +187,7 @@ fun ArticleScreen(
         LocalLabelsActions provides labelsActions,
         LocalConnectivity provides connectivity,
         LocalLinkOpener provides provideLinkOpener(context),
+        LocalMarkAllReadButtonPosition provides markAllReadButtonPosition,
         LocalUnreadCount provides unreadCount,
         LocalSnackbarHost provides snackbarHostState,
         LocalTimeFormats provides rememberDisplayTimeFormats(),

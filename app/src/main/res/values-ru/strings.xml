@@ -346,4 +346,7 @@
     <string name="article_list_new_articles_pill">Новые публикации</string>
     <string name="settings_refresh_on_wifi_only">Обновлять только через Wi-Fi</string>
     <string name="refresh_skipped_mobile">Обновление пропущено в мобильной сети</string>
+    <string name="mark_read_position_toolbar">Панель инструментов</string>
+    <string name="mark_read_position_floating_action_button">Плавающая кнопка действия</string>
+    <string name="mark_all_read_button_position">Положение кнопки «Отметить всё прочитанным»</string>
 </resources>
