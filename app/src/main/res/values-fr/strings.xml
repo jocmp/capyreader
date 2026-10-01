@@ -342,4 +342,7 @@
     <string name="article_list_new_articles_pill">Nouveaux articles</string>
     <string name="settings_refresh_on_wifi_only">Actualiser en Wi-Fi uniquement</string>
     <string name="refresh_skipped_mobile">Actualisation ignorée sur le réseau mobile</string>
+    <string name="mark_read_position_toolbar">Barre d\'outils</string>
+    <string name="mark_read_position_floating_action_button">Bouton d\'action flottant</string>
+    <string name="mark_all_read_button_position">Position du bouton \"Tout marquer comme lu\"</string>
 </resources>

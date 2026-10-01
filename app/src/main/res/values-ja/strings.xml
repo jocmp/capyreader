@@ -250,4 +250,7 @@
     <string name="settings_select_none">すべて選択解除</string>
     <string name="settings_confirm_mark_all_read">すべてを既読としてマークすることを確認</string>
     <string name="settings_mark_read_on_scroll">スクロール時に既読としてマーク</string>
+    <string name="mark_read_position_toolbar">ツールバー</string>
+    <string name="mark_read_position_floating_action_button">フローティングアクションボタン</string>
+    <string name="mark_all_read_button_position">すべてを既読にするボタンの位置</string>
 </resources>

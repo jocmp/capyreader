@@ -334,4 +334,7 @@
     <string name="article_byline_date_only">%1$s %2$s(e)tan</string>
     <string name="article_list_new_articles_pill">Artikulu berriak</string>
     <string name="article_byline">%1$s %2$s(e)tan %3$s bidez</string>
+    <string name="mark_read_position_toolbar">Tresna-barra</string>
+    <string name="mark_read_position_floating_action_button">Ekintza-botoi flotagarria</string>
+    <string name="mark_all_read_button_position">Markatu dena irakurritako gisa botoiaren posizioa</string>
 </resources>

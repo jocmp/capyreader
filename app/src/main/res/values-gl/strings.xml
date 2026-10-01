@@ -338,4 +338,7 @@
     <string name="article_list_new_articles_pill">Novos artigos</string>
     <string name="settings_refresh_on_wifi_only">Actualizar só con Wi-Fi</string>
     <string name="refresh_skipped_mobile">Omítese a actualización usando rede móbil</string>
+    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
+    <string name="mark_read_position_floating_action_button">Botón flotante de acción</string>
+    <string name="mark_all_read_button_position">Posición do botón para marcar todo lido</string>
 </resources>

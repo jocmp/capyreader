@@ -344,4 +344,7 @@
     <string name="article_list_new_articles_pill">Uued artiklid</string>
     <string name="settings_refresh_on_wifi_only">Uuenda andmeid vaid Wifi ühendusega</string>
     <string name="refresh_skipped_mobile">Mobiilse andmeside puhul jääb andmete uuendamine vahele</string>
+    <string name="mark_read_position_toolbar">Tööriistariba</string>
+    <string name="mark_read_position_floating_action_button">Ujuv tegevuste nupp</string>
+    <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
 </resources>

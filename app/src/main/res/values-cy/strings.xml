@@ -276,4 +276,7 @@
     <string name="selected">Wedi\'i ddewis</string>
     <string name="auth_fields_client_certificate">Tystysgrif y cleient (dewisol)</string>
     <string name="auth_fields_remove_client_cert">Cael gwared ar dystysgrif y cleient</string>
+    <string name="mark_read_position_toolbar">Bar offer</string>
+    <string name="mark_read_position_floating_action_button">Botwm Gweithred Arnofiol</string>
+    <string name="mark_all_read_button_position">Lleoliad y botwm i nodi\'r cwbl fel eu darllen</string>
 </resources>

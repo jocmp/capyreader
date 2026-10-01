@@ -7,6 +7,7 @@ import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.DefaultPaneExpansionIndex
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.articles.FontOption
@@ -185,6 +186,12 @@ class AppPreferences(context: Context) {
             get() = preferenceStore.getEnum(
                 "article_display_font_scale",
                 ArticleListFontScale.default
+            )
+
+        val markReadButtonPosition: Preference<MarkReadPosition>
+            get() = preferenceStore.getEnum(
+                "article_list_mark_read_position",
+                MarkReadPosition.default
             )
 
         val swipeStart: Preference<RowSwipeOption>

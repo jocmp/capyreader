@@ -336,4 +336,7 @@
     <string name="settings_refresh_on_wifi_only">Frissítés csak Wi-Fi-n keresztül</string>
     <string name="refresh_skipped_mobile">Frissítés kihagyva mobilhálózaton</string>
     <string name="article_list_new_articles_pill">Új cikkek</string>
+    <string name="mark_read_position_toolbar">Eszköztár</string>
+    <string name="mark_read_position_floating_action_button">Lebegő műveleti gomb</string>
+    <string name="mark_all_read_button_position">Összes Olvasottként Megjelölése gomb pozíciója</string>
 </resources>

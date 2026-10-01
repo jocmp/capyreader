@@ -278,4 +278,7 @@
     <string name="freshrss_visibility_option_important">Belangrijk</string>
     <string name="freshrss_visibility_option_folder">Categorie</string>
     <string name="freshrss_visibility_option_feed">feed</string>
+    <string name="mark_read_position_toolbar">Werkbalk</string>
+    <string name="mark_read_position_floating_action_button">Zwevende actieknop</string>
+    <string name="mark_all_read_button_position">Alles gelezen markeren knop positie</string>
 </resources>

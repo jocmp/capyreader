@@ -379,4 +379,7 @@
     <string name="reader_play_audio">Play audio</string>
     <string name="reader_article_truncated">This article is too long to show in full.</string>
     <string name="reader_open_in_browser">Open in browser</string>
+    <string name="mark_read_position_toolbar">Toolbar</string>
+    <string name="mark_read_position_floating_action_button">Floating Action Button</string>
+    <string name="mark_all_read_button_position">Mark All Read Button Position</string>
 </resources>

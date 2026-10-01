@@ -338,4 +338,7 @@
     <string name="article_actions_delete_page_message">Σίγουρα θες να διαγράψεις αυτή τη σελίδα;</string>
     <string name="article_actions_delete_page_confirm">Διαγραφή</string>
     <string name="freshrss_visibility_option_main">Κύρια Ροή</string>
+    <string name="mark_read_position_toolbar">Γραμμή εργαλείων</string>
+    <string name="mark_read_position_floating_action_button">Αιωρούμενο Κουμπί Ενέργειας</string>
+    <string name="mark_all_read_button_position">Θέση Κουμπιού Επισήμανση Όλων ως Αναγνωσμένα</string>
 </resources>

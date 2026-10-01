@@ -340,4 +340,7 @@
     <string name="article_list_new_articles_pill">Nowe artykuły</string>
     <string name="settings_refresh_on_wifi_only">Odśwież tylko przy użyciu Wi-Fi</string>
     <string name="refresh_skipped_mobile">Odświeżanie pominięte w sieci komórkowej</string>
+    <string name="mark_read_position_toolbar">Pasek narzędzi</string>
+    <string name="mark_read_position_floating_action_button">Pływający przycisk akcji</string>
+    <string name="mark_all_read_button_position">Pozycja przycisku \"oznacz wszystko jako przeczytane\"</string>
 </resources>

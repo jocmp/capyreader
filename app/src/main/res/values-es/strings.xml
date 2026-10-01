@@ -342,4 +342,7 @@
     <string name="widget_receiver_spotlight_title">Spоtlight</string>
     <string name="widget_spotlight_empty">No hay artículos sin leer</string>
     <string name="freshrss_visibility_option_main">Flujo principal</string>
+    <string name="mark_read_position_toolbar">Barra de herramientas</string>
+    <string name="mark_read_position_floating_action_button">Botón de Acción Flotante</string>
+    <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
 </resources>

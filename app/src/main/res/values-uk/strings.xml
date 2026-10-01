@@ -338,4 +338,7 @@
     <string name="article_list_new_articles_pill">Нові статті</string>
     <string name="settings_refresh_on_wifi_only">Оновлювати лише по Wi-Fi</string>
     <string name="refresh_skipped_mobile">Не оновлено, бо мобільна мережа</string>
+    <string name="mark_read_position_toolbar">На панелі</string>
+    <string name="mark_all_read_button_position">Кнопка позначення прочитаними</string>
+    <string name="mark_read_position_floating_action_button">Спливна</string>
 </resources>

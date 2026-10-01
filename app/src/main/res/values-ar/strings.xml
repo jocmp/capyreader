@@ -345,4 +345,7 @@
     <string name="article_list_new_articles_pill">مقالات جديدة</string>
     <string name="settings_refresh_on_wifi_only">التحديث عبر شبكة Wi-Fi فقط</string>
     <string name="refresh_skipped_mobile">تخطي التحديث عبر شبكة الجوّال</string>
+    <string name="mark_read_position_toolbar">شريط اﻷدوات</string>
+    <string name="mark_read_position_floating_action_button">زر الإجراء العائم</string>
+    <string name="mark_all_read_button_position">موضع زر وضع علامة \"قراءة الكل\"</string>
 </resources>

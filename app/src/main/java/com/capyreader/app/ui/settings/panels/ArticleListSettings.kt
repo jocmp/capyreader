@@ -44,6 +44,7 @@ import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.ArticleRowOptions
 import com.capyreader.app.ui.articles.FaviconBadge
+import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.articles.StyleProviders
 import com.capyreader.app.ui.articles.list.ArticleListItem
 import com.capyreader.app.ui.components.FormSection
@@ -228,6 +229,19 @@ fun AfterReadAllRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
         update = viewModel::updateAfterReadAll,
         options = AfterReadAllBehavior.entries,
         label = R.string.after_read_all_behavior_label,
+        optionText = {
+            stringResource(id = it.translationKey)
+        }
+    )
+}
+
+@Composable
+fun MarkAllReadPositionRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.markReadButtonPosition,
+        update = viewModel::updateMarkReadButtonPosition,
+        options = MarkReadPosition.entries,
+        label = R.string.mark_all_read_button_position,
         optionText = {
             stringResource(id = it.translationKey)
         }

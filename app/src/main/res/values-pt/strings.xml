@@ -316,4 +316,7 @@
     <string name="tag_action_edit_success">Etiqueta atualizada</string>
     <string name="tag_action_edit_error">Erro ao atualizar etiqueta</string>
     <string name="tag_action_edit">Editar Etiqueta</string>
+    <string name="mark_read_position_toolbar">Barra de ferramentas</string>
+    <string name="mark_read_position_floating_action_button">Botão de ação flutuante</string>
+    <string name="mark_all_read_button_position">Posição do botão \"Marcar todos como lido\"</string>
 </resources>
