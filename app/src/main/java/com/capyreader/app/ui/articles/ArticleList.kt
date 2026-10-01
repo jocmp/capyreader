@@ -1,6 +1,7 @@
 package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,6 +48,7 @@ fun ArticleList(
     enableMarkReadOnScroll: Boolean = false,
     dimReadArticles: Boolean = true,
     scrollToTop: () -> Unit = {},
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -57,9 +59,13 @@ fun ArticleList(
 
     Box(Modifier.fillMaxSize()) {
         key(listState) {
-            ArticleListScrollbar(listState = listState) {
+            ArticleListScrollbar(
+                listState = listState,
+                bottomPadding = contentPadding.calculateBottomPadding(),
+            ) {
                 LazyColumn(
                     state = listState,
+                    contentPadding = contentPadding,
                     modifier = Modifier
                         .fillMaxSize()
                         .onGloballyPositioned { coordinates ->
