@@ -3,11 +3,14 @@ package com.capyreader.app.ui.articles
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.detail.EInkScrollbar
 import com.capyreader.app.ui.articles.detail.rememberEInkScrollbarState
@@ -19,6 +22,7 @@ import org.koin.compose.koinInject
 @Composable
 fun ArticleListScrollbar(
     listState: LazyListState,
+    bottomPadding: Dp = 0.dp,
     appPreferences: AppPreferences = koinInject(),
     content: @Composable () -> Unit,
 ) {
@@ -41,6 +45,7 @@ fun ArticleListScrollbar(
             state = rememberEInkScrollbarState(listState),
             onPage = { direction -> scope.launch { listState.scrollPage(direction) } },
             onLine = { direction -> scope.launch { listState.scrollRow(direction) } },
+            modifier = Modifier.padding(bottom = bottomPadding),
         )
     }
 }

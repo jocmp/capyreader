@@ -9,10 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.capyreader.app.R
 import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.articles.detail.byline
 import com.capyreader.app.ui.articles.displayFeedName
@@ -50,7 +54,11 @@ fun ArticleHeader(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable(onClick = onOpenLink)
+                    .semantics { heading() }
+                    .clickable(
+                        onClickLabel = stringResource(R.string.reader_open_in_browser),
+                        onClick = onOpenLink,
+                    )
                     .padding(bottom = 8.dp),
             )
         }
