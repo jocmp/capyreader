@@ -5,6 +5,7 @@ import com.jocmp.capy.AccountPreferences
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
@@ -40,6 +41,7 @@ import com.jocmp.readerclient.Tag
 import com.jocmp.readerclient.ext.editSubscription
 import com.jocmp.readerclient.ext.streamItemsIDs
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
@@ -47,6 +49,7 @@ import org.jsoup.Jsoup
 import retrofit2.Response
 import java.io.IOException
 import java.time.ZonedDateTime
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicReference
 
 internal class ReaderAccountDelegate(
@@ -54,8 +57,10 @@ internal class ReaderAccountDelegate(
     private val database: Database,
     private val googleReader: GoogleReader,
     private val preferences: AccountPreferences,
+    private val faviconFinder: FaviconFinder,
 ) : AccountDelegate {
     private var postToken = AtomicReference<String?>(null)
+    private val faviconLookupIDs = ConcurrentHashMap.newKeySet<String>()
     private val articleRecords = ArticleRecords(database)
     private val feedRecords = FeedRecords(database)
     private val enclosureRecords = EnclosureRecords(database)
@@ -293,9 +298,40 @@ internal class ReaderAccountDelegate(
 
     private suspend fun refreshTopLevelArticles(cutoffDate: ZonedDateTime?) {
         refreshFeeds()
-        refreshAllSavedSearches()
-        refreshArticleState()
-        fetchMissingArticles(cutoffDate = cutoffDate)
+
+        coroutineScope {
+            launch { findMissingFavicons() }
+
+            refreshAllSavedSearches()
+            refreshArticleState()
+            fetchMissingArticles(cutoffDate = cutoffDate)
+        }
+    }
+
+    private suspend fun findMissingFavicons() {
+        val feeds = feedRecords.feeds().first()
+            .filter { it.faviconURL == null }
+            .filter { faviconLookupIDs.add(it.id) }
+
+        if (feeds.isEmpty()) {
+            return
+        }
+
+        val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
+
+        coroutineScope {
+            feeds.forEach { feed ->
+                launch {
+                    semaphore.withPermit {
+                        val siteURL = FaviconFinder.siteURL(feed) ?: return@withPermit
+
+                        faviconFinder.find(siteURL)?.let {
+                            feedRecords.updateFavicon(feed.id, it)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun upsertTaggings(subscription: Subscription) {

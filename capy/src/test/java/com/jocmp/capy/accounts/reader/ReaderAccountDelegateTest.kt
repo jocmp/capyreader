@@ -7,6 +7,7 @@ import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.InMemoryDataStore
 import com.jocmp.capy.InMemoryDatabaseProvider
 import com.jocmp.capy.accounts.AddFeedResult
+import com.jocmp.capy.accounts.FaviconFinder
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
@@ -46,6 +47,7 @@ import okhttp3.Request
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import java.net.SocketTimeoutException
+import java.net.URL
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -63,6 +65,7 @@ class ReaderAccountDelegateTest {
     private lateinit var folderFixture: FolderFixture
     private lateinit var delegate: AccountDelegate
     private lateinit var preferences: AccountPreferences
+    private lateinit var faviconFinder: FaviconFinder
 
     private val arsTechnica = Subscription(
         id = "feed/2",
@@ -183,8 +186,10 @@ class ReaderAccountDelegateTest {
         folderFixture = FolderFixture(database)
         googleReader = mockk()
         preferences = AccountPreferences(InMemoryDataStore())
+        faviconFinder = mockk()
+        coEvery { faviconFinder.find(any()) }.returns(null)
 
-        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.FRESHRSS, database, googleReader, preferences, faviconFinder)
     }
 
     @Test
@@ -223,6 +228,49 @@ class ReaderAccountDelegateTest {
 
         val enclosures = EnclosureRecords(database).findByArticle("0000000000000010")
         assertEquals(expected = 1, actual = enclosures.size)
+    }
+
+    @Test
+    fun refresh_findsMissingFavicons() = runTest {
+        val itemRefs = listOf(ItemRef("16"))
+        val faviconURL = "https://arstechnica.com/favicon.ico"
+
+        coEvery { faviconFinder.find(URL("https://arstechnica.com")) }.returns(faviconURL)
+
+        stubSubscriptions()
+        stubTags()
+        stubStarred()
+        stubUnread(itemRefs)
+        stubStreamItemsIDs(itemRefs)
+
+        delegate.refresh(ArticleFilter.default())
+        delegate.refresh(ArticleFilter.default())
+
+        val favicons = database
+            .feedsQueries
+            .all()
+            .executeAsList()
+            .associate { it.id to it.favicon_url }
+
+        assertEquals(expected = faviconURL, actual = favicons[arsTechnica.id])
+        assertNull(favicons["feed/3"])
+        coVerify(exactly = 2) { faviconFinder.find(any()) }
+    }
+
+    @Test
+    fun refresh_skipsFaviconLookupWithServerIcon() = runTest {
+        val itemRefs = listOf(ItemRef("16"))
+        val iconURL = "https://example.com/icon.png"
+
+        stubSubscriptions(subscriptions.map { it.copy(iconUrl = iconURL) })
+        stubTags()
+        stubStarred()
+        stubUnread(itemRefs)
+        stubStreamItemsIDs(itemRefs)
+
+        delegate.refresh(ArticleFilter.default())
+
+        coVerify(exactly = 0) { faviconFinder.find(any()) }
     }
 
     @Test
@@ -317,7 +365,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_feedOnly() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val id = "feed/2"
         val itemRefs = listOf(ItemRef("16"))
@@ -344,7 +392,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_skipsArticlesPastAutoDeleteCutoff() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val id = "feed/2"
         val oldReadItem = readItem.copy(
@@ -381,7 +429,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_unwrapsCDATASummary() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val id = "feed/3"
         val cdataItem = readItem.copy(
@@ -413,7 +461,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_folderOnly() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val folderTitle = "Tech"
         val feed = feedFixture.create(feedID = "feed/2")
@@ -443,7 +491,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun `refresh Miniflux folder`() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val folderTitle = "Tech"
         val feed = feedFixture.create(feedID = "feed/2")
@@ -473,7 +521,7 @@ class ReaderAccountDelegateTest {
 
     @Test
     fun refresh_findsMissingArticles() = runTest {
-        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences)
+        delegate = ReaderAccountDelegate(source = Source.READER, database, googleReader, preferences, faviconFinder)
 
         val readingListItems = listOf(unreadStarredItem, unreadItem)
         val readingListItemRefs = listOf("1", "16").map { ItemRef(it) }

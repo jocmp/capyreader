@@ -99,6 +99,7 @@ data class Account(
             database = database,
             path = cacheDirectory,
             preferences = preferences,
+            faviconFinder = FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage),
             clientCertManager = clientCertManager,
         )
     }
