@@ -8,6 +8,7 @@ import androidx.compose.material3.FloatingToolbarDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
 import com.capyreader.app.ui.LocalUnreadCount
@@ -30,11 +31,12 @@ fun MarkAllReadButton() {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun MarkAllReadFloatingActionButton() {
+fun MarkAllReadFloatingActionButton(modifier: Modifier = Modifier) {
     val requestMarkAllRead = LocalMarkAllRead.current
 
     FloatingToolbarDefaults.StandardFloatingActionButton(
-        onClick = { requestMarkAllRead() }
+        onClick = { requestMarkAllRead() },
+        modifier = modifier,
     ) {
         Icon(
             imageVector = Icons.Rounded.Check,

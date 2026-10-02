@@ -191,7 +191,7 @@ object SettingsRegistry {
             Setting.SERVER -> R.string.settings_section_account_server
             Setting.REFRESH_INTERVAL -> R.string.refresh_feeds_menu_label
             Setting.REFRESH_ON_WIFI_ONLY -> R.string.settings_refresh_on_wifi_only
-            Setting.LAST_REFRESHED -> R.string.settings_section_refresh
+            Setting.LAST_REFRESHED -> R.string.settings_last_refreshed
             Setting.OPML_IMPORT -> R.string.opml_import_button_text
             Setting.OPML_EXPORT -> R.string.opml_export_button_text
             Setting.STARRED_EXPORT -> R.string.starred_export_button_text

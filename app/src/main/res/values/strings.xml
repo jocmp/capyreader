@@ -133,6 +133,7 @@
     <string name="settings_account_refresh_value">%1$s at %2$s</string>
     <string name="settings_account_refresh_value_today">Today at %1$s</string>
     <string name="settings_account_never_refreshed">Never</string>
+    <string name="settings_last_refreshed">Last Refreshed</string>
     <string name="settings_section_import">Import</string>
     <string name="settings_section_export">Export</string>
     <string name="opml_import_notification_title">Importing subscriptions…</string>

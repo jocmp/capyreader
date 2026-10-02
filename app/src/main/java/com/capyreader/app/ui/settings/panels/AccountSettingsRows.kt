@@ -88,7 +88,7 @@ fun LastRefreshedRow(viewModel: AccountSettingsViewModel = koinViewModel()) {
     val lastRefreshedAt by viewModel.lastRefreshedAt.collectAsState()
 
     ListItem(
-        headlineContent = { Text(stringResource(R.string.settings_section_refresh)) },
+        headlineContent = { Text(stringResource(R.string.settings_last_refreshed)) },
         supportingContent = { Text(lastRefreshed(lastRefreshedAt)) },
     )
 }

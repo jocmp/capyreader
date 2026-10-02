@@ -110,6 +110,28 @@ class ArticleScreenViewModelTest {
     }
 
     @Test
+    fun `shows onboarding for a local account without feeds`() = runTest {
+        val viewModel = buildViewModel()
+
+        viewModel.showOnboarding.test {
+            assertTrue(awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `skips onboarding for a hosted account without feeds`() = runTest {
+        every { account.source } returns Source.FEEDBIN
+
+        val viewModel = buildViewModel()
+
+        viewModel.showOnboarding.test {
+            assertFalse(awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `refreshAll transitions from stopped, running, to settling`() = runTest {
         every { account.preferences.lastRefreshedAt.get() } returns
             ZonedDateTime.parse("2023-11-14T22:13:20Z").toEpochSecond()
