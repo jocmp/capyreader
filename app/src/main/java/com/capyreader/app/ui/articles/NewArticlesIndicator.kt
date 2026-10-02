@@ -21,8 +21,12 @@ class NewArticlesIndicator {
 
     private var newest: ListHead? = null
 
-    fun update(head: ListHead?, firstVisibleID: String?) {
+    fun update(head: ListHead?, firstVisibleID: String?, presentedID: String?) {
         head ?: return
+
+        if (firstVisibleID != presentedID) {
+            return
+        }
 
         val seen = newest
         newest = head
@@ -59,11 +63,12 @@ fun rememberNewArticlesIndicator(
             val head = items.itemSnapshotList.firstOrNull()?.let {
                 ListHead(id = it.id, publishedAt = it.publishedAt)
             }
-            val firstVisibleID = listState.layoutInfo.visibleItemsInfo.firstOrNull()?.key as? String
+            val firstVisible = listState.layoutInfo.visibleItemsInfo.firstOrNull()
+            val presentedID = firstVisible?.let { items.itemSnapshotList.getOrNull(it.index)?.id }
 
-            head to firstVisibleID
-        }.collect { (head, firstVisibleID) ->
-            indicator.update(head, firstVisibleID)
+            Triple(head, firstVisible?.key as? String, presentedID)
+        }.collect { (head, firstVisibleID, presentedID) ->
+            indicator.update(head = head, firstVisibleID = firstVisibleID, presentedID = presentedID)
         }
     }
 

@@ -15,7 +15,7 @@ class NewArticlesIndicatorTest {
     fun hiddenOnFirstUpdateWhileScrolled() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
 
         assertFalse(indicator.isVisible)
     }
@@ -24,8 +24,8 @@ class NewArticlesIndicatorTest {
     fun showsWhenNewerArticleArrivesWhileScrolled() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = newer, firstVisibleID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = newer, firstVisibleID = "row-20", presentedID = "row-20")
 
         assertTrue(indicator.isVisible)
     }
@@ -34,8 +34,8 @@ class NewArticlesIndicatorTest {
     fun ignoresOlderHeadWhileScrolled() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = older, firstVisibleID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = older, firstVisibleID = "row-20", presentedID = "row-20")
 
         assertFalse(indicator.isVisible)
     }
@@ -44,8 +44,8 @@ class NewArticlesIndicatorTest {
     fun ignoresPagingLoadsWithSameHead() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = first, firstVisibleID = "row-120")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-120", presentedID = "row-120")
 
         assertFalse(indicator.isVisible)
     }
@@ -54,9 +54,9 @@ class NewArticlesIndicatorTest {
     fun hidesWhenHeadIsVisibleAgain() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = newer, firstVisibleID = "row-20")
-        indicator.update(head = newer, firstVisibleID = newer.id)
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = newer, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = newer, firstVisibleID = newer.id, presentedID = newer.id)
 
         assertFalse(indicator.isVisible)
     }
@@ -65,9 +65,9 @@ class NewArticlesIndicatorTest {
     fun hidesWhenInsertedHeadLandsInView() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = first.id)
-        indicator.update(head = newer, firstVisibleID = first.id)
-        indicator.update(head = newer, firstVisibleID = newer.id)
+        indicator.update(head = first, firstVisibleID = first.id, presentedID = first.id)
+        indicator.update(head = newer, firstVisibleID = first.id, presentedID = first.id)
+        indicator.update(head = newer, firstVisibleID = newer.id, presentedID = newer.id)
 
         assertFalse(indicator.isVisible)
     }
@@ -76,19 +76,33 @@ class NewArticlesIndicatorTest {
     fun showsWhenInsertedAboveVisibleHead() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = first.id)
-        indicator.update(head = newer, firstVisibleID = first.id)
+        indicator.update(head = first, firstVisibleID = first.id, presentedID = first.id)
+        indicator.update(head = newer, firstVisibleID = first.id, presentedID = first.id)
 
         assertTrue(indicator.isVisible)
+    }
+
+    @Test
+    fun waitsForLayoutToCatchUpWithInsertedHead() {
+        val indicator = NewArticlesIndicator()
+
+        indicator.update(head = first, firstVisibleID = first.id, presentedID = first.id)
+        indicator.update(head = newer, firstVisibleID = first.id, presentedID = newer.id)
+
+        assertFalse(indicator.isVisible)
+
+        indicator.update(head = newer, firstVisibleID = newer.id, presentedID = newer.id)
+
+        assertFalse(indicator.isVisible)
     }
 
     @Test
     fun ignoresEmptyList() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = null, firstVisibleID = null)
-        indicator.update(head = first, firstVisibleID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = null, firstVisibleID = null, presentedID = null)
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
 
         assertFalse(indicator.isVisible)
     }
@@ -97,8 +111,8 @@ class NewArticlesIndicatorTest {
     fun dismissHides() {
         val indicator = NewArticlesIndicator()
 
-        indicator.update(head = first, firstVisibleID = "row-20")
-        indicator.update(head = newer, firstVisibleID = "row-20")
+        indicator.update(head = first, firstVisibleID = "row-20", presentedID = "row-20")
+        indicator.update(head = newer, firstVisibleID = "row-20", presentedID = "row-20")
         indicator.dismiss()
 
         assertFalse(indicator.isVisible)
