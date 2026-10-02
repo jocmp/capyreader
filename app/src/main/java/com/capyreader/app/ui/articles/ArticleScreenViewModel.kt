@@ -24,6 +24,7 @@ import com.capyreader.app.ui.widget.WidgetUpdater
 import com.jocmp.capy.Account
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleStatus.UNREAD
@@ -170,6 +171,7 @@ class ArticleScreenViewModel(
 
         return ArticleListPage(
             filter = key.filter,
+            sortOrder = key.sort,
             articles = pagerFlow(key).cachedIn(scope),
         )
     }
@@ -202,7 +204,7 @@ class ArticleScreenViewModel(
 
     val allFeeds = account.taggedFeeds
 
-    val showOnboarding = allFeeds.map { it.isEmpty() }
+    val showOnboarding = allFeeds.map { it.isEmpty() && account.source == Source.LOCAL }
 
     val allSavedSearches = account.savedSearches
 
@@ -869,6 +871,7 @@ private data class ArticlePagerKey(
 
 class ArticleListPage(
     val filter: ArticleFilter,
+    val sortOrder: SortOrder,
     val articles: Flow<PagingData<Article>>,
 )
 
