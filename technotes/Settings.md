@@ -95,7 +95,7 @@ Only settings available for the current account and build show up.
 
 `ThreePaneScaffold` requests focus on the current destination pane whenever it changes (`PaneScaffoldDirective.shouldAutoFocusCurrentDestination`, on by default). The pane's `FocusRequester` sits on a non-focusable wrapper, so the request falls through to the first focusable descendant. In touch mode, clickables are not focusable (`Focusability.SystemDefined`), which leaves the search field as the only candidate: it grabbed focus and raised the keyboard every time Settings opened.
 
-The settings list wraps its content in a `focusTarget()` that can hold focus only in touch mode. The pane's request stops there, so nothing visible is focused. With a keyboard or D-pad the wrapper can't take focus, and focus moves into the list as usual. Tapping the search field still focuses it directly.
+The settings list and each detail panel wrap their content in a `focusTarget()` that can hold focus only in touch mode. Detail panels need it too: a Material3 `Slider` stays focusable in touch mode, so the Article List panel scrolled down to its font size slider whenever it opened. The pane's request stops there, so nothing visible is focused. With a keyboard or D-pad the wrapper can't take focus, and focus moves into the list as usual. Tapping the search field still focuses it directly.
 
 ## Kept outside Settings
 
