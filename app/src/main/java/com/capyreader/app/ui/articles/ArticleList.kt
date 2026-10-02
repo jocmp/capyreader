@@ -1,5 +1,10 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.R
@@ -35,6 +43,7 @@ import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -47,6 +56,7 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     enableMarkReadOnScroll: Boolean = false,
     dimReadArticles: Boolean = true,
+    showNewArticles: Boolean = false,
     scrollToTop: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -107,6 +117,18 @@ fun ArticleList(
             }
         }
 
+        AnimatedVisibility(
+            visible = showNewArticles,
+            enter = slideInVertically(animationSpec = motionScheme.defaultSpatialSpec()) { -it } +
+                fadeIn(animationSpec = motionScheme.defaultEffectsSpec()),
+            exit = slideOutVertically(animationSpec = motionScheme.fastSpatialSpec()) { -it } +
+                fadeOut(animationSpec = motionScheme.fastEffectsSpec()),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 8.dp),
+        ) {
+            NewArticlesButton(onClick = scrollToTop)
+        }
     }
 }
 
@@ -121,10 +143,12 @@ fun ScrollToSelectedArticleEffect(
     listState: LazyListState,
 ) {
     val isSinglePane = isSinglePane()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     LaunchedEffect(selectedArticleKey, isSinglePane, articles.itemCount) {
         if (isSinglePane) return@LaunchedEffect
         val id = selectedArticleKey ?: return@LaunchedEffect
+        lifecycle.currentStateFlow.first { it.isAtLeast(Lifecycle.State.RESUMED) }
         val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
         if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
             listState.animateScrollToItem(index)
