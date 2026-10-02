@@ -9,6 +9,7 @@ import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +21,6 @@ import com.capyreader.app.ui.theme.CapyTheme
 @Composable
 fun NewArticlesButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val height = ButtonDefaults.ExtraSmallContainerHeight
 
@@ -28,6 +28,10 @@ fun NewArticlesButton(
         onClick = onClick,
         modifier = modifier.heightIn(min = height),
         shape = ButtonDefaults.shapesFor(height).shape,
+        colors = ButtonDefaults.elevatedButtonColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        ),
         contentPadding = ButtonDefaults.contentPaddingFor(height, hasStartIcon = true),
     ) {
         Icon(
