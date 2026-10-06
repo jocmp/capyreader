@@ -129,7 +129,7 @@ fun ArticleView(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    HideNavigationBarWhilePaging(hide = !showToolBar)
+    HideNavigationBarWhilePagingEffect(hide = !showToolBar)
 
     val contentPadding = rememberContentPadding(pinToolbars)
 

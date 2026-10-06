@@ -12,7 +12,7 @@ import com.capyreader.app.ui.collectChangesWithCurrent
 import org.koin.compose.koinInject
 
 @Composable
-fun HideNavigationBarWhilePaging(
+fun HideNavigationBarWhilePagingEffect(
     hide: Boolean,
     appPreferences: AppPreferences = koinInject(),
 ) {

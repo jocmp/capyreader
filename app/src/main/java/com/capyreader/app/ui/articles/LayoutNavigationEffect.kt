@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.capyreader.app.ui.isExpanded
 
 @Composable
-fun LayoutNavigationHandler(
+fun LayoutNavigationEffect(
     enabled: Boolean,
     onChange: suspend () -> Unit,
 ) {
