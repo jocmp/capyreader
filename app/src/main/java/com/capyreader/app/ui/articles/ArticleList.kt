@@ -1,5 +1,10 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme.motionScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +53,7 @@ fun ArticleList(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     enableMarkReadOnScroll: Boolean = false,
     dimReadArticles: Boolean = true,
+    showNewArticles: Boolean = false,
     scrollToTop: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -107,6 +114,18 @@ fun ArticleList(
             }
         }
 
+        AnimatedVisibility(
+            visible = showNewArticles,
+            enter = slideInVertically(animationSpec = motionScheme.defaultSpatialSpec()) { -it } +
+                fadeIn(animationSpec = motionScheme.defaultEffectsSpec()),
+            exit = slideOutVertically(animationSpec = motionScheme.fastSpatialSpec()) { -it } +
+                fadeOut(animationSpec = motionScheme.fastEffectsSpec()),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 8.dp),
+        ) {
+            NewArticlesButton(onClick = scrollToTop)
+        }
     }
 }
 

@@ -233,6 +233,12 @@ fun ArticleScreen(
             listState = listState,
         )
 
+        val newArticles = rememberNewArticlesIndicator(
+            articles = presentedArticles,
+            listState = listState,
+            enabled = !viewModel.markReadOnScrollEnabled,
+        )
+
         val (scrolledFilter, setScrolledFilter) = rememberSaveable(
             saver = ArticleFilter.Saver
         ) { mutableStateOf(null) }
@@ -582,6 +588,7 @@ fun ArticleScreen(
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
+                                            showNewArticles = newArticles.isVisible,
                                             scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)

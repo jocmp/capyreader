@@ -45,6 +45,7 @@ import com.capyreader.app.ui.articles.reader.LocalReaderPageHeight
 import com.capyreader.app.ui.articles.reader.PageDirection
 import com.capyreader.app.ui.articles.reader.LocalReaderStyle
 import com.capyreader.app.ui.articles.reader.ReaderActions
+import com.capyreader.app.ui.articles.reader.RestoreReadingPositionEffect
 import com.capyreader.app.ui.articles.reader.galleryItems
 import com.capyreader.app.ui.articles.reader.largestSource
 import com.capyreader.app.ui.articles.reader.rememberReaderStyle
@@ -132,6 +133,12 @@ fun ArticleReader(
     }
 
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
+
+    RestoreReadingPositionEffect(
+        articleID = article.id,
+        anchors = anchors,
+        scrollState = scrollState,
+    )
 
     LaunchedEffect(openAtEnd) {
         if (!openAtEnd) {
