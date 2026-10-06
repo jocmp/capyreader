@@ -105,6 +105,7 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
         }
     }
 
+    // GitHub discussion #2274
     private fun encodedURL(url: String): URL? {
         val httpURL = url.toHttpUrlOrNull() ?: siteURL?.toHttpUrlOrNull()?.resolve(url)
 
