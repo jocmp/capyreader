@@ -26,7 +26,7 @@ fun NewArticlesButton(
 
     ElevatedButton(
         onClick = onClick,
-        modifier = modifier.heightIn(min = height),
+        modifier = Modifier.heightIn(min = height),
         shape = ButtonDefaults.shapesFor(height).shape,
         colors = ButtonDefaults.elevatedButtonColors(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
