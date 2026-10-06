@@ -33,8 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.capyreader.app.R
@@ -43,7 +41,6 @@ import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
@@ -143,12 +140,10 @@ fun ScrollToSelectedArticleEffect(
     listState: LazyListState,
 ) {
     val isSinglePane = isSinglePane()
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     LaunchedEffect(selectedArticleKey, isSinglePane, articles.itemCount) {
         if (isSinglePane) return@LaunchedEffect
         val id = selectedArticleKey ?: return@LaunchedEffect
-        lifecycle.currentStateFlow.first { it.isAtLeast(Lifecycle.State.RESUMED) }
         val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
         if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
             listState.animateScrollToItem(index)
