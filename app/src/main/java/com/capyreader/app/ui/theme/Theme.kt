@@ -59,7 +59,7 @@ fun CapyTheme(
     val view = LocalView.current
 
     if (!(preview || view.isInEditMode)) {
-        StatusBarColorListener(colorScheme, themeMode, pureBlack)
+        StatusBarColorEffect(colorScheme, themeMode, pureBlack)
     }
 
     CompositionLocalProvider(LocalAppTheme provides AppThemeState(appTheme, isDark)) {
@@ -127,7 +127,7 @@ fun ThemeMode.showAppearanceLightStatusBars(): Boolean {
 }
 
 @Composable
-fun StatusBarColorListener(colorScheme: ColorScheme, themeMode: ThemeMode, pureBlack: Boolean) {
+fun StatusBarColorEffect(colorScheme: ColorScheme, themeMode: ThemeMode, pureBlack: Boolean) {
     val view = LocalView.current
 
     val isAppearanceLightStatusBars = themeMode.showAppearanceLightStatusBars()

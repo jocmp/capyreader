@@ -74,7 +74,7 @@ import com.capyreader.app.ui.articles.list.EmptyOnboardingView
 import com.capyreader.app.ui.articles.list.LabelBottomSheet
 import com.capyreader.app.ui.articles.list.LocalMarkAllRead
 import com.capyreader.app.ui.articles.list.MarkAllReadDialog
-import com.capyreader.app.ui.articles.list.ResetScrollBehaviorListener
+import com.capyreader.app.ui.articles.list.ResetScrollBehaviorEffect
 import com.capyreader.app.ui.articles.list.SearchView
 import com.capyreader.app.ui.articles.list.SwipeUpActionBox
 import com.capyreader.app.ui.collectChangesWithCurrent
@@ -216,7 +216,7 @@ fun ArticleScreen(
         }
         val listState = articles.rememberLazyListState()
 
-        ResetScrollBehaviorListener(
+        ResetScrollBehaviorEffect(
             listState = listState,
             scrollBehavior = scrollBehavior
         )
@@ -265,7 +265,7 @@ fun ArticleScreen(
             viewModel.clearRefreshSkipReason()
         }
 
-        MarkReadOnScroll(
+        MarkReadOnScrollEffect(
             listState = listState,
             articles = articles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
@@ -767,7 +767,7 @@ fun canOpenNextFeed(
 
 @OptIn(FlowPreview::class)
 @Composable
-private fun MarkReadOnScroll(
+private fun MarkReadOnScrollEffect(
     listState: LazyListState,
     articles: LazyPagingItems<Article>,
     scrollHighWaterMark: Int,

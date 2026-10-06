@@ -12,7 +12,7 @@ import androidx.compose.runtime.snapshotFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResetScrollBehaviorListener(
+fun ResetScrollBehaviorEffect(
     listState: LazyListState,
     scrollBehavior: TopAppBarScrollBehavior
 ) {
