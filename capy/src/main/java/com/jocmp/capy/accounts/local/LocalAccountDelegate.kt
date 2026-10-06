@@ -9,6 +9,7 @@ import com.jocmp.capy.accounts.FeedOption
 import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.TimeHelpers.published
+import com.jocmp.capy.common.optionalURL
 import com.jocmp.capy.common.transactionWithErrorHandling
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
@@ -18,6 +19,7 @@ import com.jocmp.capy.persistence.FeedRecords
 import com.jocmp.capy.persistence.TaggingRecords
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
+import com.jocmp.rssparser.model.RssChannel
 import com.jocmp.rssparser.model.RssItem
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.firstOrNull
@@ -104,6 +106,44 @@ internal class LocalAccountDelegate(
             CapyLog.error(tag("find"), e)
             return AddFeedResult.networkError()
         }
+    }
+
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> {
+        val channel = feedFinder.fetch(url = url).getOrNull()?.channel
+            ?: return importDiscoveredFeed(url = url, title = title, folderTitles = folderTitles)
+
+        upsertChannel(feedURL = url, channel = channel, title = title)
+
+        val feed = feedRecords.find(id = url)
+            ?: return Result.failure(AddFeedResult.Error.SaveFailure())
+
+        upsertFolders(feed, folderTitles)
+
+        return Result.success(Unit)
+    }
+
+    private suspend fun importDiscoveredFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> {
+        val feeds = feedFinder.find(url = url).getOrElse { return Result.failure(it) }
+
+        val resultFeed = feeds.singleOrNull()
+            ?: return Result.failure(AddFeedResult.Error.FeedNotFound())
+
+        upsertFeed(resultFeed, title = title)
+
+        val feed = feedRecords.find(id = resultFeed.feedURL.toString())
+            ?: return Result.failure(AddFeedResult.Error.SaveFailure())
+
+        upsertFolders(feed, folderTitles)
+
+        return Result.success(Unit)
     }
 
     override suspend fun updateFeed(
@@ -353,6 +393,30 @@ internal class LocalAccountDelegate(
             favicon_url = feed.faviconURL?.toString(),
             priority = null,
             itunes_image_url = feed.itunesImageURL,
+            read_later = false,
+        )
+    }
+
+    private fun upsertChannel(
+        feedURL: String,
+        channel: RssChannel,
+        title: String?,
+    ) {
+        val feedTitle = if (title.isNullOrBlank()) {
+            channel.title.orEmpty()
+        } else {
+            title
+        }
+
+        database.feedsQueries.upsert(
+            id = feedURL,
+            subscription_id = feedURL,
+            title = feedTitle,
+            feed_url = feedURL,
+            site_url = optionalURL(channel.link)?.toString(),
+            favicon_url = optionalURL(channel.image?.url)?.toString(),
+            priority = null,
+            itunes_image_url = channel.itunesChannelData?.image,
             read_later = false,
         )
     }
