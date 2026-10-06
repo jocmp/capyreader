@@ -1,5 +1,8 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.PaneExpansionAnchor
 import androidx.compose.material3.adaptive.layout.PaneExpansionState
@@ -42,6 +45,7 @@ private val ArticlePaneAnchors: List<PaneExpansionAnchor> = buildList {
 class ArticlePaneExpansion(
     val state: PaneExpansionState,
     val isFullscreen: Boolean,
+    val isDetailHidden: Boolean,
     private val anchors: List<PaneExpansionAnchor>,
     private val lastAnchorIndex: Int,
     private val scope: CoroutineScope,
@@ -114,9 +118,21 @@ fun rememberArticlePaneExpansion(
         ArticlePaneExpansion(
             state = paneExpansionState,
             isFullscreen = isFullscreen,
+            isDetailHidden = isDetailHidden,
             anchors = anchors,
             lastAnchorIndex = lastAnchorIndex,
             scope = scope,
         )
     }
+}
+
+@Composable
+fun WindowInsets.listPaneInsets(): WindowInsets {
+    val paneExpansion = LocalArticlePaneExpansion.current
+
+    if (isSinglePane() || paneExpansion == null || paneExpansion.isDetailHidden) {
+        return this
+    }
+
+    return only(WindowInsetsSides.Start + WindowInsetsSides.Vertical)
 }
