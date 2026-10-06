@@ -2,6 +2,7 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
@@ -20,20 +21,41 @@ fun ColumnScrollbar(state: ScrollState, content: @Composable () -> Unit) {
 }
 
 @Composable
-fun LazyScrollbar(state: LazyListState, content: @Composable () -> Unit) {
+fun LazyScrollbar(
+    state: LazyListState,
+    wide: Boolean = false,
+    content: @Composable () -> Unit,
+) {
     LazyColumnScrollbar(
         state = state,
-        settings = settings()
+        settings = settings(wide = wide)
     ) {
         content()
     }
 }
 
 @Composable
-fun settings() = ScrollbarSettings.Default.copy(
-    thumbThickness = 4.dp,
-    hideDisplacement = 0.dp,
-    scrollbarPadding = 2.dp,
-    thumbSelectedColor = colorScheme.onSurfaceVariant,
-    thumbUnselectedColor = colorScheme.onSurfaceVariant
-)
+fun settings(wide: Boolean = false): ScrollbarSettings {
+    val thin = ScrollbarSettings.Default.copy(
+        thumbThickness = 4.dp,
+        hideDisplacement = 0.dp,
+        scrollbarPadding = 2.dp,
+        thumbSelectedColor = colorScheme.onSurfaceVariant,
+        thumbUnselectedColor = colorScheme.onSurfaceVariant
+    )
+
+    if (!wide) {
+        return thin
+    }
+
+    return thin.copy(
+        thumbThickness = WideThumbThickness,
+        scrollbarPadding = WideScrollbarPadding,
+        thumbShape = CircleShape,
+        alwaysShowScrollbar = true,
+    )
+}
+
+private val WideThumbThickness = 12.dp
+
+private val WideScrollbarPadding = 8.dp

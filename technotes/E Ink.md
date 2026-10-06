@@ -6,7 +6,7 @@ Display & Appearance > E Ink groups four settings. On a detected E Ink device, a
 |--------------------|----------------------------------------|----------------------------------------------------------------|
 | Reduce animations  | `reduce_motion`                        | Every Compose animation in `MainActivity` finishes instantly   |
 | Tap to turn pages  | `article_enable_paging_tap_gesture`    | Left quarter goes back a page, right quarter forward           |
-| E Ink scrollbar    | `article_enable_e_ink_scrollbar`       | Large scrollbar with page buttons in the article list          |
+| E Ink scrollbar    | `article_enable_e_ink_scrollbar`       | Wider scrollbar thumb in the article list                      |
 | Page turn buttons  | `article_enable_page_turn_keys`        | Volume keys, Page Up/Down, and arrow keys turn pages           |
 
 The tap preference key predates this work (it was "E Ink tap to scroll", bottom-corner zones that jumped 96% of the screen), so existing users keep their setting.
@@ -30,10 +30,10 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 ## Scrollbar
 
-`EInkScrollbar` shows in the article list only. It follows the Windows 95 scrollbar's layout, drawn in Material 3: arrows at each end, a track where a tap above or below the thumb moves a page, and a draggable thumb. It's one outlined capsule (`surfaceContainerLow` with an `outlineVariant` border), 28dp wide, since light grey fills disappear in the Monochrome theme.
+The E Ink scrollbar setting widens the article list's library scrollbar to Mihon's fast scroller size (`VerticalFastScroller`): a 12dp pill-shaped thumb with 8dp padding, against 4dp normally. It stays visible instead of fading in and out while scrolling. The thumb length stays proportional to the list, since `LazyColumnScrollbar` sizes it as a fraction of the viewport rather than Mihon's fixed 48dp.
 
-- Page down makes the cut-off row the first row; page up moves a screen and aligns to a row. Arrows move one row. The thumb size and position are estimated from the average visible row height, since `LazyColumn` doesn't know the total height.
-- It was tried in the reader too and dropped: a permanent 28dp column on a 7" screen for controls the tap zones and keys already cover. The reader keeps the thin library scrollbar.
+- An earlier version drew a separate 28dp column modeled on the Windows 95 scrollbar: arrows at each end, a track where a tap above or below the thumb moved a page, and a draggable thumb. It was replaced with the wider thumb.
+- The reader keeps the thin scrollbar.
 
 ## Tap zone hint
 
