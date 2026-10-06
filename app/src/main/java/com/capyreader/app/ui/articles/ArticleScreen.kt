@@ -404,7 +404,11 @@ fun ArticleScreen(
         }
 
         val selectStatus = { status: ArticleStatus ->
-            viewModel.selectStatus(status)
+            if (status == filter.status) {
+                scrollToTop()
+            } else {
+                viewModel.selectStatus(status)
+            }
         }
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
