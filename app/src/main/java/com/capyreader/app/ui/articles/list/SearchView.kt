@@ -103,7 +103,7 @@ fun SearchView(
                             maxLines = 1,
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier
-                                .padding(end = 16.dp)
+                                .padding(end = 8.dp)
                                 .fillMaxWidth()
                                 .height(48.dp)
                                 .focusRequester(focusRequester),
