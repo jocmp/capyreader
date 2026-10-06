@@ -195,6 +195,43 @@ class ParsedItemTest {
     }
 
     @Test
+    fun url_withUnencodedSpaces() {
+        val item = RssItem.Builder()
+            .link("https://www.sixthtone.com/news/1019094/Feathered Dinosaur From China")
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://www.sixthtone.com")
+
+        assertEquals(
+            expected = "https://www.sixthtone.com/news/1019094/Feathered%20Dinosaur%20From%20China",
+            actual = parsedItem.url
+        )
+    }
+
+    @Test
+    fun url_withRelativePathAndUnencodedSpaces() {
+        val item = RssItem.Builder().link("/news/1019094/Feathered Dinosaur").build()
+        val parsedItem = ParsedItem(item, siteURL = "https://www.sixthtone.com")
+
+        assertEquals(
+            expected = "https://www.sixthtone.com/news/1019094/Feathered%20Dinosaur",
+            actual = parsedItem.url
+        )
+    }
+
+    @Test
+    fun id_whenGuidIsMissingAndURLHasUnencodedSpaces() {
+        val item = RssItem.Builder()
+            .link("https://www.sixthtone.com/news/1019094/Feathered Dinosaur From China")
+            .build()
+        val parsedItem = ParsedItem(item, siteURL = "https://www.sixthtone.com")
+
+        assertEquals(
+            expected = "https://www.sixthtone.com/news/1019094/Feathered%20Dinosaur%20From%20China",
+            actual = parsedItem.id
+        )
+    }
+
+    @Test
     fun url_withGoogleAlertsFeed() {
         val articleURL =
             "https://www.androidcentral.com/apps-software/google-squashes-a-few-pixel-bugs-in-android-15-qpr2-beta-2-1"

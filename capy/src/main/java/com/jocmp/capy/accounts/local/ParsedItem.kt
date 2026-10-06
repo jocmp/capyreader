@@ -6,6 +6,7 @@ import com.jocmp.capy.common.stripTitleMarkup
 import com.jocmp.capy.common.unescapingHTMLCharacters
 import com.jocmp.capy.common.unwrapCDATA
 import com.jocmp.rssparser.model.RssItem
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
 import java.net.URI
@@ -100,8 +101,14 @@ internal class ParsedItem(private val item: RssItem, private val siteURL: String
                 URI(siteURL).resolve(uri).toURL()
             }
         } catch (e: Throwable) {
-            null
+            encodedURL(url)
         }
+    }
+
+    private fun encodedURL(url: String): URL? {
+        val httpURL = url.toHttpUrlOrNull() ?: siteURL?.toHttpUrlOrNull()?.resolve(url)
+
+        return httpURL?.toUrl()
     }
 }
 
