@@ -75,11 +75,7 @@ private fun StatusButton(
     )
 
     Surface(
-        onClick = {
-            if (!selected) {
-                onSelect()
-            }
-        },
+        onClick = onSelect,
         selected = selected,
         shape = CircleShape,
         color = containerColor,
