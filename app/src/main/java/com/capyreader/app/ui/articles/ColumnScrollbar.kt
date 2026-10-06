@@ -2,7 +2,6 @@ package com.capyreader.app.ui.articles
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
@@ -50,12 +49,8 @@ fun settings(wide: Boolean = false): ScrollbarSettings {
 
     return thin.copy(
         thumbThickness = WideThumbThickness,
-        scrollbarPadding = WideScrollbarPadding,
-        thumbShape = CircleShape,
         alwaysShowScrollbar = true,
     )
 }
 
 private val WideThumbThickness = 12.dp
-
-private val WideScrollbarPadding = 8.dp

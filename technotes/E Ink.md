@@ -30,7 +30,7 @@ Android has no general pagination for native layouts. `StaticLayout`/`TextMeasur
 
 ## Scrollbar
 
-The E Ink scrollbar setting widens the article list's library scrollbar to Mihon's fast scroller size (`VerticalFastScroller`): a 12dp pill-shaped thumb with 8dp padding, against 4dp normally. It stays visible instead of fading in and out while scrolling. The thumb length stays proportional to the list, since `LazyColumnScrollbar` sizes it as a fraction of the viewport rather than Mihon's fixed 48dp.
+The E Ink scrollbar setting widens the article list's library scrollbar thumb to Mihon's fast scroller thickness (`VerticalFastScroller`): 12dp, against 4dp normally. It stays visible instead of fading in and out while scrolling. The thumb length stays proportional to the list, since `LazyColumnScrollbar` sizes it as a fraction of the viewport rather than Mihon's fixed 48dp.
 
 - An earlier version drew a separate 28dp column modeled on the Windows 95 scrollbar: arrows at each end, a track where a tap above or below the thumb moved a page, and a draggable thumb. It was replaced with the wider thumb.
 - The reader keeps the thin scrollbar.
