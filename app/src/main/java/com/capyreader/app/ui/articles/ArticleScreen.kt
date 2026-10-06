@@ -108,6 +108,7 @@ import org.koin.compose.koinInject
 fun ArticleScreen(
     onSelectArticle: (articleID: String, searchQuery: String?) -> Unit,
     onNavigateToSettings: () -> Unit,
+    onCloseArticle: () -> Unit = {},
     viewModel: ArticleScreenViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
     selectedArticleID: String? = null,
@@ -372,6 +373,11 @@ fun ArticleScreen(
             }
         }
 
+        fun openDrawerSelection(action: suspend () -> Unit) {
+            onCloseArticle()
+            openNextList(action)
+        }
+
         val linkOpener = LocalLinkOpener.current
 
         fun selectArticle(article: Article) {
@@ -391,7 +397,7 @@ fun ArticleScreen(
 
         val selectFilter = {
             if (!filter.hasArticlesSelected()) {
-                openNextList { viewModel.selectArticleFilter() }
+                openDrawerSelection { viewModel.selectArticleFilter() }
             } else {
                 closeDrawer()
             }
@@ -403,7 +409,7 @@ fun ArticleScreen(
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
             if (!filter.isFeedSelected(feed)) {
-                openNextList { viewModel.selectFeed(feed.id, folderTitle) }
+                openDrawerSelection { viewModel.selectFeed(feed.id, folderTitle) }
             } else {
                 closeDrawer()
             }
@@ -411,7 +417,7 @@ fun ArticleScreen(
 
         val selectFolder = { folder: Folder ->
             if (!filter.isFolderSelected(folder)) {
-                openNextList { viewModel.selectFolder(folder.title) }
+                openDrawerSelection { viewModel.selectFolder(folder.title) }
             } else {
                 closeDrawer()
             }
@@ -419,7 +425,7 @@ fun ArticleScreen(
 
         val selectSavedSearch = { savedSearch: SavedSearch ->
             if (!filter.isSavedSearchSelected(savedSearch)) {
-                openNextList { viewModel.selectSavedSearch(savedSearch.id) }
+                openDrawerSelection { viewModel.selectSavedSearch(savedSearch.id) }
             } else {
                 closeDrawer()
             }
@@ -427,7 +433,7 @@ fun ArticleScreen(
 
         val selectToday = {
             if (!filter.hasTodaySelected()) {
-                openNextList { viewModel.selectToday() }
+                openDrawerSelection { viewModel.selectToday() }
             } else {
                 closeDrawer()
             }

@@ -170,6 +170,7 @@ fun App(
                                 backStack.openArticle(id, searchQuery)
                             },
                             onNavigateToSettings = { backStack.add(Route.Settings) },
+                            onCloseArticle = { backStack.closeArticle() },
                             selectedArticleID = (backStack.lastOrNull() as? Route.ArticleDetail)?.articleID,
                         )
                     }
@@ -248,6 +249,10 @@ private fun NavBackStack<NavKey>.openArticle(articleID: String, searchQuery: Str
     } else {
         add(Route.ArticleDetail(articleID, searchQuery))
     }
+}
+
+private fun NavBackStack<NavKey>.closeArticle() {
+    removeAll { it is Route.ArticleDetail }
 }
 
 /** Replaces the entire back stack with [key] (account add/remove transitions). */
