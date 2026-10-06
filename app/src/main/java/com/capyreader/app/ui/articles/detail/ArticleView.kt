@@ -18,6 +18,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -122,6 +123,12 @@ fun ArticleView(
     val pinToolbars by appPreferences.readerOptions.pinToolbars.collectChangesWithDefault()
     val scrollState = rememberArticleScrollState()
     val showToolBar = pinToolbars || !scrollState.isScrollingDown
+
+    val enableTapPaging by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
+
+    SideEffect {
+        scrollState.keepToolbarsHidden = enableTapPaging
+    }
 
     LaunchedEffect(article.id) {
         scrollState.reset()

@@ -49,6 +49,7 @@ fun PageTurnGestures(
     val visibleInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars))
     val hiddenInsets by rememberUpdatedState(pageInsets(pinToolbars, showToolbars = false))
     val currentOnHideToolbars by rememberUpdatedState(onHideToolbars)
+    val currentEnableTaps by rememberUpdatedState(enableTaps)
     val currentOnTurnPastArticle by rememberUpdatedState(onTurnPastArticle)
     val scope = rememberCoroutineScope()
     val keys = LocalPageTurnKeys.current
@@ -76,7 +77,9 @@ fun PageTurnGestures(
 
             val moved = scrollState.value != current
 
-            if (moved && direction == PageDirection.FORWARD) {
+            val hideToolbars = currentEnableTaps || direction == PageDirection.FORWARD
+
+            if (moved && hideToolbars) {
                 currentOnHideToolbars()
             }
 
