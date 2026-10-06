@@ -20,20 +20,37 @@ fun ColumnScrollbar(state: ScrollState, content: @Composable () -> Unit) {
 }
 
 @Composable
-fun LazyScrollbar(state: LazyListState, content: @Composable () -> Unit) {
+fun LazyScrollbar(
+    state: LazyListState,
+    wide: Boolean = false,
+    content: @Composable () -> Unit,
+) {
     LazyColumnScrollbar(
         state = state,
-        settings = settings()
+        settings = settings(wide = wide)
     ) {
         content()
     }
 }
 
 @Composable
-fun settings() = ScrollbarSettings.Default.copy(
-    thumbThickness = 4.dp,
-    hideDisplacement = 0.dp,
-    scrollbarPadding = 2.dp,
-    thumbSelectedColor = colorScheme.onSurfaceVariant,
-    thumbUnselectedColor = colorScheme.onSurfaceVariant
-)
+fun settings(wide: Boolean = false): ScrollbarSettings {
+    val thin = ScrollbarSettings.Default.copy(
+        thumbThickness = 4.dp,
+        hideDisplacement = 0.dp,
+        scrollbarPadding = 2.dp,
+        thumbSelectedColor = colorScheme.onSurfaceVariant,
+        thumbUnselectedColor = colorScheme.onSurfaceVariant
+    )
+
+    if (!wide) {
+        return thin
+    }
+
+    return thin.copy(
+        thumbThickness = WideThumbThickness,
+        alwaysShowScrollbar = true,
+    )
+}
+
+private val WideThumbThickness = 12.dp

@@ -74,7 +74,6 @@ fun App(
     val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
     val directive = remember(windowAdaptiveInfo) {
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
-            .copy(horizontalPartitionSpacerSize = 0.dp)
     }
     val mediaSceneStrategy = remember { MediaSceneStrategy() }
     val paneExpansion = rememberArticlePaneExpansion()

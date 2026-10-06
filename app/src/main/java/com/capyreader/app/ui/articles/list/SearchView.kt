@@ -15,10 +15,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -34,6 +36,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleList
 import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
+import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
@@ -70,8 +73,10 @@ fun SearchView(
             .pointerInput(Unit) { detectTapGestures { } }
     ) {
         Scaffold(
+            contentWindowInsets = ScaffoldDefaults.contentWindowInsets.listPaneInsets(),
             topBar = {
                 TopAppBar(
+                    windowInsets = TopAppBarDefaults.windowInsets.listPaneInsets(),
                     navigationIcon = {
                         IconButton(onClick = search.clear) {
                             Icon(

@@ -66,10 +66,7 @@ fun ArticleList(
 
     Box(Modifier.fillMaxSize()) {
         key(listState) {
-            ArticleListScrollbar(
-                listState = listState,
-                bottomPadding = contentPadding.calculateBottomPadding(),
-            ) {
+            ArticleListScrollbar(listState = listState) {
                 LazyColumn(
                     state = listState,
                     contentPadding = contentPadding,
