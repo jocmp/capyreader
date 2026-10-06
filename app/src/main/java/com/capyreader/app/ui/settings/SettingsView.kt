@@ -87,8 +87,10 @@ fun SettingsView(
                     onQueryChange = { query = it },
                     onNavigate = { navigateToPanel(it) },
                     onSelectResult = { result ->
-                        highlighted = result.setting
-                        navigateToPanel(result.panel)
+                        coroutineScope.launchUI {
+                            navigator.navigateTo(ThreePaneScaffoldRole.Primary, result.panel)
+                            highlighted = result.setting
+                        }
                     },
                     onNavigateBack = onNavigateBack
                 )
