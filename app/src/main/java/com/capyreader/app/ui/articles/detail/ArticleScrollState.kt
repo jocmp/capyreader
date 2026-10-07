@@ -25,10 +25,12 @@ internal class ArticleScrollState(
 
     val showTopDivider: Boolean by derivedStateOf { _contentOffset.floatValue > dividerThreshold }
 
+    var keepToolbarsHidden = false
+
     val connection = object : NestedScrollConnection {
         override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
             if (abs(available.y) > 2f) {
-                _isScrollingDown.value = available.y < 0f
+                _isScrollingDown.value = keepToolbarsHidden || available.y < 0f
             }
             return Offset.Zero
         }
@@ -51,8 +53,11 @@ internal class ArticleScrollState(
     }
 
     fun reset() {
-        _isScrollingDown.value = false
         _contentOffset.floatValue = 0f
+
+        if (!keepToolbarsHidden) {
+            _isScrollingDown.value = false
+        }
     }
 }
 
