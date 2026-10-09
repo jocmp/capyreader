@@ -549,10 +549,7 @@ fun ArticleScreen(
                             )
                         },
                         snackbarHost = {
-                            SnackbarHost(
-                                hostState = snackbarHostState,
-                                modifier = Modifier.padding(bottom = 56.dp),
-                            )
+                            SnackbarHost(hostState = snackbarHostState)
                         },
                         floatingActionButtonPosition = FabPosition.Center,
                         floatingActionButton = {
