@@ -310,6 +310,8 @@
     <string name="auth_fields_miniflux_use_password">Utilizza la password</string>
     <string name="auth_fields_show_advanced">Opzioni avanzate</string>
     <string name="auth_fields_hide_advanced">Nascondi opzioni avanzate</string>
+    <string name="settings_panel_unread_counts_title">Badge non letti</string>
+    <string name="show_unread_badge">Mostra badge non letti</string>
     <string name="article_actions_delete_page">Elimina pagina</string>
     <string name="article_actions_delete_page_title">Elimina</string>
     <string name="article_actions_delete_page_message">Sei sicuro di voler eliminare questa pagina?</string>

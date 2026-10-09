@@ -46,6 +46,8 @@ fun FolderRow(
         actions.updateExpanded(folder.title, expand)
     }
 
+    val showFolderBadge = folder.feeds.any { it.showUnreadBadge && it.count > 0 }
+
     Column {
         Box {
             DrawerItem(
@@ -53,7 +55,7 @@ fun FolderRow(
                 onClick = { onFolderSelect(folder) },
                 onLongClick = { setShowMenu(true) },
                 badge = {
-                    CountBadge(count = folder.count)
+                    CountBadge(count = folder.count, showBadge = showFolderBadge)
                 },
                 icon = {
                     IconDropdown(

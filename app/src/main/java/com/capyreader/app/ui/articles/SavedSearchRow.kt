@@ -1,9 +1,13 @@
 package com.capyreader.app.ui.articles
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.ui.articles.feeds.DrawerItem
+import com.capyreader.app.ui.articles.list.SavedSearchActionMenu
 import com.jocmp.capy.SavedSearch
 
 @Composable
@@ -12,16 +16,29 @@ fun SavedSearchRow(
     selected: Boolean,
     savedSearch: SavedSearch,
 ) {
-    DrawerItem(
-        label = { ListTitle(savedSearch.name) },
-        badge = {
-            CountBadge(count = savedSearch.count)
-        },
-        selected = selected,
-        onClick = {
-            onSelect(savedSearch)
-        },
-    )
+    val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
+
+    Box {
+        DrawerItem(
+            label = { ListTitle(savedSearch.name) },
+            badge = {
+                CountBadge(count = savedSearch.count, showBadge = savedSearch.showUnreadBadge)
+            },
+            selected = selected,
+            onClick = {
+                onSelect(savedSearch)
+            },
+            onLongClick = {
+                setShowMenu(true)
+            }
+        )
+
+        SavedSearchActionMenu(
+            expanded = showMenu,
+            savedSearch = savedSearch,
+            onDismissMenuRequest = { setShowMenu(false) },
+        )
+    }
 }
 
 @Preview

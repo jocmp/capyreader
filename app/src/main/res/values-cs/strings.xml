@@ -335,6 +335,8 @@
     <string name="audio_player_close">Zavřít přehrávač</string>
     <string name="audio_player_skip_back">Přeskočit 30 sekund zpět</string>
     <string name="audio_player_skip_forward">Přeskočit 30 sekund napřed</string>
+    <string name="settings_panel_unread_counts_title">Nepřečtené odznaky</string>
+    <string name="show_unread_badge">Ukázat Nepřečtené Odznaky</string>
     <string name="article_actions_save_externally">Uložit</string>
     <string name="article_actions_save_externally_success">Uložené</string>
     <string name="article_actions_save_externally_failure">Chyba při ukládání</string>

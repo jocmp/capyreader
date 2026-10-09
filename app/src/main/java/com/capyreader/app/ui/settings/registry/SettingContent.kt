@@ -30,10 +30,10 @@ import com.capyreader.app.ui.settings.panels.PageTurnKeysRow
 import com.capyreader.app.ui.settings.panels.PinToolbarsRow
 import com.capyreader.app.ui.settings.panels.PureBlackRow
 import com.capyreader.app.ui.settings.panels.ReaderImagesRow
-import com.capyreader.app.ui.settings.panels.ReduceMotionRow
 import com.capyreader.app.ui.settings.panels.ReaderStyleRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeDownRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeUpRow
+import com.capyreader.app.ui.settings.panels.ReduceMotionRow
 import com.capyreader.app.ui.settings.panels.RefreshIntervalRow
 import com.capyreader.app.ui.settings.panels.RefreshOnWiFiOnlyRow
 import com.capyreader.app.ui.settings.panels.RemoveAccountRow
@@ -48,6 +48,7 @@ import com.capyreader.app.ui.settings.panels.TapToPageRow
 import com.capyreader.app.ui.settings.panels.TestNotificationSettingRow
 import com.capyreader.app.ui.settings.panels.ThemeModeRow
 import com.capyreader.app.ui.settings.panels.ThemeRow
+import com.capyreader.app.ui.settings.panels.UnreadBadgesRow
 
 @Composable
 fun SettingContent(
@@ -81,6 +82,7 @@ fun SettingContent(
         Setting.AFTER_READ_ALL -> AfterReadAllRow()
         Setting.MARK_ALL_READ_POSITION -> MarkAllReadPositionRow()
         Setting.FILTERS -> FiltersRow()
+        Setting.UNREAD_BADGES -> UnreadBadgesRow()
         Setting.READER_STYLE -> ReaderStyleRow()
         Setting.READER_IMAGES -> ReaderImagesRow()
         Setting.STICKY_FULL_CONTENT -> StickyFullContentRow()

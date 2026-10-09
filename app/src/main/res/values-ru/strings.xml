@@ -311,6 +311,8 @@
     <string name="add_link_subscribe">Подписаться</string>
     <string name="add_link_feed_added">Лента добавлена</string>
     <string name="add_link_page_saved">Страница сохранена</string>
+    <string name="settings_panel_unread_counts_title">Счётчики непрочитанных</string>
+    <string name="show_unread_badge">Показывать счетчик непрочитанных</string>
     <string name="article_actions_save_externally">Сохранить</string>
     <string name="article_actions_save_externally_success">Сохранено</string>
     <string name="article_actions_save_externally_failure">Не удалось сохранить</string>

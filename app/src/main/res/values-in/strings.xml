@@ -303,6 +303,8 @@
     <string name="audio_player_close">Tutup pemutar</string>
     <string name="audio_player_skip_back">Mundur 30 detik</string>
     <string name="audio_player_skip_forward">Maju 30 detik</string>
+    <string name="settings_panel_unread_counts_title">Lencana Belum Dibaca</string>
+    <string name="show_unread_badge">Tampilkan Lencana Belum Dibaca</string>
     <string name="article_actions_save_externally">Simpan</string>
     <string name="article_actions_save_externally_success">Tersimpan</string>
     <string name="article_actions_save_externally_failure">Gagal menyimpan</string>

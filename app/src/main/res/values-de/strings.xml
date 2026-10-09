@@ -305,6 +305,8 @@
     <string name="add_link_subscribe">Abonnieren</string>
     <string name="add_link_feed_added">Feed hinzugefügt</string>
     <string name="add_link_page_saved">Seite gespeichert</string>
+    <string name="settings_panel_unread_counts_title">Ungelesen Markierung</string>
+    <string name="show_unread_badge">Zeige Ungelesen-Markierung</string>
     <string name="article_actions_delete_page">Seite löschen</string>
     <string name="article_actions_delete_page_title">Löschen</string>
     <string name="article_actions_delete_page_message">Bist du sicher, dass du diese Seite löschen willst?</string>

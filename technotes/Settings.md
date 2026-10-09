@@ -65,7 +65,7 @@ Grouped by where the setting takes effect.
   - Log out / delete account
 - **Article List**
   - Article Sort: newest/oldest per status
-  - Layout: live preview, font size, feed name, feed icons, summary, shorten titles, image preview
+  - Layout: live preview, font size, feed name, feed icons, summary, shorten titles, image preview, unread badges (count, dot, or hide; per-feed and per-saved-search toggles live in each item's menu and apply to dots only)
   - Gestures: swipe right, swipe left, swipe up, back navigation, mark as read on scroll
   - Mark All As Read: confirm, after read all
   - Filters (local)

@@ -4,12 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
+import com.capyreader.app.preferences.BadgeStyle
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.preferences.ThemeMode
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.jocmp.capy.Account
+import kotlinx.coroutines.launch
 
 class DisplaySettingsViewModel(
     val account: Account,
@@ -39,6 +42,9 @@ class DisplaySettingsViewModel(
     private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
 
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
+        private set
+
+    var badgeStyle by mutableStateOf(appPreferences.badgeStyle.get())
         private set
 
     val imagePreview: ImagePreview
@@ -120,5 +126,17 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.shortenTitles.set(shortenTitles)
 
         _shortenTitles.value = shortenTitles
+    }
+
+    fun updateBadgeStyle(style: BadgeStyle) {
+        appPreferences.badgeStyle.set(style)
+
+        badgeStyle = style
+
+        if (style == BadgeStyle.EXACT) {
+            viewModelScope.launch {
+                account.toggleAllUnreadBadges(enabled = true)
+            }
+        }
     }
 }

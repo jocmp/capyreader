@@ -255,6 +255,8 @@
     <string name="freshrss_visibility_option_main">Асноўны паток</string>
     <string name="audio_player_skip_back">Перайсці на 30 секунд назад</string>
     <string name="audio_player_skip_forward">Перайсці на 30 секунд наперад</string>
+    <string name="settings_panel_unread_counts_title">Значкі непрачытаных</string>
+    <string name="show_unread_badge">Паказваць значок непрачытаных</string>
     <string name="settings_auto_delete_articles_title">Захоўваць прачытаныя артыкулы</string>
     <string name="settings_auto_delete_option_keep_forever">Назаўжды</string>
     <string name="settings_auto_delete_option_keep_for_one_week">1 тыдзень</string>

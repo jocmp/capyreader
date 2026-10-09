@@ -41,6 +41,13 @@ fun FeedActionMenu(
         }
     }
 
+    fun onToggleUnreadBadge() {
+        onDismissMenuRequest()
+        scope.launchUI {
+            actions.toggleUnreadBadge(feed.id, !feed.showUnreadBadge)
+        }
+    }
+
     fun onReloadIcon() {
         onDismissMenuRequest()
         scope.launchUI {
@@ -60,6 +67,9 @@ fun FeedActionMenu(
             onMenuClose = onDismissMenuRequest,
             onToggleOpenInBrowser = {
                 onToggleOpenInBrowser()
+            },
+            onToggleUnreadBadge = {
+                onToggleUnreadBadge()
             },
             onMarkAllRead = onMarkAllRead,
             showMarkAllRead = showMarkAllRead,

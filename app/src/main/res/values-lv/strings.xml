@@ -312,6 +312,8 @@
     <string name="article_actions_delete_page_message">Vai tiešām vēlaties dzēst šo lapu?</string>
     <string name="starred_export_button_text">Izgūt atzīmētos rakstus</string>
     <string name="article_list_empty">Šeit nekā nav</string>
+    <string name="settings_panel_unread_counts_title">Nelasīto ziņu skaitītājs</string>
+    <string name="show_unread_badge">Rādīt nelasīto ziņu skaitītāju</string>
     <string name="freshrss_visibility_option_main">Galvenā plūsma</string>
     <string name="theme_mode_label">Režīms</string>
     <string name="auth_fields_show_advanced">Papildu iestatījumi</string>

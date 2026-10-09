@@ -28,6 +28,7 @@ enum class Setting {
     AFTER_READ_ALL,
     MARK_ALL_READ_POSITION,
     FILTERS,
+    UNREAD_BADGES,
 
     READER_STYLE,
     READER_IMAGES,

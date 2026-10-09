@@ -32,7 +32,7 @@ fun FeedRow(
            },
            label = { ListTitle(feed.title) },
            badge = {
-               CountBadge(count = feed.count)
+               CountBadge(count = feed.count, showBadge = feed.showUnreadBadge)
            },
            selected = selected,
            onClick = {

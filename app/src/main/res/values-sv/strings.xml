@@ -289,6 +289,8 @@
     <string name="auth_fields_miniflux_use_api_token">Använd API-token i stället</string>
     <string name="auth_fields_miniflux_use_password">Använd lösenord i stället</string>
     <string name="auth_fields_hide_advanced">Dölj avancerade alternativ</string>
+    <string name="settings_panel_unread_counts_title">Märken för olästa</string>
+    <string name="show_unread_badge">Visa märke för olästa</string>
     <string name="add_link_title">Lägg till länk</string>
     <string name="tab_add_feed">Lägg till flöde</string>
     <string name="tab_save_page">Spara sida</string>

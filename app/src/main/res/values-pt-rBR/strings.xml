@@ -309,4 +309,6 @@
     <string name="mark_read_position_toolbar">Barra de ferramentas</string>
     <string name="mark_read_position_floating_action_button">Botão de Ação Flutuante</string>
     <string name="mark_all_read_button_position">Posição do Botão \"Marcar Todos como Lidos\"</string>
+    <string name="show_unread_badge">Mostrar Selo Não-lido</string>
+    <string name="settings_panel_unread_counts_title">Selos Não-lidos</string>
 </resources>
