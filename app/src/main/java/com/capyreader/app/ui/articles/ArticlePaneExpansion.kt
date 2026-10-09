@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.PaneExpansionAnchor
 import androidx.compose.material3.adaptive.layout.PaneExpansionState
+import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
 import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,10 +34,15 @@ val LocalArticlePaneExpansion = compositionLocalOf<ArticlePaneExpansion?> { null
 private val DetailFullscreenAnchor = PaneExpansionAnchor.Proportion(0f)
 private val ListFullscreenAnchor = PaneExpansionAnchor.Proportion(1f)
 
-const val DefaultPaneExpansionIndex = 4
+const val DefaultPaneExpansionIndex = 1
 
-private val ArticlePaneAnchors: List<PaneExpansionAnchor> = buildList {
+private fun articlePaneAnchors(directive: PaneScaffoldDirective): List<PaneExpansionAnchor> = buildList {
     add(PaneExpansionAnchor.Proportion(0f))
+    add(
+        PaneExpansionAnchor.Offset.fromStart(
+            directive.defaultPanePreferredWidth + directive.horizontalPartitionSpacerSize / 2
+        )
+    )
     (30..70 step 5).forEach { add(PaneExpansionAnchor.Proportion(it / 100f)) }
     add(PaneExpansionAnchor.Proportion(1f))
 }
@@ -82,9 +88,10 @@ class ArticlePaneExpansion(
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun rememberArticlePaneExpansion(
+    directive: PaneScaffoldDirective,
     appPreferences: AppPreferences = koinInject(),
 ): ArticlePaneExpansion {
-    val anchors = ArticlePaneAnchors
+    val anchors = remember(directive) { articlePaneAnchors(directive) }
 
     val savedIndex = appPreferences.paneExpansionIndex.get()
         .coerceIn(0, anchors.lastIndex)

@@ -83,7 +83,7 @@ class AppPreferences(context: Context) {
         get() = preferenceStore.getBoolean("e_ink_defaults_applied", false)
 
     val paneExpansionIndex: Preference<Int>
-        get() = preferenceStore.getInt("pane_expansion_index", DefaultPaneExpansionIndex)
+        get() = preferenceStore.getInt("pane_expansion_anchor", DefaultPaneExpansionIndex)
 
     fun pinFeedGroup(type: FeedGroup): Preference<Boolean> {
         return preferenceStore.getBoolean("feed_group_${type.toString().lowercase()}", true)

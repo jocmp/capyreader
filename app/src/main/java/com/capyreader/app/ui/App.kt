@@ -76,7 +76,7 @@ fun App(
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
     }
     val mediaSceneStrategy = remember { MediaSceneStrategy() }
-    val paneExpansion = rememberArticlePaneExpansion()
+    val paneExpansion = rememberArticlePaneExpansion(directive = directive)
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(
         directive = directive,
         paneExpansionState = paneExpansion.state,
