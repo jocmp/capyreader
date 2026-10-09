@@ -283,8 +283,6 @@
     <string name="settings_section_experimental">Eksperimentālie</string>
     <string name="audio_player_play">Atskaņot</string>
     <string name="freshrss_nav_headline_categories">Kategorijas</string>
-    <string name="badge_style_simple">Vienkāršs</string>
-    <string name="badge_style_exact">Precīzs</string>
     <string name="save_page_submit">Saglabāt</string>
     <string name="add_link_subscribe">Abonēt</string>
     <string name="article_actions_delete_page_title">Dzēst</string>
@@ -316,7 +314,6 @@
     <string name="article_list_empty">Šeit nekā nav</string>
     <string name="settings_panel_unread_counts_title">Nelasīto ziņu skaitītājs</string>
     <string name="show_unread_badge">Rādīt nelasīto ziņu skaitītāju</string>
-    <string name="settings_option_badge_style">Skaitītāja stils</string>
     <string name="freshrss_visibility_option_main">Galvenā plūsma</string>
     <string name="theme_mode_label">Režīms</string>
     <string name="auth_fields_show_advanced">Papildu iestatījumi</string>

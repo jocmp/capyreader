@@ -298,9 +298,6 @@
     <string name="auth_fields_show_advanced">高级选项</string>
     <string name="auth_fields_hide_advanced">隐藏高级选项</string>
     <string name="settings_panel_unread_counts_title">未读徽章</string>
-    <string name="settings_option_badge_style">徽章样式</string>
-    <string name="badge_style_simple">简约</string>
-    <string name="badge_style_exact">精确</string>
     <string name="show_unread_badge">显示未读徽章</string>
     <string name="add_link_title">添加链接</string>
     <string name="tab_add_feed">添加订阅源</string>

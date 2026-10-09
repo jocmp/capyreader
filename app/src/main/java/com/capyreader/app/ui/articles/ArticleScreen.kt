@@ -458,35 +458,43 @@ fun ArticleScreen(
         val drawerContent: @Composable () -> Unit = remember(
             folders, feeds, readLaterFeed, savedSearches, filter,
             statusCount, todayCount, refreshAllState,
+            badgeStyle, feedActions, folderActions, savedSearchActions,
         ) {
             {
-                FeedList(
-                    source = viewModel.source,
-                    folders = folders,
-                    feeds = feeds,
-                    readLaterFeed = readLaterFeed,
-                    onSelectFolder = selectFolder,
-                    onSelectFeed = selectFeed,
-                    onMarkAllRead = { viewModel.markAllRead(filter = it) },
-                    onFeedAdded = { onFeedAdded(it) },
-                    savedSearches = savedSearches,
-                    onSelectSavedSearch = selectSavedSearch,
-                    onNavigateToSettings = {
-                        onNavigateToSettings()
-                        coroutineScope.launchUI {
-                            drawerState.close()
-                        }
-                    },
-                    onFilterSelect = selectFilter,
-                    onSelectToday = { selectToday() },
-                    refreshState = refreshAllState,
-                    onRefresh = {
-                        refreshAll()
-                    },
-                    filter = filter,
-                    statusCount = statusCount,
-                    todayCount = todayCount,
-                )
+                CompositionLocalProvider(
+                    LocalBadgeStyle provides badgeStyle,
+                    LocalFeedActions provides feedActions,
+                    LocalFolderActions provides folderActions,
+                    LocalSavedSearchActions provides savedSearchActions,
+                ) {
+                    FeedList(
+                        source = viewModel.source,
+                        folders = folders,
+                        feeds = feeds,
+                        readLaterFeed = readLaterFeed,
+                        onSelectFolder = selectFolder,
+                        onSelectFeed = selectFeed,
+                        onMarkAllRead = { viewModel.markAllRead(filter = it) },
+                        onFeedAdded = { onFeedAdded(it) },
+                        savedSearches = savedSearches,
+                        onSelectSavedSearch = selectSavedSearch,
+                        onNavigateToSettings = {
+                            onNavigateToSettings()
+                            coroutineScope.launchUI {
+                                drawerState.close()
+                            }
+                        },
+                        onFilterSelect = selectFilter,
+                        onSelectToday = { selectToday() },
+                        refreshState = refreshAllState,
+                        onRefresh = {
+                            refreshAll()
+                        },
+                        filter = filter,
+                        statusCount = statusCount,
+                        todayCount = todayCount,
+                    )
+                }
             }
         }
 

@@ -37,7 +37,6 @@ import com.capyreader.app.ui.settings.panels.ReduceMotionRow
 import com.capyreader.app.ui.settings.panels.RefreshIntervalRow
 import com.capyreader.app.ui.settings.panels.RefreshOnWiFiOnlyRow
 import com.capyreader.app.ui.settings.panels.RemoveAccountRow
-import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.ShortenTitlesRow
 import com.capyreader.app.ui.settings.panels.ShowFeedIconsRow
 import com.capyreader.app.ui.settings.panels.ShowFeedNameRow
@@ -55,7 +54,6 @@ import com.capyreader.app.ui.settings.panels.UnreadBadgesRow
 fun SettingContent(
     setting: Setting,
     onRemoveAccount: () -> Unit,
-    onNavigate: (SettingsPanel) -> Unit,
 ) {
     when (setting) {
         Setting.ACCOUNT -> AccountNameRow()
@@ -84,7 +82,7 @@ fun SettingContent(
         Setting.AFTER_READ_ALL -> AfterReadAllRow()
         Setting.MARK_ALL_READ_POSITION -> MarkAllReadPositionRow()
         Setting.FILTERS -> FiltersRow()
-        Setting.UNREAD_BADGES -> UnreadBadgesRow(onClick = { onNavigate(SettingsPanel.UnreadBadges) })
+        Setting.UNREAD_BADGES -> UnreadBadgesRow()
         Setting.READER_STYLE -> ReaderStyleRow()
         Setting.READER_IMAGES -> ReaderImagesRow()
         Setting.STICKY_FULL_CONTENT -> StickyFullContentRow()

@@ -331,7 +331,6 @@
     <string name="freshrss_visibility_option_folder">Klasör</string>
     <string name="audio_player_skip_back">30 saniye geri atla</string>
     <string name="audio_player_skip_forward">30 saniye ileri atla</string>
-    <string name="badge_style_simple">Sade</string>
     <string name="show_unread_badge">Okunmamış rozeti göster</string>
     <string name="article_actions_save_externally">Kaydet</string>
     <string name="article_actions_save_externally_success">Kaydedildi</string>
@@ -347,6 +346,4 @@
     <string name="mark_read_position_floating_action_button">Yüzen Eylem Düğmesi</string>
     <string name="mark_all_read_button_position">Tümünü Okundu Olarak İşaretle Düğmesi Konumu</string>
     <string name="settings_panel_unread_counts_title">Okunmadı Rozetleri</string>
-    <string name="settings_option_badge_style">Rozet biçimi</string>
-    <string name="badge_style_exact">Tam</string>
 </resources>

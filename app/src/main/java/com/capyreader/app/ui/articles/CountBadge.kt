@@ -31,5 +31,7 @@ fun CountBadge(
                 drawCircle(color = color)
             }
         }
+
+        BadgeStyle.HIDDEN -> {}
     }
 }

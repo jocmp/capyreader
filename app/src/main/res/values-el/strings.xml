@@ -331,9 +331,6 @@
     <string name="auth_fields_hide_advanced">Απόκρυψη προηγμένων επιλογών</string>
     <string name="freshrss_visibility">Ορατότητα</string>
     <string name="settings_panel_unread_counts_title">Σήματα Μη Αναγνωσμένου</string>
-    <string name="settings_option_badge_style">Στυλ Σήματος</string>
-    <string name="badge_style_simple">Απλό</string>
-    <string name="badge_style_exact">Ακριβές</string>
     <string name="show_unread_badge">Εμφάνιση Σήματος Μη Αναγνωσμένου</string>
     <string name="article_actions_save_externally">Αποθήκευση</string>
     <string name="article_actions_save_externally_success">Αποθηκεύτηκε</string>

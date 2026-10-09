@@ -30,7 +30,6 @@ fun RegistryPanel(
     highlighted: Setting?,
     onHighlightShown: () -> Unit,
     onRemoveAccount: () -> Unit,
-    onNavigate: (SettingsPanel) -> Unit,
 ) {
     val sections = remember(panel, environment) {
         SettingsRegistry.sections(panel, environment)
@@ -51,7 +50,6 @@ fun RegistryPanel(
                             SettingContent(
                                 setting = setting,
                                 onRemoveAccount = onRemoveAccount,
-                                onNavigate = onNavigate,
                             )
                         }
                     }

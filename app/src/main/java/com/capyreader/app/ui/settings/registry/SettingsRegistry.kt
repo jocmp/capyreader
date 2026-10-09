@@ -76,6 +76,7 @@ object SettingsRegistry {
                         Setting.SHOW_SUMMARY,
                         Setting.SHORTEN_TITLES,
                         Setting.IMAGE_PREVIEW,
+                        Setting.UNREAD_BADGES,
                     ),
                 ),
                 SettingsSection(
@@ -98,7 +99,7 @@ object SettingsRegistry {
                 ),
                 SettingsSection(
                     title = null,
-                    settings = listOf(Setting.UNREAD_BADGES, Setting.FILTERS),
+                    settings = listOf(Setting.FILTERS),
                 ),
             )
 
@@ -166,7 +167,6 @@ object SettingsRegistry {
             )
 
             SettingsPanel.Notifications,
-            SettingsPanel.UnreadBadges,
             SettingsPanel.About -> emptyList()
         }
     }
@@ -274,8 +274,9 @@ object SettingsRegistry {
             Setting.AUTO_DELETE -> listOf(R.string.settings_option_auto_delete_articles_title)
             Setting.FILTERS -> listOf(R.string.filters_supporting_text)
             Setting.UNREAD_BADGES -> listOf(
-                R.string.settings_option_badge_style,
-                R.string.show_unread_badge,
+                R.string.badge_style_count,
+                R.string.badge_style_dot,
+                R.string.badge_style_hide,
             )
             Setting.CRASH_LOGS -> listOf(R.string.crash_log_export_item_subtitle)
             else -> emptyList()

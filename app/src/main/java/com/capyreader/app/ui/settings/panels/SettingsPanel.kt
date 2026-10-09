@@ -10,7 +10,6 @@ import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.capyreader.app.R
 import kotlinx.parcelize.Parcelize
@@ -52,12 +51,6 @@ sealed class SettingsPanel(@StringRes val title: Int) {
     @Parcelize
     data object About : SettingsPanel(title = R.string.settings_about_title), Parcelable {
         override fun icon() = Icons.Rounded.Info
-    }
-
-    @Parcelize
-    data object UnreadBadges : SettingsPanel(title = R.string.settings_panel_unread_counts_title),
-        Parcelable {
-        override fun icon() = Icons.Rounded.Visibility
     }
 
     companion object {

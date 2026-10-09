@@ -51,7 +51,7 @@ Conditions that depend on live state stay inside the row. For example, accent co
 
 ### Custom panels
 
-Notifications, Unread Badges and About are lists of feeds or links rather than settings, so they stay hand-written. Search still matches the Notifications and About panel titles. Unread Badges is not a top-level panel; the `UNREAD_BADGES` row in Article List opens it through `RegistryPanel`'s `onNavigate`.
+Notifications and About are lists of feeds or links rather than settings, so they stay hand-written. Search still matches their panel titles.
 
 ## Hierarchy
 
@@ -65,10 +65,9 @@ Grouped by where the setting takes effect.
   - Log out / delete account
 - **Article List**
   - Article Sort: newest/oldest per status
-  - Layout: live preview, font size, feed name, feed icons, summary, shorten titles, image preview
+  - Layout: live preview, font size, feed name, feed icons, summary, shorten titles, image preview, unread badges (count, dot, or hide; per-feed and per-saved-search toggles live in each item's menu and apply to dots only)
   - Gestures: swipe right, swipe left, swipe up, back navigation, mark as read on scroll
   - Mark All As Read: confirm, after read all
-  - Unread Badges: badge style, per-feed and per-saved-search toggles (sub-panel)
   - Filters (local)
 - **Reader**
   - Text and Title: the same typography controls as the reader's style sheet
