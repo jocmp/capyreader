@@ -299,6 +299,11 @@
     <string name="auth_fields_miniflux_use_password">Използвайте парола вместо това</string>
     <string name="auth_fields_show_advanced">Разширени опции</string>
     <string name="auth_fields_hide_advanced">Скриване на разширени опции</string>
+    <string name="settings_panel_unread_counts_title">Непрочетени значки</string>
+    <string name="settings_option_badge_style">Стил на значката</string>
+    <string name="badge_style_simple">Просто</string>
+    <string name="badge_style_exact">Точно</string>
+    <string name="show_unread_badge">Покажи значка за непрочетени</string>
     <string name="add_link_title">Добавяне на връзка</string>
     <string name="tab_add_feed">Добавяне на емисия</string>
     <string name="tab_save_page">Запазване на страница</string>

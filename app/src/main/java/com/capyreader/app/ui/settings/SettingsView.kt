@@ -30,6 +30,7 @@ import com.capyreader.app.ui.settings.panels.AboutSettingsPanel
 import com.capyreader.app.ui.settings.panels.NotificationsSettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsPanel
 import com.capyreader.app.ui.settings.panels.SettingsViewModel
+import com.capyreader.app.ui.settings.panels.UnreadBadgesSettingsPanel
 import com.capyreader.app.ui.settings.registry.RegistryPanel
 import com.capyreader.app.ui.settings.registry.Setting
 import com.capyreader.app.ui.settings.registry.SettingsEnvironment
@@ -51,6 +52,7 @@ fun SettingsView(
     val navigator = rememberListDetailPaneScaffoldNavigator<SettingsPanel>()
     val currentPanel = navigator.currentDestination?.contentKey
     val feeds by viewModel.feeds.collectAsStateWithLifecycle(emptyList())
+    val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(emptyList())
 
     var query by rememberSaveable { mutableStateOf("") }
     var highlighted by remember { mutableStateOf<Setting?>(null) }
@@ -132,6 +134,19 @@ fun SettingsView(
                                 highlighted = highlighted,
                                 onHighlightShown = { highlighted = null },
                                 onRemoveAccount = onRemoveAccount,
+                                onNavigate = { navigateToPanel(it) },
+                            )
+
+                            SettingsPanel.UnreadBadges -> UnreadBadgesSettingsPanel(
+                                badgeStyle = viewModel.badgeStyle,
+                                updateBadgeStyle = viewModel::updateBadgeStyle,
+                                source = viewModel.source,
+                                feeds = feeds,
+                                savedSearches = savedSearches,
+                                onSelectAll = viewModel::selectAllBadges,
+                                onSelectNone = viewModel::selectNoBadges,
+                                onToggleFeed = viewModel::toggleFeedUnreadBadge,
+                                onToggleSavedSearch = viewModel::toggleSavedSearchUnreadBadge,
                             )
                         }
                     }

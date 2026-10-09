@@ -141,6 +141,17 @@ internal class FeedRecords(private val database: Database) {
         database.feedsQueries.toggleAllNotifications(enabled = enabled)
     }
 
+    suspend fun updateShowUnreadBadge(feedID: String, enabled: Boolean) = withIOContext {
+        database.feedsQueries.updateShowUnreadBadge(
+            enabled = enabled,
+            feedID = feedID
+        )
+    }
+
+    suspend fun toggleAllShowUnreadBadge(enabled: Boolean) = withIOContext {
+        database.feedsQueries.toggleAllShowUnreadBadge(enabled = enabled)
+    }
+
     suspend fun clearStickyFullContent() = withIOContext {
         database.feedsQueries.clearStickyFullContent()
     }
@@ -211,6 +222,7 @@ internal class FeedRecords(private val database: Database) {
         openArticlesInBrowser = openArticlesInBrowser,
         folderExpanded = expanded ?: false,
         priority = FeedPriority.parse(priority),
+        showUnreadBadge = showUnreadBadge,
         isReadLater = readLater,
     )
 

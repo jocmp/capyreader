@@ -305,6 +305,11 @@
     <string name="audio_player_close">Zamknij odtwarzacz</string>
     <string name="audio_player_skip_back">Przeskocz do tyłu o 30 sekund</string>
     <string name="audio_player_skip_forward">Przeskocz do przodu o 30 sekund</string>
+    <string name="settings_panel_unread_counts_title">Plakietki powiadomień</string>
+    <string name="settings_option_badge_style">Styl plakietek</string>
+    <string name="badge_style_simple">Prosty</string>
+    <string name="badge_style_exact">Dokładny</string>
+    <string name="show_unread_badge">Pokaż plakietki powiadomień</string>
     <string name="article_actions_save_externally">Zapisz</string>
     <string name="article_actions_save_externally_success">Zapisano</string>
     <string name="article_actions_save_externally_failure">Nie udało się zapisać</string>

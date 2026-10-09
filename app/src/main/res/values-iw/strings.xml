@@ -310,6 +310,11 @@
     <string name="audio_player_close">סגור נגן</string>
     <string name="audio_player_skip_back">דלג אחורה 30 שניות</string>
     <string name="audio_player_skip_forward">דלג קדימה 30 שניות</string>
+    <string name="settings_panel_unread_counts_title">תגים שלא נקראו</string>
+    <string name="settings_option_badge_style">סגנון תג</string>
+    <string name="badge_style_simple">פשוט</string>
+    <string name="badge_style_exact">מדויק</string>
+    <string name="show_unread_badge">הצגת תגים שלא נקראו</string>
     <string name="article_actions_save_externally">שמור</string>
     <string name="article_actions_save_externally_success">נשמר</string>
     <string name="article_actions_save_externally_failure">השמירה נכשלה</string>

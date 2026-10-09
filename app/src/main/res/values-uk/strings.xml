@@ -304,6 +304,11 @@
     <string name="add_link_subscribe">Підписатись</string>
     <string name="add_link_feed_added">Стрічку додано</string>
     <string name="add_link_page_saved">Сторінку збережено</string>
+    <string name="settings_panel_unread_counts_title">Підписи непрочитаних</string>
+    <string name="settings_option_badge_style">Стиль підпису</string>
+    <string name="badge_style_simple">Простий</string>
+    <string name="badge_style_exact">Точний</string>
+    <string name="show_unread_badge">Підписи непрочитаних</string>
     <string name="article_actions_save_externally">Зберегти</string>
     <string name="article_actions_save_externally_success">Збережено</string>
     <string name="article_actions_save_externally_failure">Помилка збереження</string>

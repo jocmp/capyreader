@@ -98,7 +98,7 @@ object SettingsRegistry {
                 ),
                 SettingsSection(
                     title = null,
-                    settings = listOf(Setting.FILTERS),
+                    settings = listOf(Setting.UNREAD_BADGES, Setting.FILTERS),
                 ),
             )
 
@@ -166,6 +166,7 @@ object SettingsRegistry {
             )
 
             SettingsPanel.Notifications,
+            SettingsPanel.UnreadBadges,
             SettingsPanel.About -> emptyList()
         }
     }
@@ -213,6 +214,7 @@ object SettingsRegistry {
             Setting.AFTER_READ_ALL -> R.string.after_read_all_behavior_label
             Setting.MARK_ALL_READ_POSITION -> R.string.mark_all_read_button_position
             Setting.FILTERS -> R.string.filters_title
+            Setting.UNREAD_BADGES -> R.string.settings_panel_unread_counts_title
             Setting.READER_STYLE -> R.string.article_style_options
             Setting.READER_IMAGES -> R.string.reader_image_visibility_label
             Setting.STICKY_FULL_CONTENT -> R.string.settings_option_full_content_title
@@ -271,6 +273,10 @@ object SettingsRegistry {
             Setting.PAGE_TURN_KEYS -> listOf(R.string.settings_e_ink_page_turn_keys_subtitle)
             Setting.AUTO_DELETE -> listOf(R.string.settings_option_auto_delete_articles_title)
             Setting.FILTERS -> listOf(R.string.filters_supporting_text)
+            Setting.UNREAD_BADGES -> listOf(
+                R.string.settings_option_badge_style,
+                R.string.show_unread_badge,
+            )
             Setting.CRASH_LOGS -> listOf(R.string.crash_log_export_item_subtitle)
             else -> emptyList()
         }

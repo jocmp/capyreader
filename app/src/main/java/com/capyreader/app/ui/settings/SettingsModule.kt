@@ -40,6 +40,7 @@ val settingsModule = module {
     viewModel {
        SettingsViewModel(
            account = get(),
+           appPreferences = get(),
        )
     }
     worker { OPMLImportWorker(get(), get()) }

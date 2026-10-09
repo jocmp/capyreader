@@ -331,6 +331,11 @@
     <string name="audio_player_close">மூடு player</string>
     <string name="audio_player_skip_back">தவிர் பின் 30 நொடிகள்</string>
     <string name="audio_player_skip_forward">30 வினாடிகள் முன்னோக்கி செல்லவும்</string>
+    <string name="settings_panel_unread_counts_title">படிக்காத பேட்ச்கள்</string>
+    <string name="settings_option_badge_style">Badge சூல் தண்டு</string>
+    <string name="badge_style_simple">Simple</string>
+    <string name="badge_style_exact">Exact</string>
+    <string name="show_unread_badge">காட்டு Unread Badge</string>
     <string name="article_actions_save_externally">சேமி</string>
     <string name="article_actions_save_externally_success">Saved</string>
     <string name="article_actions_save_externally_failure">சேமிக்க முடியவில்லை</string>

@@ -786,6 +786,18 @@ class ArticleScreenViewModel(
         }
     }
 
+    fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleFeedUnreadBadge(feedID, enabled)
+        }
+    }
+
+    fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
+        viewModelScope.launchIO {
+            account.toggleSavedSearchUnreadBadge(id, enabled)
+        }
+    }
+
     fun reloadFavicon(feedID: String) {
         viewModelScope.launchIO {
             account.reloadFavicon(feedID)
