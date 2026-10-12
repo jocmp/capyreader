@@ -40,4 +40,7 @@ sealed class Route : NavKey {
      */
     @Serializable
     data class MediaViewer(val media: Media) : Route()
+
+    @Serializable
+    data class VideoViewer(val uri: String) : Route()
 }

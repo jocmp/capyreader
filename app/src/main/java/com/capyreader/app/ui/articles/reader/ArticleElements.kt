@@ -547,10 +547,13 @@ fun VideoElement(
         video.imageThumbnail
     }
 
-    var posterAspectRatio by rememberSaveable(poster) { mutableStateOf<Float?>(null) }
+    val probedAspectRatio = rememberProbedAspectRatio(
+        uri = source.uri,
+        enabled = videoID == null && source.aspectRatio == null,
+    )
 
     val aspectRatio = if (videoID == null) {
-        source.aspectRatio ?: posterAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
+        source.aspectRatio ?: probedAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
     } else {
         DEFAULT_VIDEO_ASPECT_RATIO
     }
@@ -575,6 +578,7 @@ fun VideoElement(
         InlineVideoPlayer(
             uri = source.uri,
             initialAspectRatio = aspectRatio,
+            onFullscreen = actions.onFullscreenVideo,
             modifier = background,
         )
         return
@@ -589,10 +593,6 @@ fun VideoElement(
                 model = poster,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                onSuccess = { state ->
-                    val size = state.painter.intrinsicSize
-                    posterAspectRatio = videoAspectRatio(size.width, size.height)
-                },
                 modifier = Modifier.fillMaxSize(),
             )
         }

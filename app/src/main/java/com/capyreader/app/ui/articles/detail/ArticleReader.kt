@@ -73,6 +73,7 @@ fun ArticleReader(
     openAtEnd: Boolean,
     onOpenedAtEnd: () -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    onFullscreenVideo: (uri: String) -> Unit,
     onSelectAudio: (audio: AudioEnclosure) -> Unit = {},
     onPauseAudio: () -> Unit = {},
     currentAudioUrl: String? = null,
@@ -159,6 +160,7 @@ fun ArticleReader(
 
     val currentFlattened by rememberUpdatedState(flattened)
     val currentOnSelectMedia by rememberUpdatedState(onSelectMedia)
+    val currentOnFullscreenVideo by rememberUpdatedState(onFullscreenVideo)
     val currentOnSelectAudio by rememberUpdatedState(onSelectAudio)
     val currentArticle by rememberUpdatedState(article)
 
@@ -202,6 +204,7 @@ fun ArticleReader(
                     )
                 )
             },
+            onFullscreenVideo = { uri -> currentOnFullscreenVideo(uri) },
         )
     }
 

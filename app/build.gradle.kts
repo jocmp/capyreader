@@ -143,6 +143,7 @@ dependencies {
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.media3.datasource.okhttp)
     implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.inspector)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui.compose.material3)
     implementation(libs.androidx.navigation.compose)
