@@ -548,11 +548,12 @@ fun VideoElement(
         DEFAULT_VIDEO_ASPECT_RATIO
     }
 
-    val frame = modifier
+    val background = modifier
         .fillMaxWidth()
-        .aspectRatio(aspectRatio)
         .clip(CORNER_SHAPE)
         .background(Color.Black)
+
+    val frame = background.aspectRatio(aspectRatio)
 
     if (isPlaying && videoID != null) {
         YoutubePlayer(
@@ -563,15 +564,18 @@ fun VideoElement(
         return
     }
 
+    if (isPlaying) {
+        InlineVideoPlayer(
+            uri = source.uri,
+            initialAspectRatio = aspectRatio,
+            modifier = background,
+        )
+        return
+    }
+
     Box(
         contentAlignment = Alignment.Center,
-        modifier = frame.clickable {
-            if (videoID == null) {
-                actions.onLinkClick(source.link, null)
-            } else {
-                isPlaying = true
-            }
-        },
+        modifier = frame.clickable { isPlaying = true },
     ) {
         if (thumbnail != null && showImages) {
             AsyncImage(

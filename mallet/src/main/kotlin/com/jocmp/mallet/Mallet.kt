@@ -668,22 +668,22 @@ private class Flattening {
                         "video" -> {
                             val width = element.attr("width").toIntOrNull()
                             val height = element.attr("height").toIntOrNull()
+                            val poster = element.attr("abs:poster").ifBlank { null }
+                            val sourceElements = element.getElementsByTag("source").ifEmpty { listOf(element) }
                             val sources =
-                                element
-                                    .getElementsByTag("source")
-                                    .asSequence()
+                                sourceElements
                                     .mapNotNull { source ->
                                         source.attr("abs:src").takeIf { it.isNotBlank() }?.let { src ->
                                             LinearVideoSource(
                                                 uri = src,
                                                 link = src,
-                                                imageThumbnail = null,
+                                                imageThumbnail = poster,
                                                 mimeType = source.attr("type").ifBlank { null },
                                                 widthPx = width?.takeIf { it > 0 },
                                                 heightPx = height?.takeIf { it > 0 },
                                             )
                                         }
-                                    }.toList()
+                                    }
                                     .takeIf { it.isNotEmpty() }
 
                             if (sources != null) {

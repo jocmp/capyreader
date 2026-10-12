@@ -55,11 +55,7 @@ private fun Article.summaryFallback(): LinearArticle {
 private fun Article.enclosureElements(): List<LinearElement> {
     val images = enclosures
         .filter { it.type.startsWith("image/") }
-        .filterNot { enclosure ->
-            val url = enclosure.url.toString()
-
-            content.contains(url) || content.contains(url.escapingSpecialHTMLCharacters)
-        }
+        .filterNot { contentContains(it.url.toString()) }
         .map { enclosure ->
             LinearImage(
                 ids = emptySet(),
@@ -79,6 +75,7 @@ private fun Article.enclosureElements(): List<LinearElement> {
 
     val videos = enclosures
         .filter { it.type.startsWith("video/") }
+        .filterNot { contentContains(it.url.toString()) }
         .map { enclosure ->
             LinearVideo(
                 ids = emptySet(),
@@ -96,4 +93,8 @@ private fun Article.enclosureElements(): List<LinearElement> {
         }
 
     return images + videos
+}
+
+private fun Article.contentContains(url: String): Boolean {
+    return content.contains(url) || content.contains(url.escapingSpecialHTMLCharacters)
 }
