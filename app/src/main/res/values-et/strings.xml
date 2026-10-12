@@ -61,7 +61,7 @@
     <string name="settings_section_export">Ekspordi</string>
     <string name="opml_import_notification_title">Impordime tellimusi…</string>
     <string name="settings_section_privacy">Privaatsus</string>
-    <string name="settings_section_refresh">Viimati uuendatud</string>
+    <string name="settings_section_refresh">Laadi uuesti</string>
     <string name="opml_import_button_text">Impordi failist</string>
     <string name="opml_import_progress_content_text_start">Alustame importi</string>
     <string name="settings_import_progress_placeholder">Impordime tellimusi…</string>
@@ -349,4 +349,13 @@
     <string name="mark_read_position_toolbar">Tööriistariba</string>
     <string name="mark_read_position_floating_action_button">Ujuv tegevuste nupp</string>
     <string name="mark_all_read_button_position">Kõige loetuks märkimise nupu asukoht</string>
+    <string name="feed_action_unsubscribe_error">Viga uudisvoo tellimusest loobumisel</string>
+    <string name="settings_last_refreshed">Viimati uuendatud</string>
+    <string name="article_list_sort_newest">Uusimad</string>
+    <string name="article_list_sort_oldest">Vanimad</string>
+    <string name="settings_section_layout">Paigutus</string>
+    <string name="settings_section_content">Sisu</string>
+    <string name="settings_section_e_ink">E-tint</string>
+    <string name="settings_reduce_motion_title">Vähenda animatsioone</string>
+    <string name="settings_reduce_motion_subtitle">Jäta visuaalsed üleminekud ja liikumisefektid vahele</string>
 </resources>
