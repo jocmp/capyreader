@@ -17,13 +17,30 @@ class VideoPlayerViewModel(
 ) : ViewModel() {
     private val players = mutableMapOf<String, ExoPlayer>()
 
+    private val owners = mutableMapOf<String, Int>()
+
     var fullscreenUri by mutableStateOf<String?>(null)
 
-    fun player(uri: String): ExoPlayer {
+    fun acquire(uri: String): ExoPlayer {
+        owners[uri] = owners.getOrDefault(uri, 0) + 1
+
         return players.getOrPut(uri) { buildPlayer(uri) }
     }
 
-    fun release(uri: String) {
+    fun release(uri: String, isChangingConfigurations: Boolean) {
+        val remaining = owners.getOrDefault(uri, 1) - 1
+
+        if (remaining > 0) {
+            owners[uri] = remaining
+            return
+        }
+
+        owners.remove(uri)
+
+        if (isChangingConfigurations) {
+            return
+        }
+
         players.remove(uri)?.release()
 
         if (fullscreenUri == uri) {

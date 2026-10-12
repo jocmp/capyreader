@@ -63,13 +63,14 @@ fun InlineVideoPlayer(
     viewModel: VideoPlayerViewModel = koinActivityViewModel(),
 ) {
     val activity = LocalActivity.current
-    val player = remember(uri) { viewModel.player(uri) }
+    val player = remember(uri) { viewModel.acquire(uri) }
 
     DisposableEffect(uri) {
         onDispose {
-            if (activity?.isChangingConfigurations != true) {
-                viewModel.release(uri)
-            }
+            viewModel.release(
+                uri = uri,
+                isChangingConfigurations = activity?.isChangingConfigurations == true,
+            )
         }
     }
 

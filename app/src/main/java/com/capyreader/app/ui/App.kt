@@ -213,9 +213,7 @@ fun App(
                             onDismiss = { backStack.removeLastOrNull() },
                         )
                     }
-                    entry<Route.VideoViewer>(
-                        metadata = MediaSceneStrategy.overlay(),
-                    ) { key ->
+                    entry<Route.VideoViewer> { key ->
                         VideoScreen(
                             uri = key.uri,
                             onDismiss = { backStack.removeLastOrNull() },

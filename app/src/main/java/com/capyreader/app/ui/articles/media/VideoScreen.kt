@@ -26,15 +26,22 @@ fun VideoScreen(
     viewModel: VideoPlayerViewModel = koinActivityViewModel(),
 ) {
     val activity = LocalActivity.current
-    val player = remember(uri) { viewModel.player(uri) }
+    val player = remember(uri) { viewModel.acquire(uri) }
 
     DisposableEffect(uri) {
         viewModel.fullscreenUri = uri
 
         onDispose {
-            if (activity?.isChangingConfigurations != true) {
+            val isChangingConfigurations = activity?.isChangingConfigurations == true
+
+            if (!isChangingConfigurations) {
                 viewModel.fullscreenUri = null
             }
+
+            viewModel.release(
+                uri = uri,
+                isChangingConfigurations = isChangingConfigurations,
+            )
         }
     }
 
