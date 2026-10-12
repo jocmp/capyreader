@@ -30,8 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.media3.common.util.ExperimentalApi
 import androidx.media3.common.util.UnstableApi
@@ -74,12 +73,8 @@ fun InlineVideoPlayer(
         }
     }
 
-    val activityLifecycleOwner = (activity as? LifecycleOwner) ?: LocalLifecycleOwner.current
-
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE, lifecycleOwner = activityLifecycleOwner) {
-        if (activity?.isChangingConfigurations != true) {
-            player.pause()
-        }
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE, lifecycleOwner = ProcessLifecycleOwner.get()) {
+        player.pause()
     }
 
     val videoSize = rememberPresentationState(player).videoSizeDp

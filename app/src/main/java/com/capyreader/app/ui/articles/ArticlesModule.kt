@@ -4,6 +4,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.addintent.AddLinkViewModel
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
+import com.capyreader.app.ui.articles.reader.VideoAspectRatios
 import com.capyreader.app.ui.articles.reader.VideoPlayerViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -18,6 +19,11 @@ internal val articlesModule = module {
     factory {
         AddLinkViewModel(
             account = get(),
+        )
+    }
+    single {
+        VideoAspectRatios(
+            context = get()
         )
     }
     single {

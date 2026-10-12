@@ -2,13 +2,9 @@ package com.capyreader.app.ui.articles.reader
 
 import android.content.Context
 import androidx.annotation.OptIn
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.mutableStateMapOf
+import coil3.imageLoader
+import coil3.request.ImageRequest
 import androidx.media3.common.C
 import androidx.media3.common.Format
 import androidx.media3.common.MediaItem
@@ -34,18 +30,45 @@ fun videoMediaSourceFactory(context: Context): DefaultMediaSourceFactory {
         .setDataSourceFactory(OkHttpDataSource.Factory(baseHttpClient()))
 }
 
-@Composable
-fun rememberProbedAspectRatio(uri: String, enabled: Boolean): Float? {
-    val context = LocalContext.current
-    var aspectRatio by rememberSaveable(uri) { mutableStateOf<Float?>(null) }
+class VideoAspectRatios(private val context: Context) {
+    private val ratios = mutableStateMapOf<String, Float>()
 
-    LaunchedEffect(uri, enabled) {
-        if (enabled && aspectRatio == null) {
-            aspectRatio = probeAspectRatio(context, uri)
+    private val probed = mutableSetOf<String>()
+
+    operator fun get(uri: String): Float? = ratios[uri]
+
+    private fun putPoster(uri: String, width: Float, height: Float) {
+        if (uri in probed) {
+            return
         }
+
+        videoAspectRatio(width, height)?.let { ratios[uri] = it }
     }
 
-    return aspectRatio
+    suspend fun measurePoster(uri: String, poster: String) {
+        if (uri in ratios) {
+            return
+        }
+
+        val request = ImageRequest.Builder(context)
+            .data(poster)
+            .build()
+
+        val image = context.imageLoader.execute(request).image ?: return
+
+        putPoster(uri, image.width.toFloat(), image.height.toFloat())
+    }
+
+    suspend fun probe(uri: String) {
+        if (uri in probed) {
+            return
+        }
+
+        probeAspectRatio(context, uri)?.let {
+            probed.add(uri)
+            ratios[uri] = it
+        }
+    }
 }
 
 fun videoAspectRatio(width: Float?, height: Float?): Float? {

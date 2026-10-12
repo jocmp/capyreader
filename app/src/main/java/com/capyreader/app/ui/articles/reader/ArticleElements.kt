@@ -37,6 +37,7 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,10 +81,17 @@ import com.jocmp.mallet.LinearTextAnnotationLink
 import com.jocmp.mallet.LinearTextBlockStyle
 import com.jocmp.mallet.LinearVideo
 import com.jocmp.mallet.toTableData
+import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
+import org.koin.compose.koinInject
 
 private const val MAX_IMAGE_WIDTH_PX = 2000
 private const val PLACEHOLDER_ASPECT_RATIO = 3f / 2f
 private val DEFAULT_VIDEO_ASPECT_RATIO = 16f / 9f
+
+private val VIDEO_MEASURE_TIMEOUT = 3.seconds
 private val CORNER_SHAPE = RoundedCornerShape(3.dp)
 
 @Composable
@@ -547,13 +555,33 @@ fun VideoElement(
         video.imageThumbnail
     }
 
-    val probedAspectRatio = rememberProbedAspectRatio(
-        uri = source.uri,
-        enabled = videoID == null && source.aspectRatio == null,
-    )
+    val aspectRatios = koinInject<VideoAspectRatios>()
+    val isAspectRatioUnknown = videoID == null && source.aspectRatio == null
+    var isMeasuring by remember(source.uri) { mutableStateOf(isAspectRatioUnknown) }
+
+    LaunchedEffect(source.uri, isAspectRatioUnknown) {
+        if (isAspectRatioUnknown) {
+            withTimeoutOrNull(VIDEO_MEASURE_TIMEOUT) {
+                coroutineScope {
+                    if (poster != null && showImages) {
+                        launch { aspectRatios.measurePoster(source.uri, poster) }
+                    }
+                    aspectRatios.probe(source.uri)
+                }
+            }
+        }
+
+        isMeasuring = false
+    }
+
+    val measuredAspectRatio = aspectRatios[source.uri]
+
+    if (isMeasuring && measuredAspectRatio == null && !isPlaying) {
+        return
+    }
 
     val aspectRatio = if (videoID == null) {
-        source.aspectRatio ?: probedAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
+        source.aspectRatio ?: measuredAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
     } else {
         DEFAULT_VIDEO_ASPECT_RATIO
     }
