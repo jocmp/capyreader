@@ -397,6 +397,7 @@ fun ArticleScreen(
             // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
             val url = article.url
             if (article.openInBrowser && url != null) {
+                viewModel.markReadAsync(article.id)
                 linkOpener.open(url.toString().toUri())
             } else {
                 val searchQuery = search.query.takeIf { search.isActive && !it.isNullOrBlank() }
