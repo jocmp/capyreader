@@ -107,7 +107,7 @@ fun YoutubePlayer(
     )
 
     fullscreen.value?.let { video ->
-        FullscreenVideoDialog(
+        FullscreenCustomView(
             video = video,
             onDismissRequest = { video.callback.onCustomViewHidden() },
         )
@@ -115,11 +115,11 @@ fun YoutubePlayer(
 }
 
 @Composable
-private fun FullscreenVideoDialog(
+private fun FullscreenCustomView(
     video: FullscreenVideo,
     onDismissRequest: () -> Unit,
 ) {
-    FullscreenDialog(onDismissRequest = onDismissRequest) {
+    FullscreenVideoDialog(onDismissRequest = onDismissRequest) {
         AndroidView(
             factory = { context ->
                 FrameLayout(context).apply { setBackgroundColor(Color.BLACK) }

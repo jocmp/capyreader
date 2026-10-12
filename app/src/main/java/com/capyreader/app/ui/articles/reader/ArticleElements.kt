@@ -537,13 +537,20 @@ fun VideoElement(
 ) {
     val source = video.firstSource
     val showImages = LocalReaderStyle.current.showImages
-    val thumbnail = video.imageThumbnail
     val label = stringResource(R.string.reader_play_video)
     val videoID = source.youtubeVideoID
     var isPlaying by rememberSaveable(source.uri) { mutableStateOf(false) }
 
+    val poster = if (videoID == null) {
+        video.imageThumbnail ?: source.uri
+    } else {
+        video.imageThumbnail
+    }
+
+    var posterAspectRatio by rememberSaveable(poster) { mutableStateOf<Float?>(null) }
+
     val aspectRatio = if (videoID == null) {
-        source.aspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
+        source.aspectRatio ?: posterAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
     } else {
         DEFAULT_VIDEO_ASPECT_RATIO
     }
@@ -577,11 +584,15 @@ fun VideoElement(
         contentAlignment = Alignment.Center,
         modifier = frame.clickable { isPlaying = true },
     ) {
-        if (thumbnail != null && showImages) {
+        if (poster != null && showImages) {
             AsyncImage(
-                model = thumbnail,
+                model = poster,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
+                onSuccess = { state ->
+                    val size = state.painter.intrinsicSize
+                    posterAspectRatio = videoAspectRatio(size.width, size.height)
+                },
                 modifier = Modifier.fillMaxSize(),
             )
         }

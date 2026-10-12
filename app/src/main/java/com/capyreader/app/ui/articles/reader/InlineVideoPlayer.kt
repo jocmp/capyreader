@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fullscreen
@@ -96,7 +97,7 @@ fun InlineVideoPlayer(
     if (isFullscreen) {
         Box(modifier = modifier.aspectRatio(aspectRatio))
 
-        FullscreenDialog(onDismissRequest = { isFullscreen = false }) {
+        FullscreenVideoDialog(onDismissRequest = { isFullscreen = false }) {
             VideoPlayer(
                 player = player,
                 isFullscreen = true,
@@ -135,6 +136,15 @@ private fun VideoPlayer(
     Player(
         player = player,
         showControls = showControls || isPaused,
+        centerControls = { player, visible ->
+            PlayerDefaults.CenterControls(
+                player = player,
+                visible = visible,
+                modifier = Modifier.fillMaxWidth(),
+                backSecondary = {},
+                forwardSecondary = {},
+            )
+        },
         bottomControls = { player, visible ->
             PlayerDefaults.BottomControls(
                 player = player,
@@ -189,7 +199,7 @@ private fun FullscreenButton(
     }
 }
 
-private fun videoAspectRatio(width: Float?, height: Float?): Float? {
+fun videoAspectRatio(width: Float?, height: Float?): Float? {
     if (width == null || height == null || width <= 0f || height <= 0f) {
         return null
     }

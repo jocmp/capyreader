@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 @Composable
-fun FullscreenDialog(
+fun FullscreenVideoDialog(
     onDismissRequest: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
