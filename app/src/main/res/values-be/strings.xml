@@ -110,7 +110,7 @@
     <string name="notifications_channel_title_opml_import">Імпарт падпісак</string>
     <string name="notification_mark_as_read_action">Пазначыць як прачытанае</string>
     <string name="settings_section_privacy">Прыватнасць</string>
-    <string name="settings_section_refresh">Апошняе абнаўленне</string>
+    <string name="settings_section_refresh">Абнавіць</string>
     <string name="settings_refresh_on_wifi_only">Абнаўляць толькі праз Wi-Fi</string>
     <string name="opml_import_button_text">Імпарт з файла</string>
     <string name="opml_export_button_text">Экспарт у OPML</string>
@@ -279,4 +279,8 @@
     <string name="actions_copy_link">Скапіраваць спасылку</string>
     <string name="actions_share_link">Абагуліць спасылку</string>
     <string name="actions_share_link_with_title">Абагуліць тэкст і спасылку</string>
+    <string name="article_byline_date_only">%1$s у %2$s</string>
+    <string name="settings_option_auto_delete_articles_title">Аўтавыдаленне артыкулаў</string>
+    <string name="after_read_all_behavior_default">Прадвызначана</string>
+    <string name="after_read_all_behavior_open_next_feed">Адкрыць наступную стужку</string>
 </resources>
