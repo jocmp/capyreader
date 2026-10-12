@@ -190,7 +190,8 @@ upsertStarred {
     )
     ON CONFLICT(article_id) DO UPDATE
     SET
-    starred = excluded.starred;
+    starred = excluded.starred,
+    last_unstarred_at = NULL;
 
     INSERT OR IGNORE INTO excluded_statuses(
         article_id,
