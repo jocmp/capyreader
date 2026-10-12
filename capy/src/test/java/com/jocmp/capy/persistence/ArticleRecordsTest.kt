@@ -357,6 +357,27 @@ class ArticleRecordsTest {
     }
 
     @Test
+    fun allByStatus_starredIncludesRestarredFromSync() = runTest {
+        val articles = 3.repeated { articleFixture.create() }
+
+        articles.forEach { articleRecords.addStar(it.id) }
+        articleRecords.removeStar(articles.last().id)
+        articleRecords.markAllStarred(articles.map { it.id })
+
+        val results = articleRecords
+            .byStatus
+            .all(
+                status = ArticleStatus.STARRED,
+                limit = 10,
+                offset = 0,
+                sortOrder = SortOrder.NEWEST_FIRST,
+            )
+            .executeAsList()
+
+        assertEquals(expected = 3, actual = results.size)
+    }
+
+    @Test
     fun markAllUnread() = runTest {
         val articleIDs = 3.repeated { RandomUUID.generate() }
         val articleRecords = ArticleRecords(database)
