@@ -80,6 +80,28 @@ class OPMLImporterTest {
     }
 
     @Test
+    fun `it imports feeds concurrently`() = runTest {
+        val inputStream = testFile("nested_import.xml").inputStream()
+        val progress = mutableListOf<ImportProgress>()
+
+        OPMLImporter(account).import(
+            inputStream = inputStream,
+            concurrency = 4,
+            onProgress = { progress.add(it) },
+        )
+
+        val topLevelFeeds = account.feeds.first().map { it.title }.toSet()
+        val newsFeeds = account.folders.first().first().feeds.map { it.title }.toSet()
+
+        assertEquals(expected = setOf("Daring Fireball", "Julia Evans"), actual = topLevelFeeds)
+        assertEquals(
+            expected = setOf("BBC News - World", "NetNewsWire", "Block Club Chicago"),
+            actual = newsFeeds
+        )
+        assertEquals(expected = (0..5).toList(), actual = progress.map { it.currentCount }.sorted())
+    }
+
+    @Test
     fun `it handles feeds nested in multiple folders`() = runTest {
         val inputStream = testFile("multiple_matching_feeds.xml").inputStream()
 

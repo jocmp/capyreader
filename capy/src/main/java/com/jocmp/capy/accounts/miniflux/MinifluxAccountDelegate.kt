@@ -33,7 +33,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import okio.IOException
 import retrofit2.Response
@@ -49,6 +51,7 @@ internal class MinifluxAccountDelegate(
     private val enclosureRecords = EnclosureRecords(database)
     private val feedRecords = FeedRecords(database)
     private val taggingRecords = TaggingRecords(database)
+    private val categoryLock = Mutex()
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
         return try {
@@ -185,6 +188,24 @@ internal class MinifluxAccountDelegate(
             }
         } catch (e: IOException) {
             AddFeedResult.networkError()
+        }
+    }
+
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> = withErrorHandling {
+        val categoryId = folderTitles.firstOrNull()?.let { folderTitle ->
+            findOrCreateCategory(folderTitle)
+        }
+
+        val response = miniflux.createFeed(
+            CreateFeedRequest(feed_url = url, category_id = categoryId)
+        )
+
+        if (response.code() > 300 || response.body() == null) {
+            throw AddFeedResult.Error.FeedNotFound()
         }
     }
 
@@ -465,11 +486,11 @@ internal class MinifluxAccountDelegate(
         }
     }
 
-    private suspend fun findOrCreateCategory(title: String): Long {
+    private suspend fun findOrCreateCategory(title: String): Long = categoryLock.withLock {
         val categories = miniflux.categories().orThrow().body() ?: emptyList()
         val existing = categories.find { it.title == title }
 
-        return if (existing != null) {
+        if (existing != null) {
             existing.id
         } else {
             val response = miniflux.createCategory(CreateCategoryRequest(title = title))
