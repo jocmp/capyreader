@@ -16,20 +16,12 @@ import android.widget.FrameLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.DialogWindowProvider
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.jocmp.capy.logging.CapyLog
 import com.jocmp.mallet.LinearVideoSource
 import java.net.URISyntaxException
@@ -127,23 +119,7 @@ private fun FullscreenVideoDialog(
     video: FullscreenVideo,
     onDismissRequest: () -> Unit,
 ) {
-    Dialog(
-        onDismissRequest = onDismissRequest,
-        properties = DialogProperties(usePlatformDefaultWidth = false),
-    ) {
-        val dialogWindow = (LocalView.current.parent as? DialogWindowProvider)?.window
-
-        LaunchedEffect(dialogWindow) {
-            if (dialogWindow != null) {
-                WindowCompat.setDecorFitsSystemWindows(dialogWindow, false)
-
-                val insets = WindowCompat.getInsetsController(dialogWindow, dialogWindow.decorView)
-                insets.systemBarsBehavior =
-                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-                insets.hide(WindowInsetsCompat.Type.systemBars())
-            }
-        }
-
+    FullscreenDialog(onDismissRequest = onDismissRequest) {
         AndroidView(
             factory = { context ->
                 FrameLayout(context).apply { setBackgroundColor(Color.BLACK) }
