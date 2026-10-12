@@ -80,7 +80,7 @@
     <string name="opml_import_notification_title">Importando suscripciones…</string>
     <string name="notifications_channel_title_opml_import">Importaciones de las suscripción</string>
     <string name="settings_section_privacy">Privacidad</string>
-    <string name="settings_section_refresh">Última Actualización</string>
+    <string name="settings_section_refresh">Refrescar</string>
     <string name="opml_import_button_text">Importar desde un archivo</string>
     <string name="opml_export_button_text">Exportar a OPML</string>
     <string name="opml_import_progress_content_text_start">Iniciando la importación</string>
@@ -347,4 +347,10 @@
     <string name="mark_read_position_toolbar">Barra de herramientas</string>
     <string name="mark_read_position_floating_action_button">Botón de Acción Flotante</string>
     <string name="mark_all_read_button_position">Posición del Botón Marcar Todo Leido</string>
+    <string name="settings_last_refreshed">Último refresco</string>
+    <string name="article_list_sort_newest">Más reciente</string>
+    <string name="article_list_sort_oldest">Más antiguo</string>
+    <string name="settings_section_content">Contenido</string>
+    <string name="settings_reduce_motion_title">Reducir animaciones</string>
+    <string name="settings_reduce_motion_subtitle">Saltar transiciones y efectos de movimiento</string>
 </resources>
