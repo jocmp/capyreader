@@ -118,7 +118,7 @@ fun AboutSettingsPanel() {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     TextButton(onClick = { linkOpener.open(Support.ABOUT_URL.toUri()) }) {
                         Text(
-                            text = "Made with ♥ in ✶✶✶✶",
+                            text = "Made with ♥ in Michigan",
                         )
                     }
                 }
