@@ -22,7 +22,6 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import com.capyreader.app.BuildConfig
 import com.capyreader.app.R
 import com.capyreader.app.common.createCacheFile
@@ -37,7 +36,7 @@ class CrashLogExport(private val context: Context, private val source: Source) {
         try {
             val file = context.createCacheFile("capy_crash_logs.txt")
 
-            file.appendText(buildDebugInfo() + "\n\n")
+            file.appendText(buildDebugInfo(source) + "\n\n")
             exception?.let { file.appendText("$it\n\n") }
 
             Runtime.getRuntime().exec("logcat ${BuildConfig.APPLICATION_ID}:I -d -f ${file.absolutePath}").waitFor()
@@ -47,18 +46,6 @@ class CrashLogExport(private val context: Context, private val source: Source) {
         } catch (e: Throwable) {
             withUIContext { context.toast("Failed to build logs") }
         }
-    }
-
-    private fun buildDebugInfo(): String {
-        return """
-            App version: ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}, ${BuildConfig.VERSION_CODE})
-            Android version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT}; build ${Build.DISPLAY})
-            Device brand: ${Build.BRAND}
-            Device manufacturer: ${Build.MANUFACTURER}
-            Device name: ${Build.DEVICE} (${Build.PRODUCT})
-            Device model: ${Build.MODEL}
-            Account source: ${source.name}
-        """.trimIndent()
     }
 }
 

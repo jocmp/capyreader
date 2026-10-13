@@ -53,5 +53,6 @@ enum class Setting {
     CLEAR_ARTICLES,
     CRASH_REPORTING,
     CRASH_LOGS,
+    REFRESH_LOG,
     TEST_NOTIFICATION,
 }

@@ -22,7 +22,7 @@ class NotificationHelper(
     private val account: Account,
     private val applicationContext: Context,
 ) {
-    suspend fun notify(since: ZonedDateTime) {
+    suspend fun notify(since: ZonedDateTime): Int {
         createChannel()
 
         dismissStaleNotifications()
@@ -30,7 +30,7 @@ class NotificationHelper(
         val notifications = account.createNotifications(since = since)
 
         if (notifications.isEmpty()) {
-            return
+            return 0
         }
 
         sendGroupNotification()
@@ -38,6 +38,8 @@ class NotificationHelper(
         notifications.forEach {
             sendNotification(it)
         }
+
+        return notifications.size
     }
 
     suspend fun dismissNotifications(ids: List<String>) {

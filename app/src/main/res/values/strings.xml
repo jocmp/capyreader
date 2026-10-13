@@ -141,6 +141,7 @@
     <string name="notifications_channel_title_feed_update">Feed Updates</string>
     <string name="notification_mark_as_read_action">Mark as read</string>
     <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_section_troubleshooting">Troubleshooting</string>
     <string name="settings_section_refresh">Refresh</string>
     <string name="settings_refresh_on_wifi_only">Refresh on Wi-Fi only</string>
     <string name="refresh_skipped_mobile">Refresh skipped on mobile network</string>
@@ -386,4 +387,31 @@
     <string name="mark_read_position_toolbar">Toolbar</string>
     <string name="mark_read_position_floating_action_button">Floating Action Button</string>
     <string name="mark_all_read_button_position">Mark All Read Button Position</string>
+    <string name="refresh_log_title">Background refresh</string>
+    <string name="refresh_log_subtitle">Check whether Android is running background refreshes</string>
+    <string name="refresh_log_copy_report">Copy report</string>
+    <string name="refresh_log_section_status">Status</string>
+    <string name="refresh_log_section_history">History</string>
+    <string name="refresh_log_job_state">Scheduled job</string>
+    <string name="refresh_log_not_scheduled">Not scheduled</string>
+    <string name="refresh_log_next_run">Next run</string>
+    <string name="refresh_log_stop_reason">Last stop reason</string>
+    <string name="refresh_log_standby_bucket">App standby bucket</string>
+    <string name="refresh_log_battery_optimization">Ignoring battery optimization</string>
+    <string name="refresh_log_background_restricted">Background activity restricted</string>
+    <string name="refresh_log_notifications_enabled">Notifications allowed</string>
+    <string name="refresh_log_yes">Yes</string>
+    <string name="refresh_log_no">No</string>
+    <string name="refresh_log_none">None</string>
+    <string name="refresh_log_empty">No background refreshes recorded yet</string>
+    <string name="refresh_log_event_started">Started</string>
+    <string name="refresh_log_event_refreshed">Refreshed</string>
+    <string name="refresh_log_event_skipped_wifi_only">Skipped (Wi-Fi only)</string>
+    <string name="refresh_log_event_failed">Failed</string>
+    <string name="refresh_log_event_stopped">Stopped by Android</string>
+    <string name="refresh_log_since_previous">%1$s after previous run</string>
+    <plurals name="refresh_log_notifications_sent">
+        <item quantity="one">%d notification</item>
+        <item quantity="other">%d notifications</item>
+    </plurals>
 </resources>

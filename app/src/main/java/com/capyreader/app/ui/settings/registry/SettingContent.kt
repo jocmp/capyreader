@@ -33,6 +33,7 @@ import com.capyreader.app.ui.settings.panels.ReaderImagesRow
 import com.capyreader.app.ui.settings.panels.ReaderStyleRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeDownRow
 import com.capyreader.app.ui.settings.panels.ReaderSwipeUpRow
+import com.capyreader.app.ui.settings.panels.RefreshLogItem
 import com.capyreader.app.ui.settings.panels.ReduceMotionRow
 import com.capyreader.app.ui.settings.panels.RefreshIntervalRow
 import com.capyreader.app.ui.settings.panels.RefreshOnWiFiOnlyRow
@@ -103,6 +104,7 @@ fun SettingContent(
         Setting.CLEAR_ARTICLES -> ClearArticlesRow()
         Setting.CRASH_REPORTING -> CrashReportingRow()
         Setting.CRASH_LOGS -> CrashLogsRow()
+        Setting.REFRESH_LOG -> RefreshLogItem()
         Setting.TEST_NOTIFICATION -> TestNotificationSettingRow()
     }
 }

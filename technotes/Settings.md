@@ -81,6 +81,7 @@ Grouped by where the setting takes effect.
 - **Advanced**
   - Storage: keep read articles, clear all articles
   - Privacy: crash reporting (gplay), share crash logs
+  - Troubleshooting: background refresh log (see `technotes/Refresh.md`)
 - **About**
 
 The Gestures and General panels are gone; each gesture lives with the screen it affects.

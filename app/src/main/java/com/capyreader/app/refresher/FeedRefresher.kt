@@ -12,24 +12,40 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 
+sealed interface RefreshOutcome {
+    data object SkippedWifiOnly : RefreshOutcome
+
+    data class Refreshed(val notifications: Int) : RefreshOutcome
+
+    data class Failed(val error: Throwable, val notifications: Int) : RefreshOutcome
+}
+
 class FeedRefresher(
     private val account: Account,
     private val appContext: Context,
     private val notificationHelper: NotificationHelper,
     private val appPreferences: AppPreferences,
 ): KoinComponent {
-    suspend fun refresh() {
+    suspend fun refresh(): RefreshOutcome {
         if (appPreferences.refreshOnWiFiOnly.get() && !appContext.isOnWifi()) {
             CapyLog.info("refresh_skipped_mobile", mapOf("type" to "background"))
-            return
+            return RefreshOutcome.SkippedWifiOnly
         }
 
         val since = TimeHelpers.nowUTC()
 
         return withContext(Dispatchers.IO) {
-            account.refresh()
-            notificationHelper.notify(since = since)
+            val result = account.refresh()
+            val notifications = notificationHelper.notify(since = since)
             WidgetUpdater.update(appContext)
+
+            val error = result.exceptionOrNull()
+
+            if (error != null) {
+                RefreshOutcome.Failed(error = error, notifications = notifications)
+            } else {
+                RefreshOutcome.Refreshed(notifications = notifications)
+            }
         }
     }
 }

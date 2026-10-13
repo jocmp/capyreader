@@ -32,7 +32,7 @@ fun RefreshIntervalMenu(
     )
 }
 
-private fun Context.translationKey(refreshInterval: RefreshInterval): String {
+internal fun Context.translationKey(refreshInterval: RefreshInterval): String {
     return when (refreshInterval) {
         MANUALLY_ONLY -> getString(R.string.refresh_manually_only)
         EVERY_FIFTEEN_MINUTES -> getString(R.string.refresh_minutes, 15)

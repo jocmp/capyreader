@@ -62,7 +62,7 @@ class SettingsRegistryTest {
     fun `drops sections with no available settings`() {
         val titles = SettingsRegistry.sections(SettingsPanel.Advanced, local).map { it.title }
 
-        assertEquals(2, titles.size)
+        assertEquals(3, titles.size)
     }
 
     @Test

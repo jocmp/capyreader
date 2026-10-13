@@ -161,6 +161,10 @@ object SettingsRegistry {
                     settings = listOf(Setting.CRASH_REPORTING, Setting.CRASH_LOGS),
                 ),
                 SettingsSection(
+                    title = R.string.settings_section_troubleshooting,
+                    settings = listOf(Setting.REFRESH_LOG),
+                ),
+                SettingsSection(
                     title = null,
                     settings = listOf(Setting.TEST_NOTIFICATION),
                 ),
@@ -235,6 +239,7 @@ object SettingsRegistry {
             Setting.CLEAR_ARTICLES -> R.string.settings_clear_all_articles_button
             Setting.CRASH_REPORTING -> R.string.crash_reporting_checkbox_title
             Setting.CRASH_LOGS -> R.string.crash_log_export_item_title
+            Setting.REFRESH_LOG -> R.string.refresh_log_title
             Setting.TEST_NOTIFICATION -> null
         }
     }
@@ -279,6 +284,11 @@ object SettingsRegistry {
                 R.string.badge_style_hide,
             )
             Setting.CRASH_LOGS -> listOf(R.string.crash_log_export_item_subtitle)
+            Setting.REFRESH_LOG -> listOf(
+                R.string.refresh_log_subtitle,
+                R.string.refresh_feeds_menu_label,
+                R.string.settings_panel_notifications_title,
+            )
             else -> emptyList()
         }
     }
