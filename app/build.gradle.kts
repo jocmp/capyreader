@@ -134,6 +134,7 @@ dependencies {
     implementation(libs.androidx.adaptive.navigation3)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
@@ -143,6 +144,7 @@ dependencies {
     implementation(libs.androidx.material3.window.size)
     implementation(libs.androidx.media3.datasource.okhttp)
     implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.inspector)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui.compose.material3)
     implementation(libs.androidx.navigation.compose)
@@ -194,6 +196,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.tests.androidx.ui.junit4)
     androidTestImplementation(libs.tests.androidx.uiautomator)
+    androidTestImplementation(libs.mockwebserver3)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.tests.androidx.ui.manifest)
 }

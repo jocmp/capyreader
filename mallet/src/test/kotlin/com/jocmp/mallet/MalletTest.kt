@@ -602,6 +602,39 @@ class MalletTest {
     }
 
     @Test
+    fun `video with src attribute`() {
+        val html =
+            """
+            <html><body>
+            <div class="enclosure"><p class="enclosure-content"><video preload="none" src="https://media.example.com/clip.mp4" controls="controls"></video></p></div>
+            </body></html>
+            """.trimIndent()
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(
+            listOf(
+                LinearVideo(
+                    ids = emptySet(),
+                    sources = listOf(
+                        LinearVideoSource("https://media.example.com/clip.mp4", "https://media.example.com/clip.mp4", null, null, null, null),
+                    ),
+                ),
+            ),
+            result,
+        )
+    }
+
+    @Test
+    fun `video with poster`() {
+        val html = "<html><body><video poster=\"poster.jpg\"><source src=\"video.mp4\" type=\"video/mp4\"></video></body></html>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals("https://example.com/poster.jpg", (result[0] as LinearVideo).imageThumbnail)
+    }
+
+    @Test
     fun `video with two sources`() {
         val html =
             """

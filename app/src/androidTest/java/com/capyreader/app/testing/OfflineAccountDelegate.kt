@@ -13,6 +13,7 @@ data class OfflineArticle(
     val id: String,
     val title: String,
     val publishedAt: ZonedDateTime,
+    val contentHTML: String = "<p>$title</p>",
 )
 
 class OfflineAccountDelegate(private val database: Database) : AccountDelegate {
@@ -106,7 +107,7 @@ class OfflineAccountDelegate(private val database: Database) : AccountDelegate {
             feed_id = FEED_ID,
             title = article.title,
             author = null,
-            content_html = "<p>${article.title}</p>",
+            content_html = article.contentHTML,
             extracted_content_url = null,
             url = "$FEED_URL/${article.id}",
             summary = article.title,

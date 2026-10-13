@@ -44,6 +44,7 @@ import com.capyreader.app.ui.articles.LocalArticlePaneExpansion
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
 import com.capyreader.app.ui.articles.media.MediaSceneStrategy
 import com.capyreader.app.ui.articles.media.MediaScreen
+import com.capyreader.app.ui.articles.media.VideoScreen
 import com.capyreader.app.ui.articles.rememberArticlePaneExpansion
 import com.capyreader.app.ui.shared.materialSharedAxisXIn
 import com.capyreader.app.ui.shared.materialSharedAxisXOut
@@ -201,6 +202,7 @@ fun App(
                             onBackPressed = { backStack.removeLastOrNull() },
                             onSelectArticle = { id -> backStack.openArticle(id, key.searchQuery) },
                             onSelectMedia = { media -> backStack.add(Route.MediaViewer(media)) },
+                            onFullscreenVideo = { uri -> backStack.add(Route.VideoViewer(uri)) },
                         )
                     }
                     entry<Route.MediaViewer>(
@@ -208,6 +210,12 @@ fun App(
                     ) { key ->
                         MediaScreen(
                             media = key.media,
+                            onDismiss = { backStack.removeLastOrNull() },
+                        )
+                    }
+                    entry<Route.VideoViewer> { key ->
+                        VideoScreen(
+                            uri = key.uri,
                             onDismiss = { backStack.removeLastOrNull() },
                         )
                     }

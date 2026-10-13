@@ -37,6 +37,7 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,10 +81,17 @@ import com.jocmp.mallet.LinearTextAnnotationLink
 import com.jocmp.mallet.LinearTextBlockStyle
 import com.jocmp.mallet.LinearVideo
 import com.jocmp.mallet.toTableData
+import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
+import org.koin.compose.koinInject
 
 private const val MAX_IMAGE_WIDTH_PX = 2000
 private const val PLACEHOLDER_ASPECT_RATIO = 3f / 2f
 private val DEFAULT_VIDEO_ASPECT_RATIO = 16f / 9f
+
+private val VIDEO_MEASURE_TIMEOUT = 3.seconds
 private val CORNER_SHAPE = RoundedCornerShape(3.dp)
 
 @Composable
@@ -537,22 +545,53 @@ fun VideoElement(
 ) {
     val source = video.firstSource
     val showImages = LocalReaderStyle.current.showImages
-    val thumbnail = video.imageThumbnail
     val label = stringResource(R.string.reader_play_video)
     val videoID = source.youtubeVideoID
     var isPlaying by rememberSaveable(source.uri) { mutableStateOf(false) }
 
+    val poster = if (videoID == null) {
+        video.imageThumbnail ?: source.uri
+    } else {
+        video.imageThumbnail
+    }
+
+    val aspectRatios = koinInject<VideoAspectRatios>()
+    val isAspectRatioUnknown = videoID == null && source.aspectRatio == null
+    var isMeasuring by remember(source.uri) { mutableStateOf(isAspectRatioUnknown) }
+
+    LaunchedEffect(source.uri, isAspectRatioUnknown) {
+        if (isAspectRatioUnknown) {
+            withTimeoutOrNull(VIDEO_MEASURE_TIMEOUT) {
+                coroutineScope {
+                    if (poster != null && showImages) {
+                        launch { aspectRatios.measurePoster(source.uri, poster) }
+                    }
+                    aspectRatios.probe(source.uri)
+                }
+            }
+        }
+
+        isMeasuring = false
+    }
+
+    val measuredAspectRatio = aspectRatios[source.uri]
+
+    if (isMeasuring && measuredAspectRatio == null && !isPlaying) {
+        return
+    }
+
     val aspectRatio = if (videoID == null) {
-        source.aspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
+        source.aspectRatio ?: measuredAspectRatio ?: DEFAULT_VIDEO_ASPECT_RATIO
     } else {
         DEFAULT_VIDEO_ASPECT_RATIO
     }
 
-    val frame = modifier
+    val background = modifier
         .fillMaxWidth()
-        .aspectRatio(aspectRatio)
         .clip(CORNER_SHAPE)
         .background(Color.Black)
+
+    val frame = background.aspectRatio(aspectRatio)
 
     if (isPlaying && videoID != null) {
         YoutubePlayer(
@@ -563,19 +602,23 @@ fun VideoElement(
         return
     }
 
+    if (isPlaying) {
+        InlineVideoPlayer(
+            uri = source.uri,
+            initialAspectRatio = aspectRatio,
+            onFullscreen = actions.onFullscreenVideo,
+            modifier = background,
+        )
+        return
+    }
+
     Box(
         contentAlignment = Alignment.Center,
-        modifier = frame.clickable {
-            if (videoID == null) {
-                actions.onLinkClick(source.link, null)
-            } else {
-                isPlaying = true
-            }
-        },
+        modifier = frame.clickable { isPlaying = true },
     ) {
-        if (thumbnail != null && showImages) {
+        if (poster != null && showImages) {
             AsyncImage(
-                model = thumbnail,
+                model = poster,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),

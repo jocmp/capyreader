@@ -40,6 +40,7 @@ fun ArticleDetailScreen(
     onBackPressed: () -> Unit,
     onSelectArticle: (id: String) -> Unit,
     onSelectMedia: (media: Media) -> Unit,
+    onFullscreenVideo: (uri: String) -> Unit,
     viewModel: ArticleViewModel = koinViewModel(),
 ) {
     LaunchedEffect(articleID) {
@@ -124,6 +125,7 @@ fun ArticleDetailScreen(
                 contentRevision = viewModel.contentRevision,
                 flattened = viewModel.flattenedArticle,
                 onSelectMedia = onSelectMedia,
+                onFullscreenVideo = onFullscreenVideo,
                 onSelectAudio = { audio -> audioController.play(audio) },
                 onPauseAudio = { audioController.pause() },
                 onSelectArticle = onSelectArticle,
