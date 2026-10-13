@@ -196,6 +196,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.tests.androidx.ui.junit4)
     androidTestImplementation(libs.tests.androidx.uiautomator)
+    androidTestImplementation(libs.mockwebserver3)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.tests.androidx.ui.manifest)
 }
