@@ -16,6 +16,10 @@ bump-release-production: ## Bump Google Play version
 changelog: ## Prep next release notes
 	./scripts/changelog
 
+.PHONY: review-opml
+review-opml: ## Save Play review account subscriptions, e.g. OPML=~/Desktop/subscriptions.xml
+	./scripts/review-opml $(OPML)
+
 test: ## Run all tests
 	./gradlew test --build-cache
 

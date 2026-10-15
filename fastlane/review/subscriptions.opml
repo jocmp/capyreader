@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <title>Play review subscriptions</title>
+  </head>
+  <body>
+<outline text="Feedbin Blog" title="Feedbin Blog" type="rss" xmlUrl="https://feedbin.com/blog/atom.xml" htmlUrl="http://pubsubhubbub.superfeedr.com/"/>
+<outline text="The Verge -  Reviews" title="The Verge -  Reviews" type="rss" xmlUrl="https://www.theverge.com/rss/reviews/index.xml" htmlUrl="https://www.theverge.com/reviews"/>
+<outline text="Ars Technica" title="Ars Technica" type="rss" xmlUrl="https://feeds.arstechnica.com/arstechnica/science" htmlUrl="https://arstechnica.com"/>
+<outline text="Multicore" title="Multicore" type="rss" xmlUrl="https://www.multicore.blog/feed" htmlUrl="https://www.multicore.blog"/>
+<outline text="NASA Image of the Day" title="NASA Image of the Day" type="rss" xmlUrl="https://www.nasa.gov/feed/" htmlUrl="https://www.nasa.gov"/>
+    <outline text="News" title="News">
+<outline text="Feedbin Blog" title="Feedbin Blog" type="rss" xmlUrl="https://feedbin.com/blog/atom.xml" htmlUrl="http://pubsubhubbub.superfeedr.com/"/>
+<outline text="Ars Technica" title="Ars Technica" type="rss" xmlUrl="https://feeds.arstechnica.com/arstechnica/science" htmlUrl="https://arstechnica.com"/>
+    </outline>
+    <outline text="Tech" title="Tech">
+<outline text="Feedbin Blog" title="Feedbin Blog" type="rss" xmlUrl="https://feedbin.com/blog/atom.xml" htmlUrl="http://pubsubhubbub.superfeedr.com/"/>
+<outline text="The Verge -  Reviews" title="The Verge -  Reviews" type="rss" xmlUrl="https://www.theverge.com/rss/reviews/index.xml" htmlUrl="https://www.theverge.com/reviews"/>
+    </outline>
+  </body>
+</opml>
