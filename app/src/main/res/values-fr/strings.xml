@@ -376,4 +376,6 @@
     <string name="reader_play_audio">Lire le son</string>
     <string name="reader_article_truncated">Cet article est trop long pour être affiché dans son intégralité.</string>
     <string name="reader_open_in_browser">Ouvrir dans le navigateur</string>
+    <string name="reader_video_enter_fullscreen">Passer en plein écran</string>
+    <string name="reader_video_exit_fullscreen">Quitter le plein écran</string>
 </resources>
