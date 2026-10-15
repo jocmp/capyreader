@@ -283,4 +283,19 @@
     <string name="settings_option_auto_delete_articles_title">Аўтавыдаленне артыкулаў</string>
     <string name="after_read_all_behavior_default">Прадвызначана</string>
     <string name="after_read_all_behavior_open_next_feed">Адкрыць наступную стужку</string>
+    <string name="mark_all_read_button_position">Размяшчэнне кнопкі «Пазначыць усё як прачытанае»</string>
+    <string name="mark_read_position_toolbar">Панэль інструментаў</string>
+    <string name="reader_open_in_browser">Адкрыць у браўзеры</string>
+    <string name="reader_article_truncated">Гэты артыкул занадта доўгі, каб паказаць яго цалкам.</string>
+    <string name="reader_play_audio">Прайграць аўдыя</string>
+    <string name="reader_play_video">Прайграць відэа</string>
+    <string name="badge_style_hide">Схаваць</string>
+    <string name="badge_style_dot">Кропка</string>
+    <string name="badge_style_count">Колькасць</string>
+    <string name="auth_fields_show_advanced">Пашыраныя параметры</string>
+    <string name="search_no_results">Нічога не знойдзена</string>
+    <string name="settings_search_no_results">Няма вынікаў</string>
+    <string name="settings_search_placeholder">Налады пошуку</string>
+    <string name="settings_section_storage">Сховішча</string>
+    <string name="settings_section_content">Змесціва</string>
 </resources>
