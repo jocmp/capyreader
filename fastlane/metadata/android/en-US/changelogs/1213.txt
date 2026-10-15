@@ -1,19 +1,18 @@
 Added
 
-• All-new native article reader with selectable text
-• Play YouTube and video enclosures inline
-• Searchable settings
+• New native article reader
+• YouTube and video enclosures now play inline
 • E Ink page turns, page keys and reduced motion
 • Sort order per article filter
+• Searchable settings
 
 Updated
 
-• Status filter moves to a compact bottom bar
-• New Media3 audio player
+• New audio player and status styling
 • Translations thanks to volunteers!
 
 Fixed
 
 • Sync label removals from FreshRSS and Reader API servers
 • Show stars after re-starring elsewhere
-• Old read articles no longer flash in on refresh
+• Old read articles no longer flicker on refresh
