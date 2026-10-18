@@ -339,4 +339,7 @@
     <string name="mark_read_position_toolbar">Tresna-barra</string>
     <string name="mark_read_position_floating_action_button">Ekintza-botoi flotagarria</string>
     <string name="mark_all_read_button_position">Markatu dena irakurritako gisa botoiaren posizioa</string>
+    <string name="article_list_sort_newest">Berriena</string>
+    <string name="article_list_sort_oldest">Zaharrena</string>
+    <string name="settings_section_content">Edukia</string>
 </resources>
