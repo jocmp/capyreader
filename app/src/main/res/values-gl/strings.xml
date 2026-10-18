@@ -372,4 +372,6 @@
     <string name="reader_play_audio">Reproducir son</string>
     <string name="reader_article_truncated">Este artigo é demasiado grande para mostralo ao completo.</string>
     <string name="reader_open_in_browser">Abrir no navegador</string>
+    <string name="reader_video_enter_fullscreen">Ver en pantalla completa</string>
+    <string name="reader_video_exit_fullscreen">Saír da pantalla completa</string>
 </resources>
