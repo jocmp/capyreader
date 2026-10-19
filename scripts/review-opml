@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+
+source = ARGV.fetch(0) do
+  warn "Usage: make review-opml OPML=path/to/subscriptions.xml"
+  exit 1
+end
+
+destination = File.join(__dir__, "..", "fastlane", "review", "subscriptions.opml")
+
+opml = File.read(source)
+  .sub(%r{<title>.*?</title>}, "<title>Play review subscriptions</title>")
+  .gsub(%r{^\s*<dateCreated>.*?</dateCreated>\n}, "")
+  .gsub(%r{^\s*<ownerEmail>.*?</ownerEmail>\n}, "")
+
+FileUtils.mkdir_p(File.dirname(destination))
+File.write(destination, opml)
+
+puts "./fastlane/review/subscriptions.opml"
