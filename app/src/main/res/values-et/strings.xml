@@ -364,13 +364,13 @@
     <string name="reader_tap_zone_previous">Keri üles</string>
     <string name="reader_tap_zone_next">Keri alla</string>
     <string name="settings_e_ink_page_turn_keys_title">Lehe pööramise nupud</string>
-    <string name="settings_e_ink_page_turn_keys_subtitle">Helivaljuse nupud, lehtede pööramine ja leht üles/alla nuppude kasutus</string>
+    <string name="settings_e_ink_page_turn_keys_subtitle">Helivaljuse nupud, lehepööramise nupud ja Leht üles/alla nupud pööravad artikli lehti</string>
     <string name="settings_section_storage">Andmeruum</string>
     <string name="settings_search_placeholder">Otsi seadistustest</string>
     <string name="settings_search_no_results">Tulemusi pole</string>
     <string name="search_no_results">Tulemusi ei leidu</string>
     <string name="feed_nav_drawer_open">Ava menüü</string>
-    <string name="badge_style_count">Arv/loendus</string>
+    <string name="badge_style_count">Arv</string>
     <string name="badge_style_dot">Punkt</string>
     <string name="badge_style_hide">Peida</string>
     <string name="reader_play_video">Esita videot</string>

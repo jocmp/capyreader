@@ -295,7 +295,7 @@
     <string name="auth_fields_show_advanced">Пашыраныя параметры</string>
     <string name="search_no_results">Нічога не знойдзена</string>
     <string name="settings_search_no_results">Няма вынікаў</string>
-    <string name="settings_search_placeholder">Налады пошуку</string>
+    <string name="settings_search_placeholder">Пошук у наладах</string>
     <string name="settings_section_storage">Сховішча</string>
     <string name="settings_section_content">Змесціва</string>
 </resources>

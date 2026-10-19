@@ -366,12 +366,12 @@
     <string name="reader_tap_zone_next">Превъртете надолу</string>
     <string name="reader_tap_zone_previous">Превъртете нагоре</string>
     <string name="settings_e_ink_page_turn_keys_title">Бутони за прелистване на страници</string>
-    <string name="settings_e_ink_page_turn_keys_subtitle">Клавиши за сила на звука, прелистване на страници и прелистване на страници нагоре/надолу</string>
+    <string name="settings_e_ink_page_turn_keys_subtitle">Клавишите за сила на звука, за прелистване и Page Up/Down прелистват страниците на статията</string>
     <string name="settings_section_storage">Съхранение</string>
-    <string name="settings_search_placeholder">Настройки за търсене</string>
+    <string name="settings_search_placeholder">Търсене в настройките</string>
     <string name="settings_search_no_results">Няма резултати</string>
     <string name="search_no_results">Няма намерени резултати</string>
-    <string name="feed_nav_drawer_open">Отваряне на чекмеджето за навигация</string>
+    <string name="feed_nav_drawer_open">Отваряне на навигационното меню</string>
     <string name="badge_style_count">Брой</string>
     <string name="badge_style_dot">Точка</string>
     <string name="badge_style_hide">Скриване</string>
