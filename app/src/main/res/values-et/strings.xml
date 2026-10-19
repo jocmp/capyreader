@@ -358,4 +358,26 @@
     <string name="settings_section_e_ink">E-tint</string>
     <string name="settings_reduce_motion_title">Vähenda animatsioone</string>
     <string name="settings_reduce_motion_subtitle">Jäta visuaalsed üleminekud ja liikumisefektid vahele</string>
+    <string name="settings_e_ink_tap_to_page_title">Klõpsa lehe pööramiseks</string>
+    <string name="settings_e_ink_scrollbar_title">E-tindi kerimisriba</string>
+    <string name="settings_e_ink_scrollbar_subtitle">Näita artiklite loendis laiemat kerimisriba</string>
+    <string name="reader_tap_zone_previous">Keri üles</string>
+    <string name="reader_tap_zone_next">Keri alla</string>
+    <string name="settings_e_ink_page_turn_keys_title">Lehe pööramise nupud</string>
+    <string name="settings_e_ink_page_turn_keys_subtitle">Helivaljuse nupud, lehtede pööramine ja leht üles/alla nuppude kasutus</string>
+    <string name="settings_section_storage">Andmeruum</string>
+    <string name="settings_search_placeholder">Otsi seadistustest</string>
+    <string name="settings_search_no_results">Tulemusi pole</string>
+    <string name="search_no_results">Tulemusi ei leidu</string>
+    <string name="feed_nav_drawer_open">Ava menüü</string>
+    <string name="badge_style_count">Arv/loendus</string>
+    <string name="badge_style_dot">Punkt</string>
+    <string name="badge_style_hide">Peida</string>
+    <string name="reader_play_video">Esita videot</string>
+    <string name="reader_play_audio">Esita heliriba</string>
+    <string name="reader_article_truncated">Täismahus näitamiseks on see artikkel liiga pikk.</string>
+    <string name="reader_open_in_browser">Ava veebibrauseris</string>
+    <string name="settings_e_ink_tap_to_page_subtitle">Lehe jagu tagasi- või edasiliikumiseks klõpsa artikli vasakut või paremat äärt</string>
+    <string name="reader_video_enter_fullscreen">Ava täisekraanivaade</string>
+    <string name="reader_video_exit_fullscreen">Välja täisekraanivaatest</string>
 </resources>

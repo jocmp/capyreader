@@ -377,4 +377,6 @@
     <string name="reader_play_audio">播放音频</string>
     <string name="reader_article_truncated">这篇文章太长无法完整显示。</string>
     <string name="reader_open_in_browser">在浏览器中打开</string>
+    <string name="reader_video_enter_fullscreen">进入全屏</string>
+    <string name="reader_video_exit_fullscreen">退出全屏</string>
 </resources>
