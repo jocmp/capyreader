@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -104,7 +105,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -824,23 +825,18 @@ private fun MarkReadOnScrollEffect(
 
     val currentArticles by rememberUpdatedState(articles)
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
+    var lastItemCount by remember { mutableIntStateOf(0) }
 
     if (enabled) {
         LaunchedEffect(listState) {
-            var newest: ListHead? = null
-
-            snapshotFlow {
-                currentArticles.itemSnapshotList.firstOrNull()?.let {
-                    ListHead(id = it.id, publishedAt = it.publishedAt)
-                }
-            }
-                .filterNotNull()
+            snapshotFlow { currentArticles.itemCount }
+                .filter { it > 0 }
                 .distinctUntilChanged()
-                .collect { head ->
-                    val seen = newest
-                    newest = head
+                .collect { itemCount ->
+                    val previousItemCount = lastItemCount
+                    lastItemCount = itemCount
 
-                    if (seen != null && head.publishedAt.isAfter(seen.publishedAt)) {
+                    if (previousItemCount > 0 && itemCount != previousItemCount) {
                         listState.scrollToItem(0)
                     }
                 }
