@@ -47,10 +47,11 @@ class NewArticlesIndicator {
 fun rememberNewArticlesIndicator(
     articles: PresentedArticles,
     listState: LazyListState,
+    enabled: Boolean,
 ): NewArticlesIndicator {
     val indicator = remember(articles.filter, articles.sortOrder) { NewArticlesIndicator() }
     val items = articles.items
-    val tracking = articles.sortOrder == SortOrder.NEWEST_FIRST
+    val tracking = enabled && articles.sortOrder == SortOrder.NEWEST_FIRST
 
     LaunchedEffect(indicator, items, tracking) {
         if (!tracking) {

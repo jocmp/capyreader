@@ -104,6 +104,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -246,6 +247,7 @@ fun ArticleScreen(
         val newArticles = rememberNewArticlesIndicator(
             articles = presentedArticles,
             listState = listState,
+            enabled = !viewModel.markReadOnScrollEnabled,
         )
 
         val (scrolledFilter, setScrolledFilter) = rememberSaveable(
@@ -277,7 +279,6 @@ fun ArticleScreen(
         MarkReadOnScrollEffect(
             listState = listState,
             articles = articles,
-            newArticles = newArticles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
@@ -613,7 +614,7 @@ fun ArticleScreen(
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
-                                            showNewArticles = newArticles.isVisible && !viewModel.markReadOnScrollEnabled,
+                                            showNewArticles = newArticles.isVisible,
                                             scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
@@ -809,7 +810,6 @@ fun canOpenNextFeed(
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
     articles: LazyPagingItems<Article>,
-    newArticles: NewArticlesIndicator,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
     clampScrollHighWaterMark: (Int) -> Unit,
@@ -826,10 +826,24 @@ private fun MarkReadOnScrollEffect(
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
 
     if (enabled) {
-        LaunchedEffect(newArticles.isVisible) {
-            if (newArticles.isVisible) {
-                listState.scrollToItem(0)
+        LaunchedEffect(listState) {
+            var newest: ListHead? = null
+
+            snapshotFlow {
+                currentArticles.itemSnapshotList.firstOrNull()?.let {
+                    ListHead(id = it.id, publishedAt = it.publishedAt)
+                }
             }
+                .filterNotNull()
+                .distinctUntilChanged()
+                .collect { head ->
+                    val seen = newest
+                    newest = head
+
+                    if (seen != null && head.publishedAt.isAfter(seen.publishedAt)) {
+                        listState.scrollToItem(0)
+                    }
+                }
         }
 
         LaunchedEffect(listState) {
