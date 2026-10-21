@@ -15,22 +15,34 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.SortOrder
 import kotlinx.coroutines.flow.first
+import java.time.OffsetDateTime
 
 class PresentedArticles(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
+    val since: OffsetDateTime,
+    val refreshed: Boolean,
     val items: LazyPagingItems<Article>,
 )
 
 @Composable
 fun rememberPresentedArticles(page: ArticleListPage): PresentedArticles {
     val items = key(page) { page.articles.collectAsLazyPagingItems() }
-    var presented by remember { mutableStateOf(PresentedArticles(page.filter, page.sortOrder, items)) }
+    var presented by remember { mutableStateOf(presentedArticles(page, items)) }
 
     LaunchedEffect(items) {
         snapshotFlow { items.loadState.refresh }.first { it !is LoadState.Loading }
-        presented = PresentedArticles(page.filter, page.sortOrder, items)
+        presented = presentedArticles(page, items)
     }
 
     return presented
 }
+
+private fun presentedArticles(page: ArticleListPage, items: LazyPagingItems<Article>) =
+    PresentedArticles(
+        filter = page.filter,
+        sortOrder = page.sortOrder,
+        since = page.since,
+        refreshed = page.refreshed,
+        items = items,
+    )

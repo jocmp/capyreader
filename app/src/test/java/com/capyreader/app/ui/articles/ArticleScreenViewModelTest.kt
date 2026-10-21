@@ -172,6 +172,33 @@ class ArticleScreenViewModelTest {
     }
 
     @Test
+    fun `marks the article list built after a refresh as refreshed`() = runTest {
+        every { account.preferences.lastRefreshedAt.get() } returns
+            ZonedDateTime.parse("2023-11-14T22:13:20Z").toEpochSecond()
+
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        assertFalse(viewModel.articleList.value.refreshed)
+
+        viewModel.refresh(ArticleFilter.default())
+        advanceUntilIdle()
+
+        assertTrue(viewModel.articleList.value.refreshed)
+    }
+
+    @Test
+    fun `does not mark the article list as refreshed on filter changes`() = runTest {
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+
+        viewModel.selectStatus(ArticleStatus.STARRED)
+        advanceUntilIdle()
+
+        assertFalse(viewModel.articleList.value.refreshed)
+    }
+
+    @Test
     fun `requestNextFeed opens next feed after current feed's unread count drops to zero`() = runTest {
         val initialFilter = ArticleFilter.Feeds(
             feedID = "1",

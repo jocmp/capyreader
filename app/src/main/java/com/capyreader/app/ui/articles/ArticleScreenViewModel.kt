@@ -161,7 +161,7 @@ class ArticleScreenViewModel(
     private fun sortOrder(filter: ArticleFilter) =
         appPreferences.articleListOptions.getSortOrder(filter).get()
 
-    private fun buildArticleList(key: ArticlePagerKey): ArticleListPage {
+    private fun buildArticleList(key: ArticlePagerKey, refreshed: Boolean = false): ArticleListPage {
         articleListScope?.cancel()
 
         val parent = viewModelScope.coroutineContext
@@ -172,6 +172,8 @@ class ArticleScreenViewModel(
         return ArticleListPage(
             filter = key.filter,
             sortOrder = key.sort,
+            since = key.since,
+            refreshed = refreshed,
             articles = pagerFlow(key).cachedIn(scope),
         )
     }
@@ -327,9 +329,11 @@ class ArticleScreenViewModel(
 
     init {
         viewModelScope.launch {
-            listSession.flatMapLatest(::listPagerKeys).collect { key ->
+            listSession.flatMapLatest { session ->
+                listPagerKeys(session).map { key -> session to key }
+            }.collect { (session, key) ->
                 if (key != articleListKey) {
-                    _articleList.value = buildArticleList(key)
+                    _articleList.value = buildArticleList(key, refreshed = session.refreshed)
                 }
             }
         }
@@ -531,7 +535,7 @@ class ArticleScreenViewModel(
         updateArticlesSince()
 
         refreshFilter(filter) {
-            updateArticlesSince()
+            updateArticlesSince(refreshed = true)
             isPullToRefreshing = false
             resetScrollHighWaterMark()
             onComplete()
@@ -717,12 +721,16 @@ class ArticleScreenViewModel(
         startListSession(filter)
     }
 
-    private fun updateArticlesSince() {
-        startListSession(latestFilter)
+    private fun updateArticlesSince(refreshed: Boolean = false) {
+        startListSession(latestFilter, refreshed = refreshed)
     }
 
-    private fun startListSession(filter: ArticleFilter) {
-        val session = ListSession(filter = filter, since = OffsetDateTime.now().plusSeconds(1))
+    private fun startListSession(filter: ArticleFilter, refreshed: Boolean = false) {
+        val session = ListSession(
+            filter = filter,
+            since = OffsetDateTime.now().plusSeconds(1),
+            refreshed = refreshed,
+        )
         listSession.value = session
         // Share the list's session cutoff so the reader's neighbor pinning matches the list exactly.
         articleCutoff.set(session.since)
@@ -884,10 +892,13 @@ private data class ArticlePagerKey(
 class ArticleListPage(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
+    val since: OffsetDateTime,
+    val refreshed: Boolean,
     val articles: Flow<PagingData<Article>>,
 )
 
 private data class ListSession(
     val filter: ArticleFilter,
     val since: OffsetDateTime,
+    val refreshed: Boolean = false,
 )

@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Saver
@@ -107,6 +106,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
+import java.time.OffsetDateTime
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class, FlowPreview::class)
 @Composable
@@ -277,7 +277,7 @@ fun ArticleScreen(
 
         MarkReadOnScrollEffect(
             listState = listState,
-            articles = articles,
+            presentedArticles = presentedArticles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
@@ -809,7 +809,7 @@ fun canOpenNextFeed(
 @Composable
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
-    articles: LazyPagingItems<Article>,
+    presentedArticles: PresentedArticles,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
     clampScrollHighWaterMark: (Int) -> Unit,
@@ -822,18 +822,25 @@ private fun MarkReadOnScrollEffect(
         .markReadOnScroll
         .collectChangesWithCurrent()
 
-    val currentArticles by rememberUpdatedState(articles)
+    val currentArticles by rememberUpdatedState(presentedArticles.items)
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
 
-    if (enabled) {
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
-                .distinctUntilChanged()
-                .collect {
-                    listState.scrollToItem(0)
-                }
-        }
+    val (scrolledRefresh, setScrolledRefresh) = rememberSaveable {
+        mutableStateOf<OffsetDateTime?>(null)
+    }
 
+    val refreshedSince = presentedArticles.since
+
+    if (presentedArticles.refreshed && refreshedSince != scrolledRefresh) {
+        SideEffect {
+            if (enabled) {
+                listState.requestScrollToItem(0)
+            }
+            setScrolledRefresh(refreshedSince)
+        }
+    }
+
+    if (enabled) {
         LaunchedEffect(listState) {
             snapshotFlow { currentArticles.itemCount }
                 .distinctUntilChanged()
