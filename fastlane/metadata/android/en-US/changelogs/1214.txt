@@ -1,0 +1,5 @@
+Fixed
+
+• Article list keeps its position when closing an article
+• Links inside headings are selectable again
+• Opening an article in the browser marks it read
