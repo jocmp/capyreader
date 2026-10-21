@@ -246,7 +246,6 @@ fun ArticleScreen(
         val newArticles = rememberNewArticlesIndicator(
             articles = presentedArticles,
             listState = listState,
-            enabled = !viewModel.markReadOnScrollEnabled,
         )
 
         val (scrolledFilter, setScrolledFilter) = rememberSaveable(
@@ -278,6 +277,7 @@ fun ArticleScreen(
         MarkReadOnScrollEffect(
             listState = listState,
             articles = articles,
+            newArticles = newArticles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
@@ -613,7 +613,7 @@ fun ArticleScreen(
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
-                                            showNewArticles = newArticles.isVisible,
+                                            showNewArticles = newArticles.isVisible && !viewModel.markReadOnScrollEnabled,
                                             scrollToTop = { scrollToTop() },
                                             onMarkAllRead = { range ->
                                                 onMarkAllRead(range)
@@ -809,6 +809,7 @@ fun canOpenNextFeed(
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
     articles: LazyPagingItems<Article>,
+    newArticles: NewArticlesIndicator,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
     clampScrollHighWaterMark: (Int) -> Unit,
@@ -825,12 +826,10 @@ private fun MarkReadOnScrollEffect(
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
 
     if (enabled) {
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
-                .distinctUntilChanged()
-                .collect {
-                    listState.scrollToItem(0)
-                }
+        LaunchedEffect(newArticles.isVisible) {
+            if (newArticles.isVisible) {
+                listState.scrollToItem(0)
+            }
         }
 
         LaunchedEffect(listState) {
