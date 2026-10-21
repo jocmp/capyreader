@@ -142,8 +142,10 @@ private class Flattening {
                         "h1" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH1) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -152,8 +154,10 @@ private class Flattening {
                         "h2" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH2) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -162,8 +166,10 @@ private class Flattening {
                         "h3" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH3) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -172,8 +178,10 @@ private class Flattening {
                         "h4" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH4) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -182,8 +190,10 @@ private class Flattening {
                         "h5" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH5) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -192,8 +202,10 @@ private class Flattening {
                         "h6" -> {
                             asElement(blockStyle) {
                                 withLinearTextAnnotation(LinearTextAnnotationH6) {
-                                    element.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                                        linearTextBuilder,
+                                    linearizeChildren(
+                                        element.childNodes(),
+                                        blockStyle = blockStyle,
+                                        baseUrl = baseUrl,
                                     )
                                 }
                             }
@@ -1023,18 +1035,6 @@ fun TextNode.appendCorrectlyNormalizedWhiteSpace(builder: LinearTextBuilder) {
 fun appendOneNormalizedWhitespace(builder: LinearTextBuilder) {
     if (!builder.endsWithWhitespace) {
         builder.append(' ')
-    }
-}
-
-fun Element.appendCorrectlyNormalizedWhiteSpaceRecursively(builder: LinearTextBuilder) {
-    for (child in childNodes()) {
-        when (child) {
-            is TextNode -> child.appendCorrectlyNormalizedWhiteSpace(builder)
-            is Element ->
-                child.appendCorrectlyNormalizedWhiteSpaceRecursively(
-                    builder,
-                )
-        }
     }
 }
 
