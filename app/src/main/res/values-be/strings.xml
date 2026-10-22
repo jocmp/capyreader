@@ -320,7 +320,7 @@
     <string name="settings_option_enable_audio_player">Аўдыяпрайгравальнік</string>
     <string name="settings_clear_all_articles_text">Вы ўпэўнены, што хочаце выдаліць са сваёй прылады ўсе прачытаныя артыкулы, якія не ў абраных? Гэта дзеянне нельга адрабіць.</string>
     <string name="opml_exporter_failure">Не ўдалося экспартаваць</string>
-    <string name="starred_export_button_text">Экпарт абраных артыкулаў</string>
+    <string name="starred_export_button_text">Экспарт абраных артыкулаў</string>
     <string name="settings_gestures_reader_swipe_down">Чырканне ўніз</string>
     <string name="settings_gestures_reader_swipe_up">Чырканне ўверх</string>
     <string name="settings_gestures_list_row_swipe_start">Чырканне ўправа</string>
