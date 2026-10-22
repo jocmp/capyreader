@@ -375,4 +375,6 @@
     <string name="reader_open_in_browser">Im Browser öffnen</string>
     <string name="settings_section_layout">Layout</string>
     <string name="settings_section_e_ink">E-Ink</string>
+    <string name="reader_video_exit_fullscreen">Vollbildmodus verlassen</string>
+    <string name="reader_video_enter_fullscreen">Vollbildmodus aktivieren</string>
 </resources>
