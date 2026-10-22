@@ -39,7 +39,36 @@ class MalletTest {
 
         assertEquals(1, result.size)
         assertEquals(
-            LinearText(ids = emptySet(), "Link small", LinearTextBlockStyle.TEXT, LinearTextAnnotation(LinearTextAnnotationH2, 0, 9)),
+            LinearText(
+                ids = emptySet(),
+                "Link small",
+                LinearTextBlockStyle.TEXT,
+                LinearTextAnnotation(LinearTextAnnotationH2, 0, 9),
+                LinearTextAnnotation(LinearTextAnnotationLink("http://example.com"), 0, 3),
+            ),
+            result[0],
+        )
+    }
+
+    @Test
+    fun `inline formatting inside headers is kept`() {
+        val html =
+            """
+            <html><body><h3><a href="/post"><em>Start</em> up</a></h3></body></html>
+            """.trimIndent()
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(1, result.size)
+        assertEquals(
+            LinearText(
+                ids = emptySet(),
+                "Start up",
+                LinearTextBlockStyle.TEXT,
+                LinearTextAnnotation(LinearTextAnnotationH3, 0, 7),
+                LinearTextAnnotation(LinearTextAnnotationLink("https://example.com/post"), 0, 7),
+                LinearTextAnnotation(LinearTextAnnotationItalic, 0, 4),
+            ),
             result[0],
         )
     }

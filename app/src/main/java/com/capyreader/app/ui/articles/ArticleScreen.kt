@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -104,6 +105,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -397,6 +399,7 @@ fun ArticleScreen(
             // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
             val url = article.url
             if (article.openInBrowser && url != null) {
+                viewModel.markReadAsync(article.id)
                 linkOpener.open(url.toString().toUri())
             } else {
                 val searchQuery = search.query.takeIf { search.isActive && !it.isNullOrBlank() }
@@ -823,13 +826,20 @@ private fun MarkReadOnScrollEffect(
 
     val currentArticles by rememberUpdatedState(articles)
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
+    var lastItemCount by remember { mutableIntStateOf(0) }
 
     if (enabled) {
         LaunchedEffect(listState) {
-            snapshotFlow { listState.layoutInfo.totalItemsCount }
+            snapshotFlow { currentArticles.itemCount }
+                .filter { it > 0 }
                 .distinctUntilChanged()
-                .collect {
-                    listState.scrollToItem(0)
+                .collect { itemCount ->
+                    val previousItemCount = lastItemCount
+                    lastItemCount = itemCount
+
+                    if (previousItemCount > 0 && itemCount != previousItemCount) {
+                        listState.scrollToItem(0)
+                    }
                 }
         }
 
