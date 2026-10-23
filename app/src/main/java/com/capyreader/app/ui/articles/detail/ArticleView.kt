@@ -80,10 +80,11 @@ fun ArticleView(
     val openLink = articleOpenLink(article)
 
     val onToggleFullContent = {
-        if (article.fullContent == Article.FullContentState.LOADED) {
-            fullContent.reset()
-        } else if (article.fullContent != Article.FullContentState.LOADING) {
-            fullContent.fetch()
+        when (article.fullContent) {
+            Article.FullContentState.LOADED,
+            Article.FullContentState.ERROR -> fullContent.reset()
+            Article.FullContentState.NONE -> fullContent.fetch()
+            Article.FullContentState.LOADING -> Unit
         }
     }
 

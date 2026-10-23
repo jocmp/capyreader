@@ -4,6 +4,7 @@ import com.jocmp.mercury.ContentType
 import com.jocmp.mercury.Mercury
 import com.jocmp.mercury.ParseOptions
 import com.jocmp.mercury.ParseResult
+import kotlinx.coroutines.CancellationException
 import java.net.URL
 
 class MercuryParser(
@@ -16,13 +17,19 @@ class MercuryParser(
 
         val html = fetchHtml(url).getOrElse { return Result.failure(it) }
 
-        val result = Mercury.parse(
-            url = url.toString(),
-            options = ParseOptions(
-                html = html,
-                contentType = ContentType.HTML,
-            ),
-        )
+        val result = try {
+            Mercury.parse(
+                url = url.toString(),
+                options = ParseOptions(
+                    html = html,
+                    contentType = ContentType.HTML,
+                ),
+            )
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            return Result.failure(ParseError(message = e.message, cause = e))
+        }
 
         val content = result.content
 
@@ -50,7 +57,10 @@ class MercuryParser(
             .replace("<", "&lt;")
     }
 
-    class ParseError(override val message: String?) : Throwable(message = message)
+    class ParseError(
+        override val message: String?,
+        override val cause: Throwable? = null,
+    ) : Throwable(message = message, cause = cause)
 
     companion object {
         private val IMG_TAG = Regex("<img[\\s>]", RegexOption.IGNORE_CASE)
