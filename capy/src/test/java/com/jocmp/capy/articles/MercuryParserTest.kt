@@ -75,4 +75,28 @@ class MercuryParserTest {
 
         assertEquals(failure, error)
     }
+
+    @Test
+    fun `does not throw when the extractor fails`() = runTest {
+        val html = """
+            <html>
+              <body>
+                <article>
+                  <div class="duet--layout--entry-body">
+                    <p>${"Lead paragraph of the article body. ".repeat(8)}</p>
+                    <div>
+                      <img srcset="https://example.com/a.jpg 1x">
+                      <img srcset="https://example.com/b.jpg 1x">
+                    </div>
+                  </div>
+                </article>
+              </body>
+            </html>
+        """.trimIndent()
+        val parser = MercuryParser { Result.success(html) }
+
+        val result = parser.fetch(URL("https://www.theverge.com/2026/10/23/example"))
+
+        assertTrue(result.isFailure || result.getOrThrow().contains("Lead paragraph"))
+    }
 }
