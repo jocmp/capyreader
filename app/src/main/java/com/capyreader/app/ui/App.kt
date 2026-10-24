@@ -223,6 +223,7 @@ fun App(
             )
           }
           }
+          PureBlackNavigationBar(appPreferences)
         }
     }
 }
