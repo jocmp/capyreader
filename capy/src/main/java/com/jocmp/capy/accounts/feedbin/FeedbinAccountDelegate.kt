@@ -178,6 +178,28 @@ internal class FeedbinAccountDelegate(
         }
     }
 
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> = withErrorHandling {
+        val response = feedbin.createSubscription(CreateSubscriptionRequest(feed_url = url))
+        val subscription = response.body()
+
+        if (response.code() > 300 || subscription == null) {
+            throw AddFeedResult.Error.FeedNotFound()
+        }
+
+        folderTitles.forEach { folderTitle ->
+            feedbin.createTagging(
+                CreateTaggingRequest(
+                    feed_id = subscription.feed_id.toString(),
+                    name = folderTitle
+                )
+            )
+        }
+    }
+
     override suspend fun updateFeed(
         feed: Feed,
         title: String,

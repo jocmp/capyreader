@@ -28,6 +28,20 @@ interface AccountDelegate {
         folderTitles: List<String>?
     ): AddFeedResult
 
+    suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> {
+        val result = addFeed(url = url, title = title, folderTitles = folderTitles)
+
+        if (result is AddFeedResult.Failure) {
+            return Result.failure(result.error)
+        }
+
+        return Result.success(Unit)
+    }
+
     suspend fun updateFeed(
         feed: Feed,
         title: String,
