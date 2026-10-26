@@ -98,4 +98,38 @@ class ConvertLazyLoadedImagesTest {
             result,
         )
     }
+
+    @Test
+    fun `does not replace an img src with an unexpanded URL template`() {
+        val html =
+            "<img src=\"http://example.com/resize/1100/?url=foo.jpg\" " +
+                "data-template=\"http://example.com/resize/{width}/?url=foo.jpg\">"
+        val doc = Doc.load(html)
+        val result = convertLazyLoadedImages(doc)("body").html()
+
+        assertEquals(html, result)
+    }
+
+    @Test
+    fun `does not replace an img src or srcset with a percent-encoded URL template`() {
+        val html =
+            "<img src=\"http://example.com/foo.jpg\" " +
+                "data-template=\"http://example.com/resize/%7Bwidth%7D/foo.jpg\" " +
+                "data-srcset=\"http://example.com/resize/%7Bwidth%7D/foo.jpg 2x\">"
+        val doc = Doc.load(html)
+        val result = convertLazyLoadedImages(doc)("body").html()
+
+        assertEquals(html, result)
+    }
+
+    @Test
+    fun `moves a URL template to src when there is no usable src`() {
+        val doc = Doc.load("<img data-pattern=\"http://example.com/foo-{{size}}.jpg\">")
+        val result = convertLazyLoadedImages(doc)("body").html()
+
+        assertEquals(
+            "<img data-pattern=\"http://example.com/foo-{{size}}.jpg\" src=\"http://example.com/foo-{{size}}.jpg\">",
+            result,
+        )
+    }
 }

@@ -14,8 +14,14 @@ import kotlinx.serialization.json.jsonObject
 fun convertLazyLoadedImages(doc: Doc): Doc {
     doc("img").each { _, img ->
         val attrs = getAttrs(img)
+        // Keep a working src over a template; with no usable src, leave templates
+        // to extractors that expand them (e.g. NYT's `{{size}}`).
+        val src = attrs["src"].orEmpty()
+        val hasUsableSrc = IS_LINK.containsMatchIn(src) && !IS_URL_TEMPLATE.containsMatchIn(src)
         attrs.keys.forEach { attr ->
             val value = attrs[attr] ?: return@forEach
+            if (hasUsableSrc && IS_URL_TEMPLATE.containsMatchIn(value)) return@forEach
+
             if (attr != "srcset" && IS_LINK.containsMatchIn(value) && IS_SRCSET.containsMatchIn(value)) {
                 img.attr("srcset", value)
             } else if (
