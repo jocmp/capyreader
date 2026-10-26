@@ -1,0 +1,11 @@
+Updated
+
+• Translations thanks to volunteers!
+
+Fixed
+
+• Live stream (HLS) videos and audio play instead of crashing
+• Unsupported video formats open in the browser
+• Very wide or tall images no longer crash the reader
+• Full content can be turned off after a failed download
+• Full content images on NPR, Android Authority, The Verge, Polygon and Motley Fool
