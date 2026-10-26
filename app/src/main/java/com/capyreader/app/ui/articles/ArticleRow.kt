@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.capyreader.app.R
+import com.capyreader.app.common.ArticleListLayout
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
@@ -91,6 +92,7 @@ data class ArticleRowOptions(
     val shortenTitles: Boolean = true,
     val accentColors: Boolean = false,
     val dim: Boolean = true,
+    val layout: ArticleListLayout = ArticleListLayout.default,
 )
 
 @Composable
@@ -118,10 +120,6 @@ fun ArticleRow(
     )
     val haptics = LocalHapticFeedback.current
     val (isArticleMenuOpen, setArticleMenuOpen) = remember { mutableStateOf(false) }
-    val labelsActions = LocalLabelsActions.current
-    val snackbarHost = LocalSnackbarHost.current
-    val scope = rememberCoroutineScope()
-    val savedForLaterMessage = stringResource(R.string.saved_for_later_success)
     val openArticleMenu = {
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         setArticleMenuOpen(true)
@@ -239,36 +237,55 @@ fun ArticleRow(
                 colors = colors
             )
 
-            val articleActions = LocalArticleActions.current
-
-            ArticleActionMenu(
-                expanded = isArticleMenuOpen,
+            ArticleRowActionMenu(
                 article = article,
                 index = index,
-                showLabels = labelsActions.showLabels,
-                showSaveForLater = articleActions.showSaveForLater,
-                onMarkAllRead = {
-                    setArticleMenuOpen(false)
-                    onMarkAllRead(it)
-                },
-                onOpenLabels = {
-                    setArticleMenuOpen(false)
-                    labelsActions.openSheet(article.id)
-                },
-                onSaveForLater = { url ->
-                    setArticleMenuOpen(false)
-                    articleActions.saveForLater(url) { result ->
-                        if (result.isSuccess) {
-                            scope.launch { snackbarHost.showSnackbar(savedForLaterMessage) }
-                        }
-                    }
-                },
-                onDismissRequest = {
-                    setArticleMenuOpen(false)
-                }
+                expanded = isArticleMenuOpen,
+                onDismissRequest = { setArticleMenuOpen(false) },
+                onMarkAllRead = onMarkAllRead,
             )
         }
     }
+}
+
+@Composable
+fun ArticleRowActionMenu(
+    article: Article,
+    index: Int,
+    expanded: Boolean,
+    onDismissRequest: () -> Unit,
+    onMarkAllRead: (range: MarkRead) -> Unit,
+) {
+    val labelsActions = LocalLabelsActions.current
+    val articleActions = LocalArticleActions.current
+    val snackbarHost = LocalSnackbarHost.current
+    val scope = rememberCoroutineScope()
+    val savedForLaterMessage = stringResource(R.string.saved_for_later_success)
+
+    ArticleActionMenu(
+        expanded = expanded,
+        article = article,
+        index = index,
+        showLabels = labelsActions.showLabels,
+        showSaveForLater = articleActions.showSaveForLater,
+        onMarkAllRead = {
+            onDismissRequest()
+            onMarkAllRead(it)
+        },
+        onOpenLabels = {
+            onDismissRequest()
+            labelsActions.openSheet(article.id)
+        },
+        onSaveForLater = { url ->
+            onDismissRequest()
+            articleActions.saveForLater(url) { result ->
+                if (result.isSuccess) {
+                    scope.launch { snackbarHost.showSnackbar(savedForLaterMessage) }
+                }
+            }
+        },
+        onDismissRequest = onDismissRequest,
+    )
 }
 
 @Composable

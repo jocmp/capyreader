@@ -6,6 +6,7 @@ import com.capyreader.app.ui.settings.panels.AccountNameRow
 import com.capyreader.app.ui.settings.panels.AccountServerRow
 import com.capyreader.app.ui.settings.panels.AfterReadAllRow
 import com.capyreader.app.ui.settings.panels.ArticleListFontSizeRow
+import com.capyreader.app.ui.settings.panels.ArticleListLayoutRow
 import com.capyreader.app.ui.settings.panels.ArticleListPreviewRow
 import com.capyreader.app.ui.settings.panels.AutoDeleteRow
 import com.capyreader.app.ui.settings.panels.BackActionRow
@@ -67,6 +68,7 @@ fun SettingContent(
         Setting.REMOVE_ACCOUNT -> RemoveAccountRow(onRemoveAccount = onRemoveAccount)
         Setting.SORT_ORDER -> SortOrderSetting()
         Setting.ARTICLE_LIST_PREVIEW -> ArticleListPreviewRow()
+        Setting.ARTICLE_LIST_LAYOUT -> ArticleListLayoutRow()
         Setting.ARTICLE_LIST_FONT_SIZE -> ArticleListFontSizeRow()
         Setting.SHOW_FEED_NAME -> ShowFeedNameRow()
         Setting.SHOW_FEED_ICONS -> ShowFeedIconsRow()

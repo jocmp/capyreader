@@ -70,6 +70,7 @@ object SettingsRegistry {
                     title = R.string.settings_section_layout,
                     settings = listOf(
                         Setting.ARTICLE_LIST_PREVIEW,
+                        Setting.ARTICLE_LIST_LAYOUT,
                         Setting.ARTICLE_LIST_FONT_SIZE,
                         Setting.SHOW_FEED_NAME,
                         Setting.SHOW_FEED_ICONS,
@@ -199,6 +200,7 @@ object SettingsRegistry {
             Setting.REMOVE_ACCOUNT -> removeAccountTitle(source)
             Setting.SORT_ORDER -> R.string.article_list_sort_title
             Setting.ARTICLE_LIST_PREVIEW -> null
+            Setting.ARTICLE_LIST_LAYOUT -> R.string.article_list_layout_label
             Setting.ARTICLE_LIST_FONT_SIZE -> R.string.article_font_scale_label
             Setting.SHOW_FEED_NAME -> R.string.settings_article_list_feed_name
             Setting.SHOW_FEED_ICONS -> R.string.settings_article_list_feed_icons
@@ -244,6 +246,11 @@ object SettingsRegistry {
             Setting.SORT_ORDER -> listOf(
                 R.string.article_list_sort_newest_first,
                 R.string.article_list_sort_oldest_first,
+            )
+
+            Setting.ARTICLE_LIST_LAYOUT -> listOf(
+                R.string.article_list_layout_list,
+                R.string.article_list_layout_cards,
             )
 
             Setting.READER_STYLE -> listOf(

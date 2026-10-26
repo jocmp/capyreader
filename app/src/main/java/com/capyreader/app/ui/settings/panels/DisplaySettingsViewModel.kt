@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.capyreader.app.common.ArticleListLayout
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.BadgeStyle
@@ -42,6 +43,9 @@ class DisplaySettingsViewModel(
     private val _shortenTitles = mutableStateOf(appPreferences.articleListOptions.shortenTitles.get())
 
     var fontScale by mutableStateOf(appPreferences.articleListOptions.fontScale.get())
+        private set
+
+    var layout by mutableStateOf(appPreferences.articleListOptions.layout.get())
         private set
 
     var badgeStyle by mutableStateOf(appPreferences.badgeStyle.get())
@@ -90,6 +94,12 @@ class DisplaySettingsViewModel(
         appPreferences.articleListOptions.fontScale.set(fontScale)
 
         this.fontScale = fontScale
+    }
+
+    fun updateLayout(layout: ArticleListLayout) {
+        appPreferences.articleListOptions.layout.set(layout)
+
+        this.layout = layout
     }
 
     fun updateImagePreview(imagePreview: ImagePreview) {

@@ -5,10 +5,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.capyreader.app.R
+import com.capyreader.app.common.ArticleListLayout
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.common.RowItem
 import com.capyreader.app.preferences.AfterReadAllBehavior
@@ -42,6 +47,9 @@ import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.preferences.BackAction
 import com.capyreader.app.preferences.BadgeStyle
 import com.capyreader.app.preferences.RowSwipeOption
+import com.capyreader.app.ui.articles.ArticleCardContent
+import com.capyreader.app.ui.articles.ArticleCardImage
+import com.capyreader.app.ui.articles.ArticleCardSurface
 import com.capyreader.app.ui.articles.ArticleListFontScale
 import com.capyreader.app.ui.articles.ArticleRowOptions
 import com.capyreader.app.ui.articles.FaviconBadge
@@ -56,22 +64,41 @@ import com.capyreader.app.ui.settings.filters.FilterKeywords
 import com.capyreader.app.ui.settings.filters.FiltersItem
 import com.capyreader.app.ui.settings.filters.LocalFilterKeywords
 import com.capyreader.app.ui.theme.LocalAppTheme
+import com.jocmp.capy.Article
 import java.lang.String.CASE_INSENSITIVE_ORDER
+import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlin.math.roundToInt
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ArticleListPreviewRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
-    PreviewArticleRow(
-        rowOptions = ArticleRowOptions(
-            showIcon = viewModel.showFeedIcons,
-            showSummary = viewModel.showSummary,
-            showFeedName = viewModel.showFeedName,
-            imagePreview = viewModel.imagePreview,
-            fontScale = viewModel.fontScale,
-            shortenTitles = viewModel.shortenTitles,
-            dim = false,
-        )
+    val rowOptions = ArticleRowOptions(
+        showIcon = viewModel.showFeedIcons,
+        showSummary = viewModel.showSummary,
+        showFeedName = viewModel.showFeedName,
+        imagePreview = viewModel.imagePreview,
+        fontScale = viewModel.fontScale,
+        shortenTitles = viewModel.shortenTitles,
+        dim = false,
+        layout = viewModel.layout,
+    )
+
+    if (viewModel.layout == ArticleListLayout.CARDS) {
+        PreviewArticleCards(rowOptions = rowOptions)
+    } else {
+        PreviewArticleRow(rowOptions = rowOptions)
+    }
+}
+
+@Composable
+fun ArticleListLayoutRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    PreferenceSelect(
+        selected = viewModel.layout,
+        update = viewModel::updateLayout,
+        options = ArticleListLayout.entries,
+        label = R.string.article_list_layout_label,
+        optionText = { stringResource(it.translationKey) },
     )
 }
 
@@ -358,6 +385,73 @@ private fun PreviewArticleRow(rowOptions: ArticleRowOptions) {
         )
         }
     }
+}
+
+@Composable
+private fun PreviewArticleCards(rowOptions: ArticleRowOptions) {
+    val currentTime = remember { LocalDateTime.now() }
+    val article = remember(currentTime) { previewArticle(currentTime) }
+    val image: (@Composable () -> Unit)? = if (rowOptions.imagePreview == ImagePreview.NONE) {
+        null
+    } else {
+        { ArticleCardImage(imageURL = null) }
+    }
+
+    StyleProviders(options = rowOptions) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .height(IntrinsicSize.Min)
+        ) {
+            ArticleCardSurface(
+                selected = false,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+            ) {
+                ArticleCardContent(
+                    article = article,
+                    currentTime = currentTime,
+                    options = rowOptions,
+                    image = image,
+                )
+            }
+            ArticleCardSurface(
+                selected = false,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+            ) {
+                ArticleCardContent(
+                    article = article,
+                    currentTime = currentTime,
+                    options = rowOptions,
+                    image = null,
+                )
+            }
+        }
+    }
+}
+
+private fun previewArticle(currentTime: LocalDateTime): Article {
+    val publishedAt = currentTime.minusHours(3).atZone(ZoneId.systemDefault())
+
+    return Article(
+        id = "preview",
+        feedID = "preview",
+        title = PREVIEW_TITLE,
+        author = null,
+        contentHTML = "",
+        url = null,
+        summary = PREVIEW_SUMMARY,
+        imageURL = null,
+        updatedAt = publishedAt,
+        publishedAt = publishedAt,
+        read = false,
+        starred = false,
+        feedName = PREVIEW_FEED_NAME,
+    )
 }
 
 @Composable

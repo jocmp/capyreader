@@ -3,6 +3,7 @@ package com.capyreader.app.preferences
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.capyreader.app.common.FeedGroup
+import com.capyreader.app.common.ArticleListLayout
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.refresher.RefreshInterval
 import com.capyreader.app.ui.articles.ArticleListFontScale
@@ -181,6 +182,9 @@ class AppPreferences(context: Context) {
 
         val imagePreview: Preference<ImagePreview>
             get() = preferenceStore.getEnum("article_display_image_preview", ImagePreview.default)
+
+        val layout: Preference<ArticleListLayout>
+            get() = preferenceStore.getEnum("article_display_layout", ArticleListLayout.default)
 
         val shortenTitles: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_display_shorten_titles", true)

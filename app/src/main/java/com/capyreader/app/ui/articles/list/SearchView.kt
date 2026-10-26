@@ -37,6 +37,7 @@ import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleList
 import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.articles.listPaneInsets
+import com.capyreader.app.ui.articles.rememberArticleColumns
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
@@ -59,11 +60,13 @@ fun SearchView(
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
     val listState = rememberLazyListState()
+    val columns = rememberArticleColumns()
 
     ScrollToSelectedArticleEffect(
         selectedArticleKey = selectedArticleID,
         articles = results,
         listState = listState,
+        columns = columns,
     )
 
     Surface(
@@ -134,6 +137,7 @@ fun SearchView(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
                         listState = listState,
+                        columns = columns,
                         dimReadArticles = dimReadArticles,
                         onSelect = onSelect,
                     )

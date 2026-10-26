@@ -227,6 +227,7 @@ fun ArticleScreen(
             setUpdatePasswordDialogOpen(true)
         }
         val listState = articles.rememberLazyListState()
+        val columns = rememberArticleColumns()
 
         ResetScrollBehaviorEffect(
             listState = listState,
@@ -243,11 +244,13 @@ fun ArticleScreen(
             selectedArticleKey = selectedArticleID,
             articles = articles,
             listState = listState,
+            columns = columns,
         )
 
         val newArticles = rememberNewArticlesIndicator(
             articles = presentedArticles,
             listState = listState,
+            columns = columns,
             enabled = !viewModel.markReadOnScrollEnabled,
         )
 
@@ -279,6 +282,7 @@ fun ArticleScreen(
 
         MarkReadOnScrollEffect(
             listState = listState,
+            columns = columns,
             articles = articles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
@@ -614,6 +618,7 @@ fun ArticleScreen(
                                             contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
                                             selectedArticleKey = selectedArticleID,
                                             listState = listState,
+                                            columns = columns,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
                                             showNewArticles = newArticles.isVisible,
@@ -811,6 +816,7 @@ fun canOpenNextFeed(
 @Composable
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
+    columns: ArticleColumns,
     articles: LazyPagingItems<Article>,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
@@ -851,7 +857,10 @@ private fun MarkReadOnScrollEffect(
 
         LaunchedEffect(listState) {
             snapshotFlow {
-                listState.firstVisibleItemIndex - 1
+                val scrolledPastRow = listState.firstVisibleItemIndex - 1
+
+                columns.lastArticleIn(scrolledPastRow)
+                    .coerceAtMost(currentArticles.itemCount - 1)
             }
                 .distinctUntilChanged()
                 .debounce(500)

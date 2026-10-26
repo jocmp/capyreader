@@ -47,6 +47,7 @@ class NewArticlesIndicator {
 fun rememberNewArticlesIndicator(
     articles: PresentedArticles,
     listState: LazyListState,
+    columns: ArticleColumns,
     enabled: Boolean,
 ): NewArticlesIndicator {
     val indicator = remember(articles.filter, articles.sortOrder) { NewArticlesIndicator() }
@@ -64,7 +65,9 @@ fun rememberNewArticlesIndicator(
                 ListHead(id = it.id, publishedAt = it.publishedAt)
             }
             val firstVisible = listState.layoutInfo.visibleItemsInfo.firstOrNull()
-            val presentedID = firstVisible?.let { items.itemSnapshotList.getOrNull(it.index)?.id }
+            val presentedID = firstVisible?.let {
+                items.itemSnapshotList.getOrNull(columns.firstArticleIn(it.index))?.id
+            }
 
             Triple(head, firstVisible?.key as? String, presentedID)
         }.collect { (head, firstVisibleID, presentedID) ->
