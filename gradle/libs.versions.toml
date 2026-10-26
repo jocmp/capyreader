@@ -64,7 +64,7 @@ converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", versi
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.1.1" }
 jsoup = { module = "org.jsoup:jsoup", version = "1.23.2" }
 jspecify = { module = "org.jspecify:jspecify", version = "1.0.1" }
-mercury-parser = { module = "com.jocmp:mercury-parser", version = "0.1.2" }
+mercury-parser = { module = "com.jocmp:mercury-parser", version = "0.1.3" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager" }
