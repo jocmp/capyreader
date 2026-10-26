@@ -1,0 +1,16 @@
+{
+  "title": "steventroughtonsmith/marzipanify: Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP)",
+  "content": "<div score=\"6.25\"><div><article class=\"markdown-body entry-content container-lg\">\n<p>marzipanify is an unsupported commandline tool to take an existing iOS Simulator binary (with minimum deployment target of iOS 12.0) and statically convert it and its embedded libraries &amp; frameworks to run on macOS 10.14's UIKit runtime (Marzipan).</p>\n<p>This isn't a tool to automatically port your iOS app to the Mac — moreso something to get you up and running quickly.</p>\n<p>As an iOS Simulator app links against the iOS Simulator version of UIKit, it won't contain Marzipan-specific APIs like menu &amp; window toolbar support. It's up to the user to know how to class-dump UIKitCore from /System/iOSSupport/System/Library/PrivateFrameworks and check for the macOS-specific UIKit APIs at runtime so the app can be a good Mac citizen.</p>\n<p>N.B. You will still need all the relevant Marzipan-related enabler steps (like disabling SIP &amp; AMFI) before a converted app will run with your signature.</p>\n<h2><a id=\"user-content-usage\" class=\"anchor\" href=\"https://github.com/#usage\"><svg class=\"octicon octicon-link\" width=\"16\" height=\"16\"><path></path></svg></a>Usage</h2>\n<p><code>marzipanify MyApp.app|MyFramework.framework|MyBinary</code></p>\n<h2><a id=\"user-content-screenshot\" class=\"anchor\" href=\"https://github.com/#screenshot\"><svg class=\"octicon octicon-link\" width=\"16\" height=\"16\"><path></path></svg></a>Screenshot</h2>\n<p><a href=\"https://camo.githubusercontent.com/45ebf6e5b7da9b4cddd6d4f1057af9a12ce48884c153a6767641d5176513174c/68747470733a2f2f686363646174612e73332e616d617a6f6e6177732e636f6d2f67685f6d61727a6970616e6966792e6a7067\"><img src=\"https://hccdata.s3.amazonaws.com/gh_marzipanify.jpg\" alt=\"screenshot\"></a></p>\n</article></div></div>",
+  "author": null,
+  "date_published": "2020-07-07T12:10:51.000Z",
+  "lead_image_url": "https://opengraph.githubassets.com/269d23b56f85a1ea9bd3cf5b2f34ddbce8cfaff7a74c6561f59d84db67b8efc1/steventroughtonsmith/marzipanify",
+  "dek": "Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP) - steventroughtonsmith/marzipanify: Convert an iOS Simulator app bundle to an iOSMac (Marzipan) one (Unsupported & undocumented, WIP)",
+  "next_page_url": null,
+  "url": null,
+  "domain": null,
+  "excerpt": null,
+  "word_count": null,
+  "direction": null,
+  "total_pages": 1,
+  "rendered_pages": 1
+}

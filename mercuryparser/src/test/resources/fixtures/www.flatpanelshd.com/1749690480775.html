@@ -1,0 +1,2703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <META HTTP-EQUIV="Content-type" content="text/html; charset=iso-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript">
+         /* Dealing with cookies */ function cn_get_cookie_val(offset) { var endstr = document.cookie.indexOf (";", offset); if (endstr == -1) endstr = document.cookie.length; return decodeURIComponent(document.cookie.substring(offset, endstr)); } function cn_get_cookie(name) { var arg = name + "="; var alen = arg.length; var clen = document.cookie.length; var i = 0; while (i < clen) { var j = i + alen; if (document.cookie.substring(i, j) == arg) return cn_get_cookie_val (j); i = document.cookie.indexOf(" ", i) + 1; if (i == 0) break; } return null; } function cn_set_cookie(name, value) { var argv = cn_set_cookie.arguments; var argc = cn_set_cookie.arguments.length; var expires = (argc > 2) ? argv[2] : null; var domain = (argc > 3) ? argv[3] : null; var secure = (argc > 4) ? argv[4] : false; var path = '/'; if (value.length > 0) { document.cookie = name + "=" + (value ? encodeURIComponent (value) : '') + ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + ((path == null) ? "" : ("; path=" + path)) + ((domain == null) ? "" : ("; domain=" + domain)) + ((secure == true) ? "; secure" : ""); } else { document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'; } } /* -------------- Get ID in misc browser ------------------ */ function cn_get_id(id) { if (document.all) return (document.all[id]); else if (document.getElementById) return (document.getElementById(id)); else if (document.layers) return (document.layers[id]); else return null; } function forget_me() { var t = document.getElementsByTagName('input'); for (var i = 0; i < t.length; i++) { if (t[i].className == 'cn_comm_username' || t[i].className == 'cn_comm_email') { t[i].value = ''; t[i].disabled = ''; } if (t[i].name == 'isforgetme') { t[i].value = 'true'; } if (t[i].name == '__signature_key' || t[i].name == '__signature_dsi') { t[i].value = ''; } } cn_set_cookie('session', ''); cn_set_cookie('CUTENEWS_SESSION', ''); var c = document.getElementsByTagName('form')[0]; /* c.submit(); */ document.location.reload(); } function cn_more_expand(id) { var dis = cn_get_id(id); if (dis.style.display == 'none') dis.style.display = 'block'; else dis.style.display = 'none'; } function insertext(text, id) { cn_get_id(id).value +=" "+ text; cn_get_id(id).focus(); }
+    </script>
+    <noscript>Your browser is not Javascript enable or you have turn it off. We recommend you to
+        activate for better security reason
+    </noscript>
+    <title>Apple TV 4K reportedly gains audio passthrough support in tvOS 26 - FlatpanelsHD</title>
+    <meta name="description" content="Dolby Atmos in TrueHD and DTS:X in DTS-HD MA?">
+    <meta itemprop="author" content="Rasmus Larsen">
+    <meta itemprop="datePublished" content="2025-June-10T17:11:00+02:00">
+    <link rel="canonical"
+          href="https://www.flatpanelshd.com/news.php?subaction=showfull&id=1749568309"/>
+    <meta property="og:title"
+          content="Apple TV 4K reportedly gains audio passthrough support in tvOS 26">
+    <meta property="og:description" content="Dolby Atmos in TrueHD and DTS:X in DTS-HD MA?">
+    <meta property="og:article:published_time" content="2025-June-10T17:11:00+02:00">
+    <meta property="og:image" content="https://www.flatpanelshd.com/pictures/tvos26_2_small.jpg">
+    <meta property="og:url"
+          content="https://www.flatpanelshd.com/news.php?subaction=showfull&id=1749568309">
+    <meta property="og:type" content="article">
+    <meta property="fb:app_id" content="205615086482562">
+    <meta name="twitter:site" content="@Flatpanels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:alt" content="tvOS 26">
+    <meta name="pinterest" content="nopin"/>
+    <!-- Head script -->
+    <link rel="alternate" TYPE="application/rss+xml" TITLE="Flatpanels News" HREF="../rss/news.xml">
+    <link rel="alternate" TYPE="application/rss+xml" TITLE="Flatpanels reviews"
+          HREF="../rss/reviews.xml">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="../apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="../apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="120x120"
+          href="../apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="152x152"
+          href="../apple-touch-icon-152x152.png"/>
+    <link rel="icon" type="image/png" href="../favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="../favicon-16x16.png" sizes="16x16"/>
+    <meta name="application-name"
+          content="FlatpanelsHD - Guide to TVs, media streamers & monitors"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF"/>
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png"/>
+    <meta property="og:site_name" content="FlatpanelsHD">
+    <link href="//plus.google.com/+flatpanelsdk" rel="publisher"/>
+    <link href="../css/fontawesome513_all.css" rel="stylesheet">
+
+
+    <!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+    <script type="text/javascript" async=true>
+
+(function() {
+  var host = window.location.hostname;
+  var element = document.createElement('script');
+  var firstScript = document.getElementsByTagName('script')[0];
+  var url = 'https://cmp.inmobi.com'
+    .concat('/choice/', 'REDA9pqFuVpMj', '/', host, '/choice.js?tag_version=V3');
+  var uspTries = 0;
+  var uspTriesLimit = 3;
+  element.async = true;
+  element.type = 'text/javascript';
+  element.src = url;
+
+  firstScript.parentNode.insertBefore(element, firstScript);
+
+  function makeStub() {
+    var TCF_LOCATOR_NAME = '__tcfapiLocator';
+    var queue = [];
+    var win = window;
+    var cmpFrame;
+
+    function addFrame() {
+      var doc = win.document;
+      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+      if (!otherCMP) {
+        if (doc.body) {
+          var iframe = doc.createElement('iframe');
+
+          iframe.style.cssText = 'display:none';
+          iframe.name = TCF_LOCATOR_NAME;
+          doc.body.appendChild(iframe);
+        } else {
+          setTimeout(addFrame, 5);
+        }
+      }
+      return !otherCMP;
+    }
+
+    function tcfAPIHandler() {
+      var gdprApplies;
+      var args = arguments;
+
+      if (!args.length) {
+        return queue;
+      } else if (args[0] === 'setGdprApplies') {
+        if (
+          args.length > 3 &&
+          args[2] === 2 &&
+          typeof args[3] === 'boolean'
+        ) {
+          gdprApplies = args[3];
+          if (typeof args[2] === 'function') {
+            args[2]('set', true);
+          }
+        }
+      } else if (args[0] === 'ping') {
+        var retr = {
+          gdprApplies: gdprApplies,
+          cmpLoaded: false,
+          cmpStatus: 'stub'
+        };
+
+        if (typeof args[2] === 'function') {
+          args[2](retr);
+        }
+      } else {
+        if(args[0] === 'init' && typeof args[3] === 'object') {
+          args[3] = Object.assign(args[3], { tag_version: 'V3' });
+        }
+        queue.push(args);
+      }
+    }
+
+    function postMessageEventHandler(event) {
+      var msgIsString = typeof event.data === 'string';
+      var json = {};
+
+      try {
+        if (msgIsString) {
+          json = JSON.parse(event.data);
+        } else {
+          json = event.data;
+        }
+      } catch (ignore) {}
+
+      var payload = json.__tcfapiCall;
+
+      if (payload) {
+        window.__tcfapi(
+          payload.command,
+          payload.version,
+          function(retValue, success) {
+            var returnMsg = {
+              __tcfapiReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: payload.callId
+              }
+            };
+            if (msgIsString) {
+              returnMsg = JSON.stringify(returnMsg);
+            }
+            if (event && event.source && event.source.postMessage) {
+              event.source.postMessage(returnMsg, '*');
+            }
+          },
+          payload.parameter
+        );
+      }
+    }
+
+    while (win) {
+      try {
+        if (win.frames[TCF_LOCATOR_NAME]) {
+          cmpFrame = win;
+          break;
+        }
+      } catch (ignore) {}
+
+      if (win === window.top) {
+        break;
+      }
+      win = win.parent;
+    }
+    if (!cmpFrame) {
+      addFrame();
+      win.__tcfapi = tcfAPIHandler;
+      win.addEventListener('message', postMessageEventHandler, false);
+    }
+  };
+
+  makeStub();
+
+  function makeGppStub() {
+    const CMP_ID = 10;
+    const SUPPORTED_APIS = [
+      '2:tcfeuv2',
+      '6:uspv1',
+      '7:usnatv1',
+      '8:usca',
+      '9:usvav1',
+      '10:uscov1',
+      '11:usutv1',
+      '12:usctv1'
+    ];
+
+    window.__gpp_addFrame = function (n) {
+      if (!window.frames[n]) {
+        if (document.body) {
+          var i = document.createElement("iframe");
+          i.style.cssText = "display:none";
+          i.name = n;
+          document.body.appendChild(i);
+        } else {
+          window.setTimeout(window.__gpp_addFrame, 10, n);
+        }
+      }
+    };
+    window.__gpp_stub = function () {
+      var b = arguments;
+      __gpp.queue = __gpp.queue || [];
+      __gpp.events = __gpp.events || [];
+
+      if (!b.length || (b.length == 1 && b[0] == "queue")) {
+        return __gpp.queue;
+      }
+
+      if (b.length == 1 && b[0] == "events") {
+        return __gpp.events;
+      }
+
+      var cmd = b[0];
+      var clb = b.length > 1 ? b[1] : null;
+      var par = b.length > 2 ? b[2] : null;
+      if (cmd === "ping") {
+        clb(
+          {
+            gppVersion: "1.1", // must be Version.Subversion, current: 1.1
+            cmpStatus: "stub", // possible values: stub, loading, loaded, error
+            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+            signalStatus: "not ready", // possible values: not ready, ready
+            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
+            sectionList: [],
+            applicableSections: [-1],
+            gppString: "",
+            parsedSections: {},
+          },
+          true
+        );
+      } else if (cmd === "addEventListener") {
+        if (!("lastId" in __gpp)) {
+          __gpp.lastId = 0;
+        }
+        __gpp.lastId++;
+        var lnr = __gpp.lastId;
+        __gpp.events.push({
+          id: lnr,
+          callback: clb,
+          parameter: par,
+        });
+        clb(
+          {
+            eventName: "listenerRegistered",
+            listenerId: lnr, // Registered ID of the listener
+            data: true, // positive signal
+            pingData: {
+              gppVersion: "1.1", // must be Version.Subversion, current: 1.1
+              cmpStatus: "stub", // possible values: stub, loading, loaded, error
+              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+              signalStatus: "not ready", // possible values: not ready, ready
+              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+              cmpId: CMP_ID, // list of supported APIs
+              sectionList: [],
+              applicableSections: [-1],
+              gppString: "",
+              parsedSections: {},
+            },
+          },
+          true
+        );
+      } else if (cmd === "removeEventListener") {
+        var success = false;
+        for (var i = 0; i < __gpp.events.length; i++) {
+          if (__gpp.events[i].id == par) {
+            __gpp.events.splice(i, 1);
+            success = true;
+            break;
+          }
+        }
+        clb(
+          {
+            eventName: "listenerRemoved",
+            listenerId: par, // Registered ID of the listener
+            data: success, // status info
+            pingData: {
+              gppVersion: "1.1", // must be Version.Subversion, current: 1.1
+              cmpStatus: "stub", // possible values: stub, loading, loaded, error
+              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+              signalStatus: "not ready", // possible values: not ready, ready
+              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+              cmpId: CMP_ID, // CMP ID
+              sectionList: [],
+              applicableSections: [-1],
+              gppString: "",
+              parsedSections: {},
+            },
+          },
+          true
+        );
+      } else if (cmd === "hasSection") {
+        clb(false, true);
+      } else if (cmd === "getSection" || cmd === "getField") {
+        clb(null, true);
+      }
+      //queue all other commands
+      else {
+        __gpp.queue.push([].slice.apply(b));
+      }
+    };
+    window.__gpp_msghandler = function (event) {
+      var msgIsString = typeof event.data === "string";
+      try {
+        var json = msgIsString ? JSON.parse(event.data) : event.data;
+      } catch (e) {
+        var json = null;
+      }
+      if (typeof json === "object" && json !== null && "__gppCall" in json) {
+        var i = json.__gppCall;
+        window.__gpp(
+          i.command,
+          function (retValue, success) {
+            var returnMsg = {
+              __gppReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: i.callId,
+              },
+            };
+            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
+          },
+          "parameter" in i ? i.parameter : null,
+          "version" in i ? i.version : "1.1"
+        );
+      }
+    };
+    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+      window.__gpp = window.__gpp_stub;
+      window.addEventListener("message", window.__gpp_msghandler, false);
+      window.__gpp_addFrame("__gppLocator");
+    }
+  };
+
+  makeGppStub();
+
+  var uspStubFunction = function() {
+    var arg = arguments;
+    if (typeof window.__uspapi !== uspStubFunction) {
+      setTimeout(function() {
+        if (typeof window.__uspapi !== 'undefined') {
+          window.__uspapi.apply(window.__uspapi, arg);
+        }
+      }, 500);
+    }
+  };
+
+  var checkIfUspIsReady = function() {
+    uspTries++;
+    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+      console.warn('USP is not accessible');
+    } else {
+      clearInterval(uspInterval);
+    }
+  };
+
+  if (typeof window.__uspapi === 'undefined') {
+    window.__uspapi = uspStubFunction;
+    var uspInterval = setInterval(checkIfUspIsReady, 6000);
+  }
+})()
+
+</script>
+<!-- End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+
+
+<!-- Adnimation -->
+<script src="https://adncdn.net/ejoQqw6A" async></script>
+<!-- End Adnimation -->
+
+
+<script src="../js/jquery-1.9.1.min.js"></script>
+<script src="../js/tablesorter/jquery.tablesorter.js"></script>
+<script src="../js/jquery.tablesorter.widgets.js"></script>
+<script src="../owlcarousel/owl.carousel.min.js"></script>
+
+
+<!-- Google Custom Search -->
+<script>
+
+    (function() {
+      var cx = 'partner-pub-1433372727850650:8063553514';
+      var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = false;
+      gcse.src = (document.location.protocol == 'https' ? 'https:' : 'https:') +
+          '//www.google.com/cse/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+    })();
+    </s
+    ipt>
+ <!-- Google Custom Search
+
+
+    -->
+
+
+
+ <!-- An
+    lytics -->
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-6285622-1', { 'cookieFlags': 'SameSite=None; Secure' });
+  ga('set', 'anonymizeIp', true);
+  ga('send',
+
+    pageview'
+
+
+</script>
+ <!--
+
+    alytics -->
+
+<!-- Google Ta
+     Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','G
+    TM-MD8K26
+    ');</script>
+<!-- End Google Ta
+
+
+    ger -->
+
+
+
+
+
+<!
+    - Matomo
+        -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.flatpanelshd.com/matomo/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefo
+    e(g,s);
+
+    })();
+</script>
+<!-- End
+
+
+    omo Code -->
+
+
+
+<!-- Google t
+    g (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-6285
+    22-1"></
+        script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config
+    , 'UA-628
+
+
+    -1');
+</script>
+
+
+
+<script id="CyxTdqcG" data-sdk="1.0.4" d
+            ta-cfasync="false" src="https://html-load.com/loader.min.
+            s" charset="UTF-8" data="irrron6o4fhugojo4o2o4hch8hto8jhe2h4h8oso7o4ojfogh8h4oj5h4h4fo7o4hefogovh4oso7o4fh4oifuhyojojo7o4he52h4ocoso7o4huhk3sfo2hkh8huo8jo7o
+            qhcuh8hto8jqo4kh9" onload="let l=!1,k=Math.random().toString(),a='html-load.com';window.addEventListener('message',e=>{e.data===k+'_as_res'&&(l=!0)}),window.postMessage(k+'_as_req','*'),new Promise(e=>{let t=Math.random().toString(),r=Math.random().toString();window.addEventListener('message',e=>e.data===t&&window.postMessage(r,'*')),window.addEventListener('message',t=>t.data===r&&e()),window.postMessage(t,'*')}).then(()=>{window.setTimeout(()=>{if(!l){document.querySelectorAll('link,style').forEach((e)=>e.remove());let e=atob('RmFpbGVkIHRvIGxvYWQgd2Vic2l0ZSBwcm9wZXJseSBzaW5jZSA')+a+atob('IGlzIGJsb2NrZWQuIFBsZWFzZSBhbGxvdyA')+a;throw alert(e),fetch('https://error-report.com/report?type=loader_light&url='+btoa(location.href)+'&error='+btoa(e),{method:'POST'}).then(e=>e.text()).then(t=>{let r=document.createElement('iframe');r.src='https://info.error-report.com/modal?eventId='+t+'&error='+btoa(e)+'&domain='+a,r.setAttribute('style','width: 100vw; height: 100vh; z-index: 2147483647; position: fixed; left: 0; top: 0;'),document.body.appendChild(r);let o=e=>{'close-error-report'===e.data&&(r.remove(),window.removeEventListener('message',o))};window.addEventListener('message',o)}).catch(e=>{confirm(navigator.language.toLowerCase().startsWith('ko')?decodeURIComponent(escape(atob('7J6Y66q765CcIOyVoOuTnOu4lOuhnSDtlYTthLDroZwg7Ju57Y6Y7J207KeAIOuhnOuUqeyXkCDsi6TtjKjtlZjsmIDsirXri4jri6QuIOyVoOuTnOu4lOuhneydhCDruYTtmZzshLHtmZTtlZwg7ZuEIOybueyCrOydtO2KuOulvCDsnbTsmqntlbTso7zshLjsmpQuICjsnpDshLjtlZwg64K07Jqp7J2AICftmZXsnbgnIOuyhO2KvOydhCDriIzrn6wg7ZmV7J247ZW07KO87IS47JqUKQ'))):atob('VGhpcyBwYWdlIGNvdWxkIG5vdCBiZSBsb2FkZWQgcHJvcGVybHkgZHVlIHRvIGluY29ycmVjdCAvIGJhZCBmaWx0ZXJpbmcgcnVsZShzKSBvZiBhZGJsb2NrZXJzIGluIHVzZS4gUGxlYXNlIGRpc2FibGUgYWxsIGFkYmxvY2tlcnMgdG8gY29udGludWUgdXNpbmcgdGhlIHdlYnNpdGUuIChjbGljayBPSyBpZiB5b3UnZCBsaWtlIHRvIGxlYXJuIG1vcmUp'))?location.href='https://info.error-report.com/modal?eventId=&error='+btoa(e.toString())+'&domain='+a:location.reload()}),
+            rror(e)}},1e3)});" onerror="let e=document.getElementById('CyxTdqcG'),t=document.createElement('script');for(let r=0;r<e.attributes.length;r++)t.setAttribute(e.attributes[r].name,e.attributes[r].value);let s=new window.URL(e.src),a=['html-load.com','fb.html-load.com','content-loader.com','fb.content-loader.com'];if(void 0===window.as_retry&&(window.as_retry=0),window.as_retry>=a.length){document.querySelectorAll('link,style').forEach((e)=>e.remove());let o=atob('RmFpbGVkIHRvIGxvYWQgd2Vic2l0ZSBwcm9wZXJseSBzaW5jZSA')+a[0]+atob('IGlzIGJsb2NrZWQuIFBsZWFzZSBhbGxvdyA')+a[0];throw alert(o),fetch('https://error-report.com/report?type=loader_light&url='+btoa(location.href)+'&error='+btoa(o),{method:'POST'}).then(e=>e.text()).then(e=>{let r=document.createElement('iframe');r.src='https://info.error-report.com/modal?eventId='+e+'&error='+btoa(o)+'&domain='+a[0],r.setAttribute('style','width: 100vw; height: 100vh; z-index: 2147483647; position: fixed; left: 0; top: 0;'),document.body.appendChild(r);let f=e=>{'close-error-report'===e.data&&(r.remove(),window.removeEventListener('message',f))};window.addEventListener('message',f)}).catch(o=>{let l=navigator.language.toLowerCase().startsWith('ko')?decodeURIComponent(escape(atob('7J6Y66q765CcIOyVoOuTnOu4lOuhnSDtlYTthLDroZwg7Ju57Y6Y7J207KeAIOuhnOuUqeyXkCDsi6TtjKjtlZjsmIDsirXri4jri6QuIOyVoOuTnOu4lOuhneydhCDruYTtmZzshLHtmZTtlZwg7ZuEIOybueyCrOydtO2KuOulvCDsnbTsmqntlbTso7zshLjsmpQuICjsnpDshLjtlZwg64K07Jqp7J2AICftmZXsnbgnIOuyhO2KvOydhCDriIzrn6wg7ZmV7J247ZW07KO87IS47JqUKQ'))):atob('VGhpcyBwYWdlIGNvdWxkIG5vdCBiZSBsb2FkZWQgcHJvcGVybHkgZHVlIHRvIGluY29ycmVjdCAvIGJhZCBmaWx0ZXJpbmcgcnVsZShzKSBvZiBhZGJsb2NrZXJzIGluIHVzZS4gUGxlYXNlIGRpc2FibGUgYWxsIGFkYmxvY2tlcnMgdG8gY29udGludWUgdXNpbmcgdGhlIHdlYnNpdGUuIChjbGljayBPSyBpZiB5b3UnZCBsaWtlIHRvIGxlYXJuIG1vcmUp');confirm(l)?location.href='https://info.error-report.com/modal?eventId=&error='+btoa(o.toString())+'&domain='+a[0]:location.reload()}),Error(o)}s.host=a[window.as_retry++],t.setAttribute('src',s.href),t.setAttribute('as-async','true'),e.setAttribute('id', e.getAttribute('id')+'_'),e.parentNode.insertBefore(t,e),e.r
+
+    ve();"></script>
+
+	<script src="js/scoreParsers
+    2_6.js"></script>
+	<script src="js/productdbOthers_2024_03.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/modern-business.css" rel="stylesheet"
+
+    >
+
+    <!-- Own Carousel -->
+	<link rel="stylesheet" href=
+    "owlcarousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+
+    <!-- Custom Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='
+
+    stylesheet' type='t ext/css'>
+
+<script type="t
+        avascript"src="highslide/highslide-full.min.js">
+    // override Highslide settings here
+    // instead of editing the highslide.js file
+	hs.graphicsDir = '/highslide/graphics/';
+	hs.showCredits = false;
+	hs.captionEval = 'this.a.title';
+	hs.dimmingOpacity = 0.5;
+	hs.dimmi
+    gDuration
+
+
+    .allowMultipleInstances = fa
+    se;
+</script>
+
+
+<!-- TA
+        LA <HEAD> CODE -->
+<script type="text/javascript">
+  window._taboola = window._taboola || [];
+  _taboola.push({article:'auto'});
+  !function (e, f, u, i) {
+    if (!document.getElementById(i)){
+      e.async = 1;
+      e.src = u;
+      e.id = i;
+      f.parentNode.insertBefore(e, f);
+    }
+  }(document.createElement('script'),
+  document.getElementsByTagName('script')[0],
+  '//cdn.taboola.com/libtrc/mediagroupdk-network/loader.js',
+  'tb_loader_script');
+  if(window.performance && typeof window.performance.mark ==
+    'function
+
+
+    dow.performance.mark('t
+        ');}
+</script>
+
+
+<style type="text/css">
+    @media (min-width: 768px) {
+        .row.equal {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+  /* Remove later */
+.pricetable{
+    overflow: visible;
+}
+  /* Remove later */
+
+@media (min-width: 667px) {
+.disq-c-text {
+	display: inline !important;
+}
+}
+
+
+ 	@media (max-width: 666px) {
+  	.row {
+    margin-right: -24px;
+	margin-left: -24px;
+ 				}
+	.wide-table {
+	margin-right: -15px;
+	margin-left: -15px;
+	}
+	.wide-table2 {
+	margin-right: -15px;
+	margin-left: -15px;
+	}
+	.wide-infogram {
+	margin-right: -18px;
+	margin-left: -18px;
+	}
+	}
+
+	@media (min-width: 667px) and (max-width: 1020px){.wide-infogram{margin-left:-18px;margin-right:-18px;} .wide-table2{margin-left:-16px;margin-right:-16px;}}
+
+	@media (min-width: 1021px) and (max-width: 1199px){.wide-infogram{margin-left:-17px;margin-right:-17px;} .wide-table2{margin-left:-15px;margin-right:-15px;}}
+
+	@media (min-width: 1200px) {.wide-infogram{margin-left:-18px;margin-right:-18px;}
+
+    de-table2{margin-left:-16px;margin-right:-16px;}}
+
+</style>
+</head>
+
+<bo
+    dy>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="htt
+            s://www.googletagmanager.com/ns.html?id=GTM-MD8K26J"
+height="0" width
+="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<!-- Global co
+
+    ainer for right menu to m
+    e -->
+<
+        div id="sb-site">
+
+<!-- Top menu og logo -->
+	<style>
+body.modal-open {
+    padding-right: 0px !important;
+}
+input.gsc-input{
+	border-bottom-left-radius: 5px!important;
+  	border-top-left-radius: 5px!important;
+	font-size:15px !important;
+	height:40px !important;
+}
+input.gsc-search-button {
+	background-color: #006699 !important;
+	height: 40px !important;
+	color: #FFF !important;
+	position: relative !important;
+	border-bottom-right-radius:5px !important;
+	border-top-right-radius:5px !important;
+	margin-left: -6px !important;
+	font-size:13px !important;
+}
+img.rssfeedphoto{
+	max-width:100%;
+	padding-left:20px;
+	padding-right:20px;
+	margin-top: 20px;
+    margin-bottom: -10px;
+}
+.rssfeedimgdiv{
+    margin-left: 20px;
+    margin-bottom: -10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    height: 80px;
+    max-width: 100%;
+	display:block;
+    background-size: cover;
+}
+.divhover:hover{
+	background-color:#ddd;
+}
+@media (max-width: 666px) {
+.col-md-hide, .col-sm-hide {display:none}
+}
+@media (min-width: 667px) and (max-width: 1020px) {
+.col-md-hide, .col-sm-hide {display:none}
+}
+@media (min-width: 1021px) and (max-width: 1199px) {
+.col-md-hide, .col-sm-hide {display:none}
+}
+@media (min-width: 12
+    0px) {
+.
+
+
+    -hide, .col-s
+     {display:inherit}
+}
+</style>
+        <!-- Logo -->
+     <div class="topline hidden-xs">
+     	<div class="container hidden-xs" style="padding:0 0 0 0 !important;margin-top: 10px;">
+            <div class="to
+                    logo hidden-xs"><a href="//www.flatpanelshd.com/"><img src="pictures/FPHD_logo_reti
+            na_flat2.gif"/ height="55"
+    alt="FlatpanelsHD
+
+    logo"></a></div>
+        </div>
+     </div><!-- Logo End-->
+
+<!-- Navigation -->
+<nav class="navbar navbar-
+         tatic-top navbar-default navb
+         r-header-full yamm navbar-light" role="navigation" id="header" style="background-color:#FFF;border-top:1px
+        d #E7E7E7; border-bottom:1px solid #E7E7E7; z-index:100;">
+    <div class="conta
+                                                                      ner"><a href="//www.flatpanelshd.com/"><img class="visible-xs" style="pos
+                                                                      tion:absolute;width:65%;max-width:280px;left:
+            -12px;" src="pictures/FPHD_logo_retina_flat3.gif"></a>
+        <!-- C
+            e nav links, forms, and other conte
+                ng -->
+        <div class="pull-right visible-xs">
+            <
+                   a href="javascript:void(0);" style="width: 48px;height: 50px;" class="
+            sb-i
+            -navbar sb-toggle-right"><i class="
+                 fa fa-bars"></i></a>
+        </div>
+		<div class="pull-ri
+                s" style="margin-right:50px;font-size:19px;margin-top:12px;">
+            <a href="#" d
+            e="modal"
+            data-target="#myModal"><i class="fa fa-search"></i></a>
+        </div>
+        <
+                div class="colla
+                    se" id="
+                        bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="
+                        focus.php?subaction=showfull&id=1229341472">
+                    Recommendations</a>
+                </li>
+                <li>
+                    <a href="TVdatabase.php">TV Database</a>
+                </li>
+               <li class="dropdown yamm-fw">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">Reviews</a>
+                     <ul class="
+                                        dropdown-menu dropdown-menu-left">
+                        <li>
+                            <div class="yamm-content">
+                                <div
+                                                class="row">
+                                	 <div class="
+                                                    col-lg-3 col-md-6 col-sm-6 col-megamenu">
+                                        <div cla
+                                                        s="megamenu-block">
+                                            <h4 class="megam
+                                                        nu-block-title"><i class="fa
+                                                    fa-flag"></i> General</h4>
+                                            <ul>
+                                            	<li><a href="rev
+                                                                ews.php"><i class="fa fa-list-ul fa
+                                                            fw"></i> Show all reviews</a></li>
+												<li role="
+                                                    presentation" class
+                                                           ="dropdown-header" style=
+                                                                "height:28px;">Articles</li>
+                                                <li><a href="/focus.php?subaction=showfull&id=144
+                                                           156585" data-original-tit
+                                                                e=""><i class="fa fa-star fa-fw"></i
+                                                            > List: Best TVs </a></li>
+                                                <
+                                                        li><a href="/focus.php?subaction=showfull&id=15032924
+                                                           9" data-original-title="">
+                                                                <i class="fa fa-star fa-fw"></i> L
+                                                            st: Best HDR TVs</a></li>
+												<li><a href="
+                                                    /focus.php?subaction=showfull&id=
+                                                           445596417" data-original-
+                                                                itle=""><i class="fa fa-star fa-fw">
+                                                            </i> List: Best gaming TVs</a></li
+                                                    >
+                                                <li><a href="/focus.
+                                                                hp?subaction=showfull&id=1469
+                                                            23601" data-original-title=""><i class="fa fa-star fa-fw"></i> List: Best media
+                                                    players</a>
+                                                           </li>
+                                                <li><a href="/focus.php?subaction=showfull&id=1534230778" data-original-title=""><i
+                                                class=
+                                            "
+                                        fa fa-star fa-fw"></i> List: Best TV audio</a></li>
+												<li><a href="
+                                            /focus.php?subaction=showfull&id=1439471411"
+                                                data-o
+                                                        iginal-title=""><i class="fa fa-cogs f
+                                                    -fw"></i> Calibration settings</a></a></li>
+                                                <li><a href="
+                                            /focus.php?subaction=showfull&id=1328263571" data-original-title=""><
+                                        i
+                                        class="fa fa-eye fa-fw"></i> What the wrong picture looks like
+                                            </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="
+                                            col-lg-3 col-md-6 col-sm-6 col-megamenu">
+                                        <div
+                                        class="
+                                        megamenu-block">
+                                            <h4 class="megamenu-block-title"><i class="fa fa-tv fa-fw"></i>
+                                                TV/Monitor reviews</h4>
+                                            <ul id="testsfeed1">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   <div class="
+                                col-lg-3 col-md-6 col-sm-6 col-megamenu">
+                                        <div class="
+                    megamenu-block">
+                        <h4 class="megamenu-block-title"><i class="fa fa-gamepad fa-fw"></i> Media box reviews</h4>
+                                            <ul id="testsfeed2">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="
+                                        col-lg-3 col-md-6 col-sm-6 col-megamenu">
+                                        <
+                                            div class="megamenu-block">
+                                            <h4 class="megamenu-block-title"><i class="fa fa-cogs fa-fw"></i> Other reviews
+                                                </h4>
+                                            <ul id="testsfeed3">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </
+                                                    div>
+                                                                </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown yamm-fw">
+                    <a
+                                                    href="javascript:void
+                                                                0);" class="dropdown-toggle" data-t
+                                                            ggle="dropdown" aria-expanded="false">Articles</a>
+                     <ul
+                                                    class="dropdown-menu dropdown-menu-left">
+                        <li>
+                            <div class="
+                                                    yamm-content">
+                                <div class="row">
+                                    <div class=
+                                                            "col-lg-3 col-md-6 col-sm-
+                                                    u">
+                                        <div class="megamenu-block">
+                                            <
+                                                            h4 class="megamenu-block-title"><i class=
+                                                    "fab fa-css3"></i> Guides</h4>
+                                            <ul>
+                                                <li><a href="guides.php"><i class="fa fa-list-ul"></i>
+                                            Show all</a></li>
+                                                <li role="presentation" class="
+                                        dropdown-header">Relevant guides</li>
+                                                <li><a href="
+                                                //www.flatpanelshd.co
+                                                        /news.php?subaction=showfull&id=1601
+                                                    35638"><i class="fa fa-caret-right"></i> List: TVs with
+                                                HDMI
+                                                            2.1</a></li>
+                                                <li><a href="
+                                                    //www
+                                                        .flatpanelshd.com/focus.ph
+                                                    p?sub
+                                                    ll&i
+                                                        d=1471930715"><i class="fa fa-caret-right"></i> Will the TV fit on your wall? </a
+                                                                ></li>
+												<li>
+                                                                    <a href="//www.flatpanelshd.com/focus.php?subaction=
+                                                    showfull&id=1518081245"><i class="fa fa-caret-right">
+                                                    </i> Avoid Smart TV tracking </a></li
+                                                                >
+												<li><a href="//
+                                                            ww.flatpanelshd.com/focus.php?s
+                                                                    baction=showfull&id=1513919755"><i class="fa fa-caret
+                                                    -right"></i> 4K HDR console gaming</a></li>
+												<l
+                                                        i><a href="//www.flatpanelshd.com/focus.php?subaction=showfull&id=1479212981"><i
+                                                                class="fa fa-caret-right"></i>
+                                                            Set up 4K HDR on PS4 Pro</a></
+                                                                    li>
+												<li><a href="//www.flatpanelshd.com/
+                                                    focus.php?subaction=showfull&id=1481024263"><i class="
+                                                    fa fa-caret-right"></i> Set up 4K H
+                                                                R on Xbox One S/X</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-l
+                                                                -3 col-md-6 col-sm-6 col-megamenu">
+                                        <div class="megamenu-block">
+                                            <h4 class="megamenu-block-title"><i class="fa fa-list-alt"></i> Ove
+                                                                view articles</h4>
+                                            <ul>
+												<li><a href="articles.php"><i
+                                                    class="fa fa-list-ul"></i> Show all</a></li>
+                                                <li
+                                        role="presentation" class="dropdown-header">Relevant
+                                        overview articles</li>
+												<li><a href="
+                                                //www.flatpanelshd.com/article.php?subaction=showfull&id=1712156879"><i class="
+                                                        fa fa-caret-right"></i> LG 2024 TV li
+                                                    e-up <span class="label label-success pull-right">New</
+                                                span></a>
+                                                            </li>
+                                                <li><a href="
+                                                    //www.flatpanelshd.com/ar
+                                                        ticle.php?subaction=sho
+                                                    wfull
+                                                    0"><
+                                                        i class="fa fa-caret-right"></i> Panasonic 2024 TV line-up <span class="label
+                                                                abel-success pull-right">New</span>
+                                                            </a></li>
+                                                <li><a href="
+                                                    //www.flatpanelshd.com/arti
+                                                                le.php?subaction=showfull&id=17150
+                                                            9844"><i class="fa fa-caret-right"></i> Philips 2024 TV line-up <span
+                                                    class="label label-success pull-rig
+                                                                t">New</span></a></li>
+                                                <li><a href="
+                                                    //www.flatpanelshd.com/article.php?subaction=showfull&id=17116089
+                                                                0"><i class="fa fa-caret-right"></i>
+                                                            Samsung 2024 TV line-up <span class="label label-success pull-right"
+                                                    >New</span></a></li>
+											    <li><a href="//www.flatpanelshd
+                                                            com/article.php?subaction=showfull
+                                                    7"><
+                                                        i class="fa fa-caret-right"></i> Sony 2024 TV line-up <span class="label label
+                                                                success pull-right">New</span></a>
+                                                            </li>
+											    <li><a href="
+                                                    //www.flatpanelshd.com/article.php?subaction=showfull&id=1718779149"><i cla
+                                                                s="fa fa-caret-right"></i> TCL 2024 TV line-up <span class="label label-success pull-right">New</span></a></li
+                                                    >
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="
+                                        col-lg-3 col-md-6 col-sm-6 col-megamenu">
+                                        <div class="
+
+                                        megamenu-block">
+                                            <h4 class="megamenu-block-title"><i
+                                                class="fa fa-hand-point-up"></i> Focus articles</h4>
+                                            <ul>
+												<li><a href
+                                                    ="focusarticles.php">
+                                                    <i class="fa fa-list-ul"></i> Show all</a></li>
+                                                <li role="presentation" cla
+                                                        s="dropdown-header">Relevant focus articles</li>
+												<li><a href="
+                                                    //www.flatpanelshd.co
+                                                        /focus.php?subaction=showfull&id=1474618766"><i class="
+                                            fa fa-caret-right"></i> OLED vs. LCD</a></li>
+                                                <
+                                    li>
+                                <a href="
+                        //w
+                    om/fo
+                    =showfull&id=1435052975"><i class="
+                        fa fa-caret-right"></i> HDR TVs explained</a></li>
+                                                <li><a href="
+                        //www.flatpanelshd.com/focus.php?s
+                            562819"><i class="
+                                fa fa-caret-right"></i> HDR terminology
+                                    demystified</a></li>
+                                                <li><a href="//www.fla
+                                            &id=1472208035"><i class="fa fa-caret-right"></i> Dolby Vision FAQ</a></
+                                                li>
+                                                <li><a href="
+                                                //www.fla
+                                                            panelshd.com/focus.php?subaction=show
+                                                        ull&id=1510231527"><i class="
+                                                    fa fa-caret-right"></i> HDR video fo
+                                                        rmats -
+                                                    prospects</a></li>
+												<li><a href="//ww
+                                                            .flatpanelshd.com/focus.php?subaction
+                                                        showfull&id=1505390780"><i class="
+                                                    fa fa-caret-right"
+                                                            ></i> The state of HDR video</a></li>
+                                                <li><a href="/
+                                                            www.flatpanelshd.com/focus.php?subaction=sho
+                                                    wfull
+                                                    4"><i class="fa fa-caret-rig
+                                                            t"></i> The road to TV heaven</a></li>
+                                                <li><a
+                                                            href="//www.flatpanelshd.com/focus.php?su
+                                                        action=show
+                                                    28517"><i class="fa fa-caret-r
+                                                            ght"></i> Does the world need cur
+                                                        ed TVs?</a></li>
+                                            </ul>
+                                        </div>
+                                                </div>
+
+                                    <div class="
+                                    col-
+                                gamenu">
+                                        <div
+                        class
+                    ="
+                    megamenu-block">
+                                            <h4 class="megamenu-
+                           lock-title"><i class="fa fa-flag"></i> More</h4>
+                                            <ul>
+                                                <li><a href="tech.php"><i c
+                                ass="fa fa-cogs fa-fw"></i> Technology</a></li>
+                                                <li><a href="
+                            coverage.php"><i class="fa fa-cloud-download fa-fw"></i> TV manufacturers</a></li>
+                                                <li><a href="coverage.php"><i class="
+                            fa fa-desktop fa-fw"></i> Monitor manufacturers</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown yamm-fw">
+                    <a href="
+                            javascript:void(0);" class="dropdown-tog
+                                    le" data-toggle="dropdown" aria-expanded="false">News</a>
+                     <ul class="dropdown-menu dropdown-menu-left">
+                        <li>
+                            <
+                    div class="yam
+                    ent">
+                                <div class="row" id="newsfeed">
+                                    <div class="
+                col-lg-2 col-md-4 col-sm-
+            amenu">
+                                        <div class=
+    "mega
+    enu-block">
+                                            <h4 class="megamenu-block-title"><i class="fa fa-flag"></i> More</h4>
+                                            <ul>
+												<li><a href="
+            newsarchive.php"><i class="fa fa-list-ul fa-fw"></i> Show all news</
+                a></li>
+												<li role
+                    ="presentation" class="dropdown-header">Coverage</li>
+												<
+                            li><a href="coverage.php"><i class="fa fa-list-ul fa-fw"></i> Show all
+                    sections</a></li>
+												<li><a href="st
+                            eaming.php"><i class="fa fa-cloud-download fa-fw"></i> Streaming</a
+                        ></li>
+												<li><a href
+                ="
+                4kultrahd.php"><i class="fa fa
+                    w"></i> 4K UHD & HDR</a></li>
+												<li><a
+                        href="tvaudio.php"><i class="f
+                    a-volume-up fa-fw"></i> TV audio </a></li
+
+                >
+												<li><a href
+                     ="smarttv.php"><i class="fa fa-lightbulb fa-fw"></i> Smart TV</a></li>
+												<li><a href="androidtv.php"><i class="
+                    fab fa-android fa-fw"></i> Android TV</a></li>
+												<li><a href="ap
+                        pletv.php"><i class="fab fa-apple fa-fw"></i> Apple TV</a></li>
+                                            </ul>
+                                         </div>
+                                     </
+
+
+    div>
+								</div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Forum</a>
+					<ul class="dropdown-menu dropdown-menu-left">
+                    	<li><a href="flatforums/recent.php"><i class="fa fa-list fa-fw"></i> Latest topics</a></li>
+                        <li><a href="flatforums/viewforum.php?f=2">TVs</a></li>
+						<li><a href="flatforums/viewforum.php?f=33">Media players</a></li>
+                        <li><a href="flatforums/viewforum.php?f=3">Monitors</a></li>
+                        <li><a href="flatforums/viewforum.php?f=5">Reviews</a></li>
+                        <li class="divider"></li>
+                        <li><a href="flatforums/search.php"><i class="fa fa-search fa-fw"></i>  Search</a></li>
+                        <li role="presentation" class="dropdown-header"> User</li>
+                        <li><a href="flatforums/ucp.php?i=pm&folder=inbox"><i class="fa fa-inbox fa-fw"></i> Inbox</a></li>
+                        <li><a href="flatforums/search.php?search_id=egosearch"><i class="fa fa-newspaper fa-fw"></i> My posts</a></li>
+                        <li><a href="flatforums/ucp.php"><i class="fa fa-user fa-fw"></i> My profile</a></li>
+                    </ul>
+                </li>
+				 <li>
+                    <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i></a>
+                </li>
+             </ul>
+        </div><!-- navbar-collapse -->
+    </div><!-- container -->
+</nav>
+<!-- Navigation end-->
+
+<!-- Modal with Google -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="  -webkit-border-radius: 10px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size:30px;"><i class="fa fa-times-circle-o"></i></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="icon-ar icon-ar-circle"><i class="fa fa-search"></i></span> Search FlatpanelsHD</h4>
+      </div>
+      <div class="slidebar modal-body">
+       <div class="input-group" style="width:100%;">
+    		<gcse:searchbox></gcse:searchbox>
+		</div><!-- /input-group -->
+
+      </div>
+      <div class="modal-footer" style=" background-color: rgb(245,245,245);  border
+            bottom-l
+
+
+            -radius: 10px;  bord
+
+                tom-right-radius: 10px;">
+        <div style="
+
+                    font-size: 1
+                        ; line-height: 1.2em;  margin: 7px; text-align:center">To remove your search results o
+                            en this box and click to small 'x'
+                        next to the search button</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal with Google --><!-- END Top menu og logo -->
+
+
+
+<div id="content">
+
+<!-- Carousel -->
+    <div class="container-fluid" style="height:210px;padding:0px !important;">
+	<style>
+#item1 {background-i
+
+                    ./pictures/judder2
+                        sfront.jpg');background-position: center;background-size: cover;width
+                             100%;h
+                        ht: 200px;display:block;text-indent:-99999px;}
+#item2 {background-image:url('../../pictures/itunes4kfront-4.jpg');background-position: center;background-size: cove
+                ;width: 100%;height: 200px;display:block;text-indent:-99999px;}
+#item3 {background-im
+
+                    pictures/tvdatabas
+                        ont.jpg');background-position: center;background-size: cover;width: 100%;he
+                            ght: 200px;display:block;
+                        t-indent:-99999px;}
+#item4 {background-image:url('../../pictures/m_sony2025firstlook_1.jpg');background-position: center;background-size: cover;width: 100%;height: 200px;display:block;text-indent:-99999px;}
+#item5 {background-image:url('../../pictures/uhdblurayfront.jp
+
+                    -position: center;
+                        kground-size: cover;width: 100%;height: 200px;display:block;text-indent:-99
+                            99px;}
+#item6 {background-i
+                        e:url('../../pictures/romafront.jpg');background-position: center;background-size: cover;width: 100%;height: 200px;display:block;text-indent:-99999px;}
+#item7 {background-image:url('../../pictures/philips2025firstlook_10_small.jpg');background-position: center;background-size: cov
+
+                    ight: 200px;displa
+                        lock;text-indent:-99999px;}
+#item8 {background-image:url('../../pictures/m-
+                            nbefaling2021.jpg');back
+                        und-position: center;background-size: cover;width: 100%;height: 200px;display:block;text-indent:-99999px;}
+#item11 {background-image:url('../../pictures//2025qdoled_6_small.jpg');background-position: center;background-size: cover;width: 100%;height: 200px;display:block;text-in
+
+
+@media (max-wid
+                         666px) {h2.carouselh2 {font-size: 1.5em;display:inline;} h2.carouselh2 a
+                             h2.carouselh2 a:link, h2.carouselh2 a
+                        ver, h2.carouselh2 a:visited, h2.carouselh2 a:active {color:white;} }
+@media (min-width: 667px) {h2.carouselh2 {font-size: 1.7em;display:inline;} h2.carouselh2 a, h2.carouselh2 a:link, h2.carouselh2 a:hover, h2.carouselh2 a:visited, h2.carouselh2 a:active {color:white;} }
+
+.carouselh
+
+                    0 !important;margi
+                        ottom: 0 !important;font-family: open sans, sans-serif;font-weight: 600;line
+                        ight: 120%;color: #474747;margin: 20px 0 17px;text-align: initial;font-size: 1.7em;display: inline;}
+.carouselh2 a, .carouselh2 a:link, .carouselh2 a:hover, .carou
+                elh2 a:visited, .carouselh2 a:active{color:white}
+</style>
+
+
+<div class="span12">
+
+    <
+
+                    div id="owl-demo" class="owl-carousel">
+
+  		<div class="item">
+		<a href=
+                            "../../focus.php?subactio
+                        howfull&id=1229341472" id="item8">Recommendations: Best TVs, players, soundbars</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../focus.php
+
+                    owfull&id=1229341472"
+                        >Recommendations: Best TVs, players, soundbars</a></div>
+		</span></div>
+
+  		<div class="item"
+                        >
+		<a href="../../TVdatabase.php" id="item3">TV database: Find & compare TVs</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../TVdatabase.php">TV datab
+            se: Find &
+
+
+        co
+        pare TVs</a></div>
+		</span>
+
+
+        </div>
+
+   		<div class="item">
+		<a href="../../focus.php?subaction=showfull
+             id=1743609600" id="item4">First look: Sony's 2025 TVs</a>
+		<span style="position: ab
+        olute;  bottom: 0;
+
+        dth: 100%; background
+         rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-a
+            lign: center;">
+		<div class="carouselh2"><a href=
+            "../../focus.p
+                showfull&id=1743609600">First look: Sony's 2025 TVs</a></div>
+		</span></
+                    div>
+
+  		<div class="item">
+		<a href="../../focus.php?subaction=showfull&id=1742286466" id="item7">First look: Philips' 2025 TVs</a>
+                        <span style="position: absolut
+                                ;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);
+                                                                              padding: 0.1em 0;text-align: cen
+                                                                             er;">
+		<div class="
+                                carouselh2"><a href="../../focus.php?subaction=showfull&id=1742
+                                    86466">First look: Philips' 2025 TVs</a><
+                                    /div>
+        </span></div>
+
+  		<div cla
+                                            s="item">
+		<a href="../../news.php?subaction=sh
+                                        wfull&id=1736855941" id="item11">First look
+                                                             at 2025 QD-OLED</a>
+		<span style="position: absolute;  bottom: 0;  wid
+                                            h: 100%; background: rgba(27, 27, 27, 0.75);
+                                  padd
+                                ng: 0.1em 0;text-align: center;"
+                                >
+		<div class="carouselh2"><a href="../../news.php?subaction=showful
+                            &id=17368
+
+                            941">First look at 2025 QD-OLED</a></div>
+        </span></div>
+
+   		<div class="item">
+		<a href="../../focus.php?subaction=showfull&id=1706864032" id="item1">Why 24fps is not enough for HDR movies</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);  padd
+                                        ng: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../focus.php?sub
+                                        ction=showfull&id=1706864032">Why 24fps is not enough for HDR movies</a></div>
+		</span></div>
+
+  		<div class="item">
+		<a href="../../uhdbluraydatabase.php" id="item5">4K UHD Blu-ray
+                                        database</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; back
+                                        round: rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../uhdbluraydatabase.php">4K UHD Blu-ray database</a></div>
+		</span></div>
+
+ 		<div class="item">
+		<a href="../../focus.php?subaction=showfull&id=1602751285" id="item6">We need to talk about HDR</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../focus.php?subaction=showfull&id=1602751285">We need to talk about HDR</a></div>
+		</span></div>
+
+ 		<div class="item">
+		<a href="../../news.php?subaction=showfull&id=1505495519" id="item2">Apple TV: All movies in 4K HDR</a>
+		<span style="position: absolute;  bottom: 0;  width: 100%; background: rgba(27, 27, 27, 0.75);  padding: 0.1em 0;text-align: center;">
+		<div class="carouselh2"><a href="../../news.php?subaction=showfull&id=1505495519">Apple TV: All movies in 4K HDR</a></div>
+		</span></div>
+
+    </div>
+</div>
+
+
+    </div>
+<!-- END Carousel -->
+
+
+<!-- top_of_page -->
+<div data-onpage=true data-adpath="/339474670,52858984/FlatPanelHD/ATF" style="text-align:center;margin-right:auto;margin-left:auto;min-height:180px;"></div>
+<!-- top_of_page -->
+
+<!-- Page Content -->
+<div class="container" style="padding-top:20px;"><gcse:searchresults></gcse:searchresults>
+        <div class="row equal">
+            <div class="col-xs-12 col-sm-12 col-md-8" style="padding-bottom:20px;">
+			<div style="padding-left:15px;padding-right:15px;padding-top:15px;background-color: white; border: 0px solid rgb(219, 219, 219);">
+                <article>
+<header style="padding-left:3px;">
+<div class="artikelthumbnail hidden-xs"><img class="topbillede" src="pictures/tvos26_2_small.jpg" alt="tvOS 26"></div>
+<div><h1 class="artikeloverskrift">Apple TV 4K reportedly gains audio passthrough support in tvOS 26</h1><div class="dateauthorartikel">10 Jun 2025 &#124; <a href="contact.php" style="color:#909090;">Rasmus Larsen</a> &#124; <i class="fa fa-comments" aria-hidden="true"></i> <a style="color:#909090;" href="#disqus_thread
+                " data-disqus-identifier=1
+                                        49568309></a></div></div>
+<div style="clear:both;"></div>
+<hr style="margin-top: 12px !important;margin-bottom:0px
+                                        important;">
+</header>
+
+<div class="fulls
+                            toryar
+                        tikel"><pre><b>Apple TV 4K will fin
+                        lly gain support for
+                             audio passthrough, according to a report, meaning that it will be able to send the audio bitstream to an AV receiver or soundbar.</b>
+
+Earlier today after digging thro
+                        gh the developer docume
+
+                        ation for tvOS 26, we found refer
+                            ences to <a href=
+                                https://developer.apple.com/docu
+                                    mentation/avfaudio/avaudiocontentsource/passthrough target=
+                                    _blank
+                                    ><b>a new AVAudioContentSource.passthrough API</b></a> ref
+                                        rencing audio passthrough support (in beta) for tvOS 26.
+                                <i class="fa fa-arrow-circle-right fa-fw"></i><i> Also read: <a href="https://www.flatpanel
+                                          hd.com/news.php?subaction=showfull&id=1749488469" target="_blank"><b>Apple unveils
+                                          tvOS 26 with new Apple TV user interface</b></a></i>
+
+Throu
+                                        ghout the day we have been trying to confirm the
+                                               details with our sources, so far without
+                                                                          luck, but now AppleInsider
+                                                                          reports that Apple has confirmed support for audio passthrough. FlatpanelsHD is still trying to independently confi
+                                        rm details.
+
+- <i>"We've confirmed with Apple that that by
+                                                enabling the new passthrough audio when it's availab
+                                                                                  e and supported by a
+                                                                                  streaming a
+                                                                                  p, a high-quality audio stream could be left alo
+                                                                                  e by the Apple TV. This all
+                                                                                  ws for hardware after the Apple TV to process the audio, which could give a higher quality result to the listener,"</i> reports AppleInsider.
+
+
+<h3>How will it work?</h3>To
+                                        day, A
+                                        pple TV 4K decodes and processes all audio on-device, meaning that, for exa
+                                            mple, Dolby Atmos
+                                                   gets decoded to LPCM + metadata (Dolby M
+                                                   T 2.0) and sent to the receiver or soundbar in uncompressed form.
+
+With audio passthrough, a device will instead passthrough the untouched audio bitstream for decoding
+                                                on the AV receiver or soundbar. Some users prefer this
+                                        solution especially for local media or in bandwidth
+                                                constrained audio setups.
+
+So far, details are scar
+                                                e, but it sounds like developers will need to implement support on an app-by-app basis. For example, t
+                                                e developers of Infuse and Plex could add passthrou
+                                                h as an option via an app update.
+
+
+<h3>Dolby
+                                                TrueHD and DTS-HD MA?</h3>We have been digging through the first beta of tvOS 26 on Apple TV 4K
+                                (3rd Ge
+                            n) but so far
+
+
+                        there are no options to
+                            enable audio passthrough.
+
+There is
+                                currently no confirmation on whether it will enable media player apps on Apple TV 4K to passthrough Dolby Atmos in lossless Dolby TrueHD and DTS:X in lossless DTS-HD MA. We will try to confirm the details before tvOS 26 is released. The Nvidia Shield already support passthrough for lossless audio.
+
+The AVAudioContentSource.passth
+                            ough API
+                            will be available not only in tvOS 26 but also mac
+                                    S Tahoe, iOS 18, iPadOS 18 and visionOS 18, according to Ap
+                                le.
+
+- <i>Source: <a h
+                        ef=htt
+                    .apple
+                /docum
+
+                /avfaudio/avaudiocontentsource/passthrough target=_blank>
+                    Apple</a>, <a href=https://appleinsider.com/articles/25/06/10/pass
+
+                        io-is-finally-on-the-way-to-app
+                            le-tv-iphone-and-more target=_blank>Ap
+                            nsider</a></i> </pre></div></articl
+                        e>
+
+
+<
+                        -- Start banner DIV -->
+<div data-onpage=true data-adpath="/3394746
+                            858984/FlatPanelHD/InContent_News"
+
+                                style="padding-top:20px;pa
+                                ding-bottom:15px;marg
+                                     n-right:auto;margin-left:auto;text-align:Center;"></div>
+<!-- E
+                                d banner DIV -->
+
+<div class="
+
+                            newsle
+                            ercontainer"><div class="row"><div class
+                    ="col-
+                    s-12 col-sm-6"><div class="headline">Sign up for FlatpanelsHD's newsletter
+
+                        </div><p class="descr
+                            iptionnewsletter">The latest news,
+                            in-depth articles, reviews, and excl
+                        usives
+                        in your inbox.</p></div><div class="newsletterform col-xs-12 col-sm-6">
+                            <form id="ema_signup_form" target="_blank" action="https://gem.godaddy.com/signups/subscribe/3a2368a8323948b8
+                                    b58c11c1f85e1cfc" accept-charset="UTF-8" method="post" style
+                                            ="height:50px;"><input name="utf8" type="hidden" value="&#10003;" auto
+                                            omplete="off"/><input type="hidden"
+                                            name="authenticity_token" value=
+                                        "frNqBf3aHuKFlMejP2FSVe1E6QsImcsm
+                                        5qIy-dgpEfhQhKeh1Stb8eKTWYdLqgrfYZ1h3vqWf1xfwKky18G0g" auto
+                                    omplete="off"/><div class="mimi_field required" style="float:
+                                    eft;"><label
+                                    for="signup_email"></label><inpu
+                                t id="
+                                signup_email" name="signup[email]" type="text" data-required-field="Dette felt er o
+                                    bligatorisk" placeholder="Email-adresse" style="display:ini
+                                            ial !important;font-family:'Open Sans',sans-serif;font-size:13px;height
+                                            34px;padding-left:10px;font-weight:initial;mar
+                                            in:0;border: 1px solid #d0d0d0;
+                                        "/></div><div style="background:
+                                        hite; font-size:1px; height: 0; overflow: hidden"><input
+                                    type="text" name="313cc7f8682d55d0daa400a76e0a1842" styl
+                                    e="font-size: 1px; width: 1px !
+                                import
+                                ant; height:1px !important; border:0 !important; line-height: 1px !important; paddi
+                                    ng: 0 0; min-height:1px !important;"/><input class="checkbox
+                                            " type="checkbox" name="beacon"/></div><div class="mimi_field" style="
+                                            float:left;"><input type="submit" class="submit btn btn
+                                    ar btn-primary" value="Submit" id="we
+                                       form_submit_button" data-default-text="Submit" data-submitti
+                                        g-text="Sending..." data-invalid-text="Please input your ema
+                                    il address" data-choose-list="L
+                                ist" d
+                                ata-thanks="Thanks!" style="line-height:1.2;border-bottom-left-radius:0px;border-to
+                                    p-left-radius:0px;"/></div></form></div></div></div>
+
+
+
+<div id="disqus_thread">
+<script type="text/javascript">
+    /* * * CONFIGU
+                                            ATION VARIABLES: EDIT BEFORE PASTING I
+                                            TO YOUR WEBPAGE * * */
+
+                                        var disqus_shortname = 'flatpanels
+                                        d';
+    // The following are highly recommended additional
+                                    arameters. Remove the slashes in front to use.
+    var d
+                                    squs_iden
+                                    tifier = '1749568309';
+    // v
+                                ar dis
+                                qus_url = 'https://example.com/permalink-to-page.html';
+</script>
+<noscript>Please
+                                    enable JavaScript to view the <a href="https://disqus.com/?r
+                                            f_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            </div>
+			</div>
+
+			<div class="col-md-4 col-sm-
+                                    2 col-xs-12">
+                <!-- Ad
+                                       -->
+<div class="forsideboks2 visible-lg visible-md hidd
+                                        n-sm hidden-xs">
+
+   <div class="seperatorposition">
+                                        <div class="
+                                    communityindicator"></div>
+   <
+                                div cl
+                                ass="kategoritekst">AD</div></div>
+<div class="shortstory3" style="margin-top:5px;m
+                                    argin-bottom:5px;">
+   <div style="padding-top:7px;">
+
+<!-- top sidebar - sidebar -->
+<div data-onpage=true data-adpath="/3
+                                            9474670,52858984/FlatPanelHD/Side_Sma
+                                            l"></div>
+<!-- top side
+                                        ar - sidebar -->
+
+</div>
+ <div sty
+                                        e="clear:both;"></div>
+</div></div>
+<!-- END Ad -->
+
+
+<div class="forsideboks hidden-sm hidden-xs">
+
+   <div class="seperato
+                                rposition"
+                            ><
+                            div class="newsindicator"></div>
+   <div
+                    class="
+
+
+                    kategorite
+                    t">NEWS</div></div>
+<div class="shortstory2" style="margin-top:5px;m
+
+                        m:5px;">
+		<div style="clear:b
+                            oth;">
+				<div style="margin-bottom:1
+                            max-height:60px;overflow:hidden;lin
+                        e-heig
+                        t:1.3em;"><a href="../news.php?subaction=showfull&id=1749642860"><img
+                            style="float:left; width: 80
+
+                                in-right: 10px;  margin-top: 3px;" src="
+                                ../pictures/hisense20
+                                     5tvs.jpg" alt="Hisense 2025 TVs"></a> <a style="color:#666;fo
+                                t-size:14px;" href="../news.php?subactio
+
+                            l&id=1
+                            9642860">Hisense launches 2025
+                        TVs: mi
+                    niLED,
+                    more HDMI 2.1 ports,
+
+
+                    USB-C, up to 116
+                    &quot;</a><div style="clear:both;"></div></div><div style="margin-bottom:12p
+                         ;max-height:60px;overflow:hid
+                        ine-height:1.3em;"><a href="../news.php?subaction=showfull&id=1749622749"><img
+                            style="float:left; width: 80px;  margin-right: 10px;
+                                                   margin-top: 3px;" src="
+                                    ../pictures/sonosacetruecinema_smal
+                        pg" a
+                        t="Sonos TrueCinema"></a> <a style="color:#666;fon
+                            ize:14px;" href="../news.php?subaction=showful
+                                =1749622749">Sonos adds TrueCinema and more features
+                                to Ace headphones</a><div st
+                                        le="clear:both;"></div></div><div style="margin-bottom:12px;max-height:60px;overflow:hidden;line-height:1.3em;"><a href="../news
+                            p?suba
+                        ion=sh
+                        full&id=1749568309"><img
+                    style="
+                    float:left; width: 80px
+
+
+                    in-right: 1
+                    x;  margin-top: 3px;" src="../pictures/tvos26_2_small.jpg" alt="tvO
+                          26"></a> <a style="color:#666;fon
+
+                        ;" href="../news.php?subaction=
+                            showfull&id=1749568309">Apple TV 4K re
+                            edly gains audio passthrough suppor
+                        t in t
+                        OS 26</a><div style="clear:both;"></div></div><div style="margin-bo
+                            12px;max-height:60px;overflow:
+
+                                ne-height:1.3em;"><a href="../news.php?su
+                                action=showfull&id=17
+                                     9546628"><img style="float:left; width: 80px;  margin-right: 10
+                                x;  margin-top: 3px;" src="../pictures/vi
+
+                            small.
+                            g" alt="vision OS 26"></a> <a s
+                        e="col
+                    or:#66
+                    ;font-size:14px;" href="
+            ../news.php?subactio
+
+
+            full&id=1749546628">visionOS 26 adds support for PS VR2
+                controllers, more types of VR video</a><div style="clear:both;"></div></div><div style="margin-bottom:12px;max-height:60px;overflow:hidden;line-height:1.3em;"><a href="
+                        ../news.php?subaction=showfull&id=1749488469"><img style="float:left; width: 80px;  margin-right: 10px;  margin-top: 3px;" src="../pictures/tvos26_7_small.jpg" alt="tvOS 26"></a> <a style="color:#666;font-size:14px;" href="../news.php?subaction=showfull&id=1749488469">Apple unveils tvOS 26 for Apple TV with new 'Liquid Glass' user interface</a><div style="clear:both;"
+                ></div></div><
+
+
+        div style="
+
+
+    margi
+    bottom:12px;max-height:60p
+
+
+    den;line-height
+    1.3em;"><a href="../
+        php?subaction=showfull&id=1749451860"><img style="float:left; width: 80px;  margin-right: 10px;  margin-top: 3px;" src="../pictures/pirattv_1_small.jpg" alt="Piracy TV"></a> <a style="color:#666;font-size:14px;" href="../news.php?subaction=showfull&id=1749451860">Big Tech blamed for piracy surge in new report</a><div style="clear:both;"></div></div>    </div>
+	<div style="clear:both;"></div>
+</div>	</div>
+
+
+<!-- Ad -->
+<div class="forsideboks2 visible-lg visible-md hidden-sm hidden-xs">
+
+   <div class="seperatorposition"><div class="communityindicator"></div>
+   <div class="kategoritekst">AD</div></div>
+<div class="shortstory3" style="margin-top:5px;margin-bot
+        tom:5px;">
+   <
+
+        div
+            style="padding-top:7px;">
+
+<!-- sidebar middle - sidebar_middle -->
+<div data-onpage=true data-adpath="/339474670,52858984/FlatPanelHD/Side_Big"></div>
+<!-- sidebar middle - sidebar_middle -->
+
+</div>
+ <div style="clear:both;"></div>
+</div></div>
+<!-- END Ad -->
+
+
+
+
+
+<!-- Disqus news -->
+<div class="block animated fadeInDown animation-delay-10 hidden-sm hidden-xs" style="margin-bottom:1.2em;">
+    <ul class="nav nav-tabs nav-tabs-ar" id="myTab2" style="display:none;">
+        <li class="active"><a href="#fa-comments" data-toggle="tab" aria-expanded="true"><i class="fa fa-comments"></i>
+        </a></li>
+	 </ul>
+<!-- Tabbed content -->
+	<div class="tab-content">
+		<div class=
+                "tab-pane active" id="fa-comments">
+			<h3 class="post-title no-margin-top">
+                    Comments</h3>
+			<script type="t
+                    t" src="//flatpanelshd.disqus.com/rec
+                        s?num_items=5&hide_avatars=0&avatar_size=32&excerpt_length=100"
+                        ></script>
+		</div>
+	</div>
+<!--
+                         END tab-content -->
+</div>
+<!-- END Disqus news -->
+
+
+<!-- Ad -->
+<div class="forsideboks2
+                         hidden-sm hidden-xs" style="position:sticky;top:50px;">
+
+   <div class="seperatorposition"><div class="communityindicator"></div>
+   <div class="
+                kategoritekst"
+
+                >AD</div></div>
+<div class="shortstory3" style="
+                    margin-top:5px;margin-bottom:5px;">
+   <div style="
+                    padding-top:7px;">
+
+<!-- side b
+                    ttom - sidebar_bottom -->
+<div data-onpage=
+                          true data-adpath="/339474670,52858984/FlatPanelHD/Side_Big_1"></div>
+<!-- side bar
+                          bottom - sidebar_bottom -->
+
+</div>
+ <div style="clear:bo
+                            h;"></div>
+</div></div>
+<!-- END Ad -->
+            </div
+                            >
+        </div>
+
+
+
+		<div class="row2
+                            " style="padding-top:15px;">
+	            <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div i
+                        d="taboola-below-article-thumbnails"></div>
+                    <script type="text/javascript">
+
+                                                                        window._taboola = window._
+                                                                  aboola || [];
+                      _taboola.pus
+                                                                  ({
+
+                                                                  ode: 'alternating-thumbnails-a',
+                        container: 'taboola-below-article-thumbnails',
+                        placement: 'Below article thumbnails',
+
+
+                                     target_type: 'mix'
+                      });
+
+                               </script>
+            </div>
+		</div>
+                                   </div>
+<!-- /.row -->
+
+
+
+</div>
+<!-- END Lower content -->
+
+
+
+<!-- Footer -->
+<div class="footer">
+    <script> /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+                                        var dsq = document.createElement('script'); ds
+                        q.type = 'text/javascript'; dsq.async = true;
+        dsq.src =
+                                                                           https://' + disqus_shortname + '.disq
+                                                                           s.com/embed.js
+                                                                           ;
+        (document.getEle
+                                                                           entsByTagName('head')[0] |
+                                                                            document.getElementsByTagName('b
+                                                                           dy')[0]).appendChild(dsq);
+    })();
+    (function
+                                                                           ) {
+        var s = doc
+                                                                           ment.createElement('s
+                                                                           ript'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'https:
+                        //' +
+                    disqus_
+
+
+                isqus.
+
+
+                  (document.getElementsByTagNam 'HEAD')[0] || document.get
+                    ame('BODY')[0]).appendChild(s);
+    }());</script>
+
+	<
+                    style>
+    input#webform_submit_button{
+    color: #fff;
+
+                         background-color: #337ab7;
+    border-color: #
+                                                     e6da4;
+    display: inline-block;
+    padding: 6px 12px;
+                    in-bottom: 0;
+    font-size: 13pt;
+    font-weight: 400;
+    li
+                       e-height: 1.42857143;
+    text-align: center;
+    white-spac
+                                                          : nowrap;
+    vertical-align: middle;
+    -ms-touch-acti
+                    ulation;
+    touch-action: manipulation;
+    cursor: poi
+                       ter;
+    -webkit-user-select: none;
+    -moz-user-select
+                                                          none;
+    -ms-user-select: none;
+    user-select: none;
+                    ground-image: none;
+    border: 1px solid transparent;
+    border-r
+                       dius: 4px;
+    }
+</style>
+
+<div class="container">
+        <div class="row2" style="">
+            <div class="co
+                -6" style="
+            p
+        ding-t
+        5px;padding-bottom:30
+        x;">
+            <h4 class="footer-widget-title">Sitemap</h4
+        >
+            <ul class="list-unstyled three_co
+        s">
+                    <li><a href="contact.php">
+        Contact</a></li>
+                    <li><a h
+        ef="contact.php">Copyright</a></li>
+                    <li><a href="privacy.php">Pr
+        vacy</a>
+            </li>
+                    <li><a href="contact.php">Advertise
+        </a></li>
+                    <li><a href="contac
+
+        php">Press</a></li>
+                    <li><a href="https://www.flatpanels.dk">Flatpanels.dk</a></li>
+              </ul>
+            </div>
+
+			<div class="col-md-4 col-sm-6"  style="padding-top:15px;">
+            <h4 class="footer-widget-title">Newsletter</h4>
+              <p style="font-size:1em;">Once or twice a week</p>
+    <form id="ema_signup_form" target="_blank" action="https://gem.godaddy.com/signups/subscribe/3a2368a8323948b8b58c11c1f85e1cfc" accept-charset="UTF-8
+        " method
+        ="post" style="heig
+
+
+        px;"><input name="u
+        f8" type="
+
+            hidden" value="" autocomplete="off"/><input type="hidden" name="authenticity_token" value="frNqBf3aHuKFlMejP2FSVe1E6QsImcsmm5qIy-dgpEfhQhKeh1Stb8eKTWYdLqgrfYZ1h3vqWf1xfwKky18G0g" autocomplete="off"/><div class="mimi_field required" style="float:left;"><label for="signup_email"></label><input id="signup_email" name="signup[email]" type="text" data-required-field="Dette felt er obligatorisk" placeholder="Email-adresse" style="display:initial !important;font-family:'Open Sans',sans-serif;font-size:13px;height:34px;padding-left:10px;font-weight:initial;margin:0;border: 1px solid #d0d0d0;"/></div><div style="background: white; font-size:1px; height: 0; overflow: hidden"><input type="text" name="313cc7f8682d55d0daa400
+        76e0a1842" style="font-size:
+
+
+        ; width: 1px !impor
+        ant; height:1px !important; bor
+            er:0 !important; line-height: 1px !important; padding: 0 0; min-height:1px !important;"/><input class="checkbox" type="checkbox" name="beacon"/></div><div class="mimi_field" style="float:left;"><input type="submit" class="submit btn btn-ar btn-primary" value="Submit" id="webform_submit_button" data-default-text="Submit" data-submitting-text="Sending..." data-invalid-text="Please input your email address" data-choose-list="List" data-thanks="Thanks!" style="line-height:1.2;border-bottom-left-radius:0px;border-top-left-radius:0px;"/></div></form>
+
+
+            </div>
+
+
+            <div class="col-md-4 col-sm-12"  style="padding-top:15px;">
+             <h4 class="footer-widget-title">Social Media</h4>
+        <a href="https://www.flatpanelshd.com/rss/news.xml" target="_blank" class="social-icon-ar rss"><i class="fas fa-rss" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://www.facebook.com/flatpanelshd" target="_blank" class="social-icon-ar facebook"><i class="fab fa-facebook-f" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://twitter.com/flatpanels" target="_blank" class="social-icon-ar twitter"><i class="fab fa-twitter" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://www.youtube.com/user/flatpanelshd" target="_blank" class="social-icon-ar youtube"><i class="fab fa-youtube" style="vertical-align: middle;margin-top: 5px;"></i></a>
+            </div>
+        </div>
+</div>
+	<!-- Load scripts -->
+<script src="../owlcarousel/owl.carousel.min.js"></script>
+<script src="../js/masonry.pkgd.min.js"></script>
+<script src="../js/imagesloaded.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/slidebars.js"></script>
+
+
+<!-- Start slidebars right menu -->
+<script>
+jQuery(document).ready(function($) {
+			$.slidebars();
+		});
+</script>
+<!-- END Start slidebars right menu -->
+
+<!-- Carousel -->
+    <script>
+jQuery(document).ready(function($){
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:2,
+	autoplay:true,
+    autoplayTimeout:6000,
+    autoplayHoverPause:true,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            nav:false,
+        },
+        600:{
+            items:1,
+            nav:false,
+        },
+        1000:{
+            items:2,
+            nav:false,
+            loop:true,
+        }
+    }
+})
+
+
+});
+		</script>
+<!-- Carousel end -->
+
+
+
+
+<!-- Disqus end -->
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://flatpanelshd.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<!-- Disqus end -->
+
+
+<!-- newsletter -->
+<script type="text/javascript">
+(function(global) {
+  function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];for(i=form.elements.length-1;i>=0;i=i-1){if(form.elements[i].name===""){continue}switch(form.elements[i].nodeName){case"INPUT":switch(form.elements[i].type){case"text":case"hidden":case"password":case"button":case"reset":case"submit":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"checkbox":case"radio":if(form.elements[i].checked){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value))}break;case"file":break}break;case"TEXTAREA":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"SELECT":switch(form.elements[i].type){case"select-one":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"select-multiple":for(j=form.elements[i].options.length-1;j>=0;j=j-1){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].options[j].value))}}break}break;case"BUTTON":switch(form.elements[i].type){case"reset":case"submit":case"button":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break}break}}return q.join("&")};
+
+
+  function extend(destination, source) {
+    for (var prop in source) {
+      destination[prop] = source[prop];
+    }
+  }
+
+  if (!Mimi) var Mimi = {};
+  if (!Mimi.Signups) Mimi.Signups = {};
+
+  Mimi.Signups.EmbedValidation = function() {
+    this.initialize();
+
+    var _this = this;
+    if (document.addEventListener) {
+      this.form.addEventListener('submit', function(e){
+        _this.onFormSubmit(e);
+      });
+    } else {
+      this.form.attachEvent('onsubmit', function(e){
+        _this.onFormSubmit(e);
+      });
+    }
+  };
+
+  extend(Mimi.Signups.EmbedValidation.prototype, {
+    initialize: function() {
+      this.form         = document.getElementById('ema_signup_form');
+      this.submit       = document.getElementById('webform_submit_button');
+      this.callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+      this.validEmail   = /.+@.+\..+/
+    },
+
+    onFormSubmit: function(e) {
+      e.preventDefault();
+
+      this.validate();
+      if (this.isValid) {
+        this.submitForm();
+      } else {
+        this.revalidateOnChange();
+      }
+    },
+
+    validate: function() {
+      this.isValid = true;
+      this.emailValidation();
+      this.fieldAndListValidation();
+      this.updateFormAfterValidation();
+    },
+
+    emailValidation: function() {
+      var email = document.getElementById('signup_email');
+
+      if (this.validEmail.test(email.value)) {
+        this.removeTextFieldError(email);
+      } else {
+        this.textFieldError(email);
+        this.isValid = false;
+      }
+    },
+
+    fieldAndListValidation: function() {
+      var fields = this.form.querySelectorAll('.mimi_field.required');
+
+      for (var i = 0; i < fields.length; ++i) {
+        var field = fields[i],
+            type  = this.fieldType(field);
+        if (type === 'checkboxes' || type === 'radio_buttons' || type === 'age_check') {
+          this.checkboxAndRadioValidation(field);
+        } else {
+          this.textAndDropdownValidation(field, type);
+        }
+      }
+    },
+
+    fieldType: function(field) {
+      var type = field.querySelectorAll('.field_type');
+
+      if (type.length) {
+        return type[0].getAttribute('data-field-type');
+      } else if (field.className.indexOf('checkgroup') >= 0) {
+        return 'checkboxes';
+      } else {
+        return 'text_field';
+      }
+    },
+
+    checkboxAndRadioValidation: function(field) {
+      var inputs   = field.getElementsByTagName('input'),
+          selected = false;
+
+      for (var i = 0; i < inputs.length; ++i) {
+        var input = inputs[i];
+        if((input.type === 'checkbox' || input.type === 'radio') && input.checked) {
+          selected = true;
+        }
+      }
+
+      if (selected) {
+        field.className = field.className.replace(/ invalid/g, '');
+      } else {
+        if (field.className.indexOf('invalid') === -1) {
+          field.className += ' invalid';
+        }
+
+        this.isValid = false;
+      }
+    },
+
+    textAndDropdownValidation: function(field, type) {
+      var inputs = field.getElementsByTagName('input');
+
+      for (var i = 0; i < inputs.length; ++i) {
+        var input = inputs[i];
+        if (input.name.indexOf('signup') >= 0) {
+          if (type === 'text_field') {
+            this.textValidation(input);
+          } else {
+            this.dropdownValidation(field, input);
+          }
+        }
+      }
+      this.htmlEmbedDropdownValidation(field);
+    },
+
+    textValidation: function(input) {
+      if (input.id === 'signup_email') return;
+
+      if (input.value) {
+        this.removeTextFieldError(input);
+      } else {
+        this.textFieldError(input);
+        this.isValid = false;
+      }
+    },
+
+    dropdownValidation: function(field, input) {
+      if (input.value) {
+        field.className = field.className.replace(/ invalid/g, '');
+      } else {
+        if (field.className.indexOf('invalid') === -1) field.className += ' invalid';
+        this.onSelectCallback(input);
+        this.isValid = false;
+      }
+    },
+
+    htmlEmbedDropdownValidation: function(field) {
+      var dropdowns = field.querySelectorAll('.mimi_html_dropdown');
+      var _this = this;
+
+      for (var i = 0; i < dropdowns.length; ++i) {
+        var dropdown = dropdowns[i];
+
+        if (dropdown.value) {
+          field.className = field.className.replace(/ invalid/g, '');
+        } else {
+          if (field.className.indexOf('invalid') === -1) field.className += ' invalid';
+          this.isValid = false;
+          dropdown.onchange = (function(){ _this.validate(); });
+        }
+      }
+    },
+
+    textFieldError: function(input) {
+      input.className   = 'required invalid';
+      input.placeholder = input.getAttribute('data-required-field');
+    },
+
+    removeTextFieldError: function(input) {
+      input.className   = 'required';
+      input.placeholder = '';
+    },
+
+    onSelectCallback: function(input) {
+      if (typeof Widget === 'undefined' || !Widget.BasicDropdown) return;
+
+      var dropdownEl = input.parentNode,
+          instances  = Widget.BasicDropdown.instances,
+          _this = this;
+
+      for (var i = 0; i < instances.length; ++i) {
+        var instance = instances[i];
+        if (instance.wrapperEl === dropdownEl) {
+          instance.onSelect = function(){ _this.validate() };
+        }
+      }
+    },
+
+    updateFormAfterValidation: function() {
+      this.form.className   = this.setFormClassName();
+      this.submit.value     = this.submitButtonText();
+      this.submit.disabled  = !this.isValid;
+      this.submit.className = this.isValid ? 'submit' : 'disabled';
+    },
+
+    setFormClassName: function() {
+      var name = this.form.className;
+
+      if (this.isValid) {
+        return name.replace(/\s?mimi_invalid/, '');
+      } else {
+        if (name.indexOf('mimi_invalid') === -1) {
+          return name += ' mimi_invalid';
+        } else {
+          return name;
+        }
+      }
+    },
+
+    submitButtonText: function() {
+      var invalidFields = document.querySelectorAll('.invalid'),
+          text;
+
+      if (this.isValid || !invalidFields) {
+        text = this.submit.getAttribute('data-default-text');
+      } else {
+        if (invalidFields.length || invalidFields[0].className.indexOf('checkgroup') === -1) {
+          text = thi
+        .submit.g
+        tAttribute('data-invali
+
+
+        t');
+        } else {
+          text = th
+        s.submit
+            etAttribute('data-choose-list');
+        }
+      }
+      return text;
+    },
+
+    submitForm: function() {
+      this.formSubmitting();
+
+      var _this = this;
+      window[this.callbackName] = function(response) {
+        delete window[this.callbackName];
+        document.body.removeChild(script);
+        _this.onSubmitCallback(response);
+      };
+
+      var script = document.createElement('script');
+      script.src = this.formUrl('json');
+      document.body.appendChild(script);
+    },
+
+    formUrl: function(format) {
+      var action  = this.form.action;
+      if (format === 'json') action += '.json';
+      return action + '?callback=' + this.callbackName + '&' + serialize(this.form);
+    },
+
+    formSubmitting: function() {
+      this.form.className  += ' mimi_submitting';
+      this.submit.value     = this.submit.getAttribute('data-submitting-text');
+      this.submit.disabled  = true;
+      this.submit.className = 'disabled';
+    },
+
+    onSubmitCallback: function(response) {
+      if (response.success) {
+        this.onSubmitSuccess(response.result);
+      } else {
+        top.location.href = this.formUrl('html');
+      }
+    },
+
+    onSubmitSuccess: function(result) {
+      if (result.has_redirect) {
+        top.location.href = result.redirect;
+      } else if(result.single_opt_in || !result.confirmation_html) {
+        this.disableForm();
+        this.updateSubmitButtonText(this.submit.getAttribute('data-thanks'));
+      } else {
+        this.showConfirmationText(result.confirmation_html);
+      }
+    },
+
+    showConfirmationText: function(html) {
+      var fields = this.form.querySelectorAll('.mimi_field');
+
+      for (var i = 0; i < fields.length; ++i) {
+        fields[i].style['display'] = 'none';
+      }
+
+      (this.form.querySelectorAll('fieldset')[0] || this.form).innerHTML = html;
+    },
+
+    disableForm: function() {
+      var elements = this.form.elements;
+      for (var i = 0; i < elements.length; ++i) {
+        elements[i].disabled = true;
+      }
+    },
+
+    updateSubmitButtonText: function(text) {
+      this.submit.value = text;
+    },
+
+    revalidateOnChange: function() {
+      var fields = this.form.querySelectorAll(".mimi_field.required"),
+          _this = this;
+
+      var onTextFieldChange = function() {
+        if (this.getAttribute('name') === 'signup[email]') {
+          if (_this.validEmail.test(this.value)) _this.validate();
+        } else {
+          if (this.value.length === 1) _this.validate();
+        }
+      }
+
+      for (var i = 0; i < fields.length; ++i) {
+        var inputs = fields[i].getElementsByTagName('input');
+        for (var j = 0; j < inputs.length; ++j) {
+          if (this.fieldType(fields[i]) === 'text_field') {
+            inputs[j].onkeyup = onTextFieldChange;
+            inputs[j].onchange = onTextFieldChange;
+          } else {
+            inputs[j].onchange = function(){ _this.validate() };
+          }
+        }
+      }
+    }
+  });
+
+  if (document.addEventListener) {
+    document.addEventListener("DOMContentLoaded", function() {
+      new Mimi.Signups.EmbedValidation();
+    });
+  }
+  else {
+    window.attachEvent('onload', function() {
+      new Mimi.Signups.EmbedValidation();
+    });
+  }
+})(this);
+</script>
+<!-- END newsletter -->
+
+
+
+
+<!-- XML parser for RSS items in menu -->
+<script>
+	jQuery(document).ready(function($){
+
+	//Get current date for highlight of new items
+	//var date = date('Y-m-d');
+
+	var x=10; // number of news items
+	var y = 100;// Y number of test items
+	var TVitems=0;
+	var MBitems=0;
+	var otheritems=0;
+	var maxTestItems=9;
+
+	// load the news xml data. it is parsed by jquery
+	$.get("/rss/news.xml", function(data) {
+		var $xml = $(data);
+
+		$xml.find("item").each(function(i, val) { // find the items in the rss and loop
+
+			// create an item object with all the necessary information out of the xml
+			var $this = $(this),
+				item = {
+					title: $this.find("title").text(),
+					link: $this.find("link").text(),
+					description: $this.find("description").text(),
+					pubDate: $this.find("pubDate").text(),
+					author: $this.find("author").text(),
+					guid: $this.find("guid").text(),
+			};
+			// replace the CDATA in the item title
+			item.title = item.title.replace("<![CDATA[", "").replace("]]>", "");
+
+			//Datestamping
+			var date = new Date(item.pubDate);
+			var monthstring;
+			var datestring;
+			if(date.getMonth()+1<10){monthstring="0"+(date.getMonth()+1)}else{monthstring=date.getMonth()+1};
+			if(date.getDate()<10){datestring="0"+date.getDate()}else{datestring=date.getDate()};
+			item.pubDate = datestring + "." + monthstring + "." + date.getFullYear();
+
+			//Find the image tag in the description	and extract path
+			var imageStart = item.description.search('<img');
+			var imageurl = item.description.substr(imageStart,100);
+
+			var urlstart = imageurl.search('src="')+5;
+			var imagePath = imageurl.substr(urlstart,imageurl.length-4-urlstart);
+
+			//shorten description text to x chars
+			if(item.description.length > 50){item.description = item.description.substr(1,50)+'...'};
+			var tabletformat="";
+			if(i<4){tabletformat="col-md-4 col-sm-4"}else{tabletformat="col-md-hide col-sm-hide"};
+
+			//$('#newsfeed').append($('<li><a href="' +item.guid +'"><i class="fa fa-caret-right"></i> ' +item.title +'</a></li>')imageurl+);
+			$('#newsfeed').append($('<div class="divhover col-lg-2 '+tabletformat+' col-megamenu" style="height:170px;"><div class="megamenu-block"><a href="'+ item.link+'" style="font-weight:bold;padding:0;"><div class="rssfeedimgdiv" style="background-image:url('+imagePath +');"></div></a><h1 class="megamenu-block-title" style="text-transform:initial"><a href="'+ item.link+'" style="font-weight:bold;padding:0;">'+ item.title+'</a></h1><ul><li class="a" role="presentation" style="font-size: 10px; padding-left: 20px;margin-top: -15px;">'+item.pubDate +'</li></ul></div></div>'));
+
+			return i<(x-1); // (stop after x iterations)
+		});
+	});
+		// load the test xml data. it is parsed by jquery
+	$.get("/rss/reviews.xml", function(data) {
+		var $xml = $(data);
+
+		$xml.find("item").each(function(i, val) { // find the items in the rss and loop
+
+			// create an item object with all the necessary information out of the xml
+			var $this = $(this),
+				item = {
+					title: $this.find("title").text(),
+					link: $this.find("link").text(),
+					description: $this.find("description").text(),
+					pubDate: $this.find("pubDate").text(),
+					author: $this.find("author").text(),
+					guid: $this.find("guid").text(),
+					cat: $this.find('category').text()
+			};
+			// replace the CDATA in the item title
+
+        tem.title
+        = item.title.replac
+
+
+        ![CDATA[ Review:", ""
+        .replace
+            ]>", "");
+			if(item.title.length > 30){item.title = item.title.substr(8,24)+'...'}else{item.title = item.title.substr(8,50);};
+			//item.title = item.title.substr(8,28);
+
+			//Datestamping
+			var date = new Date(item.pubDate);
+			var monthstring;
+			var datestring;
+			if(date.getMonth()+1<10){monthstring="0"+(date.getMonth()+1)}else{monthstring=date.getMonth()
+        1};
+			if
+        date.getDate()<10){dates
+    g="0"+date.getDate()}else{datestring=date.getDate()};
+			item.pubDate = datestring + "." + m
+    thstrin
+         + "." + date.getFullYear();
+
+			//highlight of new items
+			var curDate = new Date();
+			var datebox="";
+			if((curDate.getFullYear()*365+(curDate.getMonth()+1)*31+curDate.getDate())-(date.getFullYear()*365+(date.getMonth()+1)*31+date.getDate())<30){
+				datebox = '<span class="label label-success pull-right"></i>'+ item.pubDate +'</span>'
+			}else{
+				datebox = '<span class="label pull-right" style="color:grey;">'+ item.pubDate +'</span>'
+			};
+
+			// #feed selects the ul element with the id feed
+			// and append() appends a newly created li element
+			// to the ul
+			if(TVitems<maxTestItems){if( item.cat == 'TV' || item.cat == 'Monitor' ){$('#testsfeed1').append($('<li><a href="' +item.guid +'"><i class="fa fa-caret-right"></i> ' +item.title+ datebox +'</a></li>'));TVitems++;}};
+			if(item.cat == 'Medieboks' && MBitems<maxTestItems){$('#testsfeed2').append($('<li><a href="' +item.guid +'"><i class="fa fa-caret-right"></i> ' +item.title + datebox +'</a></li>'));MBitems++;};
+			if(item.cat != 'TV' && item.cat != 'Monitor' && item.cat != 'Medieboks' && otheritems<maxTestItems){$('#testsfeed3').append($('<li><a href="' +item.guid +'"><i class="fa fa-caret-right"></i> ' +item.title + datebox +'</a></li>'));otheritems++;};
+			return i<(y-1); // (stop after y iterations)
+		});
+	});
+	// load the news xml data. it is parsed by jquery
+	$.get("https://www.flatpanelshd.com/flatforums/app.php/feed", function(data) {
+		var $xml = $(data);
+
+		$xml.find("entry").each(function(i, val) { // find the items in the rss and loop
+
+			// create an item object with all the necessary information out of the xml
+			var $this = $(this),
+				entry = {
+					title: $this.find("title").text(),
+					link: $this.find("link").text(),
+					updated: $this.find("updated").text(),
+                    content: $this.find("content").text(),
+			};
+			// replace the CDATA in the item title
+			entry.title = entry.title.replace("<![CDATA[", "").replace("]]>", "");
+			entry.content = entry.content.replace("<![CDATA[", "").replace("]]>", "");
+
+			//Datestamping
+			var date = new Date(entry.updated);
+			var monthstring;
+			var datestring;
+			if(date.getMonth()+1<10){monthstring="0"+(date.getMonth()+1)}else{monthstring=date.getMonth()+1};
+			if(date.getDate()<10){datestring="0"+date.getDate()}else{datestring=date.getDate()};
+			entry.pubDate = datestring + "." + monthstring + "." + date.getFullYear();
+
+			//$('#newsfeed').append($('<li><a href="' +item.guid +'"><i class="fa fa-caret-right"></i> ' +item.title +'</a></li>')imageurl+);
+			$('#forumlatest2').append($('<li><a href="'+ entry.link+'" style="font-weight:bold;padding:0;">'+ entry.title+'</a>'));
+
+			return i<(x-1); // (stop after x iterations)
+		});
+	});
+
+	});
+</script>
+<!-- END parser -->
+
+
+
+<!-- Masonry code -->
+<script>
+	jQuery(document).ready( function($) {
+
+	  var $container = $('#masonry-container').imagesLoaded( function() {
+		$container.masonry({
+		  itemSelector: '.hero-item'
+		});
+	  });
+
+	});
+
+	$(document).ready( function() {
+	  var $container = $('#masonry-container2').imagesLoaded( function() {
+		$container.masonry({
+		  itemSelector: '.hero-item'
+		});
+	  });
+
+	});
+</script>
+<!-- END Masonry code-->
+</div>
+
+
+</div><!-- END site -->
+
+
+<!-- Slidebar menu -->
+<div class="sb-slidebar sb-right">
+	<style>
+.sub-menu-item{
+    background-color: #525252;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 10pt;
+}
+.sub-menu-item a{
+	padding-top: 5px!important;
+    padding-bottom: 5px!important;
+}
+@media (max-width: 666px) {
+.label {
+	margin-top:5px !important;
+}
+}
+.slidebar-social-icons {
+  padding: 0 20px;
+}
+.social-icon-ar {
+display: inline-block;
+    width: 36px;
+    height: 36px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0 4px 5px 0;
+}
+
+.social-icon-ar.email {
+    background-color: #978a8a;
+    background-image: linear-gradient(to top,#978a8a,#d9d5d5);
+}
+
+
+.sb-icon-navbar span.hamburger-box {
+    background-color: #069;
+    color: #fff;
+    padding: 11px;
+    vertical-align: middle;
+    padding: 16px 14px 14px 15px;
+    height: 50px;
+  width: 47px;
+	  cursor: pointer;
+}
+
+.sb-icon-navbar{
+position: absolute;
+    right: 0;
+    top: -1px;
+    margin: 0;
+	  cursor: pointer;
+    height: 50px;
+    width: 47px;
+}
+
+/*!
+
+
+     Hamburgers
+ * @description Tasty C
+    S-animat
+        d hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+
+     @link ht
+    s://github.com/jonsuh/hamburgers
+ */
+.hamburger {
+  cursor: pointer;
+  t
+        ion-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+	}
+
+
+.hamburger-box {
+  display: block;
+  position: relative;
+}
+
+
+.hamburger-inner {
+  display: block;
+	margin-top: 17px;
+    margin-left: -4px;
+ }
+
+
+  .ham
+        er, .hamburger-inner::before, .hamburger-inner::after {
+    width: 26px;
+    height: 3px;
+    background-color: white
+        ;
+    position: absolute;
+    transition
+        operty: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease; }
+  .hamburger-inner::before, .hamburger-inner::after {
+    content: "";
+    display: block; }
+  .hamburger-inner::before {
+    top: -10px; }
+  .hamburger-inner::after {
+    bottom: -10px; }
+
+/*
+   * Collapse
+   */
+.hamburger--collapse .ha
+                burger-inner {
+
+  transition-duration: 0.13s;
+  transition-delay: 0.13s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  .hamburger--collaps
+                 .hamburger-inner::after {
+    top: -20px;
+    transition: top 0.2s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), opacity 0.1s linear; }
+  .hamburger--collapse .h
+                mburger-inner::before {
+    transition: top 0.12s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), transform 0.13s cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+
+.hamburger--col
+                apse.is-active .hamburger-inner {
+  transform: translate3d(0, -10px, 0) rotate(
+    45deg)
+
+transi
+
+lay: 0.22s;
+  transition-timing-function: cubic-bezier(0.21
+    0.61, 0.355, 1); }
+  .hamburger--collapse.is-active .hamburger-inner::after {
+
+
+   opaci
+    ty: 0;
+    transition: top 0.2s cubic-bezier(0.33333, 0, 0.66667, 0.33333), opacity 0.1s 0.22s linear; }
+  .hamburger--collapse.is-active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(-90deg);
+    transition: top 0.1s 0.16s cubic-bezier(0.33333, 0, 0.66667, 0.33333), transform 0.13s 0.25s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+/*
+   * Collapse Reverse
+   */
+.hamburger--collapse-r .hamburger-inner {
+  transition-duration: 0.13s;
+  transition-delay: 0.13s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+  .hamburger--collapse-r .hamburger-inner::after {
+    top: -20px;
+    transition: top 0.2s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), opacity 0.1s linear; }
+  .hamburger--collapse-r .hamburger-inner::before {
+    transition: top 0.12s 0.2s cubic-bezier(0.33333, 0.66667, 0.66667, 1), transform 0.13s cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+
+.hamburger--collapse-r.i
+s-active
+.hamburger-inner {
+  transform: translate3d(0, -10px, 0) rotate(45deg);
+  transition-delay: 0.22s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .hamburger--collapse-r.is-active .hamburger-inner::after {
+    top: 0;
+    opacity: 0;
+    transition: top 0.2s cubic-bezier(0.33333, 0, 0.66667, 0.33333), opacity 0.1s 0.22s linear; }
+  .hamburger--collapse-r.is-active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(90deg);
+    transition: top 0.1s 0.16s cubic-bezier(0.33333, 0, 0.66667, 0.33333), transform 0.13s 0.25s cubic-bezier(0.215, 0.61, 0.355, 1); }
+</style>
+
+
+<!-- Start slidebars right menu -->
+<script>
+(function($) {
+		$(document).ready(function() {
+			$.slidebars();
+		});
+	}) (jQuery);
+</script>
+<!-- END Start slidebars right menu -->
+
+
+    <ul class="slidebar-menu">
+    	<li><a href="https://www.flatpanelshd.com/">Front page</a></li>
+        <li><a href="focus.php?subaction=showfull&id=1229341472">Recommendations</a></li>
+        <li><a href="reviews.php">Reviews</a></li>
+        <li><a href="newsarchive.php">News</a></li>
+        <li><a href="articles.php">Overview articles</a></li>
+        <li><a href="focusarticles.php">Focus articles</a></li>
+        <li><a href="guides.php">Guides</a></li>
+		<li><a href="coverage.php">Sections</a></li>
+        <li><a href="flatforums/recent.php">Forum</a></li>
+    </ul>
+
+    <div style="height: 14pt;width: 100%;position: relative;display: block;"></div>
+    <div class="slidebar-social-icons">
+        <a href="https://www.flatpanelshd.com/rss/news.xml" class="social-icon-ar rss"><i class="fas fa-rss" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://www.facebook.com/flatpanelshd" class="social-icon-ar facebook"><i class="fab fa-facebook-f" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://twitter.com/flatpanels" class="social-icon-ar twitter"><i class="fab fa-twitter" style="vertical-align: middle;margin-top: 5px;"></i></a>
+        <a href="https://www.youtube.com/user/flatpanelshd" class="social-icon-ar youtube"><i class="fab fa-youtube" style="vertical-align: middle;margin-top: 5px;"></i></a>
+</div>
+
+</div>
+
+<!-- TABOOLA FLUSH CODE -->
+<script type="text/javascript">
+  window._taboola = window._taboola || [];
+  _taboola.push({flush: true});
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94e571415c90e544',t:'MTc0OTY5MDM1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -544,20 +544,21 @@ fun VideoElement(
     actions: ReaderActions,
     modifier: Modifier = Modifier,
 ) {
-    val source = video.firstSource
+    val source = video.sources.firstOrNull { it.isPlayable } ?: video.firstSource
+    val isPlayable = source.isPlayable
     val showImages = LocalReaderStyle.current.showImages
     val label = stringResource(R.string.reader_play_video)
     val videoID = source.youtubeVideoID
     var isPlaying by rememberSaveable(source.uri) { mutableStateOf(false) }
 
-    val poster = if (videoID == null) {
+    val poster = if (videoID == null && isPlayable) {
         video.imageThumbnail ?: source.uri
     } else {
         video.imageThumbnail
     }
 
     val aspectRatios = koinInject<VideoAspectRatios>()
-    val isAspectRatioUnknown = videoID == null && source.aspectRatio == null
+    val isAspectRatioUnknown = isPlayable && videoID == null && source.aspectRatio == null
     var isMeasuring by remember(source.uri) { mutableStateOf(isAspectRatioUnknown) }
 
     LaunchedEffect(source.uri, isAspectRatioUnknown) {
@@ -615,7 +616,13 @@ fun VideoElement(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = frame.clickable { isPlaying = true },
+        modifier = frame.clickable {
+            if (isPlayable) {
+                isPlaying = true
+            } else {
+                actions.onLinkClick(source.link, null)
+            }
+        },
     ) {
         if (poster != null && showImages) {
             AsyncImage(
