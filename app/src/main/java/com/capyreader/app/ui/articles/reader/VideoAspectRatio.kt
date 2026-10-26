@@ -8,7 +8,9 @@ import coil3.request.ImageRequest
 import androidx.media3.common.C
 import androidx.media3.common.Format
 import androidx.media3.common.MediaItem
+import androidx.core.net.toUri
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.common.util.Util
 import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.TrackGroupArray
@@ -17,6 +19,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.jocmp.capy.accounts.baseHttpClient
 import com.jocmp.capy.logging.CapyLog
+import com.jocmp.mallet.LinearVideoSource
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.CancellationException
@@ -29,6 +32,23 @@ fun videoMediaSourceFactory(context: Context): DefaultMediaSourceFactory {
     return DefaultMediaSourceFactory(context)
         .setDataSourceFactory(OkHttpDataSource.Factory(baseHttpClient()))
 }
+
+/**
+ * Whether [videoMediaSourceFactory] has a module for this source. DASH, SmoothStreaming,
+ * and RTSP modules aren't bundled, and ExoPlayer throws when building a player for them.
+ */
+@get:OptIn(UnstableApi::class)
+val LinearVideoSource.isPlayable: Boolean
+    get() {
+        if (youtubeVideoID != null) {
+            return true
+        }
+
+        return when (Util.inferContentType(uri.toUri())) {
+            C.CONTENT_TYPE_HLS, C.CONTENT_TYPE_OTHER -> true
+            else -> false
+        }
+    }
 
 class VideoAspectRatios(private val context: Context) {
     private val ratios = mutableStateMapOf<String, Float>()
