@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		
+
+
+
+
+
+
+
+
+
+		<title>Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review - Phoronix</title>
+		<meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="https://www.phoronix.com/phxcms-css/phoronix-10.css?2024c">
+				<meta name="viewport" value="width=device-width, initial-scale=1.0">
+		<meta name="keywords" value="Phoronix, Linux Hardware Reviews, Linux hardware benchmarks, Linux server benchmarks, Linux benchmarking, Desktop Linux, Linux performance, Open Source graphics, Linux How To, Ubuntu benchmarks, Ubuntu hardware, Phoronix Test Suite">
+		<meta name="Description" value="The latest work that Raspberry Pi is working to upstream to the mainline Linux kernel is a HEVC/H.265 video decode driver that works on Raspberry Pi 4 and Raspberry Pi 5 single board computers.">
+		<link rel="alternate" type="application/rss+xml" title="Phoronix" href="https://www.phoronix.com/rss.php">
+		<link rel="shortcut icon" href="https://www.phoronix.com/favicon.ico">
+		<link rel="apple-touch-icon" sizes="57x57" href="https://www.phoronix.com/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="https://www.phoronix.com/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="https://www.phoronix.com/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="https://www.phoronix.com/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="https://www.phoronix.com/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="https://www.phoronix.com/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="https://www.phoronix.com/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="https://www.phoronix.com/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://www.phoronix.com/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="https://www.phoronix.com/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="https://www.phoronix.com/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="https://www.phoronix.com/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="https://www.phoronix.com/favicon-16x16.png" sizes="16x16">
+		<meta name="msapplication-TileImage" value="/mstile-144x144.png">
+		<meta name="twitter:card" value="summary_large_image">
+		<meta name="twitter:site" value="@phoronix">
+		<meta name="twitter:creator" value="@michaellarabel">
+		<meta name="twitter:title" value="Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review">
+		<meta name="og:title" value="Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review">
+		<meta name="twitter:image" value="https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&amp;image=raspberrypi_5_1">
+		<meta name="og:image" value="https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&amp;image=raspberrypi_5_1">
+		<meta name="twitter:description" value="The latest work that Raspberry Pi is working to upstream to the mainline Linux kernel is a HEVC/H.265 video decode driver that works on Raspberry Pi 4 and Raspberry Pi 5 single board computers.">
+		
+    		
+	</head>
+	<body style="overflow: initial !important;">
+		<div style="text-align: center; overflow: hidden; background: #222;"><div align="center" id="phoronix_desktop_leaderboard_header">
+  
+</div>
+</div>		<div id="headerwrap">
+			<div class="wcontainer defpadding">
+				<a href="https://www.phoronix.com/"><img id="logo" alt="Phoronix" src="https://www.phoronix.com/phxcms7-css/phoronix.png" style="height: 40px; margin-top: 5px;margin-left: 5px;"></a>
+				<div id="headerright">
+					<div id="social">
+					    <a href="https://www.phoronix.com/rss.php" class="icon-rss"></a>
+					    <a href="https://twitter.com/Phoronix" rel="me" class="icon-twitter"></a>
+					    <a href="https://www.facebook.com/Phoronix" rel="me" class="icon-facebook"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="litemenu">
+		    <ul>
+		        <li><a href="https://www.phoronix.com/reviews">Articles &amp; Reviews</a></li>
+		        <li><a href="https://www.phoronix.com/news">News Archive</a></li>
+		        <li><a href="https://www.phoronix.com/forums/">Forums</a></li>
+		        <li><a href="https://www.phoronix.com/phoronix-premium">Premium Ad-Free</a></li>		  	<li><a href="https://www.phoronix.com/contact">Contact</a></li>
+		        <li class="categ icon-angle-circled-down" style="display: none;"><span> Popular Categories</span></li>
+		        				<li id="closelid" onclick="javascript:document.getElementById(&apos;litemenu&apos;).style.zIndex=-9;">Close</li>
+		    </ul>		    
+		</div>
+		<div id="menuwrap">
+			<div class="wcontainer">
+				<ul id="linklist">
+					<li id="menubutton"><span class="icon-menu" onclick="javascript:document.getElementById(&apos;litemenu&apos;).style.zIndex=99;"></span>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/reviews">Articles &amp; Reviews</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/news">News Archive</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/forums/">Forums</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/phoronix-premium">Premium</a>
+					</li>					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/contact">Contact</a>
+					</li>
+					<li id="categories-link" class="menulink">
+						<span class="menunolink icon-angle-circled-down"> Categories</span>
+						<div id="categories-list">
+							<div id="categories-content">
+		         <a href="https://www.phoronix.com/reviews/Computers">Computers</a> <a href="https://www.phoronix.com/reviews/Display+Drivers">Display Drivers</a> <a href="https://www.phoronix.com/reviews/Graphics+Cards">Graphics Cards</a> <a href="https://www.phoronix.com/reviews/Linux+Gaming">Linux Gaming</a> <a href="https://www.phoronix.com/reviews/Memory">Memory</a> <a href="https://www.phoronix.com/reviews/Motherboards">Motherboards</a> <a href="https://www.phoronix.com/reviews/Processors">Processors</a> <a href="https://www.phoronix.com/reviews/Software">Software</a> <a href="https://www.phoronix.com/reviews/Storage">Storage</a> <a href="https://www.phoronix.com/reviews/Operating+Systems">Operating Systems</a> <a href="https://www.phoronix.com/reviews/Peripherals">Peripherals</a>							</div>
+						</div>
+					</li>
+					<li id="searchbox">
+						<div id="search">
+							
+
+							
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="content-bg">
+			<div id="content">
+				<div id="main-wrap">
+					<div id="main">
+						<div style="text-align: center; overflow: hidden; margin-bottom: 30px;">
+							<div align="center" id="phoronix_desktop_leaderboard_atf">
+  
+</div>
+
+						</div>
+						
+<article class="full">
+<h1>Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review</h1>
+<div class="author">Written by <a href="https://www.michaellarabel.com/">Michael Larabel</a> in <a href="https://www.phoronix.com/linux/Raspberry+Pi">Raspberry Pi</a> on 21 December 2024 at 09:31 AM EST. <a href="https://www.phoronix.com/forums/node/1514026">18 Comments</a></div>
+<div class="content">
+<div style="float: left; padding: 0 10px 10px;"><img alt="RASPBERRY PI" src="https://www.phoronix.com/assets/categories/raspberrypi.webp" width="100" height="100"></div>
+The latest work that Raspberry Pi is working to upstream to the mainline Linux kernel is a HEVC/H.265 video decode driver that works on Raspberry Pi 4 and Raspberry Pi 5 single board computers.<br><br>Dave Stevenson of Raspberry Pi posted this HEVC decoder driver on Friday for review on the Linux kernel mailing list. He summarized:<br><blockquote>&quot;This has been in the pipeline for a while, but I&apos;ve finally cleaned up our HEVC decoder driver to be in a shape to at least get a first review.<br><br>John Cox has done almost all of the work under contract to Raspberry Pi, and I&apos;m largely just doing the process of patch curation and sending.&quot;</blockquote><br>This Raspberry Pi HEVC decode driver for the Linux kernel&apos;s media subsystem is just under five thousand lines of code. This decode driver works for Broadcom BCM2711 and BCM2712 SoCs found within the Raspberry Pi 4 and Raspberry Pi 5 boards.<br><p align="center"><img src="https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&amp;image=raspberrypi_5_1_med" alt="Raspberry Pi 5"></p><br>This new driver exposes the HEVC/H.265 decode block as a stateless Video 4 Linux 2 (V4L2) decoder device that can then be used by Linux user-space applications.<br><br>Those interested in this new Raspberry Pi HEVC decode driver now being reviewed for the mainline Linux kernel can find the initial code via <a href="https://lore.kernel.org/lkml/20241220-media-rpi-hevc-dec-v1-0-0ebcc04ed42e@raspberrypi.com/">this patch series</a>. Hopefully the review will go well and it won&apos;t be too long into 2025 before finding this new &quot;VIDEO_RPI_HEVC_DEC&quot; driver in the mainline Linux kernel.</div>
+							<div style="text-align: center; overflow: hidden; margin-bottom: 30px;">
+								<div align="center" id="phoronix_leaderboard_btf">
+  
+</div>
+							</div>
+							<div class="foot">
+								<div class="pagination">
+								</div>
+								<div class="comments-label">
+									<a href="https://www.phoronix.com/forums/node/1514026">18 Comments</a>								</div>
+							</div>
+						</article>
+<div id="sharebar">
+<div style="margin: 0 10px 10px; overflow: hidden;">
+
+<div style="float: left; overflow: hidden;"><a href="https://twitter.com/share" class="twitter-share-button" data-text="Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review" data-url="https://www.phoronix.com/news/Raspberry-Pi-HEVC-H265-Decode" data-via="phoronix" data-related="michaellarabel">Tweet</a>
+</div>
+
+<div style="float: left; overflow: hidden;"><iframe src="https://www.facebook.com/plugins/like.php?href=https://www.phoronix.com/news/Raspberry-Pi-HEVC-H265-Decode&amp;width=200&amp;height=46&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:46px;" allowtransparency="true"></iframe></div>
+</div></div>
+<div class="article-box">
+								<header>Related News</header>
+								<div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-500">Raspberry Pi 500 Launches Along With Raspberry Pi Monitor</a></div><div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-CM5">Raspberry Pi Launches The Compute Module 5 For $45 USD</a></div><div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-Pico-2-W">Raspberry Pi Pico 2 W Launches For $7</a></div><div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-CFE-Linux-6.13">Raspberry Pi Camera Front End &quot;CFE&quot; Video Capture With Linux 6.13</a></div><div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-OS-Nov-2024">Raspberry Pi OS Now Defaults To 512MB Swap, Updates Labwc Compositor</a></div><div class="node"><a href="https://www.phoronix.com/news/Raspberry-Pi-Touch-Display-2">Raspberry Pi Touch Display 2 Launches For $60 USD, 720 x 1280 7-Inch Display</a></div>
+	                             
+							</div>						<div class="after-article">
+							<div style="text-align: center; overflow: hidden; margin: 5px;">
+								<div align="center" id="phoronix_leaderboard_incontent_3">
+  
+</div>
+</div>
+							<div id="about-author">
+								<header>About The Author</header>
+								<img class="pic" src="https://www.phoronix.com/assets/categories/michaellarabel.webp" alt="Michael Larabel">
+								<div class="text"><p>Michael Larabel is the principal author of Phoronix.com and founded the site in 2004 with a focus on enriching the Linux hardware experience. Michael has written more than 20,000 articles covering the state of Linux hardware support, Linux performance, graphics drivers, and other topics. Michael is also the lead developer of the Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org automated benchmarking software. He can be followed via <a href="https://twitter.com/MichaelLarabel">Twitter</a>, <a href="https://www.linkedin.com/in/michaellarabel/">LinkedIn</a>, or contacted via <a href="https://www.michaellarabel.com/">MichaelLarabel.com</a>.</p></div>
+							</div>
+<div class="article-box">
+								<header>Popular News This Week</header>
+								<div class="node"><a href="https://www.phoronix.com/news/Linux-Intel-KVM-Cache-CPUID">Linux Fixing A &quot;Hilarious/Revolting Performance Regression&quot; Around Intel KVM Virtualization</a></div><div class="node"><a href="https://www.phoronix.com/news/Linux-6.13-AMD-Features">Linux 6.13 Is A Great Holiday Gift For AMD Systems With Many New Features</a></div><div class="node"><a href="https://www.phoronix.com/news/Linux-6.6.66-LTS-Released">Linux 6.6.66 LTS Kernel Released With New Hardware Support &amp; Many Fixes</a></div><div class="node"><a href="https://www.phoronix.com/news/System76-Pangolin-15-AMD-Linux">System76 Releases Updated AMD Ryzen Linux Laptop</a></div><div class="node"><a href="https://www.phoronix.com/news/Xfce-4.20-Released">Xfce 4.20 Desktop Released With Wayland Improvements &amp; New Features</a></div><div class="node"><a href="https://www.phoronix.com/news/Curl-Drops-Rust-Hyper-Backend">Curl Drops Support For Hyper Rust HTTP Backend Citing Little Demand</a></div><div class="node"><a href="https://www.phoronix.com/news/Fish-Shell-4.0-Beta">Fish Shell 4.0 Beta Released With C++ Code Ported To Rust</a></div><div class="node"><a href="https://www.phoronix.com/news/NVIDIA-Jetson-Orin-Nano-Super">NVIDIA Launches $249 &quot;Gen AI Supercomputer&quot; With Jetson Orin Nano Super Developer Kit</a></div>
+							</div>		</div>
+
+					</div>
+				</div>
+				<div id="sidebar-wrap">
+					<div id="sidebar">
+					    <aside>
+						<div style="text-align: center;">
+                           				<div align="center" id="phoronix_right_rail_1">
+  
+</div>
+                        </div>
+                        </aside>
+                        <aside class="widget">
+			<header>Latest Linux News</header><div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Linux-6.14-Rust-PCI-Device-Drv">Linux 6.14 Looks To Land Rust PCI / Platform Device Driver Support</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Serpent-OS-Alpha-Christmas">Ikey Doherty&apos;s Serpent OS Linux Distribution Goes Into Alpha</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Fast-AMD-AES-GCM-XTS-Linux-614">Faster AES-GCM &amp; AES-XTS Crypto For AMD CPUs With Linux 6.14</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/GNU-Debugger-GDB-Intel-GPUs">Intel Engineers Adding GNU Debugger &quot;GDB&quot; Support For Intel GPUs</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Linux-6.14-Dropping-EVBUG">EVBUG Driver Being Dropped From Linux 6.14 - Useless For Years &amp; Known Security Threat</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/AMDVLK-2024.Q4.3-Released">AMDVLK 2024.Q4.3 Brings Vulkan 1.4 Support, More Game Tuning</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Linux-6.13-rc4">Linux 6.13-rc4 Released For Kernel Testing Ahead Of The Holidays</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/AMD-INVLPGB-Linux-Benefits">Linux Kernel Patches To Use AMD INVLPGB Instruction Show Huge Speed-Up</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/Intel-Family-19-Family-18-Patch">Intel To Use Both Family 18 And Family 19 Identification For Upcoming CPUs</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/news/LLVM-Telemetry-Framework">LLVM 20 Merges An Initial Telemetry Framework</a>
+                            </div>
+                        </aside>
+			<aside>
+			<div style="text-align: center;">
+                          <div align="center" id="phoronix_right_rail_2">
+  
+</div>
+
+                        </div>
+                        </aside>
+			                        <aside class="widget">
+                       <header>Show Your Support, Go Premium</header>
+                       <p><a href="https://www.phoronix.com/phoronix-premium">Phoronix Premium</a> allows ad-free access to the site, multi-page articles on a single page, and other features while supporting this site&apos;s continued operations.</p>
+                        </aside>
+			                        <aside class="widget">
+			<header>Latest Featured Articles</header><div class="popular-list">
+                                <a href="https://www.phoronix.com/review/raspberry-pi-500">Raspberry Pi 500 Delivers Great Performance, Convenient Upgrade To The Raspberry Pi 400</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/review/intel-arrowlake-0x114">100+ Linux Benchmarks Of Intel Arrow Lake With New BIOS / 0x114 CPU Microcode</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/review/intel-arrowlake-cachyos">Arch Linux Based CachyOS Takes The Lead On Intel Arrow Lake</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/review/intel-arrowlake-windows-linux">Intel Core Ultra 9 285K &quot;Arrow Lake&quot; Windows 11 vs. Ubuntu Linux Performance</a>
+                            </div>
+<div class="popular-list">
+                                <a href="https://www.phoronix.com/review/almalinux-10-beta">AlmaLinux 10 Beta Running Great With Nice Performance As Free/Community Alternative To RHEL 10</a>
+                            </div>
+                        </aside>
+			<aside>
+						<div style="text-align: center;">
+                           				<div style="position: sticky; top: 0; position: -webkit-sticky;"><div align="center" id="phoronix_right_rail_3">
+  
+</div>
+
+</div>                       				 </div>
+                        </aside>
+                                                <aside class="widget">
+                            <header>Support Phoronix</header>
+                            <p>The mission at Phoronix since 2004 has centered around enriching the Linux hardware experience. In addition to supporting our site through advertisements, you can help by <a href="https://www.phoronix.com/phoronix-premium">subscribing to Phoronix Premium</a>. You can also contribute to Phoronix through a <a href="https://www.paypal.com/donate/?hosted_button_id=EA79CCDLNFJNW">PayPal tip</a> or <a href="https://buy.stripe.com/28o02d1yG1Lp8H67ss">tip via Stripe</a>.</p>
+                        </aside>
+                        					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+		    <div id="footer-content">
+			<p align="center"></p>
+		        <div id="footer-left">
+		        <div id="footer-left-content">
+		            <div class="extra-info">
+		                <header>Phoronix Media</header>
+		                <hr>
+		                <ul>
+		                    <li><a href="https://www.phoronix.com/contact">Contact</a></li>
+		                    <li><a href="https://www.phoronix.com/michaellarabel">Michael Larabel</a></li>
+		                    <li><a href="https://openbenchmarking.org/">OpenBenchmarking.org</a></li>
+		                </ul>
+		            </div>
+		            <div class="extra-info">
+		                <header>Phoronix Premium</header>
+		                <hr>
+		                <a href="https://www.phoronix.com/phoronix-premium"><ul>
+                            <li>Support Phoronix</li>
+		                    <li>While Having Ad-Free Browsing,</li>
+                            <li>Single-Page Article Viewing</li>
+                        </ul></a>
+		            </div>
+		            <div class="extra-info">
+		                <header>Share</header>
+		                <hr>
+		                <ul>
+		                    <li><a href="https://facebook.com/Phoronix" rel="me">Facebook</a></li>
+		                    <li><a href="https://twitter.com/Phoronix" rel="me">Twitter</a></li>
+		                </ul>
+		            </div>
+		       </div>
+		       </div>
+		       <div id="footer-right">
+		            <div class="extra-info">
+		                <ul>
+		                <li><p><a href="https://www.phoronix.com/legal">Legal Disclaimer, Privacy Policy, Cookies</a> | <button id="pmLink">Privacy Manager</button> | <a href="https://www.phoronix-media.com/?k=contact">Contact</a></p></li>
+                        <li><p>Copyright &#xA9; 2004 - 2024 by <a href="https://www.phoronix-media.com/">Phoronix Media</a>.</p></li>
+                        <li><p>All trademarks used are properties of their respective owners. All rights reserved.</p></li>
+				</ul>
+		            </div>
+		        </div>
+		     </div>		   
+		</div>
+	</body>
+</html>

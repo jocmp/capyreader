@@ -16,7 +16,7 @@ Caps are 2000 elements / 100k chars. Over that, `LinearArticle.truncated` is set
 
 ## Full content
 
-`ArticleContent.fetch` (device-side, browser headers) -> `Mercury.parse(html = ...)` in `capy/articles/MercuryParser.kt`, using `com.jocmp:mercury-parser` (own library). Replaces the ~1MB JS asset the WebView loaded.
+`ArticleContent.fetch` (device-side, browser headers) -> `Mercury.parse(html = ...)` in `capy/articles/MercuryParser.kt`, from the `:mercuryparser` module (Kotlin port of Mercury Parser; per-site rules live in `extractors/custom`). Replaces the ~1MB JS asset the WebView loaded.
 
 ## Styling
 

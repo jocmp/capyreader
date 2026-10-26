@@ -1,0 +1,16 @@
+{
+  "title": "Raspberry Pi HEVC Decoder Driver Posted For Linux Kernel Review",
+  "content": "<div><div class=\"content\">\n<div><img alt=\"RASPBERRY PI\" src=\"https://www.phoronix.com/assets/categories/raspberrypi.webp\" width=\"100\" height=\"100\"></div>\nThe latest work that Raspberry Pi is working to upstream to the mainline Linux kernel is a HEVC/H.265 video decode driver that works on Raspberry Pi 4 and Raspberry Pi 5 single board computers.\n<br>\n<br>Dave Stevenson of Raspberry Pi posted this HEVC decoder driver on Friday for review on the Linux kernel mailing list. He summarized:\n<br><blockquote>\"This has been in the pipeline for a while, but I've finally cleaned up our HEVC decoder driver to be in a shape to at least get a first review.\n<br>\n<br>John Cox has done almost all of the work under contract to Raspberry Pi, and I'm largely just doing the process of patch curation and sending.\"</blockquote>\n<br>This Raspberry Pi HEVC decode driver for the Linux kernel's media subsystem is just under five thousand lines of code. This decode driver works for Broadcom BCM2711 and BCM2712 SoCs found within the Raspberry Pi 4 and Raspberry Pi 5 boards.\n<br><p><img src=\"https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&amp;image=raspberrypi_5_1_med\" alt=\"Raspberry Pi 5\"></p>\n<br>This new driver exposes the HEVC/H.265 decode block as a stateless Video 4 Linux 2 (V4L2) decoder device that can then be used by Linux user-space applications.\n<br>\n<br>Those interested in this new Raspberry Pi HEVC decode driver now being reviewed for the mainline Linux kernel can find the initial code via <a href=\"https://lore.kernel.org/lkml/20241220-media-rpi-hevc-dec-v1-0-0ebcc04ed42e@raspberrypi.com/\">this patch series</a>. Hopefully the review will go well and it won't be too long into 2025 before finding this new \"VIDEO_RPI_HEVC_DEC\" driver in the mainline Linux kernel.</div></div>",
+  "author": "Michael Larabel",
+  "date_published": "2024-12-21T14:31:00.000Z",
+  "lead_image_url": "https://www.phoronix.net/image.php?id=raspberry-pi-5-benchmarks&image=raspberrypi_5_1",
+  "dek": null,
+  "next_page_url": null,
+  "url": null,
+  "domain": null,
+  "excerpt": null,
+  "word_count": null,
+  "direction": null,
+  "total_pages": 1,
+  "rendered_pages": 1
+}
