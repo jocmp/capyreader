@@ -340,12 +340,13 @@ fun ImageElement(
             ?: PLACEHOLDER_ASPECT_RATIO
 
         val pageHeight = LocalReaderPageHeight.current
+        val pageFitWidth = pageHeight?.times(aspectRatio)
 
         val sizeModifier = if (failed) {
             Modifier.fillMaxWidth()
-        } else if (pageHeight != null) {
+        } else if (pageFitWidth != null && pageFitWidth < maxWidth) {
             Modifier
-                .widthIn(max = pageHeight * aspectRatio)
+                .widthIn(max = pageFitWidth)
                 .fillMaxWidth()
                 .aspectRatio(aspectRatio)
         } else {
