@@ -1,11 +1,6 @@
-Updated
-
-• Translations for Arabic, Belarusian, French, German, Hungarian and Korean thanks to volunteers!
-
-Fixed
-
-• Live stream (HLS) videos and audio play instead of crashing
-• Unsupported video formats open in the browser
-• Very wide or tall images no longer crash the reader
+• Updated Translations for Arabic, Belarusian, French, German, Hungarian and Korean thanks to volunteers!
+• Fixed HLS video crash
+• Fixed crash on tables such as kill-the-newsletter
+• Fixed full content images on NPR and Android Authority
+• Fixed full content crash on The Verge
 • Full content can be turned off after a failed download
-• Full content images on NPR, Android Authority, The Verge, Polygon and Motley Fool
