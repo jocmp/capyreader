@@ -22,6 +22,7 @@ import com.jocmp.mercury.extractors.generic.wordcount.extractGenericWordCount
 import com.jocmp.mercury.utils.dom.convertNodeTo
 import com.jocmp.mercury.utils.dom.makeLinksAbsolute
 import com.jocmp.mercury.utils.text.getDirection
+import org.jsoup.nodes.Document
 import java.time.Instant
 
 // Remove elements by an array of selectors
@@ -122,6 +123,12 @@ internal fun selectField(
         // of the original selector.
         val wrapper = doc.document.createElement("div")
         content.elements.forEach { wrapper.appendChild(it.clone()) }
+        // A detached wrapper serializes with jsoup's default (pretty-printed) settings
+        Document
+            .createShell(doc.document.location())
+            .apply { outputSettings(doc.document.outputSettings().clone()) }
+            .body()
+            .appendChild(wrapper)
         val wrapped = doc.wrap(wrapper)
         val transformed = transformAndClean(wrapped)
 

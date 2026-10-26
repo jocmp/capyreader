@@ -16,12 +16,13 @@ private fun resolve(
 
 private fun absolutize(
     doc: Doc,
+    nodes: Selection,
     rootUrl: String,
     attr: String,
 ) {
     val baseUrl = doc("base").attr("href")
 
-    doc("[$attr]").each { _, node ->
+    nodes.each { _, node ->
         val attrs = getAttrs(node)
         val url = attrs[attr] ?: return@each
         val absoluteUrl = resolve(baseUrl ?: rootUrl, url)
@@ -63,7 +64,11 @@ fun makeLinksAbsolute(
     doc: Doc,
     url: String,
 ): Selection {
-    listOf("href", "src").forEach { absolutize(doc, url, it) }
+    listOf("href", "src").forEach { attr ->
+        absolutize(doc, doc("[$attr]"), url, attr)
+        // Custom extractor content may be a detached clone the document query can't reach
+        absolutize(doc, content.find("[$attr]"), url, attr)
+    }
     absolutizeSet(doc, url, content)
     return content
 }
