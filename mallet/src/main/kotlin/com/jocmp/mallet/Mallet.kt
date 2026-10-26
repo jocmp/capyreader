@@ -495,7 +495,7 @@ private class Flattening {
 
                             val ids = element.allIds()
 
-                            getImageSource(baseUrl, element).let { candidates ->
+                            pictureImageSource(baseUrl, element).let { candidates ->
                                 if (candidates.isNotEmpty()) {
                                     val captionText: String? =
                                         stripHtml(element.attr("alt"))
@@ -983,10 +983,9 @@ private class Flattening {
     private fun Element.descendantImageCandidates(baseUrl: String): List<LinearImageSource>? {
         // Arstechnica is weird and has images inside divs inside figures
         return sequence {
-            yieldAll(getElementsByTag("img"))
-            yieldAll(getElementsByClass("image"))
-        }.flatMap { getImageSource(baseUrl, it) }
-            .distinctBy { it.imgUri }
+            getElementsByTag("img").forEach { yieldAll(pictureImageSource(baseUrl, it)) }
+            getElementsByClass("image").forEach { yieldAll(getImageSource(baseUrl, it)) }
+        }.distinctBy { it.imgUri }
             .toList()
             .takeIf { it.isNotEmpty() }
     }
@@ -1001,8 +1000,43 @@ private class Flattening {
             .takeIf { it.isNotEmpty() }
     }
 
+    /**
+     * Candidates for an `<img>`, minus unexpanded URL templates such as
+     * Brightspot's `/resize/{width}/`, which CDNs answer with a placeholder.
+     * Falls back to the `<source>` srcsets of an enclosing `<picture>` only
+     * when the `<img>` has nothing usable left.
+     */
+    private fun pictureImageSource(
+        baseUrl: String,
+        img: Element,
+    ): List<LinearImageSource> {
+        val candidates = getImageSource(baseUrl, img).filterNot { urlTemplateRegex.containsMatchIn(it.imgUri) }
+
+        if (candidates.isNotEmpty()) {
+            return candidates
+        }
+
+        return img.pictureSources()
+            .flatMap { getImageSource(baseUrl, it) }
+            .distinctBy { it.imgUri }
+    }
+
+    private fun Element.pictureSources(): List<Element> {
+        val picture = parent()?.takeIf { it.tagName() == "picture" } ?: return emptyList()
+
+        return picture.children().filter { source ->
+            source.tagName() == "source" &&
+                !source.hasAttr("media") &&
+                source.attr("type").substringBefore(";").trim().lowercase() in PICTURE_SOURCE_TYPES
+        }
+    }
+
     companion object {
         private val spaceRegex = Regex("\\s+")
+        private val urlTemplateRegex = Regex("""\{\w+\}|%7B\w+%7D""", RegexOption.IGNORE_CASE)
+
+        // Skip formats like AVIF that minSdk 30 can't decode
+        private val PICTURE_SOURCE_TYPES = setOf("", "image/jpeg", "image/png", "image/webp", "image/gif")
     }
 }
 

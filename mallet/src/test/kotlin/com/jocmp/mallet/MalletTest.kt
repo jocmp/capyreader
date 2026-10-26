@@ -1796,4 +1796,70 @@ class MalletTest {
         assertEquals(Mallet.MAX_ELEMENTS + 1, truncation.elementCount)
         assertEquals(Mallet.MAX_ELEMENTS, result.elements.size)
     }
+
+    @Test
+    fun `figure picture falls back to source srcset when img src is a URL template`() {
+        val html =
+            """
+            <html><body><figure><picture>
+            <source srcset="https://example.com/400.jpg 400w, https://example.com/1200.jpg 1200w" type="image/webp">
+            <img src="https://example.com/resize/{width}/image.jpg">
+            </picture></figure></body></html>
+            """.trimIndent()
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        val image = result.single() as LinearImage
+        assertEquals(
+            listOf(
+                LinearImageSource(imgUri = "https://example.com/400.jpg", widthPx = null, heightPx = null, pixelDensity = null, screenWidth = 400),
+                LinearImageSource(imgUri = "https://example.com/1200.jpg", widthPx = null, heightPx = null, pixelDensity = null, screenWidth = 1200),
+            ),
+            image.sources,
+        )
+    }
+
+    @Test
+    fun `picture skips art direction and unsupported source types`() {
+        val html =
+            """
+            <html><body><picture>
+            <source srcset="https://example.com/image.avif 800w" type="image/avif">
+            <source srcset="https://example.com/wide.jpg 800w" media="(min-width: 800px)">
+            <source srcset="https://example.com/image.webp 800w" type="image/webp; codecs=vp8">
+            <img src="https://example.com/resize/%7Bwidth%7D/image.jpg">
+            </picture></body></html>
+            """.trimIndent()
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        val image = result.single() as LinearImage
+        assertEquals(
+            listOf(
+                LinearImageSource(imgUri = "https://example.com/image.webp", widthPx = null, heightPx = null, pixelDensity = null, screenWidth = 800),
+            ),
+            image.sources,
+        )
+    }
+
+    @Test
+    fun `picture keeps a usable img src over its sources`() {
+        val html =
+            """
+            <html><body><picture>
+            <source srcset="https://example.com/image.webp 800w" type="image/webp">
+            <img src="https://example.com/image.jpg" width="1200" height="800">
+            </picture></body></html>
+            """.trimIndent()
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        val image = result.single() as LinearImage
+        assertEquals(
+            listOf(
+                LinearImageSource(imgUri = "https://example.com/image.jpg", widthPx = 1200, heightPx = 800, pixelDensity = null, screenWidth = null),
+            ),
+            image.sources,
+        )
+    }
 }
