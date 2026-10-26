@@ -32,7 +32,7 @@ internal fun cleanBySelectors(
     spec: FieldSpec,
 ): Selection {
     if (spec.clean.isEmpty()) return content
-    content.find(spec.clean.joinToString(",")).remove()
+    content.descendants(spec.clean.joinToString(",")).remove()
     return content
 }
 
@@ -45,7 +45,7 @@ internal fun transformElements(
     if (spec.transforms.isEmpty()) return content
 
     for ((key, transform) in spec.transforms) {
-        val matches = content.find(key)
+        val matches = content.descendants(key)
         when (transform) {
             is Transform.Rename ->
                 matches.each { _, node ->
