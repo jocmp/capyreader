@@ -2,7 +2,7 @@ package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateMapOf
@@ -30,10 +30,12 @@ fun TableLayout(
         Modifier
     }
 
-    Box(
+    BoxWithConstraints(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
+        val maxCellWidth = constraints.maxWidth
+
         Layout(
             modifier = scrollModifier,
             content = {
@@ -56,7 +58,7 @@ fun TableLayout(
                 measurable.measure(
                     Constraints(
                         minWidth = minWidth,
-                        maxWidth = Constraints.Infinity,
+                        maxWidth = maxOf(minWidth, maxCellWidth),
                         minHeight = minHeight,
                         maxHeight = Constraints.Infinity,
                     )
