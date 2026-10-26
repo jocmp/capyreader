@@ -65,6 +65,10 @@ val WwwAndroidauthorityComExtractor =
                 TransformResult.NoChange
             }
 
-            clean("h1 + div", "picture + div")
+            clean(
+                "h1 + div",
+                "picture + div",
+                "div:has(> div > a[href*=\"andauth.co/AAGoogle\"])",
+            )
         }
     }

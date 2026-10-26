@@ -59,6 +59,10 @@ class Selection internal constructor(
 
     fun find(selector: String): Selection = doc.wrap(elements.select(selector))
 
+    // Cheerio's .find() never matches the selection's own elements, while Jsoup's select() does
+    fun descendants(selector: String): Selection =
+        doc.wrap(Elements(elements.select(selector).filterNot { match -> elements.any { it === match } }))
+
     fun parent(): Selection = doc.wrap(elements.mapNotNull { it.parent() }.let(::Elements))
 
     /** Find the nearest ancestor matching [selector], like cheerio's `$node.parent(selector)`. */
