@@ -5,9 +5,9 @@ Dažas no iespējām:
 • vienādošana ar Feedbin, FreshRSS vai tieši ierīcē;
 • sekošana izlasītajiem un atzīmētajiem rakstiem;
 • rakstu meklēšana;
-• virsrakstu logrīks;
+• rakstu virsrakstu logrīks;
 • paziņojumi;
-• visa satura skatīšana;
+• visa (pilna) raksta satura rādīšana;
 • tumšais izskats;
 • lielu ekrānu atbalsts;
 • saglabāto ziņu plūsmu ievietošana un izgūšana.
