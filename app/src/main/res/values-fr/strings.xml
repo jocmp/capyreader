@@ -19,7 +19,7 @@
     <string name="settings_remove_account_message_local">Voulez-vous vraiment supprimer votre compte ? Cela ne peut être annulé.</string>
     <string name="settings_remove_account_confirm_local">Confirmer</string>
     <string name="account_settings_save_name">Nom enregistré</string>
-    <string name="nav_headline_folders">Étiquettes</string>
+    <string name="nav_headline_folders">Dossiers</string>
     <string name="add_feed_network_error">Impossible de trouver un flux. Vérifiez votre connexion.</string>
     <string name="add_feed_feed_not_error">Impossible de trouver un flux</string>
     <string name="add_feed_save_error">Impossible d’enregistrer le flux</string>
@@ -150,7 +150,7 @@
     <string name="add_account_title">Ajouter un compte</string>
     <string name="transfers_export_subscriptions">Exporter les abonnements</string>
     <string name="opml_import_toast_failed">Importation échouée</string>
-    <string name="edit_feed_folders">Étiquettes</string>
+    <string name="edit_feed_folders">Dossiers</string>
     <string name="image_preview_menu_option_none">Aucun</string>
     <string name="image_preview_menu_option_large">Grand</string>
     <string name="settings_section_version">Version</string>
@@ -187,7 +187,7 @@
     <string name="settings_panel_notifications_title">Notifications</string>
     <string name="edit_feed_notifications_title">Activer les notifications</string>
     <string name="notifications_channel_title_feed_update">Mises à jour des flux</string>
-    <string name="edit_feed_folders_section">Étiquettes</string>
+    <string name="edit_feed_folders_section">Dossiers</string>
     <string name="settings_select_all">Tout sélectionner</string>
     <string name="settings_select_none">Ne rien sélectionner</string>
     <string name="settings_gestures_list_back_navigation_action">Action de navigation retour</string>
