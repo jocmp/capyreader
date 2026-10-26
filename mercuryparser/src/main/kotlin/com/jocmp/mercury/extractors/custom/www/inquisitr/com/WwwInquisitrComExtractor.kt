@@ -13,7 +13,7 @@ val WwwInquisitrComExtractor =
         leadImageUrl { attr("meta[name=\"og:image\"]", "value") }
 
         content {
-            selectors("article.story", ".entry-content.")
+            selectors("article.story", ".entry-content")
 
             clean(
                 ".post-category",
