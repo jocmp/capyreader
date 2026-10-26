@@ -1,0 +1,16 @@
+{
+  "title": "jolt - A beautiful TUI battery and energy monitor for your terminal.",
+  "content": "<div><main class=\"text-white py-8\"><div class=\"px-4\"><p id=\"tagline\">A beautiful TUI battery and energy monitor for your terminal.</p><div class=\"w-full mt-8\"><img alt=\"image preview of jolt\" src=\"https://cdn.terminaltrove.com/m/adf34373-ee76-42ad-aaa9-de898fba9533.gif\" class=\"w-full\"></div><div class=\"mt-8\"><p>jolt is a TUI battery and energy monitor for macOS and Linux laptops. It is designed to show what applications drain power on your laptop and how your battery is holding up.</p>\n\n<p>It reports charge percentage, time remaining, cycle count and battery health and it tracks system power draw with a CPU or GPU breakdown of statistics. It ranks processes by energy impact and can stop power hungry processes.</p>\n\n<p>This tool also has a dedicated panel for recording history graphs of power trends, has 10 different themes with light and dark mode detection and can run in the background to collect stats between sessions. It can export metrics to JSON and it includes commands for configuration, logs and debug output.</p>\n\n<p>jolt works best for developers, software engineers and laptop users who are curious about what tools, applications and services contribute to their laptop's battery usage. It is also useful for those who want a quick power readout without leaving the terminal.</p></div></div></main></div>",
+  "author": null,
+  "date_published": null,
+  "lead_image_url": "https://cdn.terminaltrove.com/m/d6d77c6a-3e41-423e-8663-4196a8dc41e7.png",
+  "dek": "A beautiful TUI battery and energy monitor for your terminal.",
+  "next_page_url": null,
+  "url": null,
+  "domain": null,
+  "excerpt": null,
+  "word_count": null,
+  "direction": null,
+  "total_pages": 1,
+  "rendered_pages": 1
+}

@@ -1,0 +1,515 @@
+<!DOCTYPE html><html lang="en-US"><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" value="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+
+	<meta name="robots" value="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+	
+	<title>OpenVPN 2.7 Released with Support for DCO Linux Kernel Module, mbedTLS 4 - 9to5Linux</title>
+	<meta name="description" value="OpenVPN 2.7 is now available for download with support for the new upstream DCO Linux kernel module, mbedTLS 4 support, and more.">
+	<link rel="canonical" href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4">
+	<meta value="en_US" name="og:locale">
+	<meta value="article" name="og:type">
+	<meta value="OpenVPN 2.7 Released with Support for DCO Linux Kernel Module, mbedTLS 4 - 9to5Linux" name="og:title">
+	<meta value="OpenVPN 2.7 is now available for download with support for the new upstream DCO Linux kernel module, mbedTLS 4 support, and more." name="og:description">
+	<meta value="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4" name="og:url">
+	<meta value="9to5Linux" name="og:site_name">
+	<meta value="https://www.facebook.com/9to5linux" name="article:publisher">
+	<meta value="2026-02-11T13:39:31+00:00" name="article:published_time">
+	<meta value="2026-02-11T13:39:40+00:00" name="article:modified_time">
+	<meta value="https://9to5linux.com/wp-content/uploads/2025/11/ov.webp" name="og:image">
+	<meta value="1920" name="og:image:width">
+	<meta value="1080" name="og:image:height">
+	<meta value="image/webp" name="og:image:type">
+	<meta name="author" value="Marcus Nestor">
+	<meta name="twitter:card" value="summary_large_image">
+	<meta name="twitter:creator" value="@9to5linux">
+	<meta name="twitter:site" value="@9to5linux">
+	
+	
+
+
+<link rel="preconnect" href="https://i0.wp.com/">
+<link rel="alternate" type="application/rss+xml" title="9to5Linux » Feed" href="https://9to5linux.com/feed">
+<link rel="alternate" type="application/rss+xml" title="9to5Linux » Comments Feed" href="https://9to5linux.com/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="9to5Linux » OpenVPN 2.7 Released with Support for DCO Linux Kernel Module, mbedTLS 4 Comments Feed" href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4/feed">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://9to5linux.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://9to5linux.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4&amp;format=xml">
+
+<link rel="stylesheet" id="jetpack_related-posts-css" href="https://9to5linux.com/wp-content/plugins/jetpack/modules/related-posts/related-posts.css?ver=20240116" type="text/css" media="all">
+
+
+
+
+
+
+
+<link rel="preload" href="https://9to5linux.com/wp-content/plugins/coblocks/dist/style-coblocks-extensions.css?ver=3.1.16" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-content/plugins/coblocks/dist/style-coblocks-extensions.css?ver=3.1.16"></noscript><link rel="preload" href="https://9to5linux.com/wp-content/plugins/coblocks/dist/style-coblocks-animation.css?ver=2677611078ee87eb3b1c" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-content/plugins/coblocks/dist/style-coblocks-animation.css?ver=2677611078ee87eb3b1c"></noscript><link rel="preload" href="https://9to5linux.com/wp-includes/css/dist/components/style.min.css?ver=498e1a8ea70d09e1609440e53f98e05f" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-includes/css/dist/components/style.min.css?ver=498e1a8ea70d09e1609440e53f98e05f"></noscript><link rel="preload" href="https://9to5linux.com/wp-content/plugins/coblocks/includes/Dependencies/GoDaddy/Styles/build/latest.css?ver=2.0.2" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-content/plugins/coblocks/includes/Dependencies/GoDaddy/Styles/build/latest.css?ver=2.0.2"></noscript><link rel="preload" href="https://9to5linux.com/wp-content/themes/bam-pro/assets/fonts/css/all.min.css?ver=6.7.2" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-content/themes/bam-pro/assets/fonts/css/all.min.css?ver=6.7.2"></noscript><link rel="preload" href="https://9to5linux.com/wp-content/themes/bam-pro/style.css?ver=1.4.3" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://9to5linux.com/wp-content/themes/bam-pro/style.css?ver=1.4.3"></noscript><link rel="stylesheet" id="jquery-magnific-popup-css" href="https://9to5linux.com/wp-content/themes/bam-pro/assets/css/magnific-popup.css?ver=1.1.0" type="text/css" media="screen">
+<link rel="stylesheet" id="wpdiscuz-frontend-css-css" href="https://9to5linux.com/wp-content/plugins/wpdiscuz/themes/default/style.css?ver=7.6.46" type="text/css" media="all">
+
+<link rel="stylesheet" id="wpdiscuz-fa-css" href="https://9to5linux.com/wp-content/plugins/wpdiscuz/assets/third-party/font-awesome-5.13.0/css/fa.min.css?ver=7.6.46" type="text/css" media="all">
+<link rel="stylesheet" id="wpdiscuz-combo-css-css" href="https://9to5linux.com/wp-content/plugins/wpdiscuz/assets/css/wpdiscuz-combo.min.css?ver=498e1a8ea70d09e1609440e53f98e05f" type="text/css" media="all">
+<link rel="stylesheet" id="my-custom-overrides-css" href="https://9to5linux.com/wp-content/uploads/custom-css/global-styles.min.css?ver=1772216600" type="text/css" media="all">
+
+
+
+
+<link rel="https://api.w.org/" href="https://9to5linux.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://9to5linux.com/wp-json/wp/v2/posts/30452"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://9to5linux.com/xmlrpc.php?rsd">
+
+<link rel="shortlink" href="https://9to5linux.com/?p=30452">
+
+	<link rel="icon" href="https://i0.wp.com/9to5linux.com/wp-content/uploads/2021/04/cropped-9to5linux-logo-mini-copy.png?fit=32%2C32&amp;ssl=1" sizes="32x32">
+<link rel="icon" href="https://i0.wp.com/9to5linux.com/wp-content/uploads/2021/04/cropped-9to5linux-logo-mini-copy.png?fit=192%2C192&amp;ssl=1" sizes="192x192">
+<link rel="apple-touch-icon" href="https://i0.wp.com/9to5linux.com/wp-content/uploads/2021/04/cropped-9to5linux-logo-mini-copy.png?fit=180%2C180&amp;ssl=1">
+<meta name="msapplication-TileImage" value="https://i0.wp.com/9to5linux.com/wp-content/uploads/2021/04/cropped-9to5linux-logo-mini-copy.png?fit=270%2C270&amp;ssl=1">
+
+		
+
+	
+<link href="https://floss.social/@9to5linux" rel="me"></head>
+
+<body class="wp-singular post-template-default single single-post postid-30452 single-format-standard custom-background wp-custom-logo wp-embed-responsive wp-theme-bam-pro wide-layout right-sidebar one-container bm-wts-s3 bam-post-style-2"><a href="https://9to5linux.com/cdn-cgi/content?id=dEbTfx_h517yFQB0D2lPaDtZ8zUBLFSih9hEpsff7AI-1772404182.1618514-1.0.1.1-mlCNGyyx_qBuYRYJrK1x_Q.bLX25iBwH.dAFviEDSPY" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
+
+
+
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#content">Skip to content</a>
+
+	
+	
+
+
+<header id="masthead" class="site-header horizontal-style">
+
+    
+    
+
+
+<div id="site-header-inner-wrap">
+    <div id="site-header-inner" class="clearfix container-fluid">
+        <div class="site-branding">
+    <div class="site-branding-inner">
+
+                    <div class="site-logo-image"><a href="https://9to5linux.com/" class="custom-logo-link" rel="home"><img width="512" height="512" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/9to5512.webp?fit=512%2C512&amp;ssl=1" class="custom-logo" alt="9to5Linux" decoding="async" fetchpriority="high"></a></div>
+        
+        <div class="site-branding-text">
+                            <p class="site-title"><a href="https://9to5linux.com/" rel="home">9to5Linux</a></p>
+                                <p class="site-description">Linux news, reviews, tutorials, and more</p>
+                    </div>
+
+    </div>
+</div>        
+<nav id="site-navigation" class="main-navigation">
+
+    <div id="site-navigation-inner" class="align-center show-search">
+        
+        <div class="menu-primary-menu-container"><ul id="primary-menu" class="menu"><li id="menu-item-90" class="linux menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-90"><a href="https://9to5linux.com/category/news">News</a>
+<ul class="sub-menu">
+	<li id="menu-item-25651" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25651"><a href="https://9to5linux.com/category/news/distro">Distros</a></li>
+	<li id="menu-item-25653" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25653"><a href="https://9to5linux.com/category/news/desktop-environment">Desktops</a></li>
+	<li id="menu-item-25652" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-25652"><a href="https://9to5linux.com/category/news/app">Apps</a></li>
+	<li id="menu-item-25655" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25655"><a href="https://9to5linux.com/category/news/kernel">Kernel</a></li>
+	<li id="menu-item-25657" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25657"><a href="https://9to5linux.com/category/news/driver">Drivers</a></li>
+	<li id="menu-item-25654" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25654"><a href="https://9to5linux.com/category/news/hardware">Hardware</a></li>
+	<li id="menu-item-25660" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25660"><a href="https://9to5linux.com/category/news/community">Community</a></li>
+	<li id="menu-item-25658" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25658"><a href="https://9to5linux.com/category/news/bling-bling">Bling bling</a></li>
+	<li id="menu-item-25656" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25656"><a href="https://9to5linux.com/category/news/security">Security</a></li>
+	<li id="menu-item-25661" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25661"><a href="https://9to5linux.com/category/news/gaming">Gaming</a></li>
+	<li id="menu-item-25659" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25659"><a href="https://9to5linux.com/category/news/cloud">Cloud</a></li>
+</ul>
+</li>
+<li id="menu-item-183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-183"><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#downloads">Downloads</a></li>
+<li id="menu-item-91" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-91"><a href="https://9to5linux.com/category/tutorials">Tutorials</a></li>
+<li id="menu-item-92" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-92"><a href="https://9to5linux.com/category/reviews">Reviews</a></li>
+<li id="menu-item-4873" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4873"><a href="https://9to5linux.com/category/weekly-roundup">Weekly Roundup</a></li>
+<li id="menu-item-17278" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-17278"><a>Follow 9to5Linux</a>
+<ul class="sub-menu">
+	<li id="menu-item-17276" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17276"><a target="_blank" href="https://x.com/9to5linux">X/Twitter</a></li>
+	<li id="menu-item-17277" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17277"><a target="_blank" href="https://floss.social/@9to5linux">Mastodon</a></li>
+	<li id="menu-item-17279" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17279"><a target="_blank" href="https://news.google.com/publications/CAAqBwgKMPmRmwswvZyzAw?oc=3&amp;ceid=US:en">Google News</a></li>
+	<li id="menu-item-17280" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17280"><a target="_blank" href="https://www.linkedin.com/company/9to5linux/">LinkedIn</a></li>
+	<li id="menu-item-20341" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20341"><a target="_blank" href="https://www.threads.net/@9to5linux">Threads</a></li>
+	<li id="menu-item-21123" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-21123"><a target="_blank" href="https://bsky.app/profile/9to5linux.bsky.social">Bluesky</a></li>
+	<li id="menu-item-17281" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17281"><a target="_blank" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2F9to5linux.com%2Ffeed%2F">Feedly</a></li>
+	<li id="menu-item-17282" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17282"><a target="_blank" href="https://www.youtube.com/c/9to5LinuxOfficial">YouTube</a></li>
+	<li id="menu-item-17283" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17283"><a target="_blank" href="https://tilvids.com/a/9to5linux">TilVids</a></li>
+</ul>
+</li>
+<li id="menu-item-17285" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17285"><a href="https://9to5linux.com/feed/atom">RSS</a></li>
+<li id="menu-item-30276" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-30276"><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#"><button id="theme-toggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon icon-moon"></i><i class="fa-regular fa-sun icon-sun"></i></button></a></li>
+</ul></div><div class="bam-search-button-icon">
+    <i class="fas fa-search" aria-hidden="true"></i></div>
+<div class="bam-search-box-container">
+    <div class="bam-search-box">
+            </div>
+</div>
+        
+        <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" data-toggle-target=".mobile-dropdown > .mobile-navigation">
+            <i class="fas fa-bars"></i>
+                        <span class="screen-reader-text">Menu</span>        </button>
+        
+    </div>
+    
+</nav>    </div>
+</div>
+
+<div class="mobile-dropdown bam-mobile-dropdown">
+    <nav class="mobile-navigation">
+        <div class="menu-primary-menu-container"><ul id="primary-menu-mobile" class="menu"><li class="linux menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-90"><a href="https://9to5linux.com/category/news">News</a><button class="dropdown-toggle" data-toggle-target=".mobile-navigation .menu-item-90 > .sub-menu" aria-expanded="false"><span class="screen-reader-text">Show sub menu</span></button>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25651"><a href="https://9to5linux.com/category/news/distro">Distros</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25653"><a href="https://9to5linux.com/category/news/desktop-environment">Desktops</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-25652"><a href="https://9to5linux.com/category/news/app">Apps</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25655"><a href="https://9to5linux.com/category/news/kernel">Kernel</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25657"><a href="https://9to5linux.com/category/news/driver">Drivers</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25654"><a href="https://9to5linux.com/category/news/hardware">Hardware</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25660"><a href="https://9to5linux.com/category/news/community">Community</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25658"><a href="https://9to5linux.com/category/news/bling-bling">Bling bling</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25656"><a href="https://9to5linux.com/category/news/security">Security</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25661"><a href="https://9to5linux.com/category/news/gaming">Gaming</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25659"><a href="https://9to5linux.com/category/news/cloud">Cloud</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-183"><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#downloads">Downloads</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-91"><a href="https://9to5linux.com/category/tutorials">Tutorials</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-92"><a href="https://9to5linux.com/category/reviews">Reviews</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4873"><a href="https://9to5linux.com/category/weekly-roundup">Weekly Roundup</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-17278"><a>Follow 9to5Linux</a><button class="dropdown-toggle" data-toggle-target=".mobile-navigation .menu-item-17278 > .sub-menu" aria-expanded="false"><span class="screen-reader-text">Show sub menu</span></button>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17276"><a target="_blank" href="https://x.com/9to5linux">X/Twitter</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17277"><a target="_blank" href="https://floss.social/@9to5linux">Mastodon</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17279"><a target="_blank" href="https://news.google.com/publications/CAAqBwgKMPmRmwswvZyzAw?oc=3&amp;ceid=US:en">Google News</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17280"><a target="_blank" href="https://www.linkedin.com/company/9to5linux/">LinkedIn</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20341"><a target="_blank" href="https://www.threads.net/@9to5linux">Threads</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-21123"><a target="_blank" href="https://bsky.app/profile/9to5linux.bsky.social">Bluesky</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17281"><a target="_blank" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2F9to5linux.com%2Ffeed%2F">Feedly</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17282"><a target="_blank" href="https://www.youtube.com/c/9to5LinuxOfficial">YouTube</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17283"><a target="_blank" href="https://tilvids.com/a/9to5linux">TilVids</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17285"><a href="https://9to5linux.com/feed/atom">RSS</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-30276"><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#"><button id="theme-toggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon icon-moon"></i><i class="fa-regular fa-sun icon-sun"></i></button></a></li>
+</ul></div>    </nav>
+</div>
+
+
+    
+         
+</header>
+
+
+	
+	<div id="content" class="site-content">
+		<div class="container">
+
+    
+
+		<div class="bam-breadcrumb-wrap"><div id="bam-yoast-breadcrumbs"><span><span><a href="https://9to5linux.com/">Home</a></span> &gt; <span><a href="https://9to5linux.com/category/news">News</a></span> &gt; <span><a href="https://9to5linux.com/category/news/app">Apps</a></span> &gt; <span class="breadcrumb_last" aria-current="page"><strong>OpenVPN 2.7 Released with Support for DCO Linux Kernel Module, mbedTLS 4</strong></span></span></div></div>
+        <header class="entry-header">
+
+            <div class="category-list">
+            </div>
+
+            <h1 class="entry-title">OpenVPN 2.7 Released with Support for DCO Linux Kernel Module, mbedTLS 4</h1><div class="bm-post-subtitle">This release also adds TLS 1.3 support with bleeding-edge mbedTLS versions and multi-socket support for servers.</div>                <div class="secondary-title">
+                                </div>
+                <div class="entry-meta">
+                    <span class="byline"> <img class="author-photo" alt="Marcus Nestor" src="https://secure.gravatar.com/avatar/f27dea20acf03d7b12ab7d535813f41757377adb28251c00fe04a64b09b71922?s=96&amp;r=g">by <span class="author vcard"><a class="url fn n" href="https://9to5linux.com/author/admin">Marcus Nestor</a></span></span><span class="posted-on"><i class="far fa-clock"></i><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4" rel="bookmark"><time class="entry-date published sm-hu" datetime="2026-02-11T06:39:31-07:00">February 11th, 2026</time><time class="updated" datetime="2026-02-11T06:39:40-07:00">February 11th, 2026</time></a></span><span class="comments-link"><i class="far fa-comments"></i><a href="https://9to5linux.com/openvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4#respond">0 Comments</a></span>                </div>
+			            
+        </header>
+
+		
+    
+    
+	
+	<div id="primary" class="content-area">
+
+		<div class="theiaStickySidebar">
+		<main id="main" class="site-main">
+
+			
+			
+
+<article id="post-30452" class="bam-single-post post-30452 post type-post status-publish format-standard has-post-thumbnail hentry category-app category-news tag-openvpn tag-virtual-private-network tag-vpn">
+
+	
+	<div style="font-size:14px;" class="9to5-linux-social bm-social-top">Share this article:<a class="bm-share bm-share-twitter" href="https://x.com/intent/tweet?via=9to5linux&amp;hashtags=Linux&amp;text=OpenVPN%202.7%20Released%20with%20Support%20for%20DCO%20Linux%20Kernel%20Module,%20mbedTLS%204&amp;url=https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4" target="_blank"><i class="fa-brands fa-x-twitter" aria-hidden="true" style="padding: 0 0 0 5px;"></i></a><a class="bm-share bm-share-mastodon" href="https://s2f.kytta.dev/?text=OpenVPN%202.7%20Released%20with%20Support%20for%20DCO%20Linux%20Kernel%20Module,%20mbedTLS%204%20https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4" target="_blank"><i class="fa-brands fa-mastodon" style="padding: 0 5px 0 0;"></i></a><a class="bm-share bm-share-bluesky" href="https://bsky.app/intent/compose?text=OpenVPN%202.7%20Released%20with%20Support%20for%20DCO%20Linux%20Kernel%20Module,%20mbedTLS%204%20https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4" target="_blank"><i class="fa-brands fa-bluesky" aria-hidden="true" style="padding: 0 0 0 5px;"></i></a><a class="bm-share bm-share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2F9to5linux.com%2Fopenvpn-2-7-released-with-support-for-dco-linux-kernel-module-mbedtls-4&amp;title=OpenVPN%202.7%20Released%20with%20Support%20for%20DCO%20Linux%20Kernel%20Module,%20mbedTLS%204" target="_blank"><i class="fa-brands fa-linkedin-in" aria-hidden="true" style="padding: 0 0 0 5px;"></i></a></div>
+	
+			<div class="post-thumbnail">
+
+			<a class="image-link" href="https://i0.wp.com/9to5linux.com/wp-content/uploads/2025/11/ov.webp?fit=1920%2C1080&amp;ssl=1">				
+					<img width="1920" height="1080" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2025/11/ov.webp?fit=1920%2C1080&amp;ssl=1" class="attachment-full size-full wp-post-image" alt="OpenVPN" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2025/11/ov.webp?w=1920&amp;ssl=1 1920w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2025/11/ov.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2025/11/ov.webp?w=1860&amp;ssl=1 1860w" sizes="(max-width: 1920px) 100vw, 1920px">						
+				</a>
+				
+			</div>
+
+		
+	
+	<div class="entry-content">
+		
+<p>OpenVPN 2.7 has been released today as the latest version of this virtual private network (VPN) system that implements techniques to create secure point-to-point or site-to-site connections.</p>
+
+
+
+<p>Highlights of OpenVPN 2.7 include support for the new upstream DCO Linux kernel module, which will be available in future upstream kernel releases, multi-socket support to handle multiple addresses/ports/protocols within one server, mbedTLS 4 support, and TLS 1.3 support with bleeding-edge mbedTLS versions.</p>
+
+
+
+<p>This release also introduces client-side support for the new <code>PUSH_UPDATE</code> control-channel message, which allows servers to send updates to options like routing and DNS config without triggering a reconnect, <code>PUSH_UPDATE</code> server support with new management interface commands to send PUSH_UPDATE option updates.</p>
+
+
+
+<p>Two new environment variables have been introduced to communicate desired default gateway redirection to plugins like <strong><a href="https://9to5linux.com/networkmanager-1-54-brings-support-for-configuring-per-device-ipv4-forwarding" type="post" id="27589">NetworkManager</a></strong>. Also, the “Recursive Routing” check is now more granular to only drop packets-in-tunnel if the destination IP, protocol, and port matches with those needed to reach the VPN server.</p><div class="sponsor-block-1 sponsor-block-1-12 sponsor-block-1-block-12" style="margin: 8px 0; clear: both;">
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-4884260090736868" data-ad-slot="5906627323"></ins>
+</div>
+
+
+
+
+<p>Among other changes, OpenVPN 2.7 improves client support for DNS options by including client implementations for Linux, BSD, and macOS systems with the default install and introducing a new client implementation for Windows systems to add support for features like split DNS and DNSSEC.</p>
+
+
+
+<p>On top of that, this release brings architectural improvements on Windows by reinforcing the <code>block-local</code> flag with WFP filters, add support for server mode in the win-dco driver, generate Windows network adapters on demand, and run the Windows automatic service as an unprivileged user.</p>
+
+
+
+<p>Data channel was improved as well by enforcing AES-GCM usage limit, as well as epoch data keys and packet format. Check out the <em><a href="https://github.com/OpenVPN/openvpn/releases/tag/v2.7.0" target="_blank" rel="noreferrer noopener">release notes</a></em> for more details about the changes included in OpenVPN 2.7, which is available for download as community-maintained Linux packages from <em><a href="https://community.openvpn.net/openvpn/wiki/OpenvpnSoftwareRepos" target="_blank" rel="noreferrer noopener">here</a></em>.</p>
+
+
+
+<p><em>Image credits: OpenVPN project</em></p><div class="sponsor-block-1 sponsor-block-1-12 sponsor-block-1-block-12" style="margin: 8px 0; clear: both;">
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-4884260090736868" data-ad-slot="5906627323"></ins>
+</div>
+
+<div style="margin-top: 20px; display: inline-block; text-align: center;"><p style="font-style: italic; font-size: 16px; margin-bottom: 5px; margin-top: 0;">Enjoyed the article?</p><a href="https://ko-fi.com/9to5linux" target="_blank" rel="noopener"><img width="286" height="73" style="border:0px; height:36px; width:auto; display: block; margin: 0 auto;" src="https://9to5linux.com/wp-content/uploads/kofi3.webp" border="0" alt="Buy Me a Coffee at ko-fi.com" loading="lazy"></a></div>
+<div id="jp-relatedposts" class="jp-relatedposts">
+	<h3 class="jp-relatedposts-headline"><em>You might also like</em></h3>
+</div>
+	</div>
+
+	
+	<footer class="entry-footer">
+		<div class="tags-links"><span class="bam-tags-title">Tagged</span><a href="https://9to5linux.com/tag/openvpn" rel="tag">OpenVPN</a><a href="https://9to5linux.com/tag/virtual-private-network" rel="tag">virtual private network</a><a href="https://9to5linux.com/tag/vpn" rel="tag">VPN</a></div>	</footer>
+	
+	
+	    
+</article>    <div class="wpdiscuz_top_clearing"></div>
+    <div id="comments" class="comments-area"><div id="respond" style="width: 0;height: 0;clear: both;margin: 0;padding: 0;"></div>    <div id="wpdcom" class="wpdiscuz_unauth wpd-default wpdiscuz_no_avatar wpd-layout-2 wpd-comments-open">
+                    <div class="wc_social_plugin_wrapper">
+                            </div>
+            <div class="wpd-form-wrap">
+                <div class="wpd-form-head">
+                                        <div class="wpd-auth">
+                                                <div class="wpd-login">
+                                                    </div>
+                    </div>
+                </div>
+                                        <div class="wpd-form wpd-form-wrapper wpd-main-form-wrapper" id="wpd-main-form-wrapper-0_0">
+                                        
+                        </div>
+                <div id="wpdiscuz_hidden_secondary_form" style="display: none;">
+                    <div class="wpd-form wpd-form-wrapper wpd-secondary-form-wrapper" id="wpd-secondary-form-wrapper-wpdiscuzuniqueid" style="display: none;">
+                            <div class="wpd-secondary-forms-social-content"></div>
+                <div class="clearfix"></div>
+                                        
+                        </div>
+                </div>
+                    </div>
+            <p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed.</a></p>            <div id="wpd-threads" class="wpd-thread-wrapper">
+                <div class="wpd-thread-head">
+                    <div class="wpd-thread-info" data-comments-count="0">
+                        <span class="wpdtc" title="0">0</span> Comments                    </div>
+                                        <div class="wpd-space"></div>
+                    <div class="wpd-thread-filter">
+                                                    <div class="wpd-filter wpdf-reacted wpd_not_clicked wpdiscuz-hidden" wpd-tooltip="Most reacted comment">
+                                <i class="fas fa-bolt"></i></div>
+                                                        <div class="wpd-filter wpdf-hottest wpd_not_clicked wpdiscuz-hidden" wpd-tooltip="Hottest comment thread">
+                                <i class="fas fa-fire"></i></div>
+                                                        <div class="wpd-filter wpdf-sorting wpdiscuz-hidden">
+                                                                        <span class="wpdiscuz-sort-button wpdiscuz-date-sort-asc wpdiscuz-sort-button-active" data-sorting="oldest">Oldest</span>
+                                                                        <i class="fas fa-sort-down"></i>
+                                <div class="wpdiscuz-sort-buttons">
+                                                                            <span class="wpdiscuz-sort-button wpdiscuz-date-sort-desc" data-sorting="newest">Newest</span>
+                                                                        </div>
+                            </div>
+                                                </div>
+                </div>
+                <div class="wpd-comment-info-bar">
+                    <div class="wpd-current-view"><i class="fas fa-quote-left"></i> Inline Feedbacks                    </div>
+                    <div class="wpd-filter-view-all">View all comments</div>
+                </div>
+                                <div class="wpd-thread-list">
+                                        <div class="wpdiscuz-comment-pagination">
+                                            </div>
+                </div>
+            </div>
+                </div>
+        </div>
+    <div id="wpdiscuz-loading-bar" class="wpdiscuz-loading-bar-unauth"></div>
+    <div id="wpdiscuz-comment-message" class="wpdiscuz-comment-message-unauth"></div>
+    
+			
+		</main>
+
+		</div>
+	</div>
+
+	
+
+
+<aside id="secondary" class="widget-area">
+
+	<div class="theiaStickySidebar">
+
+		
+		<section id="text-22" class="widget widget_text"><div class="bwt-container"><h4 class="widget-title">Sponsor (TUXEDO Computers)</h4></div>			<div class="textwidget"><p><a class="tuxedo" href="https://www.tuxedocomputers.com/?refID=9to5hp" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="https://9to5linux.com/wp-content/uploads/tuxedo.webp" alt="TUXEDO Computers" width="300" height="250"></a></p>
+</div>
+		</section><section id="text-23" class="widget widget_text"><div class="bwt-container"><h4 class="widget-title">Recent Comments</h4></div>			<div class="textwidget"><ul class="recent-comments-list"><li class="comment-wrap"><span class="comment-author-link">Brandon</span> says: <span class="comment-excerpt">“I like Calibre and use it every single day to read. I want to know about new features and improvements.”</span> <span class="comment-post">on <a href="https://9to5linux.com/calibre-9-4-adds-reading-stats-to-the-e-book-viewer-to-show-reading-progress#comment-4949">Calibre 9.4 Adds “Reading Stats” to the E-Book Viewer to Show Reading Progress</a></span></li><li class="comment-wrap"><span class="comment-author-link">Wizaaard</span> says: <span class="comment-excerpt">“No, since 32-bit support has been removed in the underlying debian 13.”</span> <span class="comment-post">on <a href="https://9to5linux.com/bunsenlabs-carbon-is-here-with-support-for-wayland-sessions-based-on-debian-13#comment-4946">BunsenLabs Carbon Is Here with Support for Wayland Sessions, Based on Debian 13</a></span></li><li class="comment-wrap"><span class="comment-author-link">Calibrat</span> says: <span class="comment-excerpt">“Keep reporting on every update to Calibre and this will turn into the 9to5Calibre blog 😅”</span> <span class="comment-post">on <a href="https://9to5linux.com/calibre-9-4-adds-reading-stats-to-the-e-book-viewer-to-show-reading-progress#comment-4945">Calibre 9.4 Adds “Reading Stats” to the E-Book Viewer to Show Reading Progress</a></span></li><li class="comment-wrap"><span class="comment-author-link">Chrismo</span> says: <span class="comment-excerpt">“Great distro”</span> <span class="comment-post">on <a href="https://9to5linux.com/bunsenlabs-carbon-is-here-with-support-for-wayland-sessions-based-on-debian-13#comment-4944">BunsenLabs Carbon Is Here with Support for Wayland Sessions, Based on Debian 13</a></span></li><li class="comment-wrap"><span class="comment-author-link">James B.</span> says: <span class="comment-excerpt">“Incorrect.”</span> <span class="comment-post">on <a href="https://9to5linux.com/libreoffice-26-2-1-open-source-office-suite-released-with-65-bug-fixes#comment-4943">LibreOffice 26.2.1 Open-Source Office Suite Released with 65 Bug Fixes</a></span></li><li class="comment-wrap"><span class="comment-author-link">InfoLibre</span> says: <span class="comment-excerpt">“No more 32-bit version?”</span> <span class="comment-post">on <a href="https://9to5linux.com/bunsenlabs-carbon-is-here-with-support-for-wayland-sessions-based-on-debian-13#comment-4942">BunsenLabs Carbon Is Here with Support for Wayland Sessions, Based on Debian 13</a></span></li><li class="comment-wrap"><span class="comment-author-link">do_the_work</span> says: <span class="comment-excerpt">“Split view is a welcome change. I would so love for Firefox to adopt the keyboard shortcut from zen_browser shift + cmd + c to copy the URL of current…”</span> <span class="comment-post">on <a href="https://9to5linux.com/firefox-149-enters-beta-with-split-view-more-robust-http-3-upload-performance#comment-4940">Firefox 149 Enters Beta with Split View, More Robust HTTP/3 Upload Performance</a></span></li></ul>
+</div>
+		</section><section id="ai_widget-12" class="widget block-widget"><div class="sponsor-block-1 sponsor-block-1-9 sponsor-block-1-block-9" style="margin: 8px 0; clear: both;">
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4884260090736868" data-ad-slot="3313494638" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+</section><section id="custom_html-2" class="widget_text widget widget_custom_html"><div class="bwt-container"><h4 class="widget-title">Popular Posts</h4></div><div class="textwidget custom-html-widget"><div class="bam-posts-widget-wrapper"><div class="post-item clearfix" style="margin-bottom: 15px; display: flex; align-items: center;"><div class="post-thumb" style="flex-shrink: 0; margin-right: 15px;"><a href="https://9to5linux.com/kde-says-plasma-desktop-will-never-force-users-to-use-systemd"><img width="120" height="75" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kp.webp?resize=445%2C250&amp;ssl=1" class="attachment-bam-thumb size-bam-thumb wp-post-image" alt="KDE Plasma systemd" loading="lazy" style="object-fit: cover; border-radius: 4px; display: block;" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kp.webp?w=1920&amp;ssl=1 1920w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kp.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kp.webp?w=1860&amp;ssl=1 1860w" sizes="auto, (max-width: 445px) 100vw, 445px"></a></div><div class="post-content"><h5 class="post-title" style="margin: 0; font-size: 14px; line-height: 1.4;"><a href="https://9to5linux.com/kde-says-plasma-desktop-will-never-force-users-to-use-systemd" style="text-decoration: none; color: inherit;">KDE Says Plasma Desktop Will Never Force Users to Use systemd</a></h5></div></div><div class="post-item clearfix" style="margin-bottom: 15px; display: flex; align-items: center;"><div class="post-thumb" style="flex-shrink: 0; margin-right: 15px;"><a href="https://9to5linux.com/kaos-linux-drops-kde-plasma-after-12-years-for-niri-noctalia-to-escape-systemd"><img width="120" height="75" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kos262.webp?resize=445%2C250&amp;ssl=1" class="attachment-bam-thumb size-bam-thumb wp-post-image" alt="KaOS Linux Niri" loading="lazy" style="object-fit: cover; border-radius: 4px; display: block;" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kos262.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kos262.webp?zoom=2&amp;resize=445%2C250&amp;ssl=1 890w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/kos262.webp?zoom=3&amp;resize=445%2C250&amp;ssl=1 1335w" sizes="auto, (max-width: 445px) 100vw, 445px"></a></div><div class="post-content"><h5 class="post-title" style="margin: 0; font-size: 14px; line-height: 1.4;"><a href="https://9to5linux.com/kaos-linux-drops-kde-plasma-after-12-years-for-niri-noctalia-to-escape-systemd" style="text-decoration: none; color: inherit;">KaOS Linux Drops KDE Plasma After 12 Years for Niri/Noctalia to Escape systemd</a></h5></div></div><div class="post-item clearfix" style="margin-bottom: 15px; display: flex; align-items: center;"><div class="post-thumb" style="flex-shrink: 0; margin-right: 15px;"><a href="https://9to5linux.com/firefox-148-is-now-available-for-download-with-ai-kill-switch-and-other-changes"><img width="120" height="75" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ff148.webp?resize=445%2C250&amp;ssl=1" class="attachment-bam-thumb size-bam-thumb wp-post-image" alt="Firefox 148" loading="lazy" style="object-fit: cover; border-radius: 4px; display: block;" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ff148.webp?w=1920&amp;ssl=1 1920w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ff148.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ff148.webp?w=1860&amp;ssl=1 1860w" sizes="auto, (max-width: 445px) 100vw, 445px"></a></div><div class="post-content"><h5 class="post-title" style="margin: 0; font-size: 14px; line-height: 1.4;"><a href="https://9to5linux.com/firefox-148-is-now-available-for-download-with-ai-kill-switch-and-other-changes" style="text-decoration: none; color: inherit;">Firefox 148 Is Now Available for Download with AI Kill Switch and Other Changes</a></h5></div></div><div class="post-item clearfix" style="margin-bottom: 15px; display: flex; align-items: center;"><div class="post-thumb" style="flex-shrink: 0; margin-right: 15px;"><a href="https://9to5linux.com/firefoxs-ai-kill-switch-lands-in-firefox-nightly-slated-for-firefox-148"><img width="120" height="75" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ffaiks.webp?resize=445%2C250&amp;ssl=1" class="attachment-bam-thumb size-bam-thumb wp-post-image" alt="Firefox AI Kill Switch" loading="lazy" style="object-fit: cover; border-radius: 4px; display: block;" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ffaiks.webp?w=1920&amp;ssl=1 1920w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ffaiks.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/ffaiks.webp?w=1860&amp;ssl=1 1860w" sizes="auto, (max-width: 445px) 100vw, 445px"></a></div><div class="post-content"><h5 class="post-title" style="margin: 0; font-size: 14px; line-height: 1.4;"><a href="https://9to5linux.com/firefoxs-ai-kill-switch-lands-in-firefox-nightly-slated-for-firefox-148" style="text-decoration: none; color: inherit;">Firefox’s AI Kill Switch Lands in Firefox Nightly, Slated for Firefox 148</a></h5></div></div><div class="post-item clearfix" style="margin-bottom: 15px; display: flex; align-items: center;"><div class="post-thumb" style="flex-shrink: 0; margin-right: 15px;"><a href="https://9to5linux.com/gnome-50-desktop-environment-enters-public-beta-testing-with-more-new-features"><img width="120" height="75" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/g50b.webp?resize=445%2C250&amp;ssl=1" class="attachment-bam-thumb size-bam-thumb wp-post-image" alt="GNOME 50 Beta" loading="lazy" style="object-fit: cover; border-radius: 4px; display: block;" decoding="async" srcset="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/g50b.webp?w=1920&amp;ssl=1 1920w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/g50b.webp?resize=445%2C250&amp;ssl=1 445w, https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/g50b.webp?w=1860&amp;ssl=1 1860w" sizes="auto, (max-width: 445px) 100vw, 445px"></a></div><div class="post-content"><h5 class="post-title" style="margin: 0; font-size: 14px; line-height: 1.4;"><a href="https://9to5linux.com/gnome-50-desktop-environment-enters-public-beta-testing-with-more-new-features" style="text-decoration: none; color: inherit;">GNOME 50 Desktop Environment Enters Public Beta Testing with More New Features</a></h5></div></div></div></div></section><section id="ai_widget-11" class="widget block-widget"><div class="sponsor-block-1 sponsor-block-1-8 sponsor-block-1-block-8" style="margin: 8px 0; clear: both;">
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4884260090736868" data-ad-slot="7799534554" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+</section><section id="block-2" class="widget widget_block">
+<div class="kofi"><img decoding="async" width="171" height="171" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2026/02/9to5512.webp?fit=512%2C512&amp;ssl=1" alt="9to5linux" title="9to5Linux" loading="lazy"></div>
+<div style="padding: 10px; text-align:center; font-family:'Open Sans'; font-size:14px; word-wrap:break-word;">If you like this blog and appreciate its content, please consider supporting us by buying a coffee. Your support not only ensures the blog stays alive but it also helps us deliver more diverse content. Thank you!
+<div style="margin: auto;padding: 40px;"><a href="https://ko-fi.com/9to5linux" target="_blank"><img decoding="async" width="300" height="47" src="https://i0.wp.com/9to5linux.com/wp-content/uploads/2023/05/kofi.webp" alt="Support 9to5Linux on Ko-fi" loading="lazy"></a></div></div></section><section id="ai_widget-10" class="widget block-widget"><div class="sponsor-block-1 sponsor-block-1-6 sponsor-block-1-block-6" style="margin: 8px 0; clear: both;">
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4884260090736868" data-ad-slot="7475567121" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+</section><section id="ai_widget-9" class="widget block-widget"><div class="sponsor-block-1 sponsor-block-1-5 sponsor-block-1-block-5" style="margin: 8px 0; clear: both;">
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4884260090736868" data-ad-slot="2751254795" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+</section>
+		
+	</div>
+
+</aside>
+
+	</div>
+	</div>
+
+	
+	
+	<footer id="colophon" class="site-footer">
+
+		
+		
+		<div class="footer-widget-area clearfix th-columns-1">
+			<div class="container-fluid">
+				<div class="footer-widget-area-inner">
+					<div class="col column-1">
+						<section id="text-19" class="widget widget_text"><div class="bwt-container"><h4 class="widget-title">Download Latest Distros and Packages</h4></div>			<div class="textwidget">
+<div class="parent" id="downloads">
+<div class="child" style="text-align:left">
+<ul class="fa-ul">
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://mirrors.edge.kernel.org/archlinux/iso/2026.03.01/archlinux-2026.03.01-x86_64.iso">Arch Linux 2026.03.01</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/archbang/files/ArchBANG/archbang-0103.iso">ArchBANG 0103</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://downloads.bandshed.net/AVL_MXe_25/AVL_MXe-25.1_x64.iso">AV Linux 25.1</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://cdn.aerynos.dev/isos/AerynOS-2026.02-GNOME-live-x86_64.iso">AerynOS 2026.02</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/thesss/files/TheSSS-51.0-64bit.iso">TheSSS 51.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-kde-6.5.5-x86_64.iso">PorteuX 2.6 KDE Plasma</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-gnome-49.4-x86_64.iso">PorteuX 2.6 GNOME</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-xfce-4.20-x86_64.iso">PorteuX 2.6 Xfce</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-lxqt-2.3.0-x86_64.iso">PorteuX 2.6 LXQt</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-cinnamon-6.6.7-x86_64.iso">PorteuX 2.6 Cinnamon</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-mate-1.28.2-x86_64.iso">PorteuX 2.6 MATE</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-lxde-0.11.1-x86_64.iso">PorteuX 2.6 LXDE</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/porteux/porteux/releases/download/v2.6/porteux-2.6-current-cosmic-1.0.8-x86_64.iso">PorteuX 2.6 COSMIC</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/bakandimgcd/files/BakAndImgCD-51.0.iso">BakAndImgCD 51.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/manjarolinux/files/xfce/26.0.3/manjaro-xfce-26.0.3-260228-linux618.iso">Manjaro Linux 26.0.3 Xfce</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/manjarolinux/files/kde/26.0.3/manjaro-kde-26.0.3-260228-linux618.iso">Manjaro Linux 26.0.3 KDE Plasma</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/manjarolinux/files/gnome/26.0.3/manjaro-gnome-26.0.3-260228-linux618.iso">Manjaro Linux 26.0.3 GNOME</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://ddl.bunsenlabs.org/ddl/carbon-1-260211-amd64.hybrid.iso">BunsenLabs Linux Carbon</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/bluestarlinux/files/distro/bslx-6.18.13-1-2026.02.26-x86_64.iso">Bluestar Linux 6.18.13</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://iso.omarchy.org/omarchy-3.4.0.iso">Omarchy 3.4.0</a></li>
+</ul>
+</div>
+<div class="child" style="text-align:left">
+<ul class="fa-ul">
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/dbeaver/dbeaver/releases/download/26.0.0/dbeaver-ce-26.0.0-linux-x86_64.tar.gz">DBeaver 26.0.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a target="_blank" href="https://sourceforge.net/projects/freetype/files/freetype2/2.14.2/freetype-2.14.2.tar.xz">FreeType 2.14.2</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://ftp.gnu.org/gnu/groff/groff-1.24.0.tar.gz">GNU roff 1.24.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/snort3/snort3/archive/refs/tags/3.11.1.0.tar.gz">Snort 3.11.1.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.19.5.tar.xz">Linux kernel 6.19.5</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.18.15.tar.xz">Linux kernel 6.18.15 LTS</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/mltframework/shotcut/releases/download/v26.2.26/shotcut-linux-x86_64-26.2.26.AppImage">Shotcut 26.2</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://downloads.isc.org/isc/bind9/9.20.20/bind-9.20.20.tar.xz">BIND 9.20.20</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/systemd/systemd/archive/refs/tags/v259.2.tar.gz">systemd 259.2</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://download.samba.org/pub/samba/stable/samba-4.23.6.tar.gz">Samba 4.23.6</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://download.calibre-ebook.com/9.4.0/calibre-9.4.0-x86_64.txz">Calibre 9.4</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://ftp.postgresql.org/pub/source/v18.3/postgresql-18.3.tar.bz2">PostgreSQL 18.3</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://download.documentfoundation.org/libreoffice/src/26.2.1/libreoffice-26.2.1.2.tar.xz">LibreOffice 26.2.1</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/fwupd/fwupd/releases/download/2.0.20/fwupd-2.0.20.tar.xz">fwupd 2.0.20</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.28.1.tar.xz">GStreamer 1.28.1</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://www.scintilla.org/scite560.tgz">SciTE 5.6.0</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://2.na.dl.wireshark.org/src/wireshark-4.6.4.tar.xz">Wireshark 4.6.4</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://mesa.freedesktop.org/archive/mesa-26.0.1.tar.xz">Mesa 26.0.1</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://github.com/mamedev/mame/archive/refs/tags/mame0286.tar.gz">MAME 0.286</a></li>
+	<li><span class="fa-li"><i class="far fa-arrow-alt-circle-down" aria-hidden="true" style="padding: 5px 0 0 0;"></i></span><a href="https://www.torproject.org/dist/torbrowser/15.0.7/tor-browser-linux-x86_64-15.0.7.tar.xz">Tor Browser 15.0.7</a></li>
+</ul>
+</div>
+</div>
+</div>
+		</section>					</div>
+
+					
+					
+									</div>
+			</div>
+		</div>
+
+		<div class="site-info clearfix">
+			<div class="container">
+				<div class="copyright-container">
+					Copyright © 2026 9to5Linux. All rights reserved. Linux® is a registered trademark of Linus Torvalds.				</div>
+									<div class="footer-menu-container">
+						<div class="menu-footer-menu-container"><ul id="footer-menu" class="menu"><li id="menu-item-10239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-10239"><a rel="privacy-policy" href="https://9to5linux.com/privacy-policy">Privacy Policy</a></li>
+<li id="menu-item-11247" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11247"><a href="https://9to5linux.com/cookie-policy">Cookie Policy</a></li>
+<li id="menu-item-10236" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10236"><a href="https://9to5linux.com/comment-policy">Comment Policy</a></li>
+<li id="menu-item-10237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10237"><a href="https://9to5linux.com/contact-us">Contact</a></li>
+<li id="menu-item-10238" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10238"><a href="https://9to5linux.com/about-us">About</a></li>
+</ul></div>					</div>
+							</div>
+		</div>
+
+		
+	</footer>
+
+	
+</div>
+
+
+
+
+<div id="wpconsent-root" style="--wpconsent-z-index: 900000; --wpconsent-background: #121212; --wpconsent-text: #ffffff; --wpconsent-outline-color: rgba(255, 255, 255, 0.2); --wpconsent-accept-bg: #ffffff; --wpconsent-cancel-bg: #ffffff; --wpconsent-preferences-bg: #ffffff; --wpconsent-accept-color: #000000; --wpconsent-cancel-color: #000000; --wpconsent-preferences-color: #000000; --wpconsent-font-size: 16px;"><div id="wpconsent-container" style="display: none;"></div><template id="wpconsent-template"><div class="wpconsent-banner-holder wpconsent-banner-floating wpconsent-banner-floating-right-bottom" id="wpconsent-banner-holder" tabindex="-1" role="dialog" aria-labelledby="wpconsent-banner-title"><div class="wpconsent-banner" part="wpconsent-banner"><button class="wpconsent-banner-close" id="wpconsent-banner-close" aria-label="Close"><svg class="wpconsent-icon wpconsent-icon-close" width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M1.68421 12L0 10.3158L4.33083 5.98496L0 1.68421L1.68421 0L6.01504 4.33083L10.3158 0L12 1.68421L7.66917 5.98496L12 10.3158L10.3158 12L6.01504 7.66917L1.68421 12Z" fill="white"></path></svg></button><div class="wpconsent-banner-body" part="wpconsent-banner-body"><h2 id="wpconsent-banner-title" class="screen-reader-text">Cookie Consent</h2><div class="wpconsent-banner-message" tabindex="0"><p>We use cookies to improve your experience on our site. By using our site, you consent to cookies.</p>
+</div></div><div class="wpconsent-banner-footer wpconsent-button-size-small wpconsent-button-corner-slightly-rounded wpconsent-button-type-filled" part="wpconsent-banner-footer"><button type="button" id="wpconsent-preferences-all" class="wpconsent-preferences-cookies wpconsent-banner-button wpconsent-preferences-all" part="wpconsent-button-preferences">Preferences</button><button type="button" id="wpconsent-cancel-all" class="wpconsent-cancel-cookies wpconsent-banner-button wpconsent-cancel-all" part="wpconsent-button-cancel">Reject</button><button type="button" id="wpconsent-accept-all" class="wpconsent-accept-cookies wpconsent-banner-button wpconsent-accept-all" part="wpconsent-button-accept">Accept All</button></div></div></div><div id="wpconsent-preferences-modal" class="wpconsent-preferences-modal" style="display:none;" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="wpconsent-preferences-title" part="wpconsent-preferences-modal"><div class="wpconsent-preferences-content" part="wpconsent-preferences-content"><div class="wpconsent-preferences-header" part="wpconsent-preferences-header"><h2 id="wpconsent-preferences-title" tabindex="0" part="wpconsent-preferences-title">This website uses cookies</h2><div class="wpconsent-preferences-header-right"><button class="wpconsent-preferences-header-close" id="wpconsent-preferences-close" aria-label="Close" part="wpconsent-preferences-close">×</button></div></div><div class="wpconsent-preferences-body"><div class="wpconsent_preferences_panel_description" part="wpconsent-preferences-description"><p>Websites store cookies to enhance functionality and personalise your experience. You can manage your preferences, but blocking some cookies may impact site performance and services.</p>
+</div><div class="wpconsent-preference-cookies wpconsent-preferences-accordion" part="wpconsent-preferences-accordion"><div class="wpconsent-preferences-accordion-item wpconsent-cookie-category wpconsent-cookie-category-essential" part="wpconsent-accordion-item wpconsent-category-essential"><div class="wpconsent-preferences-accordion-header" part="wpconsent-accordion-header"><div class="wpconsent-cookie-category-text"><button class="wpconsent-preferences-accordion-toggle" aria-expanded="false" part="wpconsent-accordion-toggle"><span class="wpconsent-preferences-accordion-arrow" aria-hidden="true"></span><span class="screen-reader-text">Toggle Essential</span></button><label for="cookie-category-essential">Essential</label></div><div class="wpconsent-cookie-category-checkbox"><label class="wpconsent-preferences-checkbox-toggle wpconsent-preferences-checkbox-toggle-disabled" part="wpconsent-checkbox-toggle wpconsent-checkbox-toggle-disabled"><input type="checkbox" id="cookie-category-essential" checked="" disabled=""><span class="wpconsent-preferences-checkbox-toggle-slider"></span></label></div></div><div class="wpconsent-preferences-accordion-content" part="wpconsent-accordion-content"><p class="wpconsent-category-description" tabindex="0">Essential cookies enable basic functions and are necessary for the proper function of the website.</p><div class="wpconsent-preferences-cookies-list" part="wpconsent-cookies-list"><div class="wpconsent-preferences-list-header" part="wpconsent-cookies-list-header"><div class="cookie-name">Name</div><div class="cookie-desc">Description</div><div class="cookie-duration">Duration</div></div><div class="wpconsent-preferences-list-item" data-cookie-id="26637" part="wpconsent-cookies-list-item"><div class="cookie-name">Cookie Preferences</div><div class="cookie-desc">This cookie is used to store the user's cookie consent preferences.</div><div class="cookie-duration">30 days</div></div></div><div class="wpconsent-preferences-accordion-item wpconsent-cookie-service" part="wpconsent-accordion-item wpconsent-service-comments"><div class="wpconsent-preferences-accordion-header" part="wpconsent-accordion-header"><div class="wpconsent-cookie-category-text"><button class="wpconsent-preferences-accordion-toggle" aria-expanded="false" part="wpconsent-accordion-toggle"><span class="wpconsent-preferences-accordion-arrow" aria-hidden="true"></span><span class="screen-reader-text">Toggle Comments</span></button><label>Comments</label></div><div class="wpconsent-cookie-category-checkbox"></div></div><div class="wpconsent-preferences-accordion-content" part="wpconsent-accordion-content"><p class="wpconsent-service-description" tabindex="0">These cookies are needed for adding comments on this website.</p><div class="wpconsent-preferences-cookies-list" part="wpconsent-cookies-list"><div class="wpconsent-preferences-list-header" part="wpconsent-cookies-list-header"><div class="cookie-name">Name</div><div class="cookie-desc">Description</div><div class="cookie-duration">Duration</div></div><div class="wpconsent-preferences-list-item" data-cookie-id="26638" part="wpconsent-cookies-list-item"><div class="cookie-name">comment_author</div><div class="cookie-desc">Used to track the user across multiple sessions.</div><div class="cookie-duration">Session</div></div><div class="wpconsent-preferences-list-item" data-cookie-id="26639" part="wpconsent-cookies-list-item"><div class="cookie-name">comment_author_email</div><div class="cookie-desc">Used to track the user across multiple sessions.</div><div class="cookie-duration">Session</div></div><div class="wpconsent-preferences-list-item" data-cookie-id="26640" part="wpconsent-cookies-list-item"><div class="cookie-name">comment_author_url</div><div class="cookie-desc">Used to track the user across multiple sessions.</div><div class="cookie-duration">Session</div></div></div></div></div></div></div><div class="wpconsent-preferences-accordion-item wpconsent-cookie-category" part="wpconsent-accordion-item wpconsent-cookie-policy-item"><div class="wpconsent-preferences-accordion-header" part="wpconsent-accordion-header"><div class="wpconsent-cookie-category-text"><button class="wpconsent-preferences-accordion-toggle" aria-expanded="false" part="wpconsent-accordion-toggle"><span class="wpconsent-preferences-accordion-arrow" aria-hidden="true"></span><span class="screen-reader-text">Toggle Cookie Policy</span></button><label class="wpconsent-cookie-policy-title">Cookie Policy</label></div></div><div class="wpconsent-preferences-accordion-content" part="wpconsent-accordion-content"><p tabindex="0" class="wpconsent-cookie-policy-text">You can find more information in our <a href="https://9to5linux.com/cookie-policy">Cookie Policy</a> and <a href="https://9to5linux.com/privacy-policy">Privacy Policy</a>.</p></div></div></div></div><div class="wpconsent-preferences-actions" part="wpconsent-preferences-actions"><div class="wpconsent-preferences-buttons wpconsent-button-size-small wpconsent-button-corner-slightly-rounded wpconsent-button-type-filled" part="wpconsent-preferences-buttons"><div class="wpconsent-preferences-buttons-left" part="wpconsent-preferences-buttons-left"><button class="wpconsent-accept-all wpconsent-banner-button" part="wpconsent-preferences-accept-button">Accept All</button><button class="wpconsent-close-preferences wpconsent-banner-button" part="wpconsent-preferences-cancel-button">Close</button></div><button class="wpconsent-save-preferences wpconsent-banner-button" part="wpconsent-preferences-save-button">Save and Close</button></div></div></div></div><button id="wpconsent-consent-floating" class="wpconsent-consent-floating-button" part="wpconsent-settings-button" style="background-color: #121212; color: #ffffff;" aria-label="Cookie Preferences"><svg class="wpconsent-icon wpconsent-icon-preferences" width="24" height="24" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z" fill="#ffffff"></path></svg></button></template></div><div id="wpd-editor-source-code-wrapper-bg"></div><div id="wpd-editor-source-code-wrapper"><textarea id="wpd-editor-source-code"></textarea><button id="wpd-insert-source-code">Insert</button><input type="hidden" id="wpd-editor-uid"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

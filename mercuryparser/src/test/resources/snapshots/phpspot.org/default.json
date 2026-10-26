@@ -1,0 +1,16 @@
+{
+  "title": "マインドマップ風のツリーを描画できる「Treeviz」",
+  "content": "<div><div class=\"entrybody\">\n<p><a href=\"https://codepen.io/pierrecapo/full/MPbBdv\">Treeviz</a><br>\n<br>\nマインドマップ風のツリーを描画できる「Treeviz」<br>\n次のような図形を描画できるcodepenでのサンプルです<br>\n<img src=\"http://phpspot.net/php/webimager/admin3/data/4a79a2cfdd0dd3624fd5590d4ea50c17.png\"><br>\n<br>\n関連エントリ</p>\n<ul>\n\t<li><a href=\"https://phpspot.org/blog/archives/2011/11/arborjs.html\">複数要素の関連をビジュアライズできるライブラリ「arbor.js」</a></li>\n\t<li><a href=\"https://phpspot.org/blog/archives/2008/09/post_243.html\">データを視覚的に分かりやすくビジュアライズするためのライブラリ集</a></li>\n</ul>\n\n\n</div></div>",
+  "author": null,
+  "date_published": "2019-04-03T15:00:00.000Z",
+  "lead_image_url": null,
+  "dek": null,
+  "next_page_url": null,
+  "url": null,
+  "domain": null,
+  "excerpt": null,
+  "word_count": null,
+  "direction": null,
+  "total_pages": 1,
+  "rendered_pages": 1
+}

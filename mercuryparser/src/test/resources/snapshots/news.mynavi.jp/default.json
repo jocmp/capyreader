@@ -1,0 +1,16 @@
+{
+  "title": "人気の圧縮・解凍ソフト「WinRAR」に脆弱性、アップデートを",
+  "content": "<div><div class=\"article-body article_body_tech\" id=\"js-articleBody\">\n  <p>Check Point Software Technologiesは2月20日(米国時間)、「<a href=\"https://research.checkpoint.com/extracting-code-execution-from-winrar/\">Extracting a 19 Year Old Code Execution from WinRAR - Check Point Research</a>」において、人気の高い圧縮・解凍ソフトウェアであるWinRARに長年にわたってセキュリティ脆弱性が存在していると伝えた。</p>\n\n<p>この脆弱性の影響により、細工されたファイルを展開する段階でマルウェアに感染させられる可能性があり、最終的に攻撃者によってシステムの制御権が乗っ取られる危険性があるという。</p>\n\n<p>Check Point Software Technologiesがどのようにこの脆弱性を発見したか、攻撃者がどのような手口でこの脆弱性を突いてマルウェアの感染を実施するのかは次のページに詳細がまとまっている。</p>\n\n\n<ul>\n<li><a href=\"https://research.checkpoint.com/extracting-code-execution-from-winrar/\">Extracting a 19 Year Old Code Execution from WinRAR - Check Point Research</a></li>\n</ul>\n\n<ul class=\"photo_table\">\n<li class=\"item-01\">\n<a class=\"photo_table__link gtm\" href=\"https://news.mynavi.jp/techplus/photo/article/20190222-775563/images/001l.jpg\"><span class=\"img-container\"><img class=\"photo_table__img\" alt=\"Extracting a 19 Year Old Code Execution from WinRAR - Check Point Software Technologies\"></span></a><p class=\"photo_table__caption\">「WinRAR」の操作画面</p>\n</li>\n</ul>\n\n<p>WinRARは世界中に5億人のユーザーがいると見られており、かなりの数の人がこの脆弱性の影響を受けるおそれがある。この脆弱性は19年以上にわたって存在していた可能性があることも指摘されている。</p>\n\n<p>WinRARの開発元はすでにこの脆弱性の原因となった形式のファイルサポートを廃止することを決定しており、WinRAR 5.70 beta 1ですでにACEフォーマットのサポートが中止されている。今後、ベンダーから提供される情報に注力するとともに、最新版が公開された場合には迅速にアップデートすることが望まれる。</p>\n\n</div></div>",
+  "author": "著者：後藤大地",
+  "date_published": "2019-02-22T08:23:44.000Z",
+  "lead_image_url": "https://news.mynavi.jp/techplus/article/20190222-775563/index_images/index.jpg",
+  "dek": "Check Point Software Technologiesは2月20日(米国時間)、人気の高い圧縮・解凍ソフトウェアであるWinRARに長年にわたって脆弱性が存在していると伝えた。この脆弱性の影響で、細工されたファイルを展開する段階でマルウェアに感染させられる可能性があるという。",
+  "next_page_url": null,
+  "url": null,
+  "domain": null,
+  "excerpt": null,
+  "word_count": null,
+  "direction": null,
+  "total_pages": 1,
+  "rendered_pages": 1
+}
