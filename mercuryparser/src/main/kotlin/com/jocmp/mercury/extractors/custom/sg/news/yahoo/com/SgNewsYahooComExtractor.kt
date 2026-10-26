@@ -31,7 +31,8 @@ val SgNewsYahooComExtractor =
                 ".caas-title-wrapper",
                 "button",
                 ".advertisement",
-                ".sda-*",
+                "[class^=sda-]",
+                "[class*=\" sda-\"]",
                 "[data-content=\"Advertisement\"]",
             )
         }
