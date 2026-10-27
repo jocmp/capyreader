@@ -6,6 +6,7 @@ import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
 import com.jocmp.capy.preferences.getEnum
+import java.time.ZonedDateTime
 
 class AccountPreferences(
     private val store: PreferenceStore,
@@ -37,7 +38,7 @@ class AccountPreferences(
     val lastRefreshedAt: Preference<Long>
         get() = store.getLong("last_refreshed_at", 0L)
 
-    suspend fun touchLastRefreshedAt() {
-        lastRefreshedAt.set(TimeHelpers.nowUTC().toEpochSecond())
+    suspend fun touchLastRefreshedAt(at: ZonedDateTime = TimeHelpers.nowUTC()) {
+        lastRefreshedAt.set(at.toEpochSecond())
     }
 }
