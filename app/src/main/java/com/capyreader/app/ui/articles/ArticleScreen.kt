@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -89,7 +88,6 @@ import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberDisplayTimeFormats
-import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -226,11 +224,11 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val listState = articles.rememberLazyListState()
-        val columns = rememberArticleColumns()
+        val articleListLayout by appPreferences.articleListOptions.layout.collectChangesWithCurrent()
+        val listState = articles.rememberArticleScrollState(layout = articleListLayout)
 
         ResetScrollBehaviorEffect(
-            listState = listState,
+            scrollState = listState,
             scrollBehavior = scrollBehavior
         )
 
@@ -243,14 +241,12 @@ fun ArticleScreen(
         ScrollToSelectedArticleEffect(
             selectedArticleKey = selectedArticleID,
             articles = articles,
-            listState = listState,
-            columns = columns,
+            scrollState = listState,
         )
 
         val newArticles = rememberNewArticlesIndicator(
             articles = presentedArticles,
-            listState = listState,
-            columns = columns,
+            scrollState = listState,
             enabled = !viewModel.markReadOnScrollEnabled,
         )
 
@@ -281,8 +277,7 @@ fun ArticleScreen(
         }
 
         MarkReadOnScrollEffect(
-            listState = listState,
-            columns = columns,
+            scrollState = listState,
             articles = articles,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
@@ -617,8 +612,7 @@ fun ArticleScreen(
                                             articles = articles,
                                             contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
                                             selectedArticleKey = selectedArticleID,
-                                            listState = listState,
-                                            columns = columns,
+                                            scrollState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
                                             dimReadArticles = presentedArticles.filter.status != ArticleStatus.STARRED,
                                             showNewArticles = newArticles.isVisible,
@@ -815,8 +809,7 @@ fun canOpenNextFeed(
 @OptIn(FlowPreview::class)
 @Composable
 private fun MarkReadOnScrollEffect(
-    listState: LazyListState,
-    columns: ArticleColumns,
+    scrollState: ArticleScrollState,
     articles: LazyPagingItems<Article>,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
@@ -835,7 +828,7 @@ private fun MarkReadOnScrollEffect(
     var lastItemCount by remember { mutableIntStateOf(0) }
 
     if (enabled) {
-        LaunchedEffect(listState) {
+        LaunchedEffect(scrollState) {
             snapshotFlow { currentArticles.itemCount }
                 .filter { it > 0 }
                 .distinctUntilChanged()
@@ -844,23 +837,20 @@ private fun MarkReadOnScrollEffect(
                     lastItemCount = itemCount
 
                     if (previousItemCount > 0 && itemCount != previousItemCount) {
-                        listState.scrollToItem(0)
+                        scrollState.scrollToItem(0)
                     }
                 }
         }
 
-        LaunchedEffect(listState) {
+        LaunchedEffect(scrollState) {
             snapshotFlow { currentArticles.itemCount }
                 .distinctUntilChanged()
                 .collect(clampScrollHighWaterMark)
         }
 
-        LaunchedEffect(listState) {
+        LaunchedEffect(scrollState) {
             snapshotFlow {
-                val scrolledPastRow = listState.firstVisibleItemIndex - 1
-
-                columns.lastArticleIn(scrolledPastRow)
-                    .coerceAtMost(currentArticles.itemCount - 1)
+                scrollState.firstVisibleItemIndex - 1
             }
                 .distinctUntilChanged()
                 .debounce(500)

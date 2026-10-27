@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -46,15 +45,14 @@ class NewArticlesIndicator {
 @Composable
 fun rememberNewArticlesIndicator(
     articles: PresentedArticles,
-    listState: LazyListState,
-    columns: ArticleColumns,
+    scrollState: ArticleScrollState,
     enabled: Boolean,
 ): NewArticlesIndicator {
     val indicator = remember(articles.filter, articles.sortOrder) { NewArticlesIndicator() }
     val items = articles.items
     val tracking = enabled && articles.sortOrder == SortOrder.NEWEST_FIRST
 
-    LaunchedEffect(indicator, items, tracking) {
+    LaunchedEffect(indicator, items, tracking, scrollState) {
         if (!tracking) {
             indicator.dismiss()
             return@LaunchedEffect
@@ -64,10 +62,8 @@ fun rememberNewArticlesIndicator(
             val head = items.itemSnapshotList.firstOrNull()?.let {
                 ListHead(id = it.id, publishedAt = it.publishedAt)
             }
-            val firstVisible = listState.layoutInfo.visibleItemsInfo.firstOrNull()
-            val presentedID = firstVisible?.let {
-                items.itemSnapshotList.getOrNull(columns.firstArticleIn(it.index))?.id
-            }
+            val firstVisible = scrollState.firstVisibleItem
+            val presentedID = firstVisible?.let { items.itemSnapshotList.getOrNull(it.index)?.id }
 
             Triple(head, firstVisible?.key as? String, presentedID)
         }.collect { (head, firstVisibleID, presentedID) ->

@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles
 
+import androidx.collection.LruCache
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -7,17 +8,15 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
@@ -29,11 +28,15 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
@@ -43,9 +46,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
 import coil3.compose.AsyncImage
 import com.capyreader.app.R
 import com.capyreader.app.common.ImagePreview
@@ -60,62 +63,26 @@ import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.relativeTime
 import java.time.LocalDateTime
 
-fun cardColumnCount(width: Dp): Int {
-    val available = width - CARD_LIST_PADDING * 2 + CARD_GUTTER
-    val columns = (available / (MIN_CARD_WIDTH + CARD_GUTTER)).toInt()
+val ArticleCardGutter = 8.dp
+
+fun cardColumnCount(availableWidth: Dp): Int {
+    val columns = ((availableWidth + ArticleCardGutter) / (MIN_CARD_WIDTH + ArticleCardGutter)).toInt()
 
     return columns.coerceIn(1, MAX_CARD_COLUMNS)
 }
 
-@Composable
-fun ArticleCardRow(
-    articles: LazyPagingItems<Article>,
-    row: Int,
-    columns: ArticleColumns,
-    selectedArticleKey: String?,
-    onSelect: (article: Article) -> Unit,
-    onMarkAllRead: (range: MarkRead) -> Unit,
-    currentTime: LocalDateTime,
-    options: ArticleRowOptions,
-    modifier: Modifier = Modifier,
-) {
-    val first = columns.firstArticleIn(row)
+object ArticleCardCells : StaggeredGridCells {
+    override fun Density.calculateCrossAxisCellSizes(availableSize: Int, spacing: Int): IntArray {
+        val count = cardColumnCount(availableSize.toDp())
+        val gridSize = availableSize - spacing * (count - 1)
+        val slotSize = gridSize / count
+        val remainder = gridSize % count
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(CARD_GUTTER),
-        modifier = modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .padding(horizontal = CARD_LIST_PADDING, vertical = CARD_GUTTER / 2)
-    ) {
-        (first..columns.lastArticleIn(row)).forEach { index ->
-            val cardModifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-
-            if (index >= articles.itemCount) {
-                Spacer(modifier = cardModifier)
-                return@forEach
-            }
-
-            val item = articles[index]
-
-            if (item == null) {
-                PlaceholderArticleCard(
-                    showImage = options.imagePreview != ImagePreview.NONE,
-                    modifier = cardModifier,
-                )
+        return IntArray(count) { slot ->
+            if (slot < remainder) {
+                slotSize + 1
             } else {
-                ArticleCard(
-                    article = item,
-                    index = index,
-                    selected = selectedArticleKey == item.id,
-                    onSelect = { onSelect(item) },
-                    onMarkAllRead = onMarkAllRead,
-                    currentTime = currentTime,
-                    options = options,
-                    modifier = cardModifier,
-                )
+                slotSize
             }
         }
     }
@@ -141,11 +108,8 @@ fun ArticleCard(
             article = article,
             modifier = modifier.clip(MaterialTheme.shapes.medium),
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                ArticleCardSurface(
-                    selected = selected,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
+            Box {
+                ArticleCardSurface(selected = selected) {
                     ArticleCardContent(
                         article = article,
                         currentTime = currentTime,
@@ -211,14 +175,12 @@ fun ArticleCardContent(
         read = dim,
     )
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier) {
         image?.invoke()
 
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier
-                .weight(1f)
-                .padding(12.dp)
+            modifier = Modifier.padding(12.dp),
         ) {
             if (article.title.isNotBlank()) {
                 Text(
@@ -242,8 +204,6 @@ fun ArticleCardContent(
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f))
-
             CardFooter(
                 article = article,
                 currentTime = currentTime,
@@ -257,13 +217,16 @@ fun ArticleCardContent(
 
 @Composable
 fun ArticleCardImage(imageURL: String?) {
-    val modifier = Modifier
-        .fillMaxWidth()
-        .aspectRatio(CARD_IMAGE_ASPECT_RATIO)
-        .background(colorScheme.surfaceContainerHigh)
-
     if (imageURL == null) {
-        Box(modifier = modifier)
+        Box(modifier = cardImageModifier(DEFAULT_IMAGE_ASPECT_RATIO))
+        return
+    }
+
+    var aspectRatio by remember(imageURL) {
+        mutableFloatStateOf(imageAspectRatios[imageURL] ?: DEFAULT_IMAGE_ASPECT_RATIO)
+    }
+
+    if (aspectRatio == FAILED_IMAGE) {
         return
     }
 
@@ -271,7 +234,17 @@ fun ArticleCardImage(imageURL: String?) {
         model = imageURL,
         contentDescription = null,
         contentScale = ContentScale.Crop,
-        modifier = modifier,
+        onSuccess = { state ->
+            naturalAspectRatio(state.painter.intrinsicSize)?.let { ratio ->
+                imageAspectRatios.put(imageURL, ratio)
+                aspectRatio = ratio
+            }
+        },
+        onError = {
+            imageAspectRatios.put(imageURL, FAILED_IMAGE)
+            aspectRatio = FAILED_IMAGE
+        },
+        modifier = cardImageModifier(aspectRatio),
     )
 }
 
@@ -334,7 +307,7 @@ private fun CardFooter(
                 imageVector = Icons.Rounded.Star,
                 contentDescription = null,
                 tint = color,
-                modifier = Modifier.size(12.dp),
+                modifier = Modifier.size(12.dp.relative(options.fontScale)),
             )
         }
 
@@ -343,7 +316,7 @@ private fun CardFooter(
                 imageVector = Icons.Rounded.PlayArrow,
                 contentDescription = null,
                 tint = color,
-                modifier = Modifier.size(14.dp),
+                modifier = Modifier.size(14.dp.relative(options.fontScale)),
             )
         }
 
@@ -362,9 +335,25 @@ private fun CardFooter(
 }
 
 @Composable
+private fun cardImageModifier(aspectRatio: Float): Modifier {
+    return Modifier
+        .fillMaxWidth()
+        .aspectRatio(aspectRatio)
+        .background(colorScheme.surfaceContainerHigh)
+}
+
+private fun naturalAspectRatio(size: Size): Float? {
+    if (size == Size.Unspecified || size.width <= 0f || size.height <= 0f) {
+        return null
+    }
+
+    return (size.width / size.height).coerceIn(MIN_IMAGE_ASPECT_RATIO, MAX_IMAGE_ASPECT_RATIO)
+}
+
+@Composable
 private fun PlaceholderBar(fraction: Float, height: Dp) {
     Box(
-        Modifier
+        modifier = Modifier
             .fillMaxWidth(fraction)
             .height(height)
             .clip(RoundedCornerShape(4.dp))
@@ -429,10 +418,13 @@ private fun titleMaxLines(shortenTitles: Boolean): Int {
 }
 
 private val MIN_CARD_WIDTH = 180.dp
-private val CARD_GUTTER = 8.dp
-private val CARD_LIST_PADDING = 8.dp
 private const val MAX_CARD_COLUMNS = 4
-private const val CARD_IMAGE_ASPECT_RATIO = 16 / 9f
+private const val DEFAULT_IMAGE_ASPECT_RATIO = 16 / 9f
+private const val MIN_IMAGE_ASPECT_RATIO = 3 / 4f
+private const val MAX_IMAGE_ASPECT_RATIO = 2f
+private const val FAILED_IMAGE = 0f
+
+private val imageAspectRatios = LruCache<String, Float>(500)
 
 @Preview
 @Composable

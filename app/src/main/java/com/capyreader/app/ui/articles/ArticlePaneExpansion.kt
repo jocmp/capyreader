@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.PaneExpansionAnchor
 import androidx.compose.material3.adaptive.layout.PaneExpansionState
 import androidx.compose.material3.adaptive.layout.PaneScaffoldDirective
@@ -19,9 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_LARGE_LOWER_BOUND
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isSinglePane
+import com.capyreader.app.ui.isTablet
 import com.jocmp.capy.preferences.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -96,10 +95,12 @@ fun rememberArticlePaneExpansion(
 ): ArticlePaneExpansion {
     val anchors = remember(directive) { articlePaneAnchors(directive) }
     val anchorPreference = appPreferences.paneExpansionAnchor
+    val customizedPreference = appPreferences.paneExpansionCustomized
     val savedIndex = initialAnchorIndex(
         preference = anchorPreference,
+        customized = isCustomized(anchor = anchorPreference, customized = customizedPreference),
         anchors = anchors,
-        isTablet = isTabletWidth(),
+        isTablet = isTablet(),
     )
 
     val paneExpansionState = rememberPaneExpansionState(
@@ -118,8 +119,9 @@ fun rememberArticlePaneExpansion(
         if (index in 1..listFullscreenIndex) {
             lastAnchorIndex = index
 
-            if (index != savedIndex || anchorPreference.isSet()) {
+            if (index != savedIndex) {
                 anchorPreference.set(index)
+                customizedPreference.set(true)
             }
         }
     }
@@ -153,12 +155,21 @@ fun WindowInsets.listPaneInsets(): WindowInsets {
     return only(WindowInsetsSides.Start + WindowInsetsSides.Vertical)
 }
 
+private fun isCustomized(anchor: Preference<Int>, customized: Preference<Boolean>): Boolean {
+    if (customized.get()) {
+        return true
+    }
+
+    return anchor.isSet() && anchor.get() != DefaultPaneExpansionIndex
+}
+
 private fun initialAnchorIndex(
     preference: Preference<Int>,
+    customized: Boolean,
     anchors: List<PaneExpansionAnchor>,
     isTablet: Boolean,
 ): Int {
-    if (isTablet && !preference.isSet()) {
+    if (isTablet && !customized) {
         val half = anchors.indexOfFirst {
             it is PaneExpansionAnchor.Proportion && it.proportion == 0.5f
         }
@@ -171,9 +182,3 @@ private fun initialAnchorIndex(
     return preference.get().coerceIn(0, anchors.lastIndex)
 }
 
-@Composable
-private fun isTabletWidth(): Boolean {
-    return currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true)
-        .windowSizeClass
-        .isWidthAtLeastBreakpoint(WIDTH_DP_LARGE_LOWER_BOUND)
-}

@@ -1,12 +1,11 @@
 package com.capyreader.app.ui.articles.list
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -23,6 +22,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,13 +34,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.articles.ArticleList
 import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.articles.listPaneInsets
-import com.capyreader.app.ui.articles.rememberArticleColumns
+import com.capyreader.app.ui.articles.rememberArticleScrollState
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
+import org.koin.compose.koinInject
 
 /**
  * Full-surface search overlay. It owns its own results pager so the list (and therefore the
@@ -59,14 +62,14 @@ fun SearchView(
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
-    val listState = rememberLazyListState()
-    val columns = rememberArticleColumns()
+    val appPreferences = koinInject<AppPreferences>()
+    val layout by appPreferences.articleListOptions.layout.collectChangesWithCurrent()
+    val scrollState = results.rememberArticleScrollState(layout = layout)
 
     ScrollToSelectedArticleEffect(
         selectedArticleKey = selectedArticleID,
         articles = results,
-        listState = listState,
-        columns = columns,
+        scrollState = scrollState,
     )
 
     Surface(
@@ -136,8 +139,7 @@ fun SearchView(
                     ArticleList(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
-                        listState = listState,
-                        columns = columns,
+                        scrollState = scrollState,
                         dimReadArticles = dimReadArticles,
                         onSelect = onSelect,
                     )

@@ -16,7 +16,7 @@ fun ArticleRowSwipeBox(
     val swipeState = rememberArticleRowSwipeState(article = article)
 
     if (swipeState.disabled) {
-        Box(modifier) {
+        Box(modifier = modifier) {
             content()
         }
     } else {

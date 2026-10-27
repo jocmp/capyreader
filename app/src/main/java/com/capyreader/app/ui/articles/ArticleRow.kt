@@ -60,7 +60,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.capyreader.app.R
-import com.capyreader.app.common.ArticleListLayout
 import com.capyreader.app.common.ImagePreview
 import com.capyreader.app.preferences.AppTheme
 import com.capyreader.app.preferences.ThemeMode
@@ -92,7 +91,6 @@ data class ArticleRowOptions(
     val shortenTitles: Boolean = true,
     val accentColors: Boolean = false,
     val dim: Boolean = true,
-    val layout: ArticleListLayout = ArticleListLayout.default,
 )
 
 @Composable
@@ -678,7 +676,7 @@ fun ArticleRowPreview_Unread() {
     }
 }
 
-private fun Dp.relative(scale: ArticleListFontScale): Dp {
+fun Dp.relative(scale: ArticleListFontScale): Dp {
     return this * scale.relative
 }
 
