@@ -161,6 +161,7 @@ import com.jocmp.mercury.extractors.custom.www.reddit.com.WwwRedditComExtractor
 import com.jocmp.mercury.extractors.custom.www.refinery29.com.WwwRefinery29ComExtractor
 import com.jocmp.mercury.extractors.custom.www.reuters.com.WwwReutersComExtractor
 import com.jocmp.mercury.extractors.custom.www.rollingstone.com.WwwRollingstoneComExtractor
+import com.jocmp.mercury.extractors.custom.www.rosa.gr.WwwRosaGrExtractor
 import com.jocmp.mercury.extractors.custom.www.sanwa.co.jp.WwwSanwaCoJpExtractor
 import com.jocmp.mercury.extractors.custom.www.sbnation.com.WwwSbnationComExtractor
 import com.jocmp.mercury.extractors.custom.www.se.pl.WwwSePlExtractor
@@ -359,6 +360,7 @@ object AllExtractors {
             WwwRefinery29ComExtractor,
             WwwReutersComExtractor,
             WwwRollingstoneComExtractor,
+            WwwRosaGrExtractor,
             WwwSanwaCoJpExtractor,
             WwwSbnationComExtractor,
             WwwSiComExtractor,
