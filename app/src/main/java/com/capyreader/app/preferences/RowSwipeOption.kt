@@ -6,7 +6,8 @@ enum class RowSwipeOption {
     DISABLED,
     TOGGLE_READ,
     TOGGLE_STARRED,
-    OPEN_EXTERNALLY;
+    OPEN_EXTERNALLY,
+    SHARE;
 
     val translationKey: Int
         get() = when (this) {
@@ -14,6 +15,7 @@ enum class RowSwipeOption {
             TOGGLE_READ -> R.string.article_list_row_swipe_toggle_read
             TOGGLE_STARRED -> R.string.article_list_row_swipe_toggle_starred
             OPEN_EXTERNALLY -> R.string.article_list_row_swipe_open_externally
+            SHARE -> R.string.article_share
         }
 
     companion object {
@@ -25,6 +27,7 @@ enum class RowSwipeOption {
                 TOGGLE_READ,
                 TOGGLE_STARRED,
                 OPEN_EXTERNALLY,
+                SHARE,
             )
     }
 }

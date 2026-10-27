@@ -1,19 +1,23 @@
 package com.capyreader.app.ui.articles.list
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.capyreader.app.R
 import com.capyreader.app.common.asState
+import com.capyreader.app.common.shareArticle
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.RowSwipeOption
 import com.capyreader.app.ui.LinkOpener
@@ -59,10 +63,12 @@ private fun swipeActions(article: Article, option: RowSwipeOption): List<SwipeAc
 
     val actions = LocalArticleActions.current
     val linkOpener = LocalLinkOpener.current
+    val context = LocalContext.current
 
     val action = when (option) {
         RowSwipeOption.TOGGLE_STARRED -> starAction(article, actions)
         RowSwipeOption.OPEN_EXTERNALLY -> linkOpener.openLink(article, actions)
+        RowSwipeOption.SHARE -> context.shareAction(article)
         else -> readAction(article, actions)
     }
 
@@ -92,4 +98,12 @@ private fun LinkOpener.openLink(article: Article, actions: ArticleActions) =
         actions.markRead(article.id)
 
         open(url.toString().toUri())
+    }
+
+private fun Context.shareAction(article: Article) =
+    ArticleAction(
+        Icons.Rounded.Share,
+        R.string.article_share,
+    ) {
+        shareArticle(article)
     }
