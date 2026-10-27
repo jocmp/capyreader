@@ -15,7 +15,7 @@ enum class RowSwipeOption {
             TOGGLE_READ -> R.string.article_list_row_swipe_toggle_read
             TOGGLE_STARRED -> R.string.article_list_row_swipe_toggle_starred
             OPEN_EXTERNALLY -> R.string.article_list_row_swipe_open_externally
-            SHARE -> R.string.article_share
+            SHARE -> R.string.article_list_row_swipe_share
         }
 
     companion object {
