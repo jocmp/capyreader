@@ -1,0 +1,6 @@
+• Updated Translations for Arabic, Belarusian, French, German, Hungarian and Korean thanks to volunteers!
+• Fixed HLS video crash
+• Fixed crash on tables such as kill-the-newsletter
+• Fixed full content images on NPR and Android Authority
+• Fixed full content crash on The Verge
+• Full content can be turned off after a failed download
