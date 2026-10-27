@@ -136,6 +136,9 @@ class AppPreferences(context: Context) {
         val enablePageTurnKeys: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_page_turn_keys", false)
 
+        val keepScreenOn: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_keep_screen_on", false)
+
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 
