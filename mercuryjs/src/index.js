@@ -1,6 +1,6 @@
 import './globals';
-// The package's "browser" field maps its main entry to the web build, so
-// import the Node build by path and let rollup resolve its dependencies.
+// Import the Node build by path: the package's "module" field points at a
+// stale ESM build that bundles jQuery (removed in jocmp/mercury-parser#236).
 import Mercury from '@jocmp/mercury-parser/dist/mercury.js';
 
 globalThis.capyMercury = {
