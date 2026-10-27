@@ -29,4 +29,6 @@ The scrollbar library (nanihadesuka 2.2.0) has no staggered-grid variant, so Car
 
 ## Tablet pane default
 
-Windows at least 1200dp wide (the "large" width class: tablets in landscape, not foldables) start with the list/detail split at 50%. This only applies while `pane_expansion_anchor` is unset, and the initial anchor is not persisted until the user moves it. That keeps a tablet first opened in portrait from saving the narrow default. Installs that already stored an anchor keep it.
+Windows at least 1200dp wide (the "large" width class: tablets in landscape, not foldables) start with the list/detail split at 50% unless the user has picked a split.
+
+Older builds wrote `pane_expansion_anchor` on first launch, so a stored value alone doesn't mean the user chose it. The split counts as the user's choice when `pane_expansion_customized` is set (written whenever the user moves the divider), or when the stored anchor differs from the old default. The initial anchor is never persisted on its own, so a tablet first opened in portrait doesn't lock in the narrow default.
