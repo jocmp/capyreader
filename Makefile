@@ -16,6 +16,11 @@ bump-release-production: ## Bump Google Play version
 changelog: ## Prep next release notes
 	./scripts/changelog
 
+.PHONY: mercury-js
+mercury-js: ## Rebuild app/src/main/assets/mercury/mercury-headless.js
+	npm ci --prefix mercuryjs
+	npm run --prefix mercuryjs build
+
 .PHONY: review-opml
 review-opml: ## Save Play review account subscriptions, e.g. OPML=~/Desktop/subscriptions.xml
 	./scripts/review-opml $(OPML)

@@ -2,6 +2,8 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.FaviconPolicy
 import com.jocmp.capy.accounts.Source
+import com.jocmp.capy.articles.KotlinMercuryEngine
+import com.jocmp.capy.articles.MercuryEngine
 import com.jocmp.capy.db.Database
 import java.io.File
 import java.io.FileFilter
@@ -17,6 +19,7 @@ class AccountManager(
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: () -> String,
     private val acceptLanguage: String,
+    private val mercuryEngine: MercuryEngine = KotlinMercuryEngine,
 ) {
     fun findByID(
         id: String,
@@ -96,6 +99,7 @@ class AccountManager(
             clientCertManager = clientCertManager,
             userAgent = userAgent,
             acceptLanguage = acceptLanguage,
+            mercuryEngine = mercuryEngine,
         )
     }
 

@@ -17,6 +17,8 @@ import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
+import com.jocmp.capy.articles.KotlinMercuryEngine
+import com.jocmp.capy.articles.MercuryEngine
 import com.jocmp.capy.articles.MercuryParser
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
@@ -64,6 +66,7 @@ data class Account(
     private val clientCertManager: ClientCertManager = ClientCertManager { builder, _ -> builder },
     private val userAgent: () -> String,
     private val acceptLanguage: String,
+    private val mercuryEngine: MercuryEngine = KotlinMercuryEngine,
     private val localHttpClient: OkHttpClient = LocalOkHttpClient.forAccount(path = cacheDirectory),
     val delegate: AccountDelegate = when (source) {
         Source.LOCAL -> LocalAccountDelegate(
@@ -115,7 +118,10 @@ data class Account(
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
-    private val mercuryParser = MercuryParser(ArticleContent(localHttpClient, userAgent, acceptLanguage))
+    private val mercuryParser = MercuryParser(
+        ArticleContent(localHttpClient, userAgent, acceptLanguage),
+        engine = mercuryEngine,
+    )
 
     val taggedFeeds = feedRecords.taggedFeeds().map {
         it.sortedByTitle()

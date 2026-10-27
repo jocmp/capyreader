@@ -1,0 +1,19 @@
+{
+  "name": "capy-mercury-headless",
+  "private": true,
+  "description": "Bundles @jocmp/mercury-parser for androidx.javascriptengine",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@jocmp/mercury-parser": "3.1.2",
+    "core-js": "3.51.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "rollup": "^4.62.0"
+  }
+}

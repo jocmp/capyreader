@@ -1,16 +1,16 @@
 package com.jocmp.capy.articles
 
-import com.jocmp.mercury.ContentType
-import com.jocmp.mercury.Mercury
-import com.jocmp.mercury.ParseOptions
-import com.jocmp.mercury.ParseResult
 import kotlinx.coroutines.CancellationException
 import java.net.URL
 
 class MercuryParser(
+    private val engine: MercuryEngine = KotlinMercuryEngine,
     private val fetchHtml: suspend (url: URL) -> Result<String>,
 ) {
-    constructor(articleContent: ArticleContent) : this({ url -> articleContent.fetch(url) })
+    constructor(
+        articleContent: ArticleContent,
+        engine: MercuryEngine = KotlinMercuryEngine,
+    ) : this(engine, { url -> articleContent.fetch(url) })
 
     suspend fun fetch(url: URL?): Result<String> {
         url ?: return Result.failure(ArticleContent.MissingURLError())
@@ -18,13 +18,7 @@ class MercuryParser(
         val html = fetchHtml(url).getOrElse { return Result.failure(it) }
 
         val result = try {
-            Mercury.parse(
-                url = url.toString(),
-                options = ParseOptions(
-                    html = html,
-                    contentType = ContentType.HTML,
-                ),
-            )
+            engine.parse(url = url.toString(), html = html)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
@@ -40,7 +34,7 @@ class MercuryParser(
         return Result.success(withLeadImage(result, content))
     }
 
-    private fun withLeadImage(result: ParseResult, content: String): String {
+    private fun withLeadImage(result: MercuryEngine.Result, content: String): String {
         val leadImage = result.leadImageUrl
 
         if (leadImage.isNullOrBlank() || IMG_TAG.containsMatchIn(content)) {

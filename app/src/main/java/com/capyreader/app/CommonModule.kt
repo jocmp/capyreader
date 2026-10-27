@@ -1,6 +1,7 @@
 package com.capyreader.app
 
 import android.webkit.WebSettings
+import com.capyreader.app.articles.SandboxMercuryEngine
 import com.capyreader.app.common.AndroidDatabaseProvider
 import com.capyreader.app.common.AndroidClientCertManager
 import com.capyreader.app.common.AppFaviconPolicy
@@ -12,6 +13,7 @@ import com.jocmp.capy.ClientCertManager
 import com.jocmp.capy.DatabaseProvider
 import com.jocmp.capy.PreferenceStoreProvider
 import com.jocmp.capy.accounts.httpClientBuilder
+import com.jocmp.capy.articles.MercuryEngine
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -24,6 +26,7 @@ internal val common = module {
     single<PreferenceStoreProvider> { SharedPreferenceStoreProvider(get()) }
     single<DatabaseProvider> { AndroidDatabaseProvider(context = get()) }
     single<ClientCertManager> { AndroidClientCertManager(context = get()) }
+    single<MercuryEngine> { SandboxMercuryEngine(context = androidContext()) }
     single {
         val userAgent = lazy { WebSettings.getDefaultUserAgent(androidContext()) }
         AccountManager(
@@ -35,6 +38,7 @@ internal val common = module {
             clientCertManager = get(),
             userAgent = { userAgent.value },
             acceptLanguage = Locale.getDefault().toAcceptLanguageTag(),
+            mercuryEngine = get(),
         )
     }
     single { AppPreferences(get()) }

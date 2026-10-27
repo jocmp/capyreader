@@ -107,6 +107,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+    sourceSets {
+        getByName("androidTest") {
+            assets.directories.add("../mercuryparser/src/test/resources")
+        }
+    }
     buildFeatures {
         compose = true
         buildConfig = true
@@ -133,7 +138,9 @@ dependencies {
     implementation(libs.androidx.adaptive.navigation)
     implementation(libs.androidx.adaptive.navigation3)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.concurrent.futures.ktx)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.javascriptengine)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
