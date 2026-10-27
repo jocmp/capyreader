@@ -17,8 +17,10 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -30,6 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
@@ -37,6 +40,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -188,6 +193,7 @@ fun ArticleScreen(
 
     val confirmMarkAllReadEnabled by appPreferences.articleListOptions.confirmMarkAllRead.asState()
     val markAllReadButtonPosition by appPreferences.articleListOptions.markReadButtonPosition.asState()
+    val pinToolbars by appPreferences.articleListOptions.pinToolbars.collectChangesWithCurrent()
     var isMarkAllReadDialogOpen by remember { mutableStateOf(false) }
 
     CompositionLocalProvider(
@@ -217,7 +223,6 @@ fun ArticleScreen(
         val coroutineScope = rememberCoroutineScope()
         val isPullToRefreshing = viewModel.isPullToRefreshing
         val addFeedSuccessMessage = stringResource(R.string.add_feed_success)
-        val scrollBehavior = pinnedScrollBehavior()
         val audioController: AudioPlayerController = koinInject()
         val audioEnclosure by audioController.currentAudio.collectAsState()
         val audioPlayer by audioController.player.collectAsState()
@@ -227,6 +232,18 @@ fun ArticleScreen(
             setUpdatePasswordDialogOpen(true)
         }
         val listState = articles.rememberLazyListState()
+        val topBarState = rememberTopAppBarState()
+        val scrollBehavior = if (pinToolbars) {
+            pinnedScrollBehavior(state = topBarState)
+        } else {
+            enterAlwaysScrollBehavior(
+                state = topBarState,
+                canScroll = { listState.canScrollForward || listState.canScrollBackward },
+            )
+        }
+        val hideBottomBarSemantics by remember {
+            derivedStateOf { topBarState.collapsedFraction == 1f }
+        }
 
         ResetScrollBehaviorEffect(
             listState = listState,
@@ -574,6 +591,17 @@ fun ArticleScreen(
                             ArticleStatusBottomBar(
                                 status = filter.status,
                                 onSelectStatus = { selectStatus(it) },
+                                modifier = Modifier
+                                    .graphicsLayer {
+                                        translationY = size.height * topBarState.collapsedFraction
+                                    }
+                                    .then(
+                                        if (hideBottomBarSemantics) {
+                                            Modifier.clearAndSetSemantics {}
+                                        } else {
+                                            Modifier
+                                        }
+                                    ),
                             )
                         }
                     ) { innerPadding ->

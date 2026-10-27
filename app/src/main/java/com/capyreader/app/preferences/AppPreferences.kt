@@ -153,6 +153,9 @@ class AppPreferences(context: Context) {
         val backAction: Preference<BackAction>
             get() = preferenceStore.getEnum("article_list_back_action", BackAction.default)
 
+        val pinToolbars: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_list_pin_toolbars", true)
+
         fun getSortOrder(status: ArticleStatus): Preference<SortOrder> {
             return preferenceStore.getEnum(
                 "article_list_sort_order_${status.name.lowercase()}",

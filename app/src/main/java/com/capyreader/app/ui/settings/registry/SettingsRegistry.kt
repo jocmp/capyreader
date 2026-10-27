@@ -77,6 +77,7 @@ object SettingsRegistry {
                         Setting.SHORTEN_TITLES,
                         Setting.IMAGE_PREVIEW,
                         Setting.UNREAD_BADGES,
+                        Setting.LIST_PIN_TOOLBARS,
                     ),
                 ),
                 SettingsSection(
@@ -215,6 +216,7 @@ object SettingsRegistry {
             Setting.MARK_ALL_READ_POSITION -> R.string.mark_all_read_button_position
             Setting.FILTERS -> R.string.filters_title
             Setting.UNREAD_BADGES -> R.string.settings_panel_unread_counts_title
+            Setting.LIST_PIN_TOOLBARS -> R.string.settings_options_reader_pin_top_toolbar
             Setting.READER_STYLE -> R.string.article_style_options
             Setting.READER_IMAGES -> R.string.reader_image_visibility_label
             Setting.STICKY_FULL_CONTENT -> R.string.settings_option_full_content_title

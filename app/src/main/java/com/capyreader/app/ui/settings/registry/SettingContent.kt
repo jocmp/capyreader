@@ -19,6 +19,7 @@ import com.capyreader.app.ui.settings.panels.HorizontalPaginationRow
 import com.capyreader.app.ui.settings.panels.ImagePreviewRow
 import com.capyreader.app.ui.settings.panels.InAppBrowserRow
 import com.capyreader.app.ui.settings.panels.LastRefreshedRow
+import com.capyreader.app.ui.settings.panels.ListPinToolbarsRow
 import com.capyreader.app.ui.settings.panels.ListSwipeEndRow
 import com.capyreader.app.ui.settings.panels.ListSwipeStartRow
 import com.capyreader.app.ui.settings.panels.ListSwipeUpRow
@@ -83,6 +84,7 @@ fun SettingContent(
         Setting.MARK_ALL_READ_POSITION -> MarkAllReadPositionRow()
         Setting.FILTERS -> FiltersRow()
         Setting.UNREAD_BADGES -> UnreadBadgesRow()
+        Setting.LIST_PIN_TOOLBARS -> ListPinToolbarsRow()
         Setting.READER_STYLE -> ReaderStyleRow()
         Setting.READER_IMAGES -> ReaderImagesRow()
         Setting.STICKY_FULL_CONTENT -> StickyFullContentRow()
