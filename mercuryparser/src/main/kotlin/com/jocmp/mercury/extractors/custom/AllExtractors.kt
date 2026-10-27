@@ -59,6 +59,7 @@ import com.jocmp.mercury.extractors.custom.scan.netsecurity.ne.jp.ScanNetsecurit
 import com.jocmp.mercury.extractors.custom.sciencefly.com.ScienceflyComExtractor
 import com.jocmp.mercury.extractors.custom.sect.iij.ad.jp.SectIijAdJpExtractor
 import com.jocmp.mercury.extractors.custom.sg.news.yahoo.com.SgNewsYahooComExtractor
+import com.jocmp.mercury.extractors.custom.substack.com.SubstackComExtractor
 import com.jocmp.mercury.extractors.custom.superseriale.se.pl.SuperserialeSePlExtractor
 import com.jocmp.mercury.extractors.custom.takagi_hiromitsu.jp.TakagiHiromitsuJpExtractor
 import com.jocmp.mercury.extractors.custom.tarnkappe.info.TarnkappeInfoExtractor
@@ -257,6 +258,7 @@ object AllExtractors {
             ScienceflyComExtractor,
             SectIijAdJpExtractor,
             SgNewsYahooComExtractor,
+            SubstackComExtractor,
             SuperserialeSePlExtractor,
             TakagiHiromitsuJpExtractor,
             TarnkappeInfoExtractor,

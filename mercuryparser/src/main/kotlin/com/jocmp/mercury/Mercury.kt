@@ -3,6 +3,7 @@ package com.jocmp.mercury
 import com.jocmp.mercury.dsl.Doc
 import com.jocmp.mercury.extractors.Extractors
 import com.jocmp.mercury.extractors.RootExtractor
+import com.jocmp.mercury.extractors.detectByHtml
 import com.jocmp.mercury.resource.Resource
 import com.jocmp.mercury.utils.validateUrl
 import java.net.URI
@@ -40,7 +41,7 @@ object Mercury {
 
         val html = options.html ?: doc.html()
         val metaCache = collectMetaNames(doc)
-        val extractor = Extractors.get(url)
+        val extractor = Extractors.get(url) ?: detectByHtml(doc)
         val result = RootExtractor.extract(extractor, doc, url, html, metaCache, fallback = options.fallback)
 
         if (options.fetchAllPages && options.html == null && result.nextPageUrl != null) {
