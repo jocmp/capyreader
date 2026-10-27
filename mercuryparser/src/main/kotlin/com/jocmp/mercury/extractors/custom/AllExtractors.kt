@@ -81,6 +81,7 @@ import com.jocmp.mercury.extractors.custom.www.al.com.WwwAlComExtractor
 import com.jocmp.mercury.extractors.custom.www.americanow.com.WwwAmericanowComExtractor
 import com.jocmp.mercury.extractors.custom.www.androidauthority.com.WwwAndroidauthorityComExtractor
 import com.jocmp.mercury.extractors.custom.www.androidcentral.com.WwwAndroidcentralComExtractor
+import com.jocmp.mercury.extractors.custom.www.animenewsnetwork.com.WwwAnimenewsnetworkComExtractor
 import com.jocmp.mercury.extractors.custom.www.aol.com.WwwAolComExtractor
 import com.jocmp.mercury.extractors.custom.www.apartmenttherapy.com.ApartmentTherapyExtractor
 import com.jocmp.mercury.extractors.custom.www.asahi.com.WwwAsahiComExtractor
@@ -286,6 +287,7 @@ object AllExtractors {
             WwwAmericanowComExtractor,
             WwwAndroidauthorityComExtractor,
             WwwAndroidcentralComExtractor,
+            WwwAnimenewsnetworkComExtractor,
             WwwAolComExtractor,
             WwwAsahiComExtractor,
             WwwBlickDeExtractor,
