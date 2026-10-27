@@ -1,24 +1,18 @@
-import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 
-const require = createRequire(import.meta.url);
-
-// The web build defines a global `Mercury` and parses with cheerio. The ESM
-// build still bundles jQuery, which needs a real document.
-const mercury = readFileSync(
-  require.resolve('@jocmp/mercury-parser/dist/mercury.web.js'),
-  'utf8'
-).replace(/\n\/\/# sourceMappingURL=.*$/, '');
+// Kotlin fetches and decodes the HTML, so Mercury's network and charset
+// dependencies are never called.
+const NETWORK_MODULES = ['postman-request', 'browser-request', 'iconv-lite'];
+const STUB_ID = '\0network-stub';
 
 // JavaScriptSandbox is a bare V8 isolate: no DOM, no network, no URL.
-// Capy fetches the HTML in Kotlin and hands it to `capyMercury.parse`.
-// src/ runs first to install globals, then the Mercury script follows.
+// Capy hands fetched HTML to `capyMercury.parse`.
 export default {
   input: 'src/index.js',
   plugins: [
+    stubNetworkModules(),
     nodeResolve({ browser: true, preferBuiltins: false }),
     commonjs(),
     terser(),
@@ -26,6 +20,23 @@ export default {
   output: {
     file: '../app/src/main/assets/mercury/mercury-headless.js',
     format: 'iife',
-    footer: mercury,
   },
 };
+
+function stubNetworkModules() {
+  return {
+    name: 'stub-network-modules',
+    resolveId(source) {
+      return NETWORK_MODULES.includes(source) ? STUB_ID : null;
+    },
+    load(id) {
+      if (id !== STUB_ID) {
+        return null;
+      }
+
+      return `export default function stub() {
+        throw new Error('Network access is disabled in the headless parser');
+      }`;
+    },
+  };
+}
