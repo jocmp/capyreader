@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jocmp.capy.articles.KotlinMercuryEngine
 import com.jocmp.capy.articles.MercuryEngine
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -16,7 +17,8 @@ import org.junit.runner.RunWith
  *
  * adb logcat -s MercuryBench
  *
- * Pass `-e fixtures a.html,b.html` to run a subset.
+ * Pass `-e fixtures a.html,b.html` to run a subset, or `-e engines kotlin`
+ * to run one engine, e.g. while sampling memory.
  */
 @RunWith(AndroidJUnit4::class)
 class MercuryEngineBenchmark {
@@ -25,22 +27,32 @@ class MercuryEngineBenchmark {
     @Test
     fun compareEngines() = runBlocking {
         val fixtures = loadFixtures()
+        val engines = InstrumentationRegistry.getArguments().getString("engines")?.split(",")
+            ?: listOf(KOTLIN, JS)
         val sandbox = SandboxMercuryEngine(
             context = instrumentation.targetContext,
             fallback = { _, _ -> error("Sandbox fell back to Kotlin") },
         )
-
-        val sandboxColdStart = elapsedMillis { assertTrue(sandbox.prepare()) }
         val (first) = fixtures
-        val sandboxFirstParse = elapsedMillis { sandbox.parse(first.url, first.html) }
-        val kotlinFirstParse = elapsedMillis { KotlinMercuryEngine.parse(first.url, first.html) }
 
-        Log.i(TAG, "cold\tsandbox_connect=$sandboxColdStart\tsandbox_first=$sandboxFirstParse\tkotlin_first=$kotlinFirstParse")
+        idle("baseline")
+
+        if (JS in engines) {
+            val connect = elapsedMillis { assertTrue(sandbox.prepare()) }
+            val firstParse = elapsedMillis { sandbox.parse(first.url, first.html) }
+            Log.i(TAG, "cold\tsandbox_connect=$connect\tsandbox_first=$firstParse")
+        }
+
+        if (KOTLIN in engines) {
+            val firstParse = elapsedMillis { KotlinMercuryEngine.parse(first.url, first.html) }
+            Log.i(TAG, "cold\tkotlin_first=$firstParse")
+        }
+
         Log.i(TAG, "header\tfixture\tbytes\tkotlin_ms\tjs_ms\tkotlin_len\tjs_len")
 
         fixtures.forEach { fixture ->
-            val kotlin = measure(KotlinMercuryEngine, fixture)
-            val js = measure(sandbox, fixture)
+            val kotlin = if (KOTLIN in engines) measure(KotlinMercuryEngine, fixture) else SKIPPED
+            val js = if (JS in engines) measure(sandbox, fixture) else SKIPPED
 
             Log.i(
                 TAG,
@@ -48,7 +60,15 @@ class MercuryEngineBenchmark {
             )
         }
 
+        idle("after")
+
         sandbox.close()
+    }
+
+    /** Pauses so an external sampler can read steady-state memory. */
+    private suspend fun idle(phase: String) {
+        Log.i(TAG, "phase\t$phase")
+        delay(IDLE_MILLIS)
     }
 
     private suspend fun measure(engine: MercuryEngine, fixture: Fixture): Measurement {
@@ -93,5 +113,9 @@ class MercuryEngineBenchmark {
         private const val TAG = "MercuryBench"
         private const val FIXTURES = "fixtures"
         private const val RUNS = 3
+        private const val IDLE_MILLIS = 5_000L
+        private const val KOTLIN = "kotlin"
+        private const val JS = "js"
+        private val SKIPPED = Measurement(millis = -1, length = -1)
     }
 }
