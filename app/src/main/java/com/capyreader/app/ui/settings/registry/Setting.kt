@@ -29,6 +29,7 @@ enum class Setting {
     MARK_ALL_READ_POSITION,
     FILTERS,
     UNREAD_BADGES,
+    LIST_PIN_TOOLBARS,
 
     READER_STYLE,
     READER_IMAGES,

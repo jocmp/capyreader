@@ -48,6 +48,7 @@ import com.capyreader.app.ui.articles.FaviconBadge
 import com.capyreader.app.ui.articles.MarkReadPosition
 import com.capyreader.app.ui.articles.StyleProviders
 import com.capyreader.app.ui.articles.list.ArticleListItem
+import com.capyreader.app.ui.collectChangesWithCurrent
 import com.capyreader.app.ui.components.FormSection
 import com.capyreader.app.ui.components.LabelStyle
 import com.capyreader.app.ui.components.TextSwitch
@@ -147,6 +148,19 @@ fun ShortenTitlesRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
             onCheckedChange = viewModel::updateShortenTitles,
             checked = viewModel.shortenTitles,
             title = stringResource(R.string.settings_article_list_shorten_titles)
+        )
+    }
+}
+
+@Composable
+fun ListPinToolbarsRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    val pinArticleListBars by viewModel.pinArticleListBars.collectChangesWithCurrent()
+
+    RowItem {
+        TextSwitch(
+            checked = pinArticleListBars,
+            onCheckedChange = viewModel::updatePinArticleListBars,
+            title = stringResource(R.string.settings_options_reader_pin_top_toolbar),
         )
     }
 }

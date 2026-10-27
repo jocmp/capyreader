@@ -32,6 +32,7 @@ fun ResetScrollBehaviorEffect(
     LaunchedEffect(resetContentOffset) {
         if (resetContentOffset) {
             scrollBehavior.state.contentOffset = 0f
+            scrollBehavior.state.heightOffset = 0f
         }
     }
 
