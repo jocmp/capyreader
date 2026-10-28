@@ -274,7 +274,7 @@ class NewsBlurAccountDelegateTest {
         coEvery { newsBlur.addURL(url = googleFeed.feed_address, folder = "Tech") }.returns(
             Response.success(AddURLResponse(code = 1, feed = googleFeed))
         )
-        stubArticleState()
+        stubFeedStories()
 
         val result = delegate.addFeed(
             url = googleFeed.feed_address,
@@ -289,6 +289,26 @@ class NewsBlurAccountDelegateTest {
     }
 
     @Test
+    fun addFeed_fetchesFeedPages() = runTest {
+        coEvery { newsBlur.addURL(url = googleFeed.feed_address, folder = "") }.returns(
+            Response.success(AddURLResponse(code = 1, feed = googleFeed))
+        )
+        coEvery { newsBlur.feedStories(feedID = googleFeed.id, page = 1, any(), any()) }.returns(
+            Response.success(StoriesResponse(stories = listOf(unreadStory)))
+        )
+        coEvery { newsBlur.feedStories(feedID = googleFeed.id, page = 2, any(), any()) }.returns(
+            Response.success(StoriesResponse(stories = emptyList()))
+        )
+
+        delegate.addFeed(url = googleFeed.feed_address, title = null, folderTitles = null)
+
+        val article = ArticleRecords(database).find(unreadStory.story_hash)!!
+        assertFalse(article.read)
+        coVerify(exactly = 0) { newsBlur.feedStories(feedID = googleFeed.id, page = 3, any(), any()) }
+        coVerify(exactly = 0) { newsBlur.unreadStoryHashes() }
+    }
+
+    @Test
     fun addFeed_withTitleAndFolders() = runTest {
         coEvery { newsBlur.addFolder(any()) }.returns(success())
         coEvery { newsBlur.addURL(url = googleFeed.feed_address, folder = "Tech") }.returns(
@@ -296,7 +316,7 @@ class NewsBlurAccountDelegateTest {
         )
         coEvery { newsBlur.moveFeedToFolders(any(), any(), any()) }.returns(success())
         coEvery { newsBlur.renameFeed(any(), any()) }.returns(success())
-        stubArticleState()
+        stubFeedStories()
 
         val result = delegate.addFeed(
             url = googleFeed.feed_address,
@@ -348,11 +368,11 @@ class NewsBlurAccountDelegateTest {
     }
 
     @Test
-    fun addFeed_succeedsWhenArticleSyncFails() = runTest {
+    fun addFeed_succeedsWhenStoryFetchFails() = runTest {
         coEvery { newsBlur.addURL(url = googleFeed.feed_address, folder = "") }.returns(
             Response.success(AddURLResponse(code = 1, feed = googleFeed))
         )
-        coEvery { newsBlur.unreadStoryHashes() }.returns(Response.error(502, "".toResponseBody()))
+        coEvery { newsBlur.feedStories(any(), any(), any(), any()) }.returns(Response.error(502, "".toResponseBody()))
 
         val result = delegate.addFeed(url = googleFeed.feed_address, title = null, folderTitles = null)
 
@@ -514,6 +534,12 @@ class NewsBlurAccountDelegateTest {
         stubArticleState(unreadHashes = unreadHashes, starredHashes = starredHashes)
         coEvery { newsBlur.riverStories(storyHashes = any()) }.returns(
             Response.success(StoriesResponse(stories = stories))
+        )
+    }
+
+    private fun stubFeedStories() {
+        coEvery { newsBlur.feedStories(any(), any(), any(), any()) }.returns(
+            Response.success(StoriesResponse(stories = emptyList()))
         )
     }
 

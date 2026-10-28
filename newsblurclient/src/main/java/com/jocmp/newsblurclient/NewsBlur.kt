@@ -10,6 +10,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NewsBlur {
@@ -31,6 +32,14 @@ interface NewsBlur {
 
     @GET("reader/starred_story_hashes")
     suspend fun starredStoryHashes(): Response<StarredStoryHashesResponse>
+
+    @GET("reader/feed/{feedID}")
+    suspend fun feedStories(
+        @Path("feedID") feedID: Long,
+        @Query("page") page: Int,
+        @Query("read_filter") readFilter: String = "all",
+        @Query("include_story_content") includeStoryContent: Boolean = true,
+    ): Response<StoriesResponse>
 
     @GET("reader/river_stories")
     suspend fun riverStories(
