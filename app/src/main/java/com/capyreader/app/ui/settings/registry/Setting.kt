@@ -48,6 +48,7 @@ enum class Setting {
     TAP_TO_PAGE,
     E_INK_SCROLLBAR,
     PAGE_TURN_KEYS,
+    KEEP_SCREEN_ON,
 
     AUTO_DELETE,
     CLEAR_ARTICLES,

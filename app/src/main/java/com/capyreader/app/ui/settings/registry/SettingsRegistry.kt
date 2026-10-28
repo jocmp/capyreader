@@ -147,6 +147,7 @@ object SettingsRegistry {
                         Setting.TAP_TO_PAGE,
                         Setting.E_INK_SCROLLBAR,
                         Setting.PAGE_TURN_KEYS,
+                        Setting.KEEP_SCREEN_ON,
                     ),
                 ),
             )
@@ -227,6 +228,7 @@ object SettingsRegistry {
             Setting.TAP_TO_PAGE -> R.string.settings_e_ink_tap_to_page_title
             Setting.E_INK_SCROLLBAR -> R.string.settings_e_ink_scrollbar_title
             Setting.PAGE_TURN_KEYS -> R.string.settings_e_ink_page_turn_keys_title
+            Setting.KEEP_SCREEN_ON -> R.string.settings_e_ink_keep_screen_on_title
             Setting.THEME_MODE -> R.string.theme_mode_label
             Setting.THEME -> R.string.theme_menu_label
             Setting.PURE_BLACK -> R.string.settings_pure_black_dark_mode
@@ -271,6 +273,7 @@ object SettingsRegistry {
             Setting.TAP_TO_PAGE -> listOf(R.string.settings_e_ink_tap_to_page_subtitle)
             Setting.E_INK_SCROLLBAR -> listOf(R.string.settings_e_ink_scrollbar_subtitle)
             Setting.PAGE_TURN_KEYS -> listOf(R.string.settings_e_ink_page_turn_keys_subtitle)
+            Setting.KEEP_SCREEN_ON -> listOf(R.string.settings_e_ink_keep_screen_on_subtitle)
             Setting.AUTO_DELETE -> listOf(R.string.settings_option_auto_delete_articles_title)
             Setting.FILTERS -> listOf(R.string.filters_supporting_text)
             Setting.UNREAD_BADGES -> listOf(

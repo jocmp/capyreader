@@ -299,6 +299,8 @@
     <string name="reader_tap_zone_next">Scroll down</string>
     <string name="settings_e_ink_page_turn_keys_title">Page turn buttons</string>
     <string name="settings_e_ink_page_turn_keys_subtitle">Volume keys, page turners, and Page Up/Down turn article pages</string>
+    <string name="settings_e_ink_keep_screen_on_title">Keep screen on</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Prevent the screen from turning off while reading an article</string>
     <string name="settings_section_storage">Storage</string>
     <string name="settings_search_placeholder">Search settings</string>
     <string name="settings_search_no_results">No results</string>

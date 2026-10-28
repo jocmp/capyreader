@@ -18,6 +18,7 @@ import com.capyreader.app.ui.settings.panels.FiltersRow
 import com.capyreader.app.ui.settings.panels.HorizontalPaginationRow
 import com.capyreader.app.ui.settings.panels.ImagePreviewRow
 import com.capyreader.app.ui.settings.panels.InAppBrowserRow
+import com.capyreader.app.ui.settings.panels.KeepScreenOnRow
 import com.capyreader.app.ui.settings.panels.LastRefreshedRow
 import com.capyreader.app.ui.settings.panels.ListSwipeEndRow
 import com.capyreader.app.ui.settings.panels.ListSwipeStartRow
@@ -99,6 +100,7 @@ fun SettingContent(
         Setting.TAP_TO_PAGE -> TapToPageRow()
         Setting.E_INK_SCROLLBAR -> EInkScrollbarRow()
         Setting.PAGE_TURN_KEYS -> PageTurnKeysRow()
+        Setting.KEEP_SCREEN_ON -> KeepScreenOnRow()
         Setting.AUTO_DELETE -> AutoDeleteRow()
         Setting.CLEAR_ARTICLES -> ClearArticlesRow()
         Setting.CRASH_REPORTING -> CrashReportingRow()

@@ -54,3 +54,15 @@ fun PageTurnKeysRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
         )
     }
 }
+
+@Composable
+fun KeepScreenOnRow(viewModel: GesturesSettingsViewModel = koinViewModel()) {
+    RowItem {
+        TextSwitch(
+            onCheckedChange = viewModel::updateKeepScreenOn,
+            checked = viewModel.keepScreenOn,
+            title = stringResource(R.string.settings_e_ink_keep_screen_on_title),
+            subtitle = stringResource(R.string.settings_e_ink_keep_screen_on_subtitle)
+        )
+    }
+}

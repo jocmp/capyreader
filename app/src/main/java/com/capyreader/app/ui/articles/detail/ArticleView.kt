@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -127,6 +128,7 @@ fun ArticleView(
     val showToolBar = pinToolbars || !scrollState.isScrollingDown
 
     val enableTapPaging by appPreferences.readerOptions.enablePagingTapGesture.collectChangesWithDefault()
+    val keepScreenOn by appPreferences.readerOptions.keepScreenOn.collectChangesWithDefault()
 
     SideEffect {
         scrollState.keepToolbarsHidden = enableTapPaging
@@ -147,6 +149,7 @@ fun ArticleView(
     ) {
         BoxWithConstraints(Modifier
             .fillMaxSize()
+            .then(if (keepScreenOn) Modifier.keepScreenOn() else Modifier)
             .nestedScroll(scrollState.connection)) {
           if (maxWidth > 0.dp) {
             Box(
