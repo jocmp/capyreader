@@ -99,7 +99,7 @@ fun LoginView(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        if (source.hasCustomURL) {
+                        val urlField = @Composable {
                             UrlField(
                                 onChange = onUrlChange,
                                 url = url,
@@ -107,6 +107,10 @@ fun LoginView(
                                     Text(stringResource(source.urlPlaceholderKey))
                                 }
                             )
+                        }
+
+                        if (source.hasCustomURL && !source.hasDefaultServer) {
+                            urlField()
                         }
                         AuthFields(
                             onUsernameChange = onUsernameChange,
@@ -124,6 +128,7 @@ fun LoginView(
                             onClearClientCert = onClearClientCert,
                             clientCertAlias = clientCertAlias,
                             setApiTokenPreference = onUseApiTokenChange,
+                            serverField = urlField.takeIf { source.hasDefaultServer },
                         )
                     }
                 }
@@ -154,6 +159,9 @@ fun UrlField(
             .fillMaxWidth()
     )
 }
+
+private val Source.hasDefaultServer
+    get() = this == Source.NEWSBLUR
 
 private val Source.urlPlaceholderKey
     get() = when (this) {
