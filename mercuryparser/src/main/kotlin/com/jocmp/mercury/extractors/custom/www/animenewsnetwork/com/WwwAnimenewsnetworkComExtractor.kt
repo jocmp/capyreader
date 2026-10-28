@@ -4,6 +4,8 @@ import com.jocmp.mercury.extractors.TransformResult
 import com.jocmp.mercury.extractors.extractor
 import org.jsoup.nodes.Element
 
+private const val MEDIA = "img, picture, video, audio, iframe, svg, embed, object"
+
 val WwwAnimenewsnetworkComExtractor =
     extractor("www.animenewsnetwork.com") {
         title { attr("meta[name=\"og:title\"]", "value") }
@@ -31,7 +33,7 @@ val WwwAnimenewsnetworkComExtractor =
             }
 
             // Reviews lay out the cover, synopsis, and body in decorative tables
-            transform("table.layout:not(table.layout table.layout)") { node, _ ->
+            transform("table.layout") { node, _ ->
                 node.elements.forEach(::unwrapLayoutTable)
                 TransformResult.NoChange
             }
@@ -55,10 +57,10 @@ private fun unwrapLayoutTable(table: Element) {
         .filter { cell -> cell.parents().firstOrNull { it.tagName() == "table" } == table }
         .forEach { cell ->
             if (cell.hasClass("horizontal")) {
-                cell.ownText().trim().takeIf { it.isNotEmpty() }?.let { label ->
+                cell.text().trim().takeIf { it.isNotEmpty() }?.let { label ->
                     content.appendElement("p").appendElement("strong").text(label)
                 }
-            } else if (cell.text().isNotBlank() || cell.selectFirst("img") != null) {
+            } else if (cell.text().isNotBlank() || cell.selectFirst(MEDIA) != null) {
                 cell.childNodes().toList().forEach { content.appendChild(it) }
             }
         }

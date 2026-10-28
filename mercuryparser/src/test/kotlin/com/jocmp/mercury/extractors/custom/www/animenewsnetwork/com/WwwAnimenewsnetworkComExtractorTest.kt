@@ -63,7 +63,57 @@ class WwwAnimenewsnetworkComExtractorTest {
         assertFalse(content.contains("data-src"))
     }
 
+    @Test
+    fun `unwraps nested layout tables`() {
+        assertFalse(layoutContent.contains("<table"))
+        assertEquals(1, Regex(Regex.escape("nested-cover.jpg")).findAll(layoutContent).count())
+        assertEquals(1, Regex("Synopsis:").findAll(layoutContent).count())
+    }
+
+    @Test
+    fun `keeps media-only layout cells`() {
+        assertTrue(layoutContent.contains("<iframe"))
+        assertTrue(layoutContent.contains("https://www.youtube.com/embed/abc123"))
+    }
+
+    @Test
+    fun `keeps labels wrapped in elements`() {
+        assertTrue(layoutContent.contains("<strong>Synopsis:</strong>"))
+        assertTrue(layoutContent.contains("<strong>Review:</strong>"))
+    }
+
     companion object {
+        private val layoutContent: String by lazy {
+            val html =
+                """
+                <html><body><div class="KonaBody">
+                <table class="layout"><tbody>
+                  <tr>
+                    <td class="horizontal"><span style="position:absolute">Synopsis:</span></td>
+                    <td>
+                      <div class="floating-image fleft">
+                        <table class="layout"><tbody><tr>
+                          <td><img src="//cdn.animenewsnetwork.com/nested-cover.jpg" width="200" height="300"></td>
+                          <td class="vertical"><div></div></td>
+                        </tr></tbody></table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-zone"><p>A synopsis that is long enough to read as article content, with some detail.</p></td>
+                    <td><iframe src="https://www.youtube.com/embed/abc123" width="640" height="360"></iframe></td>
+                  </tr>
+                  <tr><td class="horizontal"><b>Review:</b></td><td class="vertical"></td></tr>
+                </tbody></table>
+                <p>The review body follows the layout table, and it runs long enough to count as content.</p>
+                </div></body></html>
+                """.trimIndent()
+
+            runBlocking {
+                Mercury.parse("https://www.animenewsnetwork.com/review/example/.1", ParseOptions(html = html))
+            }.content.orEmpty()
+        }
+
         private val newsContent: String by lazy {
             parse(
                 fixture = "viz-media-releases-kiss-me-with-your-face-manga",
