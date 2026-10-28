@@ -369,6 +369,10 @@
     <string name="audio_player_close">Close player</string>
     <string name="audio_player_skip_back">Skip back 30 seconds</string>
     <string name="audio_player_skip_forward">Skip forward 30 seconds</string>
+    <string name="audio_more_options">More audio options</string>
+    <string name="audio_download">Download</string>
+    <string name="audio_download_started">Downloading to Downloads</string>
+    <string name="audio_download_failure">Couldn\'t start download</string>
     <string name="settings_panel_unread_counts_title">Unread Badges</string>
     <string name="badge_style_count">Count</string>
     <string name="badge_style_dot">Dot</string>
