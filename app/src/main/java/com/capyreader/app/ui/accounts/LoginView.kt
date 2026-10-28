@@ -104,7 +104,7 @@ fun LoginView(
                                 onChange = onUrlChange,
                                 url = url,
                                 placeholder = {
-                                    Text(stringResource(R.string.auth_fields_api_url_placeholder))
+                                    Text(stringResource(source.urlPlaceholderKey))
                                 }
                             )
                         }
@@ -154,6 +154,12 @@ fun UrlField(
             .fillMaxWidth()
     )
 }
+
+private val Source.urlPlaceholderKey
+    get() = when (this) {
+        Source.NEWSBLUR -> R.string.auth_fields_newsblur_url_placeholder
+        else -> R.string.auth_fields_api_url_placeholder
+    }
 
 @Preview
 @Composable

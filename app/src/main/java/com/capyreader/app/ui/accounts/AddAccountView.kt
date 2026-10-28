@@ -75,6 +75,10 @@ fun AddAccountView(
                     source = Source.MINIFLUX
                 )
                 SyncServiceRow(
+                    onSelect = onSelectService,
+                    source = Source.NEWSBLUR
+                )
+                SyncServiceRow(
                     onSelectService,
                     source = Source.READER
                 )
