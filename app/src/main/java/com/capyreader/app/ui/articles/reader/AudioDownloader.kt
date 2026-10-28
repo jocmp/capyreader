@@ -9,7 +9,12 @@ import androidx.core.net.toUri
 import com.jocmp.capy.logging.CapyLog
 
 object AudioDownloader {
-    fun download(url: String, title: String?, context: Context): Result<Long> {
+    fun download(
+        url: String,
+        title: String?,
+        mimeType: String?,
+        context: Context,
+    ): Result<Long> {
         return try {
             val manager = context.getSystemService<DownloadManager>()
                 ?: throw IllegalStateException("DownloadManager unavailable")
@@ -18,11 +23,15 @@ object AudioDownloader {
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalPublicDir(
                     Environment.DIRECTORY_DOWNLOADS,
-                    fileName(url = url, title = title),
+                    fileName(url = url, title = title, mimeType = mimeType),
                 )
 
             if (title != null) {
                 request.setTitle(title)
+            }
+
+            if (mimeType != null) {
+                request.setMimeType(mimeType)
             }
 
             Result.success(manager.enqueue(request))
@@ -36,13 +45,15 @@ object AudioDownloader {
      * Podcast hosts often serve every episode under the same name
      * (e.g. NPR's "default.mp3"), so prefer the episode title.
      */
-    internal fun fileName(url: String, title: String?): String {
-        val guessed = URLUtil.guessFileName(url, null, null)
+    internal fun fileName(url: String, title: String?, mimeType: String?): String {
+        val guessed = URLUtil.guessFileName(url, null, mimeType)
         val name = title
             ?.replace(INVALID_FILE_CHARS, " ")
             ?.replace(WHITESPACE, " ")
             ?.trim()
-            ?.take(MAX_TITLE_LENGTH)
+            ?.trimStart('.')
+            ?.let { truncateBytes(it, MAX_TITLE_BYTES) }
+            ?.trim()
             ?.ifBlank { null }
             ?: return guessed
 
@@ -55,7 +66,20 @@ object AudioDownloader {
         return "$name.$extension"
     }
 
+    /** Filenames are limited to 255 bytes, so cut on code points by UTF-8 size. */
+    private fun truncateBytes(value: String, maxBytes: Int): String {
+        val codePoints = value.codePoints().toArray().map { String(Character.toChars(it)) }
+        val totals = codePoints
+            .runningFold(0) { total, char -> total + char.toByteArray(Charsets.UTF_8).size }
+            .drop(1)
+
+        return codePoints
+            .zip(totals)
+            .takeWhile { (_, total) -> total <= maxBytes }
+            .joinToString(separator = "") { (char, _) -> char }
+    }
+
     private val INVALID_FILE_CHARS = Regex("""[\\/:*?"<>|\p{Cntrl}]""")
     private val WHITESPACE = Regex("""\s+""")
-    private const val MAX_TITLE_LENGTH = 120
+    private const val MAX_TITLE_BYTES = 200
 }

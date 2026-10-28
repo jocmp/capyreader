@@ -9,6 +9,8 @@ class ReaderActions(
     val onImageClick: (image: LinearImage) -> Unit,
     val onImageLongPress: (url: String) -> Unit,
     val onAudioClick: (url: String) -> Unit,
+    val onAudioDownload: (url: String, mimeType: String?) -> Unit,
+    val onAudioShare: (url: String) -> Unit,
     val onFullscreenVideo: (uri: String) -> Unit,
 ) {
     companion object {
@@ -18,6 +20,8 @@ class ReaderActions(
             onImageClick = {},
             onImageLongPress = {},
             onAudioClick = {},
+            onAudioDownload = { _, _ -> },
+            onAudioShare = {},
             onFullscreenVideo = {},
         )
     }

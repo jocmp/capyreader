@@ -32,6 +32,7 @@ import com.capyreader.app.R
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.shareImage
+import com.capyreader.app.common.shareLink
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ReaderImageVisibility
 import com.capyreader.app.ui.ConnectivityType
@@ -40,6 +41,7 @@ import com.capyreader.app.ui.LocalLinkOpener
 import com.capyreader.app.ui.articles.ColumnScrollbar
 import com.capyreader.app.ui.articles.media.ImageSaver
 import com.capyreader.app.ui.articles.reader.AnchorRegistry
+import com.capyreader.app.ui.articles.reader.AudioDownloader
 import com.capyreader.app.ui.articles.reader.ArticleReaderContent
 import com.capyreader.app.ui.articles.reader.LocalReaderPageHeight
 import com.capyreader.app.ui.articles.reader.PageDirection
@@ -90,6 +92,8 @@ fun ArticleReader(
     val successMessage = stringResource(R.string.media_save_success)
     val failureMessage = stringResource(R.string.media_save_failure)
     val shareFailureMessage = stringResource(R.string.media_share_failure)
+    val downloadStartedMessage = stringResource(R.string.audio_download_started)
+    val downloadFailureMessage = stringResource(R.string.audio_download_failure)
 
     fun showSnackbar(message: String) {
         scope.launchUI {
@@ -131,6 +135,28 @@ fun ArticleReader(
         }
 
         setImageUrl(null)
+    }
+
+    fun downloadAudio(url: String, title: String, mimeType: String?) {
+        scope.launchIO {
+            val result = AudioDownloader.download(
+                url = url,
+                title = title,
+                mimeType = mimeType,
+                context = context,
+            )
+
+            withUIContext {
+                result.fold(
+                    onSuccess = {
+                        showSnackbar(downloadStartedMessage)
+                    },
+                    onFailure = {
+                        showSnackbar(downloadFailureMessage)
+                    }
+                )
+            }
+        }
     }
 
     val anchors = remember(scrollState) { AnchorRegistry(scrollState) }
@@ -204,6 +230,10 @@ fun ArticleReader(
                     )
                 )
             },
+            onAudioDownload = { url, mimeType ->
+                downloadAudio(url = url, title = currentArticle.title, mimeType = mimeType)
+            },
+            onAudioShare = { url -> context.shareLink(url = url, title = currentArticle.title) },
             onFullscreenVideo = { uri -> currentOnFullscreenVideo(uri) },
         )
     }

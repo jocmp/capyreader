@@ -664,7 +664,7 @@ fun AudioElement(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(start = 16.dp, end = 4.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
         ) {
             Icon(
                 imageVector = Icons.Outlined.Audiotrack,
@@ -675,7 +675,12 @@ fun AudioElement(
                 text = stringResource(R.string.reader_play_audio),
                 modifier = Modifier.weight(1f),
             )
-            AudioMenuButton(url = audio.firstSource.uri)
+            AudioMenuButton(
+                onDownload = {
+                    actions.onAudioDownload(audio.firstSource.uri, audio.firstSource.mimeType)
+                },
+                onShare = { actions.onAudioShare(audio.firstSource.uri) },
+            )
         }
     }
 }

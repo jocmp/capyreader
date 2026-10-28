@@ -40,6 +40,8 @@ fun AudioEnclosureCard(
     isBuffering: Boolean,
     onPlay: (audio: AudioEnclosure) -> Unit,
     onPause: () -> Unit,
+    onDownload: () -> Unit,
+    onShare: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val url = enclosure.url.toString()
@@ -102,8 +104,8 @@ fun AudioEnclosureCard(
                 },
             )
             AudioMenuButton(
-                url = url,
-                title = article.title,
+                onDownload = onDownload,
+                onShare = onShare,
             )
         }
     }
