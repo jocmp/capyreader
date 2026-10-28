@@ -17,6 +17,8 @@ Same shape as NetNewsWire's NewsBlur account:
 
 Story hashes (`<feed_id>:<guid_hash>`) are the article IDs. `read_status` is `1` when read; `starred` is absent unless the story is starred.
 
+A new subscription is missing from `unread_story_hashes` for a while (over 25 seconds in testing, under about a minute for The Verge), even though `reader/feed/{id}` already returns its stories as unread. After adding a feed, the delegate loads up to 5 pages of `reader/feed/{id}` (6 stories per page, fixed by the server) instead of running the hash sync. A refresh in that window can still mark those stories read locally until NewsBlur includes them.
+
 Only unread and starred stories are fetched. NewsBlur's unread window is 15 days on free accounts and 30 on premium, so older unread stories never arrive.
 
 ## Free accounts
