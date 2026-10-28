@@ -117,7 +117,7 @@ internal class NewsBlurAccountDelegate(
 
             coroutineScope {
                 launch {
-                    refreshNewArticles()
+                    fetchNewFeedStories(feedID = feed.id)
                 }
             }
 
@@ -262,15 +262,34 @@ internal class NewsBlurAccountDelegate(
         articleRecords.markAllStarred(articleIDs = starredBody.starred_story_hashes)
     }
 
-    private suspend fun refreshNewArticles() {
+    private suspend fun fetchNewFeedStories(feedID: Long) {
         try {
-            refreshArticleState()
-            fetchMissingArticles(cutoffDate = null)
+            fetchFeedStories(feedID = feedID, page = 1)
         } catch (e: Exception) {
-            CapyLog.warn("newsblur_refresh_new_articles", mapOf("error" to e.message))
+            CapyLog.warn("newsblur_fetch_new_feed", mapOf("error" to e.message))
         } catch (e: UnauthorizedError) {
-            CapyLog.warn("newsblur_refresh_new_articles", mapOf("error" to "unauthorized"))
+            CapyLog.warn("newsblur_fetch_new_feed", mapOf("error" to "unauthorized"))
         }
+    }
+
+    private suspend fun fetchFeedStories(feedID: Long, page: Int) {
+        if (page > MAX_NEW_FEED_PAGES) {
+            return
+        }
+
+        val stories = newsBlur.feedStories(feedID = feedID, page = page)
+            .orThrowAuthorized()
+            .body()
+            ?.stories
+            .orEmpty()
+
+        if (stories.isEmpty()) {
+            return
+        }
+
+        saveStories(stories, cutoffDate = null)
+
+        fetchFeedStories(feedID = feedID, page = page + 1)
     }
 
     private suspend fun fetchMissingArticles(cutoffDate: ZonedDateTime?) {
@@ -406,6 +425,7 @@ internal class NewsBlurAccountDelegate(
         private const val TOP_LEVEL = ""
         private const val NESTED_SEPARATOR = " - "
         private const val MAX_STORY_HASHES = 100
+        private const val MAX_NEW_FEED_PAGES = 5
         private const val MAX_STATUS_HASHES = 50
         private const val MAX_CONCURRENT_FETCHES = 4
     }
