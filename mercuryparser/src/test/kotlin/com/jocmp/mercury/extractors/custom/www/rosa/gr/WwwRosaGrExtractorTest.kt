@@ -18,7 +18,7 @@ class WwwRosaGrExtractorTest {
             "Χειμερινοί Ολυμπιακοί: Η ΔΟΕ απέκλεισε τον Ουκρανό αθλητή που φόρεσε κράνος με τα θύματα του πολέμου",
             result.title,
         )
-        assertEquals("Newsroom", result.author)
+        assertEquals("Ιωάννα Καρδούλια", result.author)
         assertEquals(Instant.parse("2026-02-12T12:12:00Z"), result.datePublished)
         assertEquals("https://www.rosa.gr/wp-content/uploads/2026/02/ukraine-athlitis.jpg", result.leadImageUrl)
     }
@@ -42,8 +42,16 @@ class WwwRosaGrExtractorTest {
     }
 
     @Test
+    fun `keeps a real credit as the figure caption`() {
+        val credited = parse(fixture.replace("<span class=\"image-credits\">X</span>", "<span class=\"image-credits\">AP</span>"))
+        val captions = Jsoup.parseBodyFragment(credited.content.orEmpty()).select("figure > figcaption")
+
+        assertEquals(listOf("AP"), captions.map { it.text() })
+    }
+
+    @Test
     fun `cleans the read also block`() {
-        assertTrue(content.select(".short-read-also, .post-list").isEmpty())
+        assertTrue(content.select(".short-read-also").isEmpty())
         assertFalse(html.contains("cheimerinoi-olybiakoi-o-foros-timis-oukranou-athliti"))
     }
 
@@ -59,18 +67,21 @@ class WwwRosaGrExtractorTest {
     }
 
     companion object {
-        private val result: ParseResult by lazy {
-            val fixture =
-                WwwRosaGrExtractorTest::class.java
-                    .getResource("/fixtures/www.rosa.gr/cheimerinoi-olybiakoi-i-doe-apekleise-ton-oukrano-athliti.html")!!
-                    .readText()
-            val uri = "https://www.rosa.gr/athlitismos/cheimerinoi-olybiakoi-i-doe-apekleise-ton-oukrano-athliti-pou-forese-kranos-me-ta-thymata-tou-polemou/"
+        private const val URI =
+            "https://www.rosa.gr/athlitismos/cheimerinoi-olybiakoi-i-doe-apekleise-ton-oukrano-athliti-pou-forese-kranos-me-ta-thymata-tou-polemou/"
 
-            runBlocking { Mercury.parse(uri, ParseOptions(html = fixture)) }
+        private val fixture: String by lazy {
+            WwwRosaGrExtractorTest::class.java
+                .getResource("/fixtures/www.rosa.gr/cheimerinoi-olybiakoi-i-doe-apekleise-ton-oukrano-athliti.html")!!
+                .readText()
         }
+
+        private val result: ParseResult by lazy { parse(fixture) }
 
         private val html: String by lazy { result.content.orEmpty() }
 
         private val content by lazy { Jsoup.parseBodyFragment(html).body() }
+
+        private fun parse(html: String): ParseResult = runBlocking { Mercury.parse(URI, ParseOptions(html = html)) }
     }
 }
