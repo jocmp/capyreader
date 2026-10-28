@@ -53,7 +53,7 @@ fun AudioEnclosureCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
         ) {
             Artwork(artworkUrl = artworkUrl)
             Column(
@@ -100,6 +100,10 @@ fun AudioEnclosureCard(
                         )
                     }
                 },
+            )
+            AudioMenuButton(
+                url = url,
+                title = article.title,
             )
         }
     }

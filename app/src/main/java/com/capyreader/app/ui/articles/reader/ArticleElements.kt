@@ -664,14 +664,18 @@ fun AudioElement(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp),
         ) {
             Icon(
                 imageVector = Icons.Outlined.Audiotrack,
                 contentDescription = null,
                 tint = LocalContentColor.current,
             )
-            Text(text = stringResource(R.string.reader_play_audio))
+            Text(
+                text = stringResource(R.string.reader_play_audio),
+                modifier = Modifier.weight(1f),
+            )
+            AudioMenuButton(url = audio.firstSource.uri)
         }
     }
 }
