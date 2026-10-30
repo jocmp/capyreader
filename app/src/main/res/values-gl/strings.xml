@@ -374,4 +374,7 @@
     <string name="reader_open_in_browser">Abrir no navegador</string>
     <string name="reader_video_enter_fullscreen">Ver en pantalla completa</string>
     <string name="reader_video_exit_fullscreen">Saír da pantalla completa</string>
+    <string name="article_list_row_swipe_share">Compartir artigo</string>
+    <string name="settings_e_ink_keep_screen_on_title">Manter pantalla acesa</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Evitar que a pantalla se apague mentras les un artigo</string>
 </resources>
