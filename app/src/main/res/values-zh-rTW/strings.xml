@@ -141,7 +141,7 @@
     <string name="add_account_title">新增帳戶</string>
     <string name="settings_section_account">帳戶</string>
     <string name="settings_section_privacy">隱私</string>
-    <string name="settings_section_refresh">上次更新</string>
+    <string name="settings_section_refresh">重新整理</string>
     <string name="opml_export_button_text">匯出到 OPML</string>
     <string name="opml_import_notification_title">正在匯入訂閲…</string>
     <string name="opml_import_button_text">從檔案匯入</string>
@@ -348,4 +348,21 @@
     <string name="mark_read_position_toolbar">工具列</string>
     <string name="mark_all_read_button_position">全部標為已讀按鈕位置</string>
     <string name="mark_read_position_floating_action_button">浮動操作按鈕</string>
+    <string name="badge_style_hide">隱藏</string>
+    <string name="badge_style_dot">點</string>
+    <string name="badge_style_count">計數</string>
+    <string name="settings_section_storage">儲存</string>
+    <string name="article_list_sort_oldest">最舊</string>
+    <string name="settings_section_layout">排版</string>
+    <string name="settings_section_content">內容</string>
+    <string name="article_list_sort_newest">最新</string>
+    <string name="reader_video_exit_fullscreen">退出全螢幕</string>
+    <string name="settings_section_e_ink">E Ink</string>
+    <string name="settings_reduce_motion_title">減少動畫</string>
+    <string name="settings_search_placeholder">搜尋設定</string>
+    <string name="settings_search_no_results">無結果</string>
+    <string name="reader_play_video">播放視訊</string>
+    <string name="reader_play_audio">播放音訊</string>
+    <string name="reader_video_enter_fullscreen">進入全螢幕</string>
+    <string name="reader_open_in_browser">在瀏覽器中開啟</string>
 </resources>
