@@ -380,4 +380,7 @@
     <string name="settings_e_ink_tap_to_page_subtitle">Lehe jagu tagasi- või edasiliikumiseks klõpsa artikli vasakut või paremat äärt</string>
     <string name="reader_video_enter_fullscreen">Ava täisekraanivaade</string>
     <string name="reader_video_exit_fullscreen">Välja täisekraanivaatest</string>
+    <string name="settings_e_ink_keep_screen_on_title">Hoia ekraan sisselülitatuna</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Väldi ekraani väljalülitamist artikli lugemise ajal</string>
+    <string name="article_list_row_swipe_share">Jaga artiklit</string>
 </resources>

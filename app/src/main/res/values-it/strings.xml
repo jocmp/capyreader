@@ -381,4 +381,7 @@
     <string name="reader_play_audio">Riproduci audio</string>
     <string name="reader_article_truncated">Questo articolo è troppo lungo per essere visualizzato per intero.</string>
     <string name="reader_open_in_browser">Apri nel browser</string>
+    <string name="article_list_row_swipe_share">Condividi l\'articolo</string>
+    <string name="settings_e_ink_keep_screen_on_title">Mantieni lo schermo acceso</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Impedisci allo schermo di spegnersi mentre leggi un articolo</string>
 </resources>

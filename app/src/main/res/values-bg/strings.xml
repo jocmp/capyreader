@@ -381,4 +381,6 @@
     <string name="reader_play_audio">Пускане на аудио</string>
     <string name="reader_article_truncated">Тази статия е твърде дълга, за да бъде показана изцяло.</string>
     <string name="reader_open_in_browser">Отваряне в браузъра</string>
+    <string name="settings_e_ink_keep_screen_on_title">Дръжте екрана включен</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Предотвратяване на изключването на екрана по време на четене на статия</string>
 </resources>
