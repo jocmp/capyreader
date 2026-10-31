@@ -36,8 +36,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import okio.IOException
+import retrofit2.HttpException
 import retrofit2.Response
 import java.time.ZonedDateTime
+import kotlin.time.Duration.Companion.minutes
 import com.jocmp.minifluxclient.Feed as MinifluxFeed
 
 internal class MinifluxAccountDelegate(
@@ -51,15 +53,23 @@ internal class MinifluxAccountDelegate(
     private val taggingRecords = TaggingRecords(database)
 
     override suspend fun refresh(filter: ArticleFilter, cutoffDate: ZonedDateTime?): Result<Unit> {
+        val startedAt = TimeHelpers.nowUTC()
+
         return try {
             refreshIntegrationStatus()
             refreshFeeds()
             refreshArticles(cutoffDate = cutoffDate)
-            preferences.touchLastRefreshedAt()
+            preferences.touchLastRefreshedAt(startedAt)
 
             Result.success(Unit)
         } catch (exception: IOException) {
             Result.failure(exception)
+        } catch (e: HttpException) {
+            if (e.code() == 401) {
+                Result.failure(UnauthorizedError())
+            } else {
+                Result.failure(e)
+            }
         } catch (e: UnauthorizedError) {
             Result.failure(e)
         }
@@ -173,7 +183,13 @@ internal class MinifluxAccountDelegate(
 
                 if (localFeed != null) {
                     coroutineScope {
-                        launch { refreshArticles() }
+                        launch {
+                            try {
+                                refreshArticles()
+                            } catch (e: HttpException) {
+                                CapyLog.warn("add_feed_refresh", mapOf("code" to e.code().toString()))
+                            }
+                        }
                     }
 
                     AddFeedResult.Success(localFeed)
@@ -281,12 +297,7 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun refreshFeeds() {
-        val feedsResponse = miniflux.feeds()
-        val feeds = feedsResponse.body()
-
-        if (!feedsResponse.isSuccessful || feeds == null) {
-            return
-        }
+        val feeds = miniflux.feeds().orThrow().body() ?: return
 
         val feedIDsWithIcons = database.feedsQueries.all()
             .executeAsList()
@@ -309,20 +320,22 @@ internal class MinifluxAccountDelegate(
     private suspend fun refreshArticles(cutoffDate: ZonedDateTime? = null) = coroutineScope {
         val starred = async { refreshStarredEntries() }
         val unread = async { refreshUnreadEntries() }
-        starred.await()
-        unread.await()
+        val statusIDs = starred.await() + unread.await()
         fetchAllEntries(cutoffDate = cutoffDate)
+        fetchMissingEntries(statusIDs = statusIDs, cutoffDate = cutoffDate)
     }
 
-    private suspend fun refreshStarredEntries() {
+    private suspend fun refreshStarredEntries(): List<String> {
         val ids = fetchAllEntryIDs { offset ->
             miniflux.entries(starred = true, limit = MAX_ENTRY_LIMIT, offset = offset)
         }
 
         articleRecords.markAllStarred(articleIDs = ids)
+
+        return ids
     }
 
-    private suspend fun refreshUnreadEntries() {
+    private suspend fun refreshUnreadEntries(): List<String> {
         val ids = fetchAllEntryIDs { offset ->
             miniflux.entries(
                 status = EntryStatus.UNREAD.value,
@@ -332,17 +345,19 @@ internal class MinifluxAccountDelegate(
         }
 
         articleRecords.markAllUnread(articleIDs = ids)
+
+        return ids
     }
 
     private suspend fun fetchAllEntryIDs(
         fetch: suspend (offset: Int) -> Response<EntryResultSet>
     ): List<String> {
-        val firstPage = fetch(0).body() ?: return emptyList()
+        val firstPage = fetch(0).orThrow().body() ?: return emptyList()
         val ids = firstPage.entries.map { it.id.toString() }.toMutableList()
 
         var offset = MAX_ENTRY_LIMIT
         while (ids.size < firstPage.total) {
-            val page = fetch(offset).body() ?: break
+            val page = fetch(offset).orThrow().body() ?: break
             if (page.entries.isEmpty()) break
             ids.addAll(page.entries.map { it.id.toString() })
             offset += MAX_ENTRY_LIMIT
@@ -352,7 +367,9 @@ internal class MinifluxAccountDelegate(
     }
 
     private suspend fun fetchAllEntries(cutoffDate: ZonedDateTime?) = coroutineScope {
-        val changedAfter = preferences.lastRefreshedAt.get().takeIf { it > 0 }
+        val changedAfter = preferences.lastRefreshedAt.get()
+            .takeIf { it > 0 }
+            ?.minus(CHANGED_AFTER_OVERLAP.inWholeSeconds)
 
         val firstResult = miniflux.entries(
             limit = MAX_ENTRY_LIMIT,
@@ -360,7 +377,7 @@ internal class MinifluxAccountDelegate(
             order = "published_at",
             direction = "desc",
             changedAfter = changedAfter,
-        ).body() ?: return@coroutineScope
+        ).orThrow().body() ?: return@coroutineScope
 
         val total = firstResult.total
 
@@ -378,12 +395,44 @@ internal class MinifluxAccountDelegate(
                             order = "published_at",
                             direction = "desc",
                             changedAfter = changedAfter,
-                        ).body()?.entries ?: return@withPermit
+                        ).orThrow().body()?.entries ?: return@withPermit
                         saveEntries(entries, cutoffDate = cutoffDate)
                     }
                 }
             }
             .awaitAll()
+    }
+
+    /**
+     * Entries can slip past `changed_after` when the server's clock trails the device's or a
+     * feed refresh commits mid-sync, so fetch any unread or starred entry still missing locally.
+     */
+    private suspend fun fetchMissingEntries(
+        statusIDs: List<String>,
+        cutoffDate: ZonedDateTime?
+    ) = coroutineScope {
+        val missingIDs = articleRecords.findMissingArticles().toSet() intersect statusIDs.toSet()
+        val semaphore = Semaphore(MAX_CONCURRENT_FETCHES)
+
+        val entries = missingIDs
+            .map { entryID ->
+                async {
+                    semaphore.withPermit { fetchEntry(entryID) }
+                }
+            }
+            .awaitAll()
+            .filterNotNull()
+
+        saveEntries(entries, cutoffDate = cutoffDate)
+    }
+
+    private suspend fun fetchEntry(entryID: String): Entry? {
+        return try {
+            miniflux.entry(entryID.toLong()).body()
+        } catch (e: IOException) {
+            CapyLog.warn("fetch_missing_entry", mapOf("entry_id" to entryID, "error" to e.message))
+            null
+        }
     }
 
     private fun saveEntries(entries: List<Entry>, cutoffDate: ZonedDateTime?) {
@@ -504,5 +553,6 @@ internal class MinifluxAccountDelegate(
     companion object {
         const val MAX_ENTRY_LIMIT = 250
         private const val MAX_CONCURRENT_FETCHES = 4
+        private val CHANGED_AFTER_OVERLAP = 5.minutes
     }
 }
