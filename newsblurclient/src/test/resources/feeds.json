@@ -1,0 +1,22 @@
+{
+  "flat_folders": {
+    " ": [
+      9451748
+    ],
+    "Tech": [
+      9451748
+    ]
+  },
+  "feeds": {
+    "9451748": {
+      "id": 9451748,
+      "feed_title": "9to5Google",
+      "feed_address": "https://9to5google.com/feed/",
+      "feed_link": "https://9to5google.com/",
+      "favicon_url": "https://s3.amazonaws.com/icons.newsblur.com/9451748.png",
+      "active": true
+    }
+  },
+  "result": "ok",
+  "authenticated": true
+}
