@@ -106,6 +106,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -604,7 +605,7 @@ fun ArticleScreen(
                                         onSwipeUp()
                                     },
                                 ) {
-                                    val listLoaded = articles.loadState.refresh is LoadState.NotLoading
+                                    val listLoaded = rememberInitialLoad(articles)
 
                                     if (isRefreshInitialized && listLoaded && articles.itemCount == 0) {
                                         ArticleListEmptyView()
@@ -808,6 +809,20 @@ fun canOpenNextFeed(
 }
 
 @OptIn(FlowPreview::class)
+@Composable
+private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
+    var loaded by remember(items) {
+        mutableStateOf(items.loadState.refresh is LoadState.NotLoading)
+    }
+
+    LaunchedEffect(items) {
+        snapshotFlow { items.loadState.refresh }.first { it is LoadState.NotLoading }
+        loaded = true
+    }
+
+    return loaded
+}
+
 @Composable
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
