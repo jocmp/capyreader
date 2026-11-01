@@ -70,6 +70,10 @@ fun ArticleReaderContent(
                     isBuffering = isAudioBuffering && isCurrentAudio,
                     onPlay = onSelectAudio,
                     onPause = onPauseAudio,
+                    onDownload = {
+                        actions.onAudioDownload(enclosure.url.toString(), enclosure.type)
+                    },
+                    onShare = { actions.onAudioShare(enclosure.url.toString()) },
                 )
             }
 

@@ -40,6 +40,8 @@ fun AudioEnclosureCard(
     isBuffering: Boolean,
     onPlay: (audio: AudioEnclosure) -> Unit,
     onPause: () -> Unit,
+    onDownload: () -> Unit,
+    onShare: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val url = enclosure.url.toString()
@@ -53,7 +55,7 @@ fun AudioEnclosureCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
         ) {
             Artwork(artworkUrl = artworkUrl)
             Column(
@@ -100,6 +102,10 @@ fun AudioEnclosureCard(
                         )
                     }
                 },
+            )
+            AudioMenuButton(
+                onDownload = onDownload,
+                onShare = onShare,
             )
         }
     }
