@@ -374,4 +374,9 @@
     <string name="reader_play_audio">Odtwórz audio</string>
     <string name="reader_article_truncated">Ten artykuł jest zbyt długi, by wyświetlić go w całości.</string>
     <string name="reader_open_in_browser">Otwórz w przeglądarce</string>
+    <string name="article_list_row_swipe_share">Udostępnij artykuł</string>
+    <string name="settings_e_ink_keep_screen_on_title">Utrzymuj ekran włączony</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Zapobieganie wyłączaniu się ekranu podczas czytania artykułu</string>
+    <string name="reader_video_enter_fullscreen">Włącz tryb pełnoekranowy</string>
+    <string name="reader_video_exit_fullscreen">Wyjdź z trybu pełnoekranowego</string>
 </resources>
