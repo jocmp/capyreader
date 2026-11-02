@@ -351,7 +351,7 @@
     <string name="badge_style_hide">隱藏</string>
     <string name="badge_style_dot">點</string>
     <string name="badge_style_count">計數</string>
-    <string name="settings_section_storage">儲存</string>
+    <string name="settings_section_storage">儲存空間</string>
     <string name="article_list_sort_oldest">最舊</string>
     <string name="settings_section_layout">排版</string>
     <string name="settings_section_content">內容</string>
@@ -361,7 +361,7 @@
     <string name="settings_reduce_motion_title">減少動畫</string>
     <string name="settings_search_placeholder">搜尋設定</string>
     <string name="settings_search_no_results">無結果</string>
-    <string name="reader_play_video">播放視訊</string>
+    <string name="reader_play_video">播放影片</string>
     <string name="reader_play_audio">播放音訊</string>
     <string name="reader_video_enter_fullscreen">進入全螢幕</string>
     <string name="reader_open_in_browser">在瀏覽器中開啟</string>
