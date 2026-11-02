@@ -1,0 +1,10 @@
+Added
+
+• Swipe to share in the article list (thanks to a volunteer!)
+• Keep screen on setting for the reader
+
+Fixed
+
+• Miniflux no longer misses articles added during a sync
+• Fixed flicker on swipe-to-refresh on empty pages
+• Updated translations for Belarusian, Bulgarian, Chinese, Estonian, French, Galician, Italian, Latvian, Polish and Ukrainian thanks to volunteers!
