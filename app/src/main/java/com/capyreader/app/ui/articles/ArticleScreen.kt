@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -20,7 +19,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
@@ -58,6 +56,7 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalAppDrawer
+import com.capyreader.app.ui.rememberDetachedAppDrawer
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
@@ -67,7 +66,7 @@ import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
-import com.capyreader.app.ui.articles.feeds.ArticleNavigationRail
+import com.capyreader.app.ui.articles.feeds.ArticleNavigationRailItems
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -158,7 +157,7 @@ fun ArticleScreen(
     // panes; this entry only publishes its content and drives open/close. Fall back to a local
     // state when there's no host (previews).
     val appDrawer = LocalAppDrawer.current
-    val drawerState = appDrawer?.state ?: rememberDrawerState(DrawerValue.Closed)
+    val drawerState = appDrawer ?: rememberDetachedAppDrawer()
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
@@ -504,22 +503,18 @@ fun ArticleScreen(
         }
 
         val railContent: @Composable () -> Unit = remember(
-            readLaterFeed, filter, statusCount, todayCount, refreshAllState, badgeStyle,
+            readLaterFeed, filter, statusCount, todayCount, badgeStyle,
         ) {
             {
                 CompositionLocalProvider(LocalBadgeStyle provides badgeStyle) {
-                    ArticleNavigationRail(
+                    ArticleNavigationRailItems(
                         filter = filter,
                         statusCount = statusCount,
                         todayCount = todayCount,
                         readLaterFeed = readLaterFeed,
-                        refreshState = refreshAllState,
-                        onOpenDrawer = { openDrawer() },
                         onFilterSelect = selectFilter,
                         onSelectToday = { selectToday() },
                         onSelectFeed = selectFeed,
-                        onRefresh = { refreshAll() },
-                        onNavigateToSettings = onNavigateToSettings,
                     )
                 }
             }

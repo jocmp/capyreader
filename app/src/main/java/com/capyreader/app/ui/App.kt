@@ -12,14 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material3.DrawerValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.MenuOpen
+import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.ModalWideNavigationRail
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
-import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberWideNavigationRailState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
@@ -31,9 +34,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
@@ -42,6 +47,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.accounts.AddAccountScreen
 import com.capyreader.app.ui.accounts.LoginScreen
@@ -58,6 +64,7 @@ import com.capyreader.app.ui.shared.materialSharedAxisXOut
 import com.capyreader.app.ui.settings.SettingsScreen
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.unloadAccountModules
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -103,44 +110,60 @@ fun App(
         },
     )
 
-    // Window-level drawer: hosting it above NavDisplay lets its scrim cover both panes (the list
-    // entry publishes the content + drives open/close through LocalAppDrawer).
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    // Window-level rail: hosting it above NavDisplay lets its scrim cover both panes (the list
+    // entry publishes the content + drives expand/collapse through LocalAppDrawer).
+    val railState = rememberWideNavigationRailState()
     var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
     var railContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
     val isRailEnabled = isAtLeastMedium()
-    val drawerController = remember(drawerState, isRailEnabled) {
+    val drawerController = remember(railState, isRailEnabled) {
         AppDrawerController(
-            state = drawerState,
+            state = railState,
             isRailEnabled = isRailEnabled,
             setContent = { drawerContent = it },
             setRailContent = { railContent = it },
         )
     }
-    val rail = railContent.takeIf { isRailEnabled }
+    // Collapsed rail stays on screen on medium+ while the list entry is showing; otherwise it
+    // hides entirely until expanded (compact: from the top bar's menu button).
+    val isRailVisible = isRailEnabled && railContent != null
+    val railScope = rememberCoroutineScope()
 
     CapyTheme(appPreferences) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-          ModalNavigationDrawer(
-              drawerState = drawerState,
-              gesturesEnabled = drawerState.isOpen,
-              drawerContent = {
-                  ModalDrawerSheet { drawerContent?.invoke() }
+          Row(modifier = Modifier.fillMaxSize()) {
+          ModalWideNavigationRail(
+              state = railState,
+              hideOnCollapse = !isRailVisible,
+              windowInsets = WindowInsets.safeDrawing.only(
+                  WindowInsetsSides.Vertical + WindowInsetsSides.Start
+              ),
+              header = if (isRailVisible) {
+                  {
+                      RailMenuButton(
+                          expanded = drawerController.isOpen,
+                          onClick = { railScope.launch { railState.toggle() } },
+                      )
+                  }
+              } else {
+                  null
               },
           ) {
-          Row(modifier = Modifier.fillMaxSize()) {
-          // Medium and wider: a rail beside the panes for the top-level filters. It consumes the
-          // start inset so the list pane doesn't pad for it twice.
-          rail?.invoke()
+              if (drawerController.isOpen) {
+                  drawerContent?.invoke()
+              } else {
+                  railContent?.invoke()
+              }
+          }
           Box(
               modifier = Modifier
                   .weight(1f)
                   .fillMaxHeight()
                   .then(
-                      if (rail != null) {
+                      if (isRailVisible) {
                           Modifier.consumeWindowInsets(
                               WindowInsets.safeDrawing.only(WindowInsetsSides.Start)
                           )
@@ -257,10 +280,27 @@ fun App(
           }
           }
           }
-          }
         }
     }
 }
+
+@Composable
+private fun RailMenuButton(expanded: Boolean, onClick: () -> Unit) {
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier.padding(start = RailMenuButtonInset),
+    ) {
+        Icon(
+            imageVector = if (expanded) Icons.AutoMirrored.Rounded.MenuOpen else Icons.Rounded.Menu,
+            contentDescription = stringResource(
+                if (expanded) R.string.feed_nav_drawer_close else R.string.feed_nav_drawer_open
+            ),
+        )
+    }
+}
+
+/** Centers the 48dp menu button over the collapsed rail's 96dp items. */
+private val RailMenuButtonInset = 24.dp
 
 private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
 
