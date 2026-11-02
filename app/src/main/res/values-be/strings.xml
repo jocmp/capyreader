@@ -237,7 +237,7 @@
     <string name="settings_select_all">Выбраць усе</string>
     <string name="article_list_row_swipe_open_externally">Адкрыць у браўзеры</string>
     <string name="article_view_open_externally">Адкрыць у знешняй праграме</string>
-    <string name="settings_confirm_mark_all_read">Пацверджаць пазначэнне ўсіх як прачытаных</string>
+    <string name="settings_confirm_mark_all_read">Пацвярджаць пазначэнне ўсіх як прачытаных</string>
     <string name="widget_headlines_see_more_button">Больш артыкулаў</string>
     <string name="widget_receiver_spotlight_title">У цэнтры ўвагі</string>
     <string name="widget_spotlight_empty">Няма непрачытаных артыкулаў</string>
@@ -343,4 +343,17 @@
     <string name="filters_add_keyword">Дадаць ключавое слова</string>
     <string name="reader_video_enter_fullscreen">Уключыць поўнаэкранны рэжым</string>
     <string name="reader_video_exit_fullscreen">Выйсці з поўнаэкраннага рэжыму</string>
+    <string name="filter_read_later">Захавана на потым</string>
+    <string name="article_actions_save_for_later">Захаваць на потым</string>
+    <string name="saved_for_later_success">Захавана на потым</string>
+    <string name="nav_headline_saved_searches">Пошукі</string>
+    <string name="account_source_reader">Чытальнік</string>
+    <string name="settings_article_list_summary">Зводка</string>
+    <string name="article_byline">%1$s у %2$s — %3$s</string>
+    <string name="settings_reader_title">Чытальнік</string>
+    <string name="add_account_local_subtitle">На вашай прыладзе</string>
+    <string name="account_source_local">Лакальна</string>
+    <string name="settings_gestures_list_back_navigation_action">Дзеянне кнопкі «Назад»</string>
+    <string name="settings_gestures_list_back_navigation_open_drawer">Адкрыць панэль навігацыі</string>
+    <string name="settings_gestures_list_back_navigation_navigate_to_parent">Да бацькоўскага элемента</string>
 </resources>

@@ -378,4 +378,7 @@
     <string name="reader_open_in_browser">Ouvrir dans le navigateur</string>
     <string name="reader_video_enter_fullscreen">Passer en plein écran</string>
     <string name="reader_video_exit_fullscreen">Quitter le plein écran</string>
+    <string name="settings_e_ink_keep_screen_on_title">Garder l\'écran allumé</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Empêcher l\'écran de s\'éteindre lors de la lecture d\'un article</string>
+    <string name="article_list_row_swipe_share">Partager l\'article</string>
 </resources>
