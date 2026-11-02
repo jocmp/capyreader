@@ -3,8 +3,15 @@ package com.capyreader.app.ui
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
@@ -100,9 +107,17 @@ fun App(
     // entry publishes the content + drives open/close through LocalAppDrawer).
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
-    val drawerController = remember(drawerState) {
-        AppDrawerController(state = drawerState, setContent = { drawerContent = it })
+    var railContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    val isRailEnabled = isAtLeastMedium()
+    val drawerController = remember(drawerState, isRailEnabled) {
+        AppDrawerController(
+            state = drawerState,
+            isRailEnabled = isRailEnabled,
+            setContent = { drawerContent = it },
+            setRailContent = { railContent = it },
+        )
     }
+    val rail = railContent.takeIf { isRailEnabled }
 
     CapyTheme(appPreferences) {
         Surface(
@@ -115,6 +130,24 @@ fun App(
               drawerContent = {
                   ModalDrawerSheet { drawerContent?.invoke() }
               },
+          ) {
+          Row(modifier = Modifier.fillMaxSize()) {
+          // Medium and wider: a rail beside the panes for the top-level filters. It consumes the
+          // start inset so the list pane doesn't pad for it twice.
+          rail?.invoke()
+          Box(
+              modifier = Modifier
+                  .weight(1f)
+                  .fillMaxHeight()
+                  .then(
+                      if (rail != null) {
+                          Modifier.consumeWindowInsets(
+                              WindowInsets.safeDrawing.only(WindowInsetsSides.Start)
+                          )
+                      } else {
+                          Modifier
+                      }
+                  )
           ) {
           CompositionLocalProvider(
               LocalArticlePaneExpansion provides paneExpansion,
@@ -221,6 +254,8 @@ fun App(
                     }
                 }
             )
+          }
+          }
           }
           }
         }

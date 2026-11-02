@@ -67,6 +67,7 @@ import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
+import com.capyreader.app.ui.articles.feeds.ArticleNavigationRail
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
@@ -502,11 +503,39 @@ fun ArticleScreen(
             }
         }
 
+        val railContent: @Composable () -> Unit = remember(
+            readLaterFeed, filter, statusCount, todayCount, refreshAllState, badgeStyle,
+        ) {
+            {
+                CompositionLocalProvider(LocalBadgeStyle provides badgeStyle) {
+                    ArticleNavigationRail(
+                        filter = filter,
+                        statusCount = statusCount,
+                        todayCount = todayCount,
+                        readLaterFeed = readLaterFeed,
+                        refreshState = refreshAllState,
+                        onOpenDrawer = { openDrawer() },
+                        onFilterSelect = selectFilter,
+                        onSelectToday = { selectToday() },
+                        onSelectFeed = selectFeed,
+                        onRefresh = { refreshAll() },
+                        onNavigateToSettings = onNavigateToSettings,
+                    )
+                }
+            }
+        }
+
         LaunchedEffect(appDrawer, drawerContent) {
             appDrawer?.setContent(drawerContent)
         }
+        LaunchedEffect(appDrawer, railContent) {
+            appDrawer?.setRailContent(railContent)
+        }
         DisposableEffect(appDrawer) {
-            onDispose { appDrawer?.setContent(null) }
+            onDispose {
+                appDrawer?.setContent(null)
+                appDrawer?.setRailContent(null)
+            }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
@@ -536,6 +565,7 @@ fun ArticleScreen(
                             ArticleListTopBar(
                                 onRequestJumpToTop = { scrollToTop() },
                                 onNavigateToDrawer = { openDrawer() },
+                                showNavigationIcon = appDrawer?.isRailEnabled != true,
                                 onRemoveFolder = { folderTitle, completion ->
                                     viewModel.removeFolder(
                                         folderTitle,

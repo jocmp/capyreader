@@ -37,6 +37,7 @@ fun ArticleListTopBar(
     savedSearches: List<SavedSearch>,
     folders: List<Folder>,
     source: Source,
+    showNavigationIcon: Boolean = true,
 ) {
     // Search runs in its own full-surface overlay (see SearchView), so the list top bar only needs
     // to launch it; the active-search field/back-arrow used to live here.
@@ -53,13 +54,15 @@ fun ArticleListTopBar(
             )
         },
         navigationIcon = {
-            IconButton(
-                onClick = onNavigateToDrawer
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Menu,
-                    contentDescription = stringResource(R.string.feed_nav_drawer_open)
-                )
+            if (showNavigationIcon) {
+                IconButton(
+                    onClick = onNavigateToDrawer
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Menu,
+                        contentDescription = stringResource(R.string.feed_nav_drawer_open)
+                    )
+                }
             }
         },
         actions = {

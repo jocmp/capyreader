@@ -11,12 +11,16 @@ import androidx.compose.runtime.compositionLocalOf
  * the article list entry, which owns the drawer's content and the ViewModel that drives it.
  *
  * The list entry calls [setContent] to publish its drawer pane upward, and reads [state] to open
- * and close the drawer. Null when no host is present (e.g. previews).
+ * and close the drawer. On medium and wider windows ([isRailEnabled]), the host also shows a
+ * navigation rail beside the panes, published through [setRailContent]. Null when no host is
+ * present (e.g. previews).
  */
 @Stable
 class AppDrawerController(
     val state: DrawerState,
+    val isRailEnabled: Boolean,
     val setContent: (content: (@Composable () -> Unit)?) -> Unit,
+    val setRailContent: (content: (@Composable () -> Unit)?) -> Unit,
 )
 
 val LocalAppDrawer = compositionLocalOf<AppDrawerController?> { null }
