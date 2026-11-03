@@ -124,8 +124,8 @@ fun App(
             setRailContent = { railContent = it },
         )
     }
-    // Collapsed rail stays on screen on medium+ while the list entry is showing; otherwise it
-    // hides entirely until expanded (compact: from the top bar's menu button).
+    // The rail shows on medium+ while the list entry is showing. Compact windows have no rail: the
+    // list entry shows the feeds as a full page instead.
     val isRailVisible = isRailEnabled && railContent != null
     val railScope = rememberCoroutineScope()
 
@@ -135,27 +135,24 @@ fun App(
             color = MaterialTheme.colorScheme.background
         ) {
           Row(modifier = Modifier.fillMaxSize()) {
-          ModalWideNavigationRail(
-              state = railState,
-              hideOnCollapse = !isRailVisible,
-              windowInsets = WindowInsets.safeDrawing.only(
-                  WindowInsetsSides.Vertical + WindowInsetsSides.Start
-              ),
-              header = if (isRailVisible) {
-                  {
+          if (isRailVisible) {
+              ModalWideNavigationRail(
+                  state = railState,
+                  windowInsets = WindowInsets.safeDrawing.only(
+                      WindowInsetsSides.Vertical + WindowInsetsSides.Start
+                  ),
+                  header = {
                       RailMenuButton(
                           expanded = drawerController.isOpen,
                           onClick = { railScope.launch { railState.toggle() } },
                       )
+                  },
+              ) {
+                  if (drawerController.isOpen) {
+                      drawerContent?.invoke()
+                  } else {
+                      railContent?.invoke()
                   }
-              } else {
-                  null
-              },
-          ) {
-              if (drawerController.isOpen) {
-                  drawerContent?.invoke()
-              } else {
-                  railContent?.invoke()
               }
           }
           Box(

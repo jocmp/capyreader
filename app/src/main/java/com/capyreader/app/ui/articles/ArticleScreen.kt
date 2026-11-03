@@ -4,6 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,7 +58,8 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalAppDrawer
-import com.capyreader.app.ui.rememberDetachedAppDrawer
+import com.capyreader.app.ui.NavigationPanel
+import com.capyreader.app.ui.rememberFeedsPageState
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
@@ -69,6 +72,7 @@ import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.ArticleNavigationRailItems
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
+import com.capyreader.app.ui.articles.feeds.FeedsPage
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -157,7 +161,11 @@ fun ArticleScreen(
     // panes; this entry only publishes its content and drives open/close. Fall back to a local
     // state when there's no host (previews).
     val appDrawer = LocalAppDrawer.current
-    val drawerState = appDrawer ?: rememberDetachedAppDrawer()
+    // Medium+: the feed list lives in the window-level rail. Compact: it's a full page over the
+    // article list, and back from the list returns to it.
+    val isRailEnabled = appDrawer?.isRailEnabled == true
+    val feedsPage = rememberFeedsPageState()
+    val drawerState: NavigationPanel = appDrawer?.takeIf { isRailEnabled } ?: feedsPage
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
@@ -671,6 +679,16 @@ fun ArticleScreen(
                     onSelect = { article -> selectArticle(article) },
                 )
             }
+
+            if (!isRailEnabled) {
+                AnimatedVisibility(
+                    visible = feedsPage.isOpen,
+                    enter = slideInHorizontally { width -> -width },
+                    exit = slideOutHorizontally { width -> -width },
+                ) {
+                    FeedsPage(content = drawerContent)
+                }
+            }
         }
 
         if (isMarkAllReadDialogOpen) {
@@ -724,20 +742,27 @@ fun ArticleScreen(
             search.clear()
         }
 
-        // When a detail is open the list yields back to NavDisplay so it can pop the detail entry.
-        ArticleListBackHandler(
-            filter,
-            onRequestFilter = selectFilter,
-            onRequestFolder = selectFolder,
-            enabled = selectedArticleID == null && !search.isActive,
-            isDrawerOpen = drawerState.isOpen,
-            toggleDrawer = {
-                toggleDrawer()
-            },
-            closeDrawer = {
-                closeDrawer()
+        if (isRailEnabled) {
+            // When a detail is open the list yields back to NavDisplay so it can pop the detail entry.
+            ArticleListBackHandler(
+                filter,
+                onRequestFilter = selectFilter,
+                onRequestFolder = selectFolder,
+                enabled = selectedArticleID == null && !search.isActive,
+                isDrawerOpen = drawerState.isOpen,
+                toggleDrawer = {
+                    toggleDrawer()
+                },
+                closeDrawer = {
+                    closeDrawer()
+                }
+            )
+        } else {
+            // Compact: back from the list goes up to the feeds page; back from there exits.
+            BackHandler(selectedArticleID == null && !search.isActive && !feedsPage.isOpen) {
+                openDrawer()
             }
-        )
+        }
     }
 }
 

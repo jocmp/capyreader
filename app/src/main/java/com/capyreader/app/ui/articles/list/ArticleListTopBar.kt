@@ -1,7 +1,7 @@
 package com.capyreader.app.ui.articles.list
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -59,8 +59,8 @@ fun ArticleListTopBar(
                     onClick = onNavigateToDrawer
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.Menu,
-                        contentDescription = stringResource(R.string.feed_nav_drawer_open)
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = stringResource(R.string.show_feeds)
                     )
                 }
             }
