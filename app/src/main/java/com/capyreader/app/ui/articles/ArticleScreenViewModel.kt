@@ -17,7 +17,6 @@ import com.capyreader.app.common.toast
 import com.capyreader.app.notifications.NotificationHelper
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
-import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.widget.WidgetUpdater
@@ -29,17 +28,13 @@ import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
-import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.SavedSearch
 import com.jocmp.capy.articles.ArticleContent
-import com.jocmp.capy.articles.SidebarItem
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.launchUI
 import com.jocmp.capy.common.withIOContext
 import com.jocmp.capy.common.withUIContext
-import com.jocmp.capy.countToday
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -54,7 +49,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.job
@@ -124,14 +118,6 @@ class ArticleScreenViewModel(
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
-    private val _counts = filter.flatMapLatest { latestFilter ->
-        account.countAll(latestFilter.status)
-    }
-
-    private val _savedSearchCounts = filter.flatMapLatest { latestFilter ->
-        account.countAllBySavedSearch(latestFilter.status)
-    }
-
     // The list pager is filter-only: it must stay in lockstep with the reader's neighbor query
     // (which keys off the persisted filter), so search no longer participates here.
     private var articleListScope: CoroutineScope? = null
@@ -184,24 +170,6 @@ class ArticleScreenViewModel(
             since = key.since,
         ).flow
 
-    val folders: Flow<List<Folder>> = combine(
-        account.folders,
-        _counts,
-        filter,
-    ) { folders, latestCounts, filter ->
-        folders.map { copyFolderCounts(it, latestCounts, filter) }
-            .withPositiveCount(filter.status)
-    }
-
-    val savedSearches: Flow<List<SavedSearch>> = combine(
-        account.savedSearches,
-        _savedSearchCounts,
-        filter,
-    ) { searches, latestCounts, filter ->
-        searches.map { copySavedSearchCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
-    }
-
     val allFeeds = account.taggedFeeds
 
     val showOnboarding = allFeeds.map { it.isEmpty() && account.source == Source.LOCAL }
@@ -210,98 +178,12 @@ class ArticleScreenViewModel(
 
     val allFolders = account.folders
 
-    val topLevelFeeds = combine(
-        account.feeds,
-        _counts,
-        filter,
-    ) { feeds, latestCounts, filter ->
-        feeds.filter { !it.isReadLater }
-            .map { copyFeedCounts(it, latestCounts) }
-            .withPositiveCount(filter.status)
-    }
-
-    val readLaterFeed: Flow<Feed?> = combine(
-        account.feeds,
-        _counts,
-    ) { feeds, latestCounts ->
-        feeds.find { it.isReadLater }
-            ?.let { copyFeedCounts(it, latestCounts) }
-    }
-
     val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
         if (filter is ArticleFilter.Feeds) {
             feeds.find { it.id == filter.feedID }
         } else {
             null
         }
-    }
-
-    private val sidebar: Flow<List<SidebarItem>> = combine(
-        readLaterFeed,
-        savedSearches,
-        folders,
-        topLevelFeeds,
-        filter,
-    ) { readLater, searches, folders, feeds, filter ->
-        SidebarItem.buildList(
-            status = filter.status,
-            readLaterFeed = readLater,
-            savedSearches = searches,
-            folders = folders,
-            feeds = feeds,
-        )
-    }
-
-    private val _sidebarItem = MutableStateFlow<SidebarItem?>(null)
-
-    private val sidebarListener: Flow<SidebarItem?> =
-        combine(
-            listSwipeBottom,
-            sidebar,
-            filter,
-        ) { swipeBottom, sidebar, filter ->
-            if (swipeBottom == ArticleListVerticalSwipe.DISABLED) {
-                return@combine null
-            }
-
-            val found = sidebar.find { it.isSelected(filter) }
-            if (found != null) return@combine found
-
-            val stale = _sidebarItem.value?.takeIf { it.isSelected(filter) }
-                ?: return@combine null
-
-            SidebarItem(
-                toFilter = stale.toFilter,
-                isSelected = stale.isSelected,
-                next = findFreshItem(stale, sidebar, filter.status),
-            )
-        }
-
-    private fun findFreshItem(
-        stale: SidebarItem,
-        sidebar: List<SidebarItem>,
-        status: ArticleStatus,
-    ): SidebarItem? {
-        var search: SidebarItem? = stale.next
-
-        while (search != null) {
-            val searchFilter = search.toFilter(status)
-            val match = sidebar.find { it.isSelected(searchFilter) }
-            if (match != null) {
-                return match
-            }
-            search = search.next
-        }
-
-        return null
-    }
-
-    val statusCount: Flow<Long> = filter.flatMapLatest { latestFilter ->
-        account.countAllByStatus(countableStatus(latestFilter))
-    }
-
-    val todayCount: Flow<Long> = _counts.combine(filter) { _, filter ->
-        account.countToday(countableStatus(filter))
     }
 
     val unreadCount: Flow<Long> = combine(
@@ -323,8 +205,6 @@ class ArticleScreenViewModel(
     val searchState: Flow<SearchState>
         get() = _searchState
 
-    val nextFilter: Flow<SidebarItem?> = _sidebarItem.map { it?.next }
-
     init {
         viewModelScope.launch {
             listSession.flatMapLatest(::listPagerKeys).collect { key ->
@@ -339,12 +219,6 @@ class ArticleScreenViewModel(
                 if (persisted != latestFilter) {
                     applyFilter(persisted)
                 }
-            }
-        }
-
-        viewModelScope.launch {
-            sidebarListener.collect {
-                _sidebarItem.value = it
             }
         }
 
@@ -366,51 +240,13 @@ class ArticleScreenViewModel(
         }
     }
 
-    fun selectArticleFilter() {
-        updateFilter(ArticleFilter.Articles(articleStatus = currentStatus))
-    }
-
-    fun selectToday() {
-        updateFilter(ArticleFilter.Today(todayStatus = currentStatus))
-    }
-
     fun selectStatus(status: ArticleStatus) {
         updateFilter(latestFilter.withStatus(status))
     }
 
-    fun selectFeed(feedID: String, folderTitle: String? = null) {
-        viewModelScope.launchIO {
-            val feed = account.findFeed(feedID) ?: return@launchIO
-            updateFilter(
-                ArticleFilter.Feeds(
-                    feedID = feed.id,
-                    folderTitle = folderTitle,
-                    feedStatus = currentStatus
-                )
-            )
-        }
-    }
-
-    fun selectSavedSearch(savedSearchID: String) {
-        viewModelScope.launchIO {
-            val savedSearch = account.findSavedSearch(savedSearchID) ?: return@launchIO
-            updateFilter(
-                ArticleFilter.SavedSearches(savedSearch.id, savedSearchStatus = currentStatus)
-            )
-        }
-    }
-
-    fun selectFolder(title: String) {
-        viewModelScope.launchIO {
-            val folder = account.findFolder(title) ?: return@launchIO
-            updateFilter(
-                ArticleFilter.Folders(folderTitle = folder.title, folderStatus = currentStatus)
-            )
-        }
-    }
-
     fun markAllRead(
         onArticlesCleared: () -> Unit = {},
+        onOpenNextFeed: () -> Unit = {},
         range: MarkRead = MarkRead.All,
         filter: ArticleFilter = latestFilter,
         query: String? = _searchQuery.value,
@@ -437,7 +273,7 @@ class ArticleScreenViewModel(
             if (afterReadAll.value == AfterReadAllBehavior.OPEN_DRAWER) {
                 onArticlesCleared()
             } else if (afterReadAll.value == AfterReadAllBehavior.OPEN_NEXT_FEED) {
-                openNextFeedOnAllRead(onArticlesCleared)
+                onOpenNextFeed()
             }
         }
     }
@@ -461,40 +297,6 @@ class ArticleScreenViewModel(
         viewModelScope.launchIO {
             val result = account.createPage(url)
             withUIContext { onComplete(result) }
-        }
-    }
-
-    fun removeFeed(
-        feedID: String,
-        completion: (result: Result<Unit>) -> Unit,
-    ) {
-        viewModelScope.launchIO {
-            account.removeFeed(feedID = feedID).fold(
-                onSuccess = {
-                    resetToDefaultFilter()
-                    completion(Result.success(Unit))
-                },
-                onFailure = {
-                    completion(Result.failure(it))
-                }
-            )
-        }
-    }
-
-    fun removeFolder(
-        folderTitle: String,
-        completion: (result: Result<Unit>) -> Unit
-    ) {
-        viewModelScope.launchIO {
-            account.removeFolder(folderTitle).fold(
-                onSuccess = {
-                    resetToDefaultFilter()
-                    completion(Result.success(Unit))
-                },
-                onFailure = {
-                    completion(Result.failure(it))
-                }
-            )
         }
     }
 
@@ -671,15 +473,6 @@ class ArticleScreenViewModel(
         markUnread(articleID)
     }
 
-    fun requestNextFeed() {
-        _sidebarItem.value?.next?.let(::selectSidebarItem)
-    }
-
-    private fun selectSidebarItem(item: SidebarItem) {
-        val filter = item.toFilter(currentStatus)
-        updateFilter(filter)
-    }
-
     private fun addStar(articleID: String) {
         viewModelScope.launchIO {
             account.addStar(articleID)
@@ -697,10 +490,6 @@ class ArticleScreenViewModel(
 
     private suspend fun markUnread(articleID: String) {
         account.markUnread(articleID)
-    }
-
-    private fun resetToDefaultFilter() {
-        updateFilter(ArticleFilter.default())
     }
 
     private fun updateFilter(filter: ArticleFilter) {
@@ -728,85 +517,7 @@ class ArticleScreenViewModel(
         articleCutoff.set(session.since)
     }
 
-    private fun copyFolderCounts(
-        folder: Folder,
-        counts: Map<String, Long>,
-        filter: ArticleFilter
-    ): Folder {
-        val folderFeeds = folder.feeds.map { copyFeedCounts(it, counts) }
-
-        return folder.copy(
-            feeds = folderFeeds.withPositiveCount(filter.status).toMutableList(),
-            count = folderFeeds.sumOf { it.count }
-        )
-    }
-
-    private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
-        return feed.copy(count = counts.getOrDefault(feed.id, 0))
-    }
-
-    private fun copySavedSearchCounts(
-        savedSearch: SavedSearch,
-        counts: Map<String, Long>
-    ): SavedSearch {
-        return savedSearch.copy(count = counts.getOrDefault(savedSearch.id, 0))
-    }
-
-    private suspend fun openNextFeedOnAllRead(
-        onArticlesCleared: () -> Unit,
-    ) {
-        val current = _sidebarItem.value
-        val next = sidebar.first()
-
-        val nextItem = current?.let { stale ->
-            val matched = next.find { it.isSelected(stale.toFilter(latestFilter.status)) }
-            matched?.next ?: findFreshItem(stale, next, latestFilter.status)
-        }
-
-        if (nextItem != null) {
-            selectSidebarItem(nextItem)
-        } else {
-            if (latestFilter.status == UNREAD) {
-                selectArticleFilter()
-            }
-            onArticlesCleared()
-        }
-    }
-
-    fun expandFolder(folderName: String, expanded: Boolean) {
-        viewModelScope.launchIO {
-            account.expandFolder(folderName, expanded = expanded)
-        }
-    }
-
-    fun updateOpenInBrowser(feedID: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.updateOpenInBrowser(feedID, enabled = enabled)
-            WidgetUpdater.update(context = application.applicationContext)
-        }
-    }
-
-    fun toggleFeedUnreadBadge(feedID: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.toggleFeedUnreadBadge(feedID, enabled)
-        }
-    }
-
-    fun toggleSavedSearchUnreadBadge(id: String, enabled: Boolean) {
-        viewModelScope.launchIO {
-            account.toggleSavedSearchUnreadBadge(id, enabled)
-        }
-    }
-
-    fun reloadFavicon(feedID: String) {
-        viewModelScope.launchIO {
-            account.reloadFavicon(feedID)
-        }
-    }
-
     private val latestFilter: ArticleFilter get() = filter.value
-    private val currentStatus: ArticleStatus
-        get() = latestFilter.status
 
     private val context: Context
         get() = application.applicationContext

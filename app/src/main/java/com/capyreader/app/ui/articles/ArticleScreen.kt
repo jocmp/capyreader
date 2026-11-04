@@ -73,6 +73,7 @@ import com.capyreader.app.ui.articles.feeds.ArticleNavigationRailItems
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FeedsPage
+import com.capyreader.app.ui.articles.feeds.FeedsViewModel
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -122,24 +123,25 @@ fun ArticleScreen(
     onNavigateToSettings: () -> Unit,
     onCloseArticle: () -> Unit = {},
     viewModel: ArticleScreenViewModel = koinViewModel(),
+    feedsViewModel: FeedsViewModel = koinViewModel(),
     appPreferences: AppPreferences = koinInject(),
     selectedArticleID: String? = null,
 ) {
     val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
-    val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
-    val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
+    val feeds by feedsViewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
+    val readLaterFeed by feedsViewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
-    val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
-    val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
+    val folders by feedsViewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
+    val savedSearches by feedsViewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
-    val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
-    val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
+    val statusCount by feedsViewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
+    val todayCount by feedsViewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
     val searchState by viewModel.searchState.collectAsStateWithLifecycle(SearchState.INACTIVE)
-    val nextFilter by viewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
+    val nextFilter by feedsViewModel.nextFilter.collectAsStateWithLifecycle(initialValue = null)
     val swipeBottom by viewModel.listSwipeBottom.collectAsStateWithLifecycle()
     val afterReadAll by viewModel.afterReadAll.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
@@ -152,9 +154,9 @@ fun ArticleScreen(
     val context = LocalContext.current
 
     val articleActions = rememberArticleActions(viewModel)
-    val folderActions = rememberFolderActions(viewModel)
-    val feedActions = rememberFeedActions(viewModel)
-    val savedSearchActions = rememberSavedSearchActions(viewModel)
+    val folderActions = rememberFolderActions(feedsViewModel)
+    val feedActions = rememberFeedActions(feedsViewModel)
+    val savedSearchActions = rememberSavedSearchActions(feedsViewModel)
     val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
     // The drawer is hosted at the window level (see App / LocalAppDrawer) so its scrim covers both
@@ -175,11 +177,17 @@ fun ArticleScreen(
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
     val onMarkAllRead = { range: MarkRead ->
+        val openFeeds = {
+            scope.launchUI {
+                drawerState.open()
+            }
+            Unit
+        }
+
         viewModel.markAllRead(
-            onArticlesCleared = {
-                scope.launchUI {
-                    drawerState.open()
-                }
+            onArticlesCleared = openFeeds,
+            onOpenNextFeed = {
+                feedsViewModel.openNextFeedOnAllRead(onArticlesCleared = openFeeds)
             },
             range = range,
         )
@@ -325,7 +333,7 @@ fun ArticleScreen(
                 ArticleListVerticalSwipe.NEXT_FEED -> {
                     coroutineScope.launchUI {
                         openNextStatus {
-                            viewModel.requestNextFeed()
+                            feedsViewModel.requestNextFeed()
                         }
                     }
                 }
@@ -387,7 +395,7 @@ fun ArticleScreen(
 
         val onFeedAdded = { feedID: String ->
             coroutineScope.launch {
-                openNextList { viewModel.selectFeed(feedID) }
+                openNextList { feedsViewModel.selectFeed(feedID) }
 
                 showSnackbar(addFeedSuccessMessage)
             }
@@ -418,7 +426,7 @@ fun ArticleScreen(
 
         val selectFilter = {
             if (!filter.hasArticlesSelected()) {
-                openDrawerSelection { viewModel.selectArticleFilter() }
+                openDrawerSelection { feedsViewModel.selectArticleFilter() }
             } else {
                 closeDrawer()
             }
@@ -434,7 +442,7 @@ fun ArticleScreen(
 
         val selectFeed = { feed: Feed, folderTitle: String? ->
             if (!filter.isFeedSelected(feed)) {
-                openDrawerSelection { viewModel.selectFeed(feed.id, folderTitle) }
+                openDrawerSelection { feedsViewModel.selectFeed(feed.id, folderTitle) }
             } else {
                 closeDrawer()
             }
@@ -442,7 +450,7 @@ fun ArticleScreen(
 
         val selectFolder = { folder: Folder ->
             if (!filter.isFolderSelected(folder)) {
-                openDrawerSelection { viewModel.selectFolder(folder.title) }
+                openDrawerSelection { feedsViewModel.selectFolder(folder.title) }
             } else {
                 closeDrawer()
             }
@@ -450,7 +458,7 @@ fun ArticleScreen(
 
         val selectSavedSearch = { savedSearch: SavedSearch ->
             if (!filter.isSavedSearchSelected(savedSearch)) {
-                openDrawerSelection { viewModel.selectSavedSearch(savedSearch.id) }
+                openDrawerSelection { feedsViewModel.selectSavedSearch(savedSearch.id) }
             } else {
                 closeDrawer()
             }
@@ -458,7 +466,7 @@ fun ArticleScreen(
 
         val selectToday = {
             if (!filter.hasTodaySelected()) {
-                openDrawerSelection { viewModel.selectToday() }
+                openDrawerSelection { feedsViewModel.selectToday() }
             } else {
                 closeDrawer()
             }
@@ -486,7 +494,7 @@ fun ArticleScreen(
                         readLaterFeed = readLaterFeed,
                         onSelectFolder = selectFolder,
                         onSelectFeed = selectFeed,
-                        onMarkAllRead = { viewModel.markAllRead(filter = it) },
+                        onMarkAllRead = { feedsViewModel.markAllRead(filter = it) },
                         onFeedAdded = { onFeedAdded(it) },
                         savedSearches = savedSearches,
                         onSelectSavedSearch = selectSavedSearch,
@@ -570,7 +578,7 @@ fun ArticleScreen(
                                 onNavigateToDrawer = { openDrawer() },
                                 showNavigationIcon = appDrawer?.isRailEnabled != true,
                                 onRemoveFolder = { folderTitle, completion ->
-                                    viewModel.removeFolder(
+                                    feedsViewModel.removeFolder(
                                         folderTitle,
                                         completion
                                     )
@@ -783,7 +791,7 @@ fun rememberArticleActions(viewModel: ArticleScreenViewModel): ArticleActions {
 }
 
 @Composable
-fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
+fun rememberFolderActions(viewModel: FeedsViewModel): FolderActions {
     return remember {
         FolderActions(
             updateExpanded = viewModel::expandFolder,
@@ -795,7 +803,7 @@ fun rememberFolderActions(viewModel: ArticleScreenViewModel): FolderActions {
 }
 
 @Composable
-fun rememberFeedActions(viewModel: ArticleScreenViewModel): FeedActions {
+fun rememberFeedActions(viewModel: FeedsViewModel): FeedActions {
     return remember {
         FeedActions(
             updateOpenInBrowser = { feedID, openInBrowser ->
@@ -841,7 +849,7 @@ fun rememberLabelsActions(
 }
 
 @Composable
-fun rememberSavedSearchActions(viewModel: ArticleScreenViewModel): SavedSearchActions {
+fun rememberSavedSearchActions(viewModel: FeedsViewModel): SavedSearchActions {
     return remember {
         SavedSearchActions(
             toggleUnreadBadge = { id, show ->

@@ -3,6 +3,7 @@ package com.capyreader.app.ui.articles
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.addintent.AddLinkViewModel
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
+import com.capyreader.app.ui.articles.feeds.FeedsViewModel
 import com.capyreader.app.ui.articles.feeds.edit.EditFeedViewModel
 import com.capyreader.app.ui.articles.reader.VideoAspectRatios
 import com.capyreader.app.ui.articles.reader.VideoPlayerViewModel
@@ -39,6 +40,15 @@ internal val articlesModule = module {
             appPreferences = appPreferences,
             notificationHelper = get(),
             application = get(),
+            articleCutoff = get(),
+        )
+    }
+    viewModel {
+        FeedsViewModel(
+            account = get(),
+            appPreferences = get(),
+            application = get(),
+            notificationHelper = get(),
             articleCutoff = get(),
         )
     }
