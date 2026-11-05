@@ -20,6 +20,7 @@ fun ArticleListBackHandler(
     toggleDrawer: () -> Unit,
     enabled: Boolean,
     isDrawerOpen: Boolean,
+    hasDrawer: Boolean = true,
 ) {
     val backAction by appPreferences.articleListOptions.backAction.asState()
 
@@ -27,7 +28,8 @@ fun ArticleListBackHandler(
         return
     }
 
-    BackHandler(backAction == BackAction.OPEN_DRAWER) {
+    // A permanent drawer can't open or close, so don't let it swallow back.
+    BackHandler(backAction == BackAction.OPEN_DRAWER && hasDrawer) {
         toggleDrawer()
     }
 

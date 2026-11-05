@@ -12,34 +12,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.MenuOpen
-import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
-import androidx.compose.material3.WideNavigationRail
-import androidx.compose.material3.WideNavigationRailValue
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
-import androidx.compose.material3.rememberWideNavigationRailState
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
@@ -48,7 +43,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.capyreader.app.R
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.accounts.AddAccountScreen
 import com.capyreader.app.ui.accounts.LoginScreen
@@ -65,7 +59,6 @@ import com.capyreader.app.ui.shared.materialSharedAxisXOut
 import com.capyreader.app.ui.settings.SettingsScreen
 import com.capyreader.app.ui.theme.CapyTheme
 import com.capyreader.app.unloadAccountModules
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -111,22 +104,24 @@ fun App(
         },
     )
 
-    // Window-level Material rail beside both panes; the list entry publishes its items and drives
-    // expand/collapse through LocalAppDrawer.
-    val railState = rememberWideNavigationRailState()
-    var railContent by remember { mutableStateOf<(@Composable (Boolean) -> Unit)?>(null) }
-    val isRailEnabled = isAtLeastMedium()
-    val drawerController = remember(railState, isRailEnabled) {
+    // Window-level drawer: hosting it above NavDisplay lets it span both panes (the list entry
+    // publishes the content + drives open/close through LocalAppDrawer).
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    val drawerMode = when {
+        isExpanded() -> DrawerMode.PERMANENT
+        isAtLeastMedium() -> DrawerMode.MODAL
+        else -> DrawerMode.PAGE
+    }
+    val drawerController = remember(drawerState, drawerMode) {
         AppDrawerController(
-            state = railState,
-            isRailEnabled = isRailEnabled,
-            setRailContent = { railContent = it },
+            state = drawerState,
+            mode = drawerMode,
+            setContent = { drawerContent = it },
         )
     }
-    // The rail shows on medium+ while the list entry is showing. Compact windows have no rail: the
-    // list entry shows the feeds as a full page instead.
-    val isRailVisible = isRailEnabled && railContent != null
-    val railScope = rememberCoroutineScope()
+    // Only while the list entry is showing: Settings and account screens get the full window.
+    val permanentContent = drawerContent.takeIf { drawerMode == DrawerMode.PERMANENT }
 
     CapyTheme(appPreferences) {
         Surface(
@@ -134,31 +129,15 @@ fun App(
             color = MaterialTheme.colorScheme.background
         ) {
           Row(modifier = Modifier.fillMaxSize()) {
-          if (isRailVisible) {
-              val railExpanded = railState.targetValue == WideNavigationRailValue.Expanded
-
-              WideNavigationRail(
-                  state = railState,
-                  header = {
-                      RailMenuButton(
-                          railExpanded = railExpanded,
-                          onClick = {
-                              railScope.launch {
-                                  if (railExpanded) railState.collapse() else railState.expand()
-                              }
-                          },
-                      )
-                  },
-              ) {
-                  railContent?.invoke(railExpanded)
-              }
+          if (permanentContent != null) {
+              PermanentDrawerSheet { permanentContent() }
           }
           Box(
               modifier = Modifier
                   .weight(1f)
                   .fillMaxHeight()
                   .then(
-                      if (isRailVisible) {
+                      if (permanentContent != null) {
                           Modifier.consumeWindowInsets(
                               WindowInsets.safeDrawing.only(WindowInsetsSides.Start)
                           )
@@ -166,6 +145,17 @@ fun App(
                           Modifier
                       }
                   )
+          ) {
+          // Always present so NavDisplay keeps its place in the tree across modes; it only opens
+          // in MODAL mode.
+          ModalNavigationDrawer(
+              drawerState = drawerState,
+              gesturesEnabled = drawerMode == DrawerMode.MODAL && drawerState.isOpen,
+              drawerContent = {
+                  if (drawerMode == DrawerMode.MODAL) {
+                      ModalDrawerSheet { drawerContent?.invoke() }
+                  }
+              },
           ) {
           CompositionLocalProvider(
               LocalArticlePaneExpansion provides paneExpansion,
@@ -275,23 +265,8 @@ fun App(
           }
           }
           }
+          }
         }
-    }
-}
-
-/** The rail's expand/collapse toggle, as in Material's WideNavigationRail samples. */
-@Composable
-private fun RailMenuButton(railExpanded: Boolean, onClick: () -> Unit) {
-    IconButton(
-        onClick = onClick,
-        modifier = Modifier.padding(start = 24.dp),
-    ) {
-        Icon(
-            imageVector = if (railExpanded) Icons.AutoMirrored.Rounded.MenuOpen else Icons.Rounded.Menu,
-            contentDescription = stringResource(
-                if (railExpanded) R.string.feed_nav_drawer_close else R.string.feed_nav_drawer_open
-            ),
-        )
     }
 }
 

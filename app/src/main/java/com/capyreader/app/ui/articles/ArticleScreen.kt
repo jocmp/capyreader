@@ -59,6 +59,7 @@ import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalAppDrawer
+import com.capyreader.app.ui.DrawerMode
 import com.capyreader.app.ui.NavigationPanel
 import com.capyreader.app.ui.rememberNavigationPanelState
 import com.capyreader.app.ui.LocalBadgeStyle
@@ -70,7 +71,6 @@ import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
 import com.capyreader.app.ui.articles.feeds.AngleRefreshState
-import com.capyreader.app.ui.articles.feeds.ArticleNavigationRailItems
 import com.capyreader.app.ui.articles.feeds.FeedActions
 import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FeedsPage
@@ -166,9 +166,10 @@ fun ArticleScreen(
     val appDrawer = LocalAppDrawer.current
     // Medium+: the feed list lives in the window-level rail. Compact: it's a full page over the
     // article list, and back from the list returns to it.
-    val isRailEnabled = appDrawer?.isRailEnabled == true
+    val drawerMode = appDrawer?.mode ?: DrawerMode.PAGE
+    val usesFeedsPage = drawerMode == DrawerMode.PAGE
     val feedsPage = rememberNavigationPanelState()
-    val drawerState: NavigationPanel = appDrawer?.takeIf { isRailEnabled } ?: feedsPage
+    val drawerState: NavigationPanel = appDrawer?.takeIf { !usesFeedsPage } ?: feedsPage
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
@@ -355,13 +356,11 @@ fun ArticleScreen(
             viewModel.refresh(filter)
         }
 
-        // Compact: picking from the feeds page returns to the list. Medium+: the Material rail is
-        // non-modal, so it stays as the user left it.
+        // Picking a feed returns to the list: closes the feeds page or modal drawer. A permanent
+        // drawer stays put.
         fun dismissAfterSelection() {
-            if (!isRailEnabled) {
-                coroutineScope.launchUI {
-                    drawerState.close()
-                }
+            coroutineScope.launchUI {
+                drawerState.close()
             }
         }
 
@@ -529,28 +528,11 @@ fun ArticleScreen(
             }
         }
 
-        // Publish the rail's items up to the window-level Material rail (medium+).
-        val railContent: @Composable (Boolean) -> Unit = remember(readLaterFeed, filter) {
-            { railExpanded ->
-                ArticleNavigationRailItems(
-                    railExpanded = railExpanded,
-                    filter = filter,
-                    readLaterFeed = readLaterFeed,
-                    onFilterSelect = selectFilter,
-                    onSelectToday = { selectToday() },
-                    onSelectFeed = selectFeed,
-                    onNavigateToSettings = onNavigateToSettings,
-                )
-            }
-        }
-
-        LaunchedEffect(appDrawer, railContent) {
-            appDrawer?.setRailContent(railContent)
+        LaunchedEffect(appDrawer, drawerContent) {
+            appDrawer?.setContent(drawerContent)
         }
         DisposableEffect(appDrawer) {
-            onDispose {
-                appDrawer?.setRailContent(null)
-            }
+            onDispose { appDrawer?.setContent(null) }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
@@ -580,7 +562,7 @@ fun ArticleScreen(
                             ArticleListTopBar(
                                 onRequestJumpToTop = { scrollToTop() },
                                 onNavigateToDrawer = { openDrawer() },
-                                showNavigationIcon = appDrawer?.isRailEnabled != true,
+                                showNavigationIcon = drawerMode != DrawerMode.PERMANENT,
                                 onRemoveFolder = { folderTitle, completion ->
                                     feedsViewModel.removeFolder(
                                         folderTitle,
@@ -689,7 +671,7 @@ fun ArticleScreen(
                 )
             }
 
-            if (!isRailEnabled) {
+            if (usesFeedsPage) {
                 AnimatedVisibility(
                     visible = feedsPage.isOpen,
                     enter = slideInHorizontally { width -> -width },
@@ -764,7 +746,7 @@ fun ArticleScreen(
             search.clear()
         }
 
-        if (isRailEnabled) {
+        if (!usesFeedsPage) {
             // When a detail is open the list yields back to NavDisplay so it can pop the detail entry.
             ArticleListBackHandler(
                 filter,
@@ -772,6 +754,7 @@ fun ArticleScreen(
                 onRequestFolder = selectFolder,
                 enabled = selectedArticleID == null && !search.isActive,
                 isDrawerOpen = drawerState.isOpen,
+                hasDrawer = drawerMode == DrawerMode.MODAL,
                 toggleDrawer = {
                     toggleDrawer()
                 },
