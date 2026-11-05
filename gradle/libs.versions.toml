@@ -63,7 +63,7 @@ coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version = "20.1.1" }
-jsoup = { module = "org.jsoup:jsoup", version = "1.23.2" }
+jsoup = { module = "org.jsoup:jsoup", version = "1.24.1" }
 jspecify = { module = "org.jspecify:jspecify", version = "1.0.1" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
