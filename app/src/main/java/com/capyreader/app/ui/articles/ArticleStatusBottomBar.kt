@@ -108,6 +108,21 @@ fun ArticleStatusBottomBar(
     }
 }
 
+/**
+ * Reserves the bar's space in a scaffold's bottom slot while the bar itself is drawn above
+ * sibling views, so it stays put as they change beneath it.
+ */
+@Composable
+fun ArticleStatusBottomBarSpacer() {
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(bottom = ArticleBarDefaults.FloatingToolbarBottomGap)
+            .height(ArticleBarDefaults.FloatingToolbarHeight)
+    )
+}
+
 private const val FabHiddenScale = 0.2f
 
 private val ToolbarToFabGap = 8.dp

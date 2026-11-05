@@ -15,19 +15,20 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.MenuOpen
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalWideNavigationRail
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
-import androidx.compose.material3.rememberWideNavigationRailState
+import androidx.compose.material3.WideNavigationRail
+import androidx.compose.material3.WideNavigationRailValue
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
+import androidx.compose.material3.rememberWideNavigationRailState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -110,17 +111,15 @@ fun App(
         },
     )
 
-    // Window-level rail: hosting it above NavDisplay lets its scrim cover both panes (the list
-    // entry publishes the content + drives expand/collapse through LocalAppDrawer).
+    // Window-level Material rail beside both panes; the list entry publishes its items and drives
+    // expand/collapse through LocalAppDrawer.
     val railState = rememberWideNavigationRailState()
-    var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
-    var railContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    var railContent by remember { mutableStateOf<(@Composable (Boolean) -> Unit)?>(null) }
     val isRailEnabled = isAtLeastMedium()
     val drawerController = remember(railState, isRailEnabled) {
         AppDrawerController(
             state = railState,
             isRailEnabled = isRailEnabled,
-            setContent = { drawerContent = it },
             setRailContent = { railContent = it },
         )
     }
@@ -136,23 +135,22 @@ fun App(
         ) {
           Row(modifier = Modifier.fillMaxSize()) {
           if (isRailVisible) {
-              ModalWideNavigationRail(
+              val railExpanded = railState.targetValue == WideNavigationRailValue.Expanded
+
+              WideNavigationRail(
                   state = railState,
-                  windowInsets = WindowInsets.safeDrawing.only(
-                      WindowInsetsSides.Vertical + WindowInsetsSides.Start
-                  ),
                   header = {
                       RailMenuButton(
-                          expanded = drawerController.isOpen,
-                          onClick = { railScope.launch { railState.toggle() } },
+                          railExpanded = railExpanded,
+                          onClick = {
+                              railScope.launch {
+                                  if (railExpanded) railState.collapse() else railState.expand()
+                              }
+                          },
                       )
                   },
               ) {
-                  if (drawerController.isOpen) {
-                      drawerContent?.invoke()
-                  } else {
-                      railContent?.invoke()
-                  }
+                  railContent?.invoke(railExpanded)
               }
           }
           Box(
@@ -281,23 +279,21 @@ fun App(
     }
 }
 
+/** The rail's expand/collapse toggle, as in Material's WideNavigationRail samples. */
 @Composable
-private fun RailMenuButton(expanded: Boolean, onClick: () -> Unit) {
+private fun RailMenuButton(railExpanded: Boolean, onClick: () -> Unit) {
     IconButton(
         onClick = onClick,
-        modifier = Modifier.padding(start = RailMenuButtonInset),
+        modifier = Modifier.padding(start = 24.dp),
     ) {
         Icon(
-            imageVector = if (expanded) Icons.AutoMirrored.Rounded.MenuOpen else Icons.Rounded.Menu,
+            imageVector = if (railExpanded) Icons.AutoMirrored.Rounded.MenuOpen else Icons.Rounded.Menu,
             contentDescription = stringResource(
-                if (expanded) R.string.feed_nav_drawer_close else R.string.feed_nav_drawer_open
+                if (railExpanded) R.string.feed_nav_drawer_close else R.string.feed_nav_drawer_open
             ),
         )
     }
 }
-
-/** Centers the 48dp menu button over the collapsed rail's 96dp items. */
-private val RailMenuButtonInset = 24.dp
 
 private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
 

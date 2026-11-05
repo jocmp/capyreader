@@ -2,94 +2,61 @@ package com.capyreader.app.ui.articles.feeds
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Bookmark
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.WideNavigationRailItem
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.capyreader.app.R
-import com.capyreader.app.preferences.BadgeStyle
-import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.articles.icon
 import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 
 /**
- * Collapsed rail items for medium and wider windows: the fixed top-level filters. The full feed
- * and folder tree shows when the rail expands.
+ * The top-level destinations, as direct children of the Material
+ * [androidx.compose.material3.WideNavigationRail], following its samples.
  */
 @Composable
 fun ArticleNavigationRailItems(
+    railExpanded: Boolean,
     filter: ArticleFilter,
-    statusCount: Long,
-    todayCount: Long,
     readLaterFeed: Feed?,
     onFilterSelect: () -> Unit,
     onSelectToday: () -> Unit,
     onSelectFeed: (feed: Feed, folderTitle: String?) -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
-    RailItem(
-        icon = filter.status.icon,
-        label = stringResource(filter.status.navigationTitle),
-        count = statusCount,
+    WideNavigationRailItem(
+        railExpanded = railExpanded,
+        icon = { Icon(imageVector = filter.status.icon, contentDescription = null) },
+        label = { Text(stringResource(filter.status.navigationTitle)) },
         selected = filter.hasArticlesSelected(),
         onClick = onFilterSelect,
     )
-    RailItem(
-        icon = Icons.Rounded.Today,
-        label = stringResource(R.string.filter_today),
-        count = todayCount,
+    WideNavigationRailItem(
+        railExpanded = railExpanded,
+        icon = { Icon(imageVector = Icons.Rounded.Today, contentDescription = null) },
+        label = { Text(stringResource(R.string.filter_today)) },
         selected = filter.hasTodaySelected(),
         onClick = onSelectToday,
     )
     if (readLaterFeed != null) {
-        RailItem(
-            icon = Icons.Rounded.Bookmark,
-            label = stringResource(R.string.filter_read_later),
-            count = readLaterFeed.count,
+        WideNavigationRailItem(
+            railExpanded = railExpanded,
+            icon = { Icon(imageVector = Icons.Rounded.Bookmark, contentDescription = null) },
+            label = { Text(stringResource(R.string.filter_read_later)) },
             selected = filter.isFeedSelected(readLaterFeed),
             onClick = { onSelectFeed(readLaterFeed, null) },
         )
     }
-}
-
-@Composable
-private fun RailItem(
-    icon: ImageVector,
-    label: String,
-    count: Long,
-    selected: Boolean,
-    onClick: () -> Unit,
-) {
     WideNavigationRailItem(
-        selected = selected,
-        onClick = onClick,
-        railExpanded = false,
-        label = { Text(text = label, maxLines = 1) },
-        icon = {
-            BadgedBox(badge = { RailBadge(count = count) }) {
-                Icon(imageVector = icon, contentDescription = null)
-            }
-        },
+        railExpanded = railExpanded,
+        icon = { Icon(imageVector = Icons.Rounded.Settings, contentDescription = null) },
+        label = { Text(stringResource(R.string.settings_top_bar_title)) },
+        selected = false,
+        onClick = onNavigateToSettings,
     )
 }
-
-@Composable
-private fun RailBadge(count: Long) {
-    if (count < 1) {
-        return
-    }
-
-    when (LocalBadgeStyle.current) {
-        BadgeStyle.EXACT -> Badge { Text(if (count > MAX_BADGE_COUNT) "$MAX_BADGE_COUNT+" else count.toString()) }
-        BadgeStyle.SIMPLE -> Badge()
-        BadgeStyle.HIDDEN -> {}
-    }
-}
-
-private const val MAX_BADGE_COUNT = 999

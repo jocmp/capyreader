@@ -36,6 +36,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -59,7 +60,7 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
 import com.capyreader.app.ui.LocalAppDrawer
 import com.capyreader.app.ui.NavigationPanel
-import com.capyreader.app.ui.rememberFeedsPageState
+import com.capyreader.app.ui.rememberNavigationPanelState
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
 import com.capyreader.app.ui.LocalLinkOpener
@@ -166,7 +167,7 @@ fun ArticleScreen(
     // Medium+: the feed list lives in the window-level rail. Compact: it's a full page over the
     // article list, and back from the list returns to it.
     val isRailEnabled = appDrawer?.isRailEnabled == true
-    val feedsPage = rememberFeedsPageState()
+    val feedsPage = rememberNavigationPanelState()
     val drawerState: NavigationPanel = appDrawer?.takeIf { isRailEnabled } ?: feedsPage
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
@@ -354,9 +355,19 @@ fun ArticleScreen(
             viewModel.refresh(filter)
         }
 
+        // Compact: picking from the feeds page returns to the list. Medium+: the Material rail is
+        // non-modal, so it stays as the user left it.
+        fun dismissAfterSelection() {
+            if (!isRailEnabled) {
+                coroutineScope.launchUI {
+                    drawerState.close()
+                }
+            }
+        }
+
         fun openNextList(action: suspend () -> Unit) {
+            dismissAfterSelection()
             coroutineScope.launchUI {
-                drawerState.close()
                 openNextStatus(action)
             }
         }
@@ -428,7 +439,7 @@ fun ArticleScreen(
             if (!filter.hasArticlesSelected()) {
                 openDrawerSelection { feedsViewModel.selectArticleFilter() }
             } else {
-                closeDrawer()
+                dismissAfterSelection()
             }
         }
 
@@ -444,7 +455,7 @@ fun ArticleScreen(
             if (!filter.isFeedSelected(feed)) {
                 openDrawerSelection { feedsViewModel.selectFeed(feed.id, folderTitle) }
             } else {
-                closeDrawer()
+                dismissAfterSelection()
             }
         }
 
@@ -452,7 +463,7 @@ fun ArticleScreen(
             if (!filter.isFolderSelected(folder)) {
                 openDrawerSelection { feedsViewModel.selectFolder(folder.title) }
             } else {
-                closeDrawer()
+                dismissAfterSelection()
             }
         }
 
@@ -460,7 +471,7 @@ fun ArticleScreen(
             if (!filter.isSavedSearchSelected(savedSearch)) {
                 openDrawerSelection { feedsViewModel.selectSavedSearch(savedSearch.id) }
             } else {
-                closeDrawer()
+                dismissAfterSelection()
             }
         }
 
@@ -468,13 +479,13 @@ fun ArticleScreen(
             if (!filter.hasTodaySelected()) {
                 openDrawerSelection { feedsViewModel.selectToday() }
             } else {
-                closeDrawer()
+                dismissAfterSelection()
             }
         }
 
-        // Publish the drawer pane up to the window-level host. Keyed on the data so the lambda is
-        // recreated (and the drawer recomposes) only when its contents change; the callbacks it
-        // captures are behaviorally stable.
+        // The compact feeds page. Keyed on the data so the lambda is recreated (and the page
+        // recomposes) only when its contents change; the callbacks it captures are behaviorally
+        // stable.
         val drawerContent: @Composable () -> Unit = remember(
             folders, feeds, readLaterFeed, savedSearches, filter,
             statusCount, todayCount, refreshAllState,
@@ -518,33 +529,26 @@ fun ArticleScreen(
             }
         }
 
-        val railContent: @Composable () -> Unit = remember(
-            readLaterFeed, filter, statusCount, todayCount, badgeStyle,
-        ) {
-            {
-                CompositionLocalProvider(LocalBadgeStyle provides badgeStyle) {
-                    ArticleNavigationRailItems(
-                        filter = filter,
-                        statusCount = statusCount,
-                        todayCount = todayCount,
-                        readLaterFeed = readLaterFeed,
-                        onFilterSelect = selectFilter,
-                        onSelectToday = { selectToday() },
-                        onSelectFeed = selectFeed,
-                    )
-                }
+        // Publish the rail's items up to the window-level Material rail (medium+).
+        val railContent: @Composable (Boolean) -> Unit = remember(readLaterFeed, filter) {
+            { railExpanded ->
+                ArticleNavigationRailItems(
+                    railExpanded = railExpanded,
+                    filter = filter,
+                    readLaterFeed = readLaterFeed,
+                    onFilterSelect = selectFilter,
+                    onSelectToday = { selectToday() },
+                    onSelectFeed = selectFeed,
+                    onNavigateToSettings = onNavigateToSettings,
+                )
             }
         }
 
-        LaunchedEffect(appDrawer, drawerContent) {
-            appDrawer?.setContent(drawerContent)
-        }
         LaunchedEffect(appDrawer, railContent) {
             appDrawer?.setRailContent(railContent)
         }
         DisposableEffect(appDrawer) {
             onDispose {
-                appDrawer?.setContent(null)
                 appDrawer?.setRailContent(null)
             }
         }
@@ -613,10 +617,7 @@ fun ArticleScreen(
                             }
                         },
                         bottomBar = {
-                            ArticleStatusBottomBar(
-                                status = filter.status,
-                                onSelectStatus = { selectStatus(it) },
-                            )
+                            ArticleStatusBottomBarSpacer()
                         }
                     ) { innerPadding ->
                         ArticleListScaffold(
@@ -695,6 +696,19 @@ fun ArticleScreen(
                     exit = slideOutHorizontally { width -> -width },
                 ) {
                     FeedsPage(content = drawerContent)
+                }
+            }
+
+            // Drawn above the list and the compact feeds page so it stays put as they switch.
+            if (!search.isActive) {
+                CompositionLocalProvider(
+                    LocalMarkAllRead provides { markAllRead(MarkRead.All) },
+                ) {
+                    ArticleStatusBottomBar(
+                        status = filter.status,
+                        onSelectStatus = { selectStatus(it) },
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                    )
                 }
             }
         }
