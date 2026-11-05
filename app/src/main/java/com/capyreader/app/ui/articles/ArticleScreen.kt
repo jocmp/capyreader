@@ -397,6 +397,10 @@ fun ArticleScreen(
                 focusManager.clearFocus()
             }
 
+            // The scrim only intercepts taps once the drawer settles open, so a tap mid-animation
+            // reaches the list and must close the drawer itself.
+            closeDrawer()
+
             // Feeds flagged "open in browser" skip the in-app reader, matching the widget behavior.
             val url = article.url
             if (article.openInBrowser && url != null) {
@@ -563,6 +567,7 @@ fun ArticleScreen(
                                 AudioMiniPlayer(
                                     player = player,
                                     onClick = {
+                                        closeDrawer()
                                         onSelectArticle(audio.articleID, null)
                                     },
                                     onDismiss = {
