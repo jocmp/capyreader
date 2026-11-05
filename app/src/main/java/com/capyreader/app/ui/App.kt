@@ -103,6 +103,14 @@ fun App(
     val drawerController = remember(drawerState) {
         AppDrawerController(state = drawerState, setContent = { drawerContent = it })
     }
+    // Closes from this scope since a close launched by the list entry is cancelled when the
+    // entry leaves composition, which would strand an empty drawer open.
+    val hasDrawerContent = drawerContent != null
+    LaunchedEffect(hasDrawerContent) {
+        if (!hasDrawerContent && !drawerState.isClosed) {
+            drawerState.close()
+        }
+    }
 
     CapyTheme(appPreferences) {
         Surface(
