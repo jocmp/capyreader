@@ -122,7 +122,7 @@ fun App(
           ) {
             NavDisplay(
                 backStack = backStack,
-                onBack = { backStack.removeLastOrNull() },
+                onBack = { backStack.pop() },
                 // Scope a ViewModelStore per NavEntry so each route instance gets its own
                 // ViewModel (Login per source, ArticleDetail per article id).
                 entryDecorators = listOf(
@@ -140,17 +140,17 @@ fun App(
                     entry<Route.Login> { key ->
                         LoginScreen(
                             viewModel = koinViewModel { parametersOf(key.source) },
-                            onNavigateBack = { backStack.removeLastOrNull() },
+                            onNavigateBack = { backStack.pop(key) },
                             onSuccess = { backStack.resetToArticles(appPreferences) },
                         )
                     }
-                    entry<Route.Settings> {
+                    entry<Route.Settings> { key ->
                         SettingsScreen(
                             onRemoveAccount = {
                                 backStack.resetTo(Route.AddAccount)
                                 unloadAccountModules()
                             },
-                            onNavigateBack = { backStack.removeLastOrNull() }
+                            onNavigateBack = { backStack.pop(key) }
                         )
                     }
                     entry<Route.ArticleList>(
@@ -199,7 +199,7 @@ fun App(
                         ArticleDetailScreen(
                             articleID = key.articleID,
                             searchQuery = key.searchQuery,
-                            onBackPressed = { backStack.removeLastOrNull() },
+                            onBackPressed = { backStack.popIf { it is Route.ArticleDetail } },
                             onSelectArticle = { id -> backStack.openArticle(id, key.searchQuery) },
                             onSelectMedia = { media -> backStack.add(Route.MediaViewer(media)) },
                             onFullscreenVideo = { uri -> backStack.add(Route.VideoViewer(uri)) },
@@ -210,13 +210,13 @@ fun App(
                     ) { key ->
                         MediaScreen(
                             media = key.media,
-                            onDismiss = { backStack.removeLastOrNull() },
+                            onDismiss = { backStack.pop(key) },
                         )
                     }
                     entry<Route.VideoViewer> { key ->
                         VideoScreen(
                             uri = key.uri,
-                            onDismiss = { backStack.removeLastOrNull() },
+                            onDismiss = { backStack.pop(key) },
                         )
                     }
                 }
