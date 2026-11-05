@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:weekly"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Android Gradle Plugin",
+      "matchDepNames": [
+        "com.android.application",
+        "com.android.library"
+      ]
+    },
+    {
+      "groupName": "Firebase",
+      "matchDepNames": [
+        "com.google.gms.google-services",
+        "com.google.firebase**"
+      ]
+    },
+    {
+      "groupName": "GitHub Actions",
+      "matchManagers": [
+        "github-actions"
+      ]
+    }
+  ]
+}
