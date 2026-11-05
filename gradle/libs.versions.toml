@@ -36,7 +36,7 @@ androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtim
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle-runtime" }
 androidx-material = { module = "com.google.android.material:material", version = "1.14.0" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-alpha29" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version = "1.5.0-rc01" }
 androidx-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class-android", version = "1.4.0" }
 androidx-media3-datasource-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "media3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
