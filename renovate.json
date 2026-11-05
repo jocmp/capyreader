@@ -4,6 +4,9 @@
     "config:recommended",
     "schedule:weekly"
   ],
+  "bundler": {
+    "enabled": false
+  },
   "packageRules": [
     {
       "groupName": "Android Gradle Plugin",
