@@ -36,6 +36,7 @@ dependencies {
     implementation(project(":feedbinclient"))
     implementation(project(":feedfinder"))
     implementation(project(":minifluxclient"))
+    implementation(project(":newsblurclient"))
     implementation(project(":rssparser"))
     implementation(project(":readerclient"))
     implementation(project(":mercuryparser"))

@@ -15,6 +15,7 @@ import com.jocmp.capy.accounts.feedbin.FeedbinOkHttpClient
 import com.jocmp.capy.accounts.forAccount
 import com.jocmp.capy.accounts.local.LocalAccountDelegate
 import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
+import com.jocmp.capy.accounts.newsblur.NewsBlurAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.MercuryParser
@@ -40,6 +41,7 @@ import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
+import com.jocmp.newsblurclient.NewsBlur
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -88,6 +90,16 @@ data class Account(
                 path = cacheDirectory,
                 preferences = preferences,
                 source = source,
+                clientCertManager = clientCertManager,
+            ),
+            preferences = preferences,
+        )
+
+        Source.NEWSBLUR -> NewsBlurAccountDelegate(
+            database = database,
+            newsBlur = NewsBlur.forAccount(
+                path = cacheDirectory,
+                preferences = preferences,
                 clientCertManager = clientCertManager,
             ),
             preferences = preferences,
@@ -539,7 +551,9 @@ data class Account(
     }
 
     val supportsMultiFolderFeeds: Boolean
-        get() = source == Source.FEEDBIN || source == Source.LOCAL
+        get() = source == Source.FEEDBIN ||
+                source == Source.LOCAL ||
+                source == Source.NEWSBLUR
 
     val faviconFinder
         get() = FaviconFinder(localHttpClient, faviconPolicy, userAgent, acceptLanguage)
