@@ -1,0 +1,10 @@
+math-glyphs.bin is a modified version of Latin Modern Math 1.959
+(B. Jackowski, P. Strzelczyk and P. Pianowski, on behalf of TeX Users
+Groups). It is not the original font: glyph outlines, metrics and MATH
+table data were extracted from a subset of its glyphs by
+mallet-math/scripts/extract_font.py and stored in a non-font format.
+
+The original work is distributed under the GUST Font License
+(GUST-FONT-LICENSE.txt), an instance of the LaTeX Project Public License,
+and is available from https://www.gust.org.pl/projects/e-foundry/lm-math
+See README-Latin-Modern-Math.txt for the original readme.

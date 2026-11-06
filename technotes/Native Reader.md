@@ -37,6 +37,24 @@ Fullscreen goes through `WebChromeClient.onShowCustomView` into a `Dialog`. Embe
 
 - <https://developers.google.com/youtube/terms/required-minimum-functionality>
 
+## Math
+
+Feeds carry server-rendered math. KaTeX emits three copies of each formula (MathML, the TeX in `<annotation encoding="application/x-tex">`, and a visual `katex-html` copy), and flattening all three garbled the text.
+
+- `mathSource` in `mallet/MathSource.kt` recovers TeX from KaTeX spans, bare `<math>` with a TeX annotation, Pandoc `span.math`, and MathJax 2 `script[type=math/tex]`. Inline math becomes `LinearTextAnnotationMath` over the collapsed TeX; display math becomes `LinearMath`.
+- `replaceMathWithSource()` does the same for plain-text summaries (`ContentFormatter`), which had the same leak.
+- Default: the TeX source as inline code or a code block. "Render math formulas" (`article_render_math`, Reader › Content, off by default) draws it with `:mallet-math`.
+
+`:mallet-math` is a JVM module extracted from AndroidMath (MIT, a Kotlin port of iosMath) at `170d8e3`: parser, atom model and typesetter, rewritten to produce an immutable `MathBox` tree. Editor plumbing (index ranges, `toLatexString`, placeholders) and the View were dropped.
+
+- **No FreeType.** AndroidMath read fonts and rasterised every glyph through JNI FreeType, which needs the NDK. `scripts/extract_font.py` precomputes metrics, MATH tables and outlines into `math-glyphs.bin` (a Latin Modern Math subset, ~375 KB compressed), and the app draws glyphs as Compose `Path`s. `minSdk` 30 rules out `Canvas.drawGlyphs`. The font is GUST-licensed, which asks derived works to be renamed; hence the file name and `FONT-NOTICE.txt`.
+- **Target is KaTeX's command set**, since feed TeX is whatever KaTeX accepted. Anything else throws `MathParseException` and the source is shown instead.
+- **Fidelity:** `MathTypesetterTest` ports AndroidMath's typesetter dimensions and matches within 0.05pt.
+- Formulas render at 1.21× the body size, as KaTeX does. Inline placeholders are the formula's ascent tall on `AboveBaseline`, so baselines line up and the descent draws into the line spacing.
+- Upstream bugs fixed: `\ll`/`\gg` swapped, `\Uparrow`-family delimiters missing `\u`, deprecated U+2329 angle brackets, accent variants falling back to `.notdef`, delimiter shortfall in raw points rather than em, and a leading minus after `\textstyle` spaced as binary.
+
+Known gaps: `\overbrace`/`\underbrace`, `\middle`, array rules (`\hline` is skipped), non-stretching `\xrightarrow`, `\tag` numbers (dropped), and `\color` values aren't adjusted for dark themes.
+
 ## Gaps
 
 - Non-YouTube iframe embeds (Instagram, Bluesky, Vimeo, Spotify) are dropped at parse time, not just unrendered — `parseIframeVideo` only emits for YouTube. The blockquote form of an Instagram embed survives as quoted fallback text. These all worked under the WebView.

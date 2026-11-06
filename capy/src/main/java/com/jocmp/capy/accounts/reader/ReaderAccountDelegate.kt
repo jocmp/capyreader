@@ -10,11 +10,11 @@ import com.jocmp.capy.accounts.ValidationError
 import com.jocmp.capy.accounts.feedbin.FeedbinAccountDelegate.Companion.MAX_CREATE_UNREAD_LIMIT
 import com.jocmp.capy.accounts.willAutoDelete
 import com.jocmp.capy.accounts.withErrorHandling
+import com.jocmp.capy.common.ContentFormatter
 import com.jocmp.capy.common.TimeHelpers
 import com.jocmp.capy.common.UnauthorizedError
 import com.jocmp.capy.common.launchIO
 import com.jocmp.capy.common.transactionWithErrorHandling
-import com.jocmp.capy.common.unwrapCDATA
 import com.jocmp.capy.common.withResult
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.logging.CapyLog
@@ -43,7 +43,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
-import org.jsoup.Jsoup
 import retrofit2.Response
 import java.io.IOException
 import java.time.ZonedDateTime
@@ -536,7 +535,7 @@ internal class ReaderAccountDelegate(
 
         val summaries = mutableMapOf<String, String?>()
         articles.forEach { item ->
-            summaries[item.hexID] = item.summary.content?.let { Jsoup.parse(it.unwrapCDATA()).text() }
+            summaries[item.hexID] = item.summary.content?.let { ContentFormatter.plainText(it) }
         }
 
         database.transactionWithErrorHandling {

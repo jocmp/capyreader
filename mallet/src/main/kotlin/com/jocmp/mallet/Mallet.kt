@@ -114,6 +114,13 @@ private class Flattening {
                         continue
                     }
 
+                    val math = mathSource(element)
+                    if (math != null) {
+                        addMath(element, math, blockStyle)
+                        node = node.nextSibling()
+                        continue
+                    }
+
                     when (element.tagName()) {
                         "p" -> {
                             // Readability4j inserts p-tags in divs for algorithmic purposes.
@@ -715,6 +722,24 @@ private class Flattening {
             }
 
             node = node.nextSibling()
+        }
+    }
+
+    private fun ListBuilderScope<LinearElement>.addMath(
+        element: Element,
+        math: MathSource,
+        blockStyle: LinearTextBlockStyle,
+    ) {
+        charCount += math.tex.length
+
+        if (math.display) {
+            finalizeAndAddCurrentElement(blockStyle)
+            addLimited(LinearMath(ids = element.allIds(), tex = math.tex))
+            return
+        }
+
+        withLinearTextAnnotation(LinearTextAnnotationMath(math.tex)) {
+            append(math.tex.collapseWhitespace())
         }
     }
 

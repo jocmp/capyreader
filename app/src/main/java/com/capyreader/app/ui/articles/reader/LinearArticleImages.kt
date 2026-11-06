@@ -8,6 +8,7 @@ import com.jocmp.mallet.LinearElement
 import com.jocmp.mallet.LinearImage
 import com.jocmp.mallet.LinearImageSource
 import com.jocmp.mallet.LinearListItem
+import com.jocmp.mallet.LinearMath
 import com.jocmp.mallet.LinearTable
 import com.jocmp.mallet.LinearText
 import com.jocmp.mallet.LinearVideo
@@ -48,6 +49,6 @@ private fun LinearElement.images(): List<LinearImage> {
         is LinearBlockQuote -> content.flatMap { it.images() }
         is LinearListItem -> content.flatMap { it.images() }
         is LinearTable -> cells.values.flatMap { cell -> cell.content.flatMap { it.images() } }
-        is LinearText, is LinearAudio, is LinearVideo -> emptyList()
+        is LinearText, is LinearAudio, is LinearVideo, is LinearMath -> emptyList()
     }
 }

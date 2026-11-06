@@ -48,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -67,17 +68,22 @@ import coil3.request.ImageRequest
 import coil3.size.Precision
 import coil3.size.Size
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.reader.math.MathElement
+import com.capyreader.app.ui.articles.reader.math.inlineMathContent
+import com.capyreader.app.ui.articles.reader.math.rememberInlineMath
 import com.capyreader.app.ui.components.ShareLink
 import com.jocmp.mallet.LinearAudio
 import com.jocmp.mallet.LinearBlockQuote
 import com.jocmp.mallet.LinearElement
 import com.jocmp.mallet.LinearImage
 import com.jocmp.mallet.LinearListItem
+import com.jocmp.mallet.LinearMath
 import com.jocmp.mallet.LinearTable
 import com.jocmp.mallet.LinearTableCellItemType
 import com.jocmp.mallet.LinearText
 import com.jocmp.mallet.LinearTextAnnotation
 import com.jocmp.mallet.LinearTextAnnotationLink
+import com.jocmp.mallet.LinearTextAnnotationMath
 import com.jocmp.mallet.LinearTextBlockStyle
 import com.jocmp.mallet.LinearVideo
 import com.jocmp.mallet.toTableData
@@ -170,6 +176,14 @@ fun ArticleElement(
                 modifier = modifier,
             )
         }
+
+        is LinearMath -> MathElement(
+            math = element,
+            idToIndex = idToIndex,
+            actions = actions,
+            allowHorizontalScroll = allowHorizontalScroll,
+            modifier = modifier,
+        )
     }
 }
 
@@ -221,10 +235,25 @@ fun TextElement(
     modifier: Modifier = Modifier,
     softWrap: Boolean = true,
 ) {
+    val renderMath = LocalReaderStyle.current.renderMath
+    val mathAnnotations = remember(linearText) {
+        linearText.annotations.filter { it.data is LinearTextAnnotationMath }
+    }
+    val inlineMath = if (renderMath && mathAnnotations.isNotEmpty()) {
+        rememberInlineMath(annotations = mathAnnotations, fontSize = LocalTextStyle.current.fontSize)
+    } else {
+        emptyMap()
+    }
     val annotated = linearText.toAnnotatedString(
         idToIndex = idToIndex,
         onLinkClick = actions.onLinkClick,
+        renderedMath = inlineMath.keys,
     )
+    val density = LocalDensity.current
+    val mathColor = LocalTextStyle.current.color.takeOrElse { LocalContentColor.current }
+    val inlineContent = remember(inlineMath, density, mathColor) {
+        inlineMathContent(boxes = inlineMath, density = density, color = { mathColor })
+    }
     val links = remember(linearText) { linearText.links }
     val haptics = LocalHapticFeedback.current
     var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -233,6 +262,7 @@ fun TextElement(
         Text(
             text = annotated,
             softWrap = softWrap,
+            inlineContent = inlineContent,
             onTextLayout = { layout = it },
             modifier = modifier.longPressLink(
                 enabled = links.isNotEmpty(),
