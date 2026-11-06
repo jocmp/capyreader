@@ -21,7 +21,7 @@ review-opml: ## Save Play review account subscriptions, e.g. OPML=~/Desktop/subs
 	./scripts/review-opml $(OPML)
 
 test: ## Run all tests
-	./gradlew test --build-cache
+	./gradlew test -x :app:testGplayDebugUnitTest --build-cache
 
 deploy-production: release-secrets
 	$(FASTLANE) production

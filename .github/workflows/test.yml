@@ -23,7 +23,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
       - name: Run tests
-        run: ./gradlew test --build-cache
+        run: ./gradlew test -x :app:testGplayDebugUnitTest --build-cache
       - name: Compile gplay flavor
         if: github.event_name == 'push'
         run: ./gradlew :app:compileGplayDebugKotlin --build-cache

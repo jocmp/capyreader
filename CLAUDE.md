@@ -4,7 +4,7 @@
 
 - `./gradlew assembleFreeDebug` will compile the debug version of the app
 - For fast feedback, run single tests i.e. `./gradlew :capy:test --tests com.jocmp.capy.persistence.ArticleRecordsTest` replacing the module - `:capy` - and Java package accordingly. Note `:capy` is a JVM module (use `:capy:test`); Android modules like `:app` use the variant task `testFreeDebugUnitTest`
-- `make test` will run all tests via Gradle. Unit tests only run against the `free` flavor of `:app`; the `gplay` flavor shares the same test sources, so its unit test variant is disabled in `app/build.gradle.kts`.
+- `make test` will run all tests via Gradle. Unit tests only run against the `free` flavor of `:app`; the `gplay` flavor shares the same test sources, so `make test` and CI skip `:app:testGplayDebugUnitTest` with `-x`. AGP 9.5+ requires the unit test variant for Compose Preview, so it cannot be disabled in `beforeVariants`.
 
 ## Project Architecture
 

@@ -1,4 +1,3 @@
-import com.android.build.api.variant.HostTestBuilder
 import java.util.Properties
 
 plugins {
@@ -53,14 +52,12 @@ android {
     productFlavors {
         create("free") {
             dimension = "license"
-            afterEvaluate {
-                tasks
-                    .matching {
-                        !it.name.contains("Gplay") &&
-                                (it.name.contains("GoogleServices") || it.name.contains("Crashlytics"))
-                    }
-                    .forEach { it.enabled = false }
-            }
+            tasks
+                .named { name ->
+                    !name.contains("Gplay") &&
+                            (name.contains("GoogleServices") || name.contains("Crashlytics"))
+                }
+                .configureEach { enabled = false }
         }
         create("gplay") {
             dimension = "license"
@@ -118,13 +115,6 @@ android {
         }
     }
 }
-
-androidComponents {
-    beforeVariants(selector().withFlavor("license" to "gplay")) { variant ->
-        variant.hostTests[HostTestBuilder.UNIT_TEST_TYPE]?.enable = false
-    }
-}
-
 
 dependencies {
     implementation(libs.androidx.activity.compose)
