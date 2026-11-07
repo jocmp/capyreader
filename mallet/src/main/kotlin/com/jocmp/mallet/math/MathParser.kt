@@ -129,6 +129,16 @@ internal class MathParser(source: String) {
 
                     ch == '~' -> MathSpace(INTERWORD_SPACE)
 
+                    // \text{$k$ times} switches back to math mode between the dollars.
+                    ch == '$' && textMode -> {
+                        val math = withFontStyle(FontStyle.DEFAULT, text = false) {
+                            buildList(oneCharOnly = false, stopChar = '$')
+                        }
+                        prevAtom = math.lastOrNull()
+                        list.addAll(math)
+                        continue
+                    }
+
                     textMode -> textAtom(readCodepoint(ch))
 
                     ch.code > 0x7E -> MathSymbols.atomForCodepoint(readCodepoint(ch))
@@ -178,6 +188,8 @@ internal class MathParser(source: String) {
             "overline" -> Overline(buildList(oneCharOnly = true, stopChar = null))
             "underline" -> Underline(buildList(oneCharOnly = true, stopChar = null))
             "boxed" -> Framed(buildList(oneCharOnly = true, stopChar = null))
+            "overbrace" -> Brace(buildList(oneCharOnly = true, stopChar = null), over = true)
+            "underbrace" -> Brace(buildList(oneCharOnly = true, stopChar = null), over = false)
             "begin" -> buildTable(environment = readEnvironment(), firstList = null, isRow = false)
             "textcolor" -> MathColor(readColor(), buildList(oneCharOnly = true, stopChar = null))
             "operatorname" -> operatorName(limits = false)

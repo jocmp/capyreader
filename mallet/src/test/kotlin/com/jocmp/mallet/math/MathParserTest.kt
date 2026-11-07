@@ -122,6 +122,24 @@ class MathParserTest {
     }
 
     @Test
+    fun dollarsInsideTextSwitchToMath() {
+        val atoms = parse("\\text{\$k\$ times}")
+
+        assertEquals("k", atoms[0].nucleus)
+        assertEquals(FontStyle.DEFAULT, atoms[0].fontStyle)
+        assertEquals(AtomType.VARIABLE, atoms[0].type)
+        assertEquals(FontStyle.ROMAN, atoms.last().fontStyle)
+    }
+
+    @Test
+    fun underbraceTakesLabel() {
+        val brace = assertIs<Brace>(parse("\\underbrace{a+b}_{n}").single())
+
+        assertEquals(false, brace.over)
+        assertEquals("n", brace.subscript!!.single().nucleus)
+    }
+
+    @Test
     fun bigDelimiters() {
         val atoms = parse("\\bigl( x \\bigr)")
 

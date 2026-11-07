@@ -19,7 +19,7 @@ from fontTools.pens.boundsPen import BoundsPen
 from fontTools.pens.recordingPen import RecordingPen
 from fontTools.ttLib import TTFont
 
-MAGIC = b"MMF1"
+MAGIC = b"MMF2"
 NO_ACCENT = 0x7FFF
 
 # Order matches MathConstant in MathFont.kt.
@@ -146,8 +146,8 @@ def main(source, destination):
         )
         out += outline(glyph, glyph_set)
 
-    write_constructions(out, vertical, with_assembly=True)
-    write_constructions(out, horizontal, with_assembly=False)
+    write_constructions(out, vertical)
+    write_constructions(out, horizontal)
 
     with open(destination, "wb") as handle:
         handle.write(out)
@@ -219,17 +219,16 @@ def coords(points):
     return b"".join(struct.pack(">hh", round(x), round(y)) for x, y in points)
 
 
-def write_constructions(out, table, with_assembly):
+def write_constructions(out, table):
     out += struct.pack(">H", len(table))
     for gid in sorted(table):
         variants, parts = table[gid]
         out += struct.pack(">HH", gid, len(variants))
         for variant in variants:
             out += struct.pack(">H", variant)
-        if with_assembly:
-            out += struct.pack(">H", len(parts))
-            for glyph, start, end, full, flags in parts:
-                out += struct.pack(">HhhhH", glyph, start, end, full, flags)
+        out += struct.pack(">H", len(parts))
+        for glyph, start, end, full, flags in parts:
+            out += struct.pack(">HhhhH", glyph, start, end, full, flags)
 
 
 if __name__ == "__main__":

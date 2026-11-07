@@ -72,6 +72,11 @@ internal class MathMetrics(
     val stackTopDisplayStyleShiftUp: Float get() = value(MathConstant.StackTopDisplayStyleShiftUp)
     val stackTopShiftUp: Float get() = value(MathConstant.StackTopShiftUp)
 
+    val stretchStackTopShiftUp: Float get() = value(MathConstant.StretchStackTopShiftUp)
+    val stretchStackBottomShiftDown: Float get() = value(MathConstant.StretchStackBottomShiftDown)
+    val stretchStackGapAboveMin: Float get() = value(MathConstant.StretchStackGapAboveMin)
+    val stretchStackGapBelowMin: Float get() = value(MathConstant.StretchStackGapBelowMin)
+
     val minConnectorOverlap: Float get() = units(font.minConnectorOverlap)
 
     fun glyph(codepoint: Int): Int = font.glyphForCodepoint(codepoint)
@@ -104,8 +109,12 @@ internal class MathMetrics(
 
     fun horizontalVariants(glyph: Int): IntArray = font.horizontalVariants(glyph)
 
-    fun verticalAssembly(glyph: Int): List<ScaledGlyphPart>? =
-        font.verticalAssembly(glyph)?.map { part ->
+    fun verticalAssembly(glyph: Int): List<ScaledGlyphPart>? = font.verticalAssembly(glyph)?.let(::scaled)
+
+    fun horizontalAssembly(glyph: Int): List<ScaledGlyphPart>? = font.horizontalAssembly(glyph)?.let(::scaled)
+
+    private fun scaled(parts: List<GlyphPart>): List<ScaledGlyphPart> =
+        parts.map { part ->
             ScaledGlyphPart(
                 glyph = part.glyph,
                 startConnectorLength = units(part.startConnectorLength),

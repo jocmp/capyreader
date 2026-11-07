@@ -53,7 +53,9 @@ Feeds carry server-rendered math. KaTeX emits three copies of each formula (Math
 - Formulas render at 1.21× the body size, as KaTeX does. Inline placeholders are the formula's ascent tall on `AboveBaseline`, so baselines line up and the descent draws into the line spacing.
 - Upstream bugs fixed: `\ll`/`\gg` swapped, `\Uparrow`-family delimiters missing `\u`, deprecated U+2329 angle brackets, accent variants falling back to `.notdef`, delimiter shortfall in raw points rather than em, and a leading minus after `\textstyle` spaced as binary.
 
-Known gaps: `\overbrace`/`\underbrace`, `\middle`, array rules (`\hline` is skipped), non-stretching `\xrightarrow`, `\tag` numbers (dropped), and `\color` values aren't adjusted for dark themes.
+`\overbrace`/`\underbrace` build the brace from the font's horizontal variants and assembly parts (extracted alongside the vertical ones) and always set their label as a limit, as TeX does.
+
+Known gaps: `\middle`, array rules (`\hline` is skipped), non-stretching `\xrightarrow`, `\tag` numbers (dropped), and `\color` values aren't adjusted for dark themes.
 
 ## Gaps
 

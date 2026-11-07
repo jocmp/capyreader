@@ -99,6 +99,9 @@ class KatexCoverageTest {
             "\\lfloor x \\rfloor \\leq x < \\lfloor x \\rfloor + 1",
             "x \\in \\mathbb{R}^n, \\quad A \\subseteq B",
             "\\boxed{E = mc^2}",
+            // From Gundersen's inverse covariance post.
+            "\\boldsymbol{\\Sigma}^k = \\underbrace{\\left( \\mathbf{Q} \\boldsymbol{\\Lambda} \\mathbf{Q}^{\\top} \\right) \\dots \\left( \\mathbf{Q} \\boldsymbol{\\Lambda} \\mathbf{Q}^{\\top} \\right)}_{\\text{\$k\$ times}} = \\mathbf{Q} \\boldsymbol{\\Lambda}^k \\mathbf{Q}^{\\top}. \\tag{5}",
+            "\\overbrace{1 + 1 + \\cdots + 1}^{n}",
             "\\overset{\\text{def}}{=}",
             "a \\xrightarrow{f} b",
             "\\bigl( \\Bigl[ \\biggl\\{ x \\biggr\\} \\Bigr] \\bigr)",

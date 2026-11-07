@@ -19,6 +19,7 @@ class MathFont internal constructor(
     private val verticalVariants: Map<Int, IntArray>,
     private val horizontalVariants: Map<Int, IntArray>,
     private val verticalAssemblies: Map<Int, List<GlyphPart>>,
+    private val horizontalAssemblies: Map<Int, List<GlyphPart>>,
 ) {
     /**
      * Calls [visitor] with each outline command for [glyph], in font units with y pointing up.
@@ -85,6 +86,8 @@ class MathFont internal constructor(
 
     internal fun verticalAssembly(glyph: Int): List<GlyphPart>? = verticalAssemblies[glyph]
 
+    internal fun horizontalAssembly(glyph: Int): List<GlyphPart>? = horizontalAssemblies[glyph]
+
     interface OutlineVisitor {
         fun moveTo(x: Float, y: Float)
 
@@ -130,7 +133,7 @@ class MathFont internal constructor(
         internal fun read(input: InputStream): MathFont {
             val data = DataInputStream(input.buffered())
             val magic = ByteArray(4).also { data.readFully(it) }
-            require(magic.decodeToString() == "MMF1") { "Not a mallet math font file" }
+            require(magic.decodeToString() == "MMF2") { "Not a mallet math font file" }
 
             val unitsPerEm = data.readUnsignedShort()
             val constants = IntArray(data.readUnsignedShort()) { data.readShort().toInt() }
@@ -147,30 +150,8 @@ class MathFont internal constructor(
                 glyphs[gid] = readGlyph(data)
             }
 
-            val verticalVariants = HashMap<Int, IntArray>()
-            val verticalAssemblies = HashMap<Int, List<GlyphPart>>()
-            repeat(data.readUnsignedShort()) {
-                val gid = data.readUnsignedShort()
-                verticalVariants[gid] = IntArray(data.readUnsignedShort()) { data.readUnsignedShort() }
-                val parts = List(data.readUnsignedShort()) {
-                    GlyphPart(
-                        glyph = data.readUnsignedShort(),
-                        startConnectorLength = data.readShort().toInt(),
-                        endConnectorLength = data.readShort().toInt(),
-                        fullAdvance = data.readShort().toInt(),
-                        isExtender = data.readUnsignedShort() and 1 == 1,
-                    )
-                }
-                if (parts.isNotEmpty()) {
-                    verticalAssemblies[gid] = parts
-                }
-            }
-
-            val horizontalVariants = HashMap<Int, IntArray>()
-            repeat(data.readUnsignedShort()) {
-                val gid = data.readUnsignedShort()
-                horizontalVariants[gid] = IntArray(data.readUnsignedShort()) { data.readUnsignedShort() }
-            }
+            val (verticalVariants, verticalAssemblies) = readConstructions(data)
+            val (horizontalVariants, horizontalAssemblies) = readConstructions(data)
 
             return MathFont(
                 unitsPerEm = unitsPerEm,
@@ -181,7 +162,30 @@ class MathFont internal constructor(
                 verticalVariants = verticalVariants,
                 horizontalVariants = horizontalVariants,
                 verticalAssemblies = verticalAssemblies,
+                horizontalAssemblies = horizontalAssemblies,
             )
+        }
+
+        private fun readConstructions(data: DataInputStream): Pair<Map<Int, IntArray>, Map<Int, List<GlyphPart>>> {
+            val variants = HashMap<Int, IntArray>()
+            val assemblies = HashMap<Int, List<GlyphPart>>()
+            repeat(data.readUnsignedShort()) {
+                val gid = data.readUnsignedShort()
+                variants[gid] = IntArray(data.readUnsignedShort()) { data.readUnsignedShort() }
+                val parts = List(data.readUnsignedShort()) {
+                    GlyphPart(
+                        glyph = data.readUnsignedShort(),
+                        startConnectorLength = data.readShort().toInt(),
+                        endConnectorLength = data.readShort().toInt(),
+                        fullAdvance = data.readShort().toInt(),
+                        isExtender = data.readUnsignedShort() and 1 == 1,
+                    )
+                }
+                if (parts.isNotEmpty()) {
+                    assemblies[gid] = parts
+                }
+            }
+            return variants to assemblies
         }
 
         private fun readGlyph(data: DataInputStream): GlyphData {

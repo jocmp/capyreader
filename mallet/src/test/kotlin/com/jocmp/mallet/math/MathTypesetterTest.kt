@@ -107,6 +107,33 @@ class MathTypesetterTest {
     }
 
     @Test
+    fun underbraceStretchesUnderContentWithLabelBelow() {
+        val content = layout("a+b+c+d+e", display = true)
+        val braced = layout("\\underbrace{a+b+c+d+e}", display = true)
+        val labeled = layout("\\underbrace{a+b+c+d+e}_{n \\text{ terms}}", display = true)
+
+        assertEquals(content.width, braced.width, TOLERANCE)
+        assertEquals(content.ascent, braced.ascent, TOLERANCE)
+        assert(braced.descent > content.descent)
+        assert(labeled.descent > braced.descent)
+    }
+
+    @Test
+    fun overbraceSitsAboveContent() {
+        val content = layout("x_1 + x_2 + x_3", display = true)
+        val braced = layout("\\overbrace{x_1 + x_2 + x_3}^{3}", display = true)
+
+        assert(braced.ascent > content.ascent)
+        assertEquals(content.descent, braced.descent, TOLERANCE)
+    }
+
+    @Test
+    fun boldsymbolKeepsCapitalGreekUpright() {
+        assertEquals("𝚺", MathCharset.styled("Σ", FontStyle.BOLD_ITALIC))
+        assertEquals("𝜶", MathCharset.styled("α", FontStyle.BOLD_ITALIC))
+    }
+
+    @Test
     fun thinSpacesSeparateDigitGroups() {
         val grouped = layout("10\\,000", display = false)
         val plain = layout("10000", display = false)

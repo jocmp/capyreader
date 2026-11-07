@@ -159,6 +159,15 @@ internal class Stack(
 ) : MathAtom(type, "")
 
 /**
+ * `\overbrace` or `\underbrace`. Spaced as an operator whose scripts always set as limits, as in
+ * TeX, so `\underbrace{x}_{n}` puts `n` under the brace.
+ */
+internal class Brace(
+    var innerList: MathList,
+    val over: Boolean,
+) : MathAtom(AtomType.LARGE_OPERATOR, "")
+
+/**
  * `\boxed`: a frame drawn around [innerList].
  */
 internal class Framed(

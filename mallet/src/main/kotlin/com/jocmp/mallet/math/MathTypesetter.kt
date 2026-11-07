@@ -154,6 +154,12 @@ internal class MathTypesetter private constructor(
                         AtomType.LARGE_OPERATOR
                     }
 
+                    is Brace -> {
+                        addInterElementSpace(prevType, AtomType.LARGE_OPERATOR)
+                        place(makeBrace(item, atom))
+                        AtomType.LARGE_OPERATOR
+                    }
+
                     is Inner -> {
                         addInterElementSpace(prevType, AtomType.INNER)
                         val box =
@@ -559,6 +565,29 @@ internal class MathTypesetter private constructor(
     }
 
     /**
+     * The smallest horizontal variant of [character] at least [width] wide, built from parts
+     * when no variant is wide enough.
+     */
+    private fun horizontalGlyph(character: String, width: Float): MathBox {
+        val base = styleFont.glyph(character.codePointAt(0))
+        if (base == 0) {
+            throw MathParseException("No glyph for $character")
+        }
+        val variants = styleFont.horizontalVariants(base)
+        variants.firstOrNull { styleFont.advance(it) >= width }?.let { return glyphBox(it) }
+
+        val parts = styleFont.horizontalAssembly(base)?.takeIf { it.isNotEmpty() } ?: return glyphBox(variants.last())
+        val (glyphs, offsets, totalWidth) = assembleParts(parts, width)
+        val nodes = glyphs.mapIndexed { index, part -> glyphNode(part, offsets[index], 0f) }
+        return MathBox(
+            width = totalWidth,
+            ascent = nodes.maxOf { it.ascent },
+            descent = nodes.maxOf { it.descent },
+            children = nodes,
+        )
+    }
+
+    /**
      * Repeats the extender parts until the assembly reaches [height], spreading any excess
      * evenly across the connectors.
      */
@@ -661,6 +690,34 @@ internal class MathTypesetter private constructor(
         val upperGap = upper?.let { maxOf(styleFont.upperLimitGapMin, styleFont.upperLimitBaselineRiseMin - it.descent) } ?: 0f
         val lowerGap = lower?.let { maxOf(styleFont.lowerLimitGapMin, styleFont.lowerLimitBaselineDropMin - it.ascent) } ?: 0f
         place(limitsBox(nucleus, upper, lower, upperGap, lowerGap, shift = delta / 2))
+    }
+
+    /**
+     * A brace stretched over or under its content, with the label set as a limit beyond it.
+     */
+    private fun makeBrace(item: Item, brace: Brace): MathBox {
+        val inner = createLine(brace.innerList, font, style, cramped)
+        val glyph = horizontalGlyph(if (brace.over) OVER_BRACE else UNDER_BRACE, inner.width)
+        val width = maxOf(inner.width, glyph.width)
+        val braceY =
+            if (brace.over) {
+                inner.ascent + styleFont.stretchStackGapBelowMin + glyph.descent
+            } else {
+                -(inner.descent + styleFont.stretchStackGapAboveMin + glyph.ascent)
+            }
+        val stacked =
+            MathBox.containing(
+                listOf(
+                    MathNode.Child(x = (width - inner.width) / 2, y = 0f, box = inner),
+                    MathNode.Child(x = (width - glyph.width) / 2, y = braceY, box = glyph),
+                ),
+            )
+
+        val upper = item.superscript?.let { createLine(it, font, scriptStyle(), cramped) }
+        val lower = item.subscript?.let { createLine(it, font, scriptStyle(), cramped = true) }
+        val upperGap = upper?.let { maxOf(styleFont.upperLimitGapMin, styleFont.upperLimitBaselineRiseMin - it.descent) } ?: 0f
+        val lowerGap = lower?.let { maxOf(styleFont.lowerLimitGapMin, styleFont.lowerLimitBaselineDropMin - it.ascent) } ?: 0f
+        return limitsBox(stacked, upper, lower, upperGap, lowerGap, shift = 0f)
     }
 
     private fun limitsBox(
@@ -973,3 +1030,5 @@ private const val JOT_MULTIPLIER = 0.3f
 private const val FRAME_PADDING_EM = 0.3f
 private const val FRAME_RULE_EM = 0.04f
 private const val MAX_EXTENDERS = 64
+private const val OVER_BRACE = "⏞"
+private const val UNDER_BRACE = "⏟"

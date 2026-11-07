@@ -63,7 +63,8 @@ internal object MathCharset {
         when {
             isUpper(ch) -> 0x1D468 + (ch - 'A'.code)
             isLower(ch) -> 0x1D482 + (ch - 'a'.code)
-            isCapitalGreek(ch) -> 0x1D71C + (ch - GREEK_CAPITAL_START)
+            // Capital Greek is upright in TeX, so \boldsymbol keeps it upright, as KaTeX does.
+            isCapitalGreek(ch) -> bold(ch)
             isLowerGreek(ch) -> 0x1D736 + (ch - GREEK_LOWER_START)
             greekSymbolOrder(ch) >= 0 -> 0x1D750 + greekSymbolOrder(ch)
             // There are no bold italic digits.
