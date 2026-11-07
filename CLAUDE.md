@@ -17,8 +17,7 @@ Capy Reader is an RSS reader for Android split into several gradle modules
 - readerclient: Google Reader API HTTP client
 - feedfinder: Feed discovery helper
 - rssparser: Feed parsing helper based on JSoup
-- mallet: Flattens article HTML into a list of renderable elements for the native reader
-- mallet-math: TeX math parser and typesetter (KaTeX subset) for the native reader, extracted from AndroidMath
+- mallet: Flattens article HTML into a list of renderable elements for the native reader. `mallet.math` typesets TeX (KaTeX subset), extracted from AndroidMath
 - mercuryparser: Full content extraction, a Kotlin port of Mercury Parser with per-site custom extractors
 
 ### Key Architectural Patterns

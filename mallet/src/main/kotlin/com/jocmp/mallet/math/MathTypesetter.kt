@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * Lays out a [MathList] following TeX's Appendix G rules with OpenType MATH metrics.

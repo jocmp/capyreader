@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.isSpecified
 import com.jocmp.mallet.LinearTextAnnotation
 import com.jocmp.mallet.LinearTextAnnotationMath
-import com.jocmp.malletmath.MalletMath
-import com.jocmp.malletmath.MathBox
-import com.jocmp.malletmath.MathFont
+import com.jocmp.mallet.math.MalletMath
+import com.jocmp.mallet.math.MathBox
+import com.jocmp.mallet.math.MathFont
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 import java.io.DataInputStream
 import java.io.InputStream
@@ -98,7 +98,7 @@ class MathFont internal constructor(
     }
 
     companion object {
-        private const val RESOURCE = "/com/jocmp/malletmath/math-glyphs.bin"
+        private const val RESOURCE = "/com/jocmp/mallet/math/math-glyphs.bin"
         private const val NO_ACCENT = 0x7FFF
         private const val OP_MOVE = 0
         private const val OP_LINE = 1
@@ -130,7 +130,7 @@ class MathFont internal constructor(
         internal fun read(input: InputStream): MathFont {
             val data = DataInputStream(input.buffered())
             val magic = ByteArray(4).also { data.readFully(it) }
-            require(magic.decodeToString() == "MMF1") { "Not a mallet-math font file" }
+            require(magic.decodeToString() == "MMF1") { "Not a mallet math font file" }
 
             val unitsPerEm = data.readUnsignedShort()
             val constants = IntArray(data.readUnsignedShort()) { data.readShort().toInt() }

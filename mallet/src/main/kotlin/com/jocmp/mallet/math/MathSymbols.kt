@@ -1,12 +1,12 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
-import com.jocmp.malletmath.AtomType.BINARY_OPERATOR
-import com.jocmp.malletmath.AtomType.CLOSE
-import com.jocmp.malletmath.AtomType.OPEN
-import com.jocmp.malletmath.AtomType.ORDINARY
-import com.jocmp.malletmath.AtomType.PUNCTUATION
-import com.jocmp.malletmath.AtomType.RELATION
-import com.jocmp.malletmath.AtomType.VARIABLE
+import com.jocmp.mallet.math.AtomType.BINARY_OPERATOR
+import com.jocmp.mallet.math.AtomType.CLOSE
+import com.jocmp.mallet.math.AtomType.OPEN
+import com.jocmp.mallet.math.AtomType.ORDINARY
+import com.jocmp.mallet.math.AtomType.PUNCTUATION
+import com.jocmp.mallet.math.AtomType.RELATION
+import com.jocmp.mallet.math.AtomType.VARIABLE
 
 /**
  * TeX command tables, scoped to what KaTeX renders.

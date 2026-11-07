@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * TeX's inter-atom spacing table (The TeXbook, chapter 18).

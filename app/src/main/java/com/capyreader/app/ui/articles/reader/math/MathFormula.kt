@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
-import com.jocmp.malletmath.MathBox
-import com.jocmp.malletmath.MathFont
-import com.jocmp.malletmath.MathNode
+import com.jocmp.mallet.math.MathBox
+import com.jocmp.mallet.math.MathFont
+import com.jocmp.mallet.math.MathNode
 
 /**
  * Draws a typeset formula sized to its box, with the baseline [MathBox.ascent] from the top.

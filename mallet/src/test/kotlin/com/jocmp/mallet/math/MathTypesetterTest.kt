@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

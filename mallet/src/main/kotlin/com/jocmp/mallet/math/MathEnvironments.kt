@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * Builds the table atom for a `\begin{...}` environment, or for bare `&` and `\\` rows.

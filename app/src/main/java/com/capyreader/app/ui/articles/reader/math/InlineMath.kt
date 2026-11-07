@@ -10,7 +10,7 @@ import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.unit.Density
 import androidx.compose.foundation.layout.fillMaxSize
 import com.jocmp.mallet.LinearTextAnnotation
-import com.jocmp.malletmath.MathBox
+import com.jocmp.mallet.math.MathBox
 
 /**
  * The inline content id for a math annotation, shared by the annotated string and its content

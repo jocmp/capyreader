@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * [MathFont] scaled to [fontSize]. All values are in the same unit as [fontSize].

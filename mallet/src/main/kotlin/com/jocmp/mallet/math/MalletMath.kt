@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * Typesets KaTeX-flavored TeX into a [MathBox] that a renderer can draw.

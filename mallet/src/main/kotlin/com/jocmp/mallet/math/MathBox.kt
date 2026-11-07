@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * A typeset formula or part of one. Coordinates are relative to the box's baseline origin, with

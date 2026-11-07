@@ -1,4 +1,4 @@
-Portions of mallet-math are derived from AndroidMath
+Portions of mallet (com.jocmp.mallet.math) are derived from AndroidMath
 (https://github.com/gregcockroft/AndroidMath), itself a port of iosMath
 (https://github.com/kostub/iosMath). Both are distributed under the MIT
 License:

@@ -43,9 +43,9 @@ Feeds carry server-rendered math. KaTeX emits three copies of each formula (Math
 
 - `mathSource` in `mallet/MathSource.kt` recovers TeX from KaTeX spans, bare `<math>` with a TeX annotation, Pandoc `span.math`, and MathJax 2 `script[type=math/tex]`. Inline math becomes `LinearTextAnnotationMath` over the collapsed TeX; display math becomes `LinearMath`.
 - `replaceMathWithSource()` does the same for plain-text summaries (`ContentFormatter`), which had the same leak.
-- Default: the TeX source as inline code or a code block. "Render math formulas" (`article_render_math`, Reader › Content, off by default) draws it with `:mallet-math`.
+- Default: the TeX source as inline code or a code block. "Render math formulas" (`article_render_math`, Reader › Content, off by default) draws it with `com.jocmp.mallet.math`.
 
-`:mallet-math` is a JVM module extracted from AndroidMath (MIT, a Kotlin port of iosMath) at `170d8e3`: parser, atom model and typesetter, rewritten to produce an immutable `MathBox` tree. Editor plumbing (index ranges, `toLatexString`, placeholders) and the View were dropped.
+`mallet.math` is extracted from AndroidMath (MIT, a Kotlin port of iosMath) at `170d8e3`: parser, atom model and typesetter, rewritten to produce an immutable `MathBox` tree. Editor plumbing (index ranges, `toLatexString`, placeholders) and the View were dropped.
 
 - **No FreeType.** AndroidMath read fonts and rasterised every glyph through JNI FreeType, which needs the NDK. `scripts/extract_font.py` precomputes metrics, MATH tables and outlines into `math-glyphs.bin` (a Latin Modern Math subset, ~375 KB compressed), and the app draws glyphs as Compose `Path`s. `minSdk` 30 rules out `Canvas.drawGlyphs`. The font is GUST-licensed, which asks derived works to be renamed; hence the file name and `FONT-NOTICE.txt`.
 - **Target is KaTeX's command set**, since feed TeX is whatever KaTeX accepted. Anything else throws `MathParseException` and the source is shown instead.

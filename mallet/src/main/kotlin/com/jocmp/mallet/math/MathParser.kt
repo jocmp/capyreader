@@ -1,7 +1,7 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
- * Thrown for TeX that mallet-math can't parse, including commands outside its KaTeX subset.
+ * Thrown for TeX that mallet can't parse, including commands outside its KaTeX subset.
  */
 class MathParseException(message: String) : Exception(message)
 

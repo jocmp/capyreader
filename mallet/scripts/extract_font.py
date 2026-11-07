@@ -2,9 +2,9 @@
 
 Run from the repository root:
 
-    uv run --with fonttools python mallet-math/scripts/extract_font.py \
+    uv run --with fonttools python mallet/scripts/extract_font.py \
         path/to/latinmodern-math.otf \
-        mallet-math/src/main/resources/com/jocmp/malletmath/math-glyphs.bin
+        mallet/src/main/resources/com/jocmp/mallet/math/math-glyphs.bin
 
 The output keeps only what the typesetter needs: font units per em, the MATH
 constants, the cmap, per-glyph metrics and outlines, and the MATH variant and

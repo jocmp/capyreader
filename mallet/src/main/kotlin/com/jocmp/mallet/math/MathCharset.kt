@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * Maps characters into the Unicode Mathematical Alphanumeric Symbols block for a [FontStyle].

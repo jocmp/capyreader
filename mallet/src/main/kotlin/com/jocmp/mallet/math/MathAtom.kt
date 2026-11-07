@@ -1,4 +1,4 @@
-package com.jocmp.malletmath
+package com.jocmp.mallet.math
 
 /**
  * TeX atom types. Order matters: types before [BOUNDARY] accept sub- and superscripts.
