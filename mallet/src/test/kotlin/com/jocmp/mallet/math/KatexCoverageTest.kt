@@ -120,7 +120,7 @@ class KatexCoverageTest {
             "iota", "kappa", "lambda", "mu", "nu", "xi", "pi", "varpi", "rho", "varrho", "sigma", "varsigma",
             "tau", "upsilon", "phi", "varphi", "chi", "psi", "omega", "Gamma", "Delta", "Theta", "Lambda",
             "Xi", "Pi", "Sigma", "Upsilon", "Phi", "Psi", "Omega",
-            "leq", "geq", "leqslant", "geqslant", "neq", "nleq", "ngeq", "lesssim", "gtrsim", "in", "notin",
+            "lt", "gt", "leq", "geq", "leqslant", "geqslant", "neq", "nleq", "ngeq", "lesssim", "gtrsim", "in", "notin",
             "ni", "propto", "mid", "nmid", "parallel", "sim", "simeq", "cong", "approx", "asymp", "doteq",
             "triangleq", "equiv", "ll", "gg", "prec", "succ", "preceq", "succeq", "subset", "supset",
             "subseteq", "supseteq", "subsetneq", "supsetneq", "sqsubseteq", "vdash", "dashv", "models",

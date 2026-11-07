@@ -177,6 +177,8 @@ internal object MathSymbols {
                 "Longrightarrow" to "⟹",
                 "Longleftrightarrow" to "⟺",
                 "longmapsto" to "⟼",
+                "lt" to "<",
+                "gt" to ">",
                 "leq" to "≤",
                 "geq" to "≥",
                 "leqslant" to "⩽",
