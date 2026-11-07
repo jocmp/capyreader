@@ -1,3 +1,8 @@
+---
+name: gh-issue
+description: Analyze and fix a GitHub issue by number, from reading it with gh through implementing and testing the change. Use when asked to work on or address an issue.
+---
+
 Please analyze and address the GitHub issue: $ARGUMENTS.
 
 Follow these steps:

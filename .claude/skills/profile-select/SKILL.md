@@ -1,3 +1,8 @@
+---
+name: profile-select
+description: Run the bench select-profile command and format the timing output as a table.
+---
+
 Run the bench select-profile command and format the output as a table.
 
 1. Ensure bench data exists (if not, run `make bench-reset` then `./gradlew :bench:run --args="refresh"`)

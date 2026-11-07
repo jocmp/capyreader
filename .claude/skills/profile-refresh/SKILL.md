@@ -1,3 +1,8 @@
+---
+name: profile-refresh
+description: Run the bench refresh-profile command and format the timing output as a table.
+---
+
 Run the bench refresh-profile command and format the output as a table.
 
 1. Run `make bench-reset`

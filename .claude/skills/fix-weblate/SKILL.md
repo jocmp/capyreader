@@ -1,3 +1,8 @@
+---
+name: fix-weblate
+description: Merge pending Weblate translation commits into the repo and resolve conflicts. Use when Weblate's translation branch has diverged or its merge is blocked.
+---
+
 1. Open an existing checkout of the upstream repository or perform a fresh one.
 2. Commit all pending changes in Weblate and lock the translation component.
     ```
