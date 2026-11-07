@@ -281,6 +281,7 @@ fun ArticleScreen(
         MarkReadOnScrollEffect(
             listState = listState,
             articles = articles,
+            active = !search.isActive,
             scrollHighWaterMark = viewModel.scrollHighWaterMark,
             updateScrollHighWaterMark = viewModel::updateScrollHighWaterMark,
             clampScrollHighWaterMark = viewModel::clampScrollHighWaterMark,
@@ -643,11 +644,40 @@ fun ArticleScreen(
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
+                val searchListState = androidx.compose.foundation.lazy.rememberLazyListState()
+                val searchHighWaterMark = rememberSaveable { mutableIntStateOf(-1) }
+                val (scrolledQuery, setScrolledQuery) = rememberSaveable { mutableStateOf<String?>(null) }
+
+                if (searchQuery != scrolledQuery) {
+                    SideEffect {
+                        searchListState.requestScrollToItem(0)
+                        searchHighWaterMark.intValue = -1
+                        setScrolledQuery(searchQuery)
+                    }
+                }
+
+                MarkReadOnScrollEffect(
+                    listState = searchListState,
+                    articles = searchResults,
+                    active = true,
+                    scrollHighWaterMark = searchHighWaterMark.intValue,
+                    updateScrollHighWaterMark = { index ->
+                        searchHighWaterMark.intValue = maxOf(searchHighWaterMark.intValue, index)
+                    },
+                    clampScrollHighWaterMark = { itemCount ->
+                        searchHighWaterMark.intValue = minOf(searchHighWaterMark.intValue, itemCount - 1)
+                    },
+                    markReadOnScroll = viewModel::markReadOnScroll,
+                )
+
                 SearchView(
                     search = search,
                     results = searchResults,
+                    listState = searchListState,
                     selectedArticleID = selectedArticleID,
                     dimReadArticles = filter.status != ArticleStatus.STARRED,
+                    enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
+                    onMarkAllRead = onMarkAllRead,
                     onSelect = { article -> selectArticle(article) },
                 )
             }
@@ -832,6 +862,7 @@ private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
     articles: LazyPagingItems<Article>,
+    active: Boolean,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
     clampScrollHighWaterMark: (Int) -> Unit,
@@ -848,7 +879,7 @@ private fun MarkReadOnScrollEffect(
     val currentHighWaterMark by rememberUpdatedState(scrollHighWaterMark)
     var lastItemCount by remember { mutableIntStateOf(0) }
 
-    if (enabled) {
+    if (enabled && active) {
         LaunchedEffect(listState) {
             snapshotFlow { currentArticles.itemCount }
                 .filter { it > 0 }
