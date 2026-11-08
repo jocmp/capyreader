@@ -9,5 +9,6 @@ val Source.titleKey: Int
         Source.FRESHRSS -> R.string.account_source_freshrss
         Source.LOCAL -> R.string.account_source_local
         Source.MINIFLUX, Source.MINIFLUX_TOKEN -> R.string.account_source_miniflux
+        Source.NEWSBLUR -> R.string.account_source_newsblur
         Source.READER -> R.string.account_source_reader
     }

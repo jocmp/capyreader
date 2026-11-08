@@ -55,6 +55,12 @@ private fun buildPrompt(source: Source): SignupPrompt? {
             link = "https://miniflux.app/"
         )
 
+        Source.NEWSBLUR -> SignupPrompt(
+            text = stringResource(R.string.add_account_newsblur_signup_prompt),
+            linkText = stringResource(R.string.add_account_feedbin_signup_link_text),
+            link = "https://www.newsblur.com/"
+        )
+
         else -> null
     }
 }
