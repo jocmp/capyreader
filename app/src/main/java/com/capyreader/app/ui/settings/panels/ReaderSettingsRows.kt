@@ -57,6 +57,20 @@ fun PinToolbarsRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
 }
 
 @Composable
+fun RenderMathRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    val renderMath by viewModel.renderMath.collectChangesWithCurrent()
+
+    RowItem {
+        TextSwitch(
+            checked = renderMath,
+            onCheckedChange = viewModel::updateRenderMath,
+            title = stringResource(R.string.settings_reader_render_math_title),
+            subtitle = stringResource(R.string.settings_reader_render_math_subtitle),
+        )
+    }
+}
+
+@Composable
 fun InAppBrowserRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
     RowItem {
         TextSwitch(

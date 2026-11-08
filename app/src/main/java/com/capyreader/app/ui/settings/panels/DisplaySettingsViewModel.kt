@@ -64,6 +64,8 @@ class DisplaySettingsViewModel(
 
     val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
+    val renderMath = appPreferences.readerOptions.renderMath
+
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
 
@@ -80,6 +82,10 @@ class DisplaySettingsViewModel(
     fun updateAccentColors(enable: Boolean) {
         appPreferences.accentColors.set(enable)
         this.accentColors = enable
+    }
+
+    fun updateRenderMath(enabled: Boolean) {
+        appPreferences.readerOptions.renderMath.set(enabled)
     }
 
     fun updatePinArticleBars(pinBars: Boolean) {

@@ -34,6 +34,16 @@ class ContentFormatterTest {
     }
 
     @Test
+    fun `reduces KaTeX to its TeX source`() {
+        val html =
+            """
+            <p>Start with <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>F</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">F_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="mord">F</span><span class="vlist">0</span></span></span> and stop.</p>
+            """.trimIndent()
+
+        assertEquals("Start with F_0 and stop.", ContentFormatter.summary(html))
+    }
+
+    @Test
     fun `normalizes whitespace`() {
         val html = "<p>Hello    world</p><p>Another   paragraph</p>"
 
