@@ -619,7 +619,7 @@ class ArticleScreenViewModel(
                 filter = latestFilter,
                 range = range,
                 sortOrder = sortOrder(latestFilter),
-                query = null,
+                query = _searchQuery.value,
                 since = listSession.value.since,
             )
 
