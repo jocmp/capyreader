@@ -1,8 +1,7 @@
 package com.capyreader.app.ui.components.pullrefresh
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.MutatePriority
-import androidx.compose.foundation.MutatorMutex
+import androidx.annotation.VisibleForTesting
+import androidx.compose.animation.core.animate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -12,11 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
@@ -30,11 +30,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 
 private const val DragMultiplier = 0.6f
+
+private const val TriggerRearmFraction = 0.9f
 
 /**
  * Creates a [SwipeRefreshState] that is remembered across compositions.
@@ -67,8 +68,8 @@ fun rememberSwipeRefreshState(
 class SwipeRefreshState(
     isRefreshing: Boolean,
 ) {
-    private val _indicatorOffset = Animatable(0f)
-    private val mutatorMutex = MutatorMutex()
+    private var offset by mutableFloatStateOf(0f)
+    private var settle: Job? = null
 
     /**
      * Whether this [SwipeRefreshState] is currently refreshing or not.
@@ -84,27 +85,39 @@ class SwipeRefreshState(
     /**
      * The current offset for the indicator, in pixels.
      */
-    val indicatorOffset: Float get() = _indicatorOffset.value
+    val indicatorOffset: Float get() = offset
 
-    internal suspend fun animateOffsetTo(offset: Float) {
-        mutatorMutex.mutate {
-            _indicatorOffset.animateTo(offset)
+    internal suspend fun animateOffsetTo(target: Float) = coroutineScope {
+        val job = coroutineContext[Job]
+        settle = job
+        try {
+            animate(initialValue = offset, targetValue = target) { value, _ ->
+                // A frame already queued when dragBy cancels must not overwrite the drag.
+                if (job?.isActive == true) {
+                    offset = value
+                }
+            }
+        } finally {
+            if (settle === job) {
+                settle = null
+            }
         }
     }
 
     /**
-     * Dispatch scroll delta in pixels from touch events.
+     * Applies a drag delta in pixels synchronously, so the next scroll event
+     * reads the updated offset. Interrupts any settle animation.
      */
-    internal suspend fun dispatchScrollDelta(delta: Float) {
-        mutatorMutex.mutate(MutatePriority.UserInput) {
-            _indicatorOffset.snapTo(_indicatorOffset.value + delta)
-        }
+    internal fun dragBy(delta: Float) {
+        settle?.cancel()
+        settle = null
+        offset += delta
     }
 }
 
-private class SwipeRefreshNestedScrollConnection(
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+internal class SwipeRefreshNestedScrollConnection(
     private val state: SwipeRefreshState,
-    private val coroutineScope: CoroutineScope,
     private val onRefresh: () -> Unit,
     private val scrollFromTop: Boolean = true,
 ) : NestedScrollConnection {
@@ -151,10 +164,10 @@ private class SwipeRefreshNestedScrollConnection(
 
         val dragConsumed = getDragConsumed(available)
 
-        return if (dragConsumed.absoluteValue >= 0.5f) {
-            coroutineScope.launch {
-                state.dispatchScrollDelta(dragConsumed)
-            }
+        // No minimum delta: a slow finger moves less than a pixel per event,
+        // and dropping those deltas made the indicator stall and jump.
+        return if (dragConsumed != 0f) {
+            state.dragBy(dragConsumed)
             // Return the consumed Y
             if (scrollFromTop) {
                 Offset(x = 0f, y = dragConsumed / DragMultiplier)
@@ -250,8 +263,10 @@ fun SwipeRefresh(
     clipIndicatorToPadding: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val updatedOnRefresh = rememberUpdatedState(onRefresh)
+    val updatedOnTriggerThreshold = rememberUpdatedState(onTriggerThreshold)
+    val refreshTriggerPx = with(LocalDensity.current) { refreshTriggerDistance.toPx() }
+    val updatedRefreshTriggerPx = rememberUpdatedState(refreshTriggerPx)
 
     // Our LaunchedEffect, which animates the indicator to its resting position
     LaunchedEffect(state.isSwipeInProgress) {
@@ -261,13 +276,10 @@ fun SwipeRefresh(
         }
     }
 
-    val refreshTriggerPx = with(LocalDensity.current) { refreshTriggerDistance.toPx() }
-
     // Our nested scroll connection, which updates our state.
-    val nestedScrollConnection = remember(state, coroutineScope) {
+    val nestedScrollConnection = remember(state) {
         SwipeRefreshNestedScrollConnection(
             state = state,
-            coroutineScope = coroutineScope,
             onRefresh = {
                 // On refresh, re-dispatch to the update onRefresh block
                 updatedOnRefresh.value.invoke()
@@ -279,11 +291,18 @@ fun SwipeRefresh(
         this.refreshTrigger = refreshTriggerPx
     }
 
-    val atTrigger = state.indicatorOffset >= refreshTriggerPx
-
-    LaunchedEffect(atTrigger) {
-        if (atTrigger) {
-            onTriggerThreshold()
+    // Re-arm only once the pull falls back below the trigger with some margin,
+    // so sub-pixel finger noise at the threshold doesn't repeat the haptic.
+    LaunchedEffect(state) {
+        var armed = true
+        snapshotFlow { state.indicatorOffset }.collect { offset ->
+            val trigger = updatedRefreshTriggerPx.value
+            if (armed && offset >= trigger) {
+                armed = false
+                updatedOnTriggerThreshold.value()
+            } else if (!armed && offset < trigger * TriggerRearmFraction) {
+                armed = true
+            }
         }
     }
 
