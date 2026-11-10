@@ -5,9 +5,14 @@ import androidx.annotation.OptIn
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsIgnoringVisibility
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.FullscreenExit
@@ -27,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.keepScreenOn
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -74,10 +80,6 @@ fun InlineVideoPlayer(
         }
     }
 
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE, lifecycleOwner = ProcessLifecycleOwner.get()) {
-        player.pause()
-    }
-
     val videoSize = rememberPresentationState(player).videoSizeDp
     val aspectRatio = videoAspectRatio(videoSize?.width, videoSize?.height) ?: initialAspectRatio
     val frame = modifier.aspectRatio(aspectRatio)
@@ -106,6 +108,10 @@ fun VideoPlayer(
     val isPaused = rememberPlayPauseButtonState(player).showPlay
     var showControls by remember(player) { mutableStateOf(false) }
 
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE, lifecycleOwner = ProcessLifecycleOwner.get()) {
+        player.pause()
+    }
+
     LaunchedEffect(showControls, isPaused) {
         if (showControls && !isPaused) {
             delay(CONTROLS_TIMEOUT)
@@ -131,6 +137,15 @@ fun VideoPlayer(
                     PlayerDefaults.BottomControls(
                         player = player,
                         visible = visible,
+                        modifier = if (isFullscreen) {
+                            Modifier.windowInsetsPadding(
+                                WindowInsets.systemBarsIgnoringVisibility.only(
+                                    WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom
+                                )
+                            )
+                        } else {
+                            Modifier
+                        },
                         right = { player ->
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 DurationText(
@@ -146,6 +161,7 @@ fun VideoPlayer(
                     )
                 },
                 modifier = modifier
+                    .then(if (isPaused) Modifier else Modifier.keepScreenOn())
                     .clickable(
                         interactionSource = null,
                         indication = null,
