@@ -1,0 +1,7 @@
+Fixed
+
+• Mark as read works again from search results
+• Notifications respect the in-app browser setting
+• Selecting an article closes the navigation drawer
+• Fixed crash when tapping back twice quickly
+• Added Welsh translation thanks to a volunteer!
