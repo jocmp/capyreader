@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -53,15 +53,14 @@ import com.jocmp.capy.MarkRead
 fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
-    listState: LazyListState,
     selectedArticleID: String?,
     dimReadArticles: Boolean,
-    enableMarkReadOnScroll: Boolean,
     onMarkAllRead: (range: MarkRead) -> Unit,
     onSelect: (article: Article) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
+    val listState = rememberLazyListState()
 
     ScrollToSelectedArticleEffect(
         selectedArticleKey = selectedArticleID,
@@ -137,7 +136,6 @@ fun SearchView(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
                         listState = listState,
-                        enableMarkReadOnScroll = enableMarkReadOnScroll,
                         dimReadArticles = dimReadArticles,
                         onMarkAllRead = onMarkAllRead,
                         onSelect = onSelect,

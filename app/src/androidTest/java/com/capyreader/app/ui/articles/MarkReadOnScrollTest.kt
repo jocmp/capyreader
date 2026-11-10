@@ -95,18 +95,16 @@ class MarkReadOnScrollTest {
     }
 
     @Test
-    fun scrollingSearchResultsMarksOnlyMatchesRead() {
+    fun scrollingSearchResultsMarksNothingRead() {
         val (matches, others) = seedSearchArticles()
 
         ActivityScenario.launch(MainActivity::class.java).use {
             search("Match")
 
             repeat(4) { swipeUpAboveKeyboard() }
+            SystemClock.sleep(SETTLE_MILLIS)
 
-            assertTrue(
-                "Expected scrolling search results to mark matches read",
-                waitUntil { readIDs(matches).isNotEmpty() }
-            )
+            assertEquals(emptyList<String>(), readIDs(matches))
             assertEquals(emptyList<String>(), readIDs(others))
         }
     }
