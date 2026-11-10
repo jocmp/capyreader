@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -40,6 +40,7 @@ import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
 import com.jocmp.capy.Article
+import com.jocmp.capy.MarkRead
 
 /**
  * Full-surface search overlay. It owns its own results pager so the list (and therefore the
@@ -52,13 +53,15 @@ import com.jocmp.capy.Article
 fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
+    listState: LazyListState,
     selectedArticleID: String?,
     dimReadArticles: Boolean,
+    enableMarkReadOnScroll: Boolean,
+    onMarkAllRead: (range: MarkRead) -> Unit,
     onSelect: (article: Article) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
     val query = search.query.orEmpty()
-    val listState = rememberLazyListState()
 
     ScrollToSelectedArticleEffect(
         selectedArticleKey = selectedArticleID,
@@ -134,7 +137,9 @@ fun SearchView(
                         articles = results,
                         selectedArticleKey = selectedArticleID,
                         listState = listState,
+                        enableMarkReadOnScroll = enableMarkReadOnScroll,
                         dimReadArticles = dimReadArticles,
+                        onMarkAllRead = onMarkAllRead,
                         onSelect = onSelect,
                     )
                 }

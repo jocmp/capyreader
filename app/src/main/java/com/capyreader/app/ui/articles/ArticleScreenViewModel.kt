@@ -647,12 +647,10 @@ class ArticleScreenViewModel(
     fun clearSearch() {
         _searchQuery.value = ""
         _searchState.value = SearchState.INACTIVE
-        resetScrollHighWaterMark()
     }
 
     fun updateSearch(query: String) {
         _searchQuery.value = query
-        resetScrollHighWaterMark()
     }
 
     fun addStarAsync(articleID: String) {

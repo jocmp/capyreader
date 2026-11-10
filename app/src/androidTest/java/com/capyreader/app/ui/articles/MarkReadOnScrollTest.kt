@@ -94,6 +94,90 @@ class MarkReadOnScrollTest {
         }
     }
 
+    @Test
+    fun scrollingSearchResultsMarksOnlyMatchesRead() {
+        val (matches, others) = seedSearchArticles()
+
+        ActivityScenario.launch(MainActivity::class.java).use {
+            search("Match")
+
+            repeat(4) { swipeUpAboveKeyboard() }
+
+            assertTrue(
+                "Expected scrolling search results to mark matches read",
+                waitUntil { readIDs(matches).isNotEmpty() }
+            )
+            assertEquals(emptyList<String>(), readIDs(others))
+        }
+    }
+
+    @Test
+    fun markBelowInSearchResultsMarksOnlyMatchesRead() {
+        val (matches, others) = seedSearchArticles()
+
+        ActivityScenario.launch(MainActivity::class.java).use {
+            search("Match")
+
+            device.wait(Until.findObject(By.text("Match article 2")), TIMEOUT_MILLIS).longClick()
+            assertTrue(waitForText(string(R.string.article_actions_mark_below_as_read)))
+            device.findObject(By.text(string(R.string.article_actions_mark_below_as_read))).click()
+
+            val below = matches.drop(1)
+
+            assertTrue(
+                "Expected matches below the selected result to be marked read",
+                waitUntil { readIDs(below) == below.map { it.id } }
+            )
+            assertEquals(emptyList<String>(), readIDs(matches.take(1)))
+            assertEquals(emptyList<String>(), readIDs(others))
+        }
+    }
+
+    private fun seedSearchArticles(): Pair<List<OfflineArticle>, List<OfflineArticle>> {
+        val now = ZonedDateTime.now()
+        val matches = (1..30).map {
+            OfflineArticle(
+                id = "match-$it",
+                title = "Match article $it",
+                publishedAt = now.minusHours(it.toLong()),
+            )
+        }
+        val others = (1..30).map {
+            OfflineArticle(
+                id = "other-$it",
+                title = "Other article $it",
+                publishedAt = now.minusHours(it.toLong()).minusMinutes(30),
+            )
+        }
+
+        delegate.seed(matches + others)
+
+        return matches to others
+    }
+
+    private fun search(query: String) {
+        assertTrue(waitForText("Match article 1"))
+        device.findObject(By.desc(string(R.string.filter_action_menu_search_articles))).click()
+        device.wait(Until.findObject(By.clazz("android.widget.EditText")), TIMEOUT_MILLIS).text = query
+        assertTrue(
+            "Expected search to filter out non-matching articles",
+            device.wait(Until.gone(By.text("Other article 1")), TIMEOUT_MILLIS) == true
+        )
+        SystemClock.sleep(SETTLE_MILLIS)
+    }
+
+    private fun swipeUpAboveKeyboard() {
+        val x = device.displayWidth / 2
+
+        device.swipe(
+            x,
+            (device.displayHeight * 0.5).toInt(),
+            x,
+            (device.displayHeight * 0.15).toInt(),
+            SWIPE_STEPS,
+        )
+    }
+
     private fun readIDs(articles: List<OfflineArticle>): List<String> {
         return articles.map { it.id }.filter(delegate::isRead)
     }
