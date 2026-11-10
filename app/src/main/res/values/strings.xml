@@ -240,6 +240,8 @@
     <string name="starred_exporter_failure">Export failed</string>
     <string name="settings_reader_title">Reader</string>
     <string name="settings_options_reader_pin_top_toolbar">Pin Toolbars</string>
+    <string name="settings_reader_render_math_title">Render math formulas</string>
+    <string name="settings_reader_render_math_subtitle">Draw TeX equations instead of showing their source. Experimental</string>
 
     <string name="article_bottom_bar_next_article">Go to next article</string>
     <string name="settings_gestures_reader_swipe_down">Swipe Down</string>

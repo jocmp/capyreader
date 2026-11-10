@@ -43,6 +43,7 @@ fun LinearElement.ids(): Set<String> =
         is LinearBlockQuote -> ids
         is LinearImage -> ids
         is LinearListItem -> ids
+        is LinearMath -> ids
         is LinearText -> ids
         is LinearTable -> ids
         is LinearVideo -> ids
@@ -51,6 +52,7 @@ fun LinearElement.ids(): Set<String> =
 private fun LinearElement.collectImageUrls(target: MutableSet<String>) {
     when (this) {
         is LinearAudio,
+        is LinearMath,
         is LinearText,
         is LinearVideo,
         -> Unit
@@ -351,6 +353,14 @@ data class LinearText(
         vararg annotations: LinearTextAnnotation,
     ) : this(ids = ids, text = text, blockStyle = blockStyle, annotations = annotations.toList())
 }
+
+/**
+ * Display (block) math. [tex] is the TeX source, without `$$` or `\[` delimiters.
+ */
+data class LinearMath(
+    val ids: Set<String>,
+    val tex: String,
+) : LinearPrimitive
 
 enum class LinearTextBlockStyle {
     TEXT,

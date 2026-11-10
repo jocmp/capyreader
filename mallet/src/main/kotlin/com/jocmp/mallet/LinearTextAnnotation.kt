@@ -52,3 +52,11 @@ data object LinearTextAnnotationCode : LinearTextAnnotationData
 data class LinearTextAnnotationLink(
     val href: String,
 ) : LinearTextAnnotationData
+
+/**
+ * Inline math. The annotated text is the TeX source with whitespace collapsed, for display when
+ * the formula isn't rendered; [tex] is the source as published.
+ */
+data class LinearTextAnnotationMath(
+    val tex: String,
+) : LinearTextAnnotationData
