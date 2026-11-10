@@ -325,6 +325,69 @@ class LocalAccountDelegateTest {
     }
 
     @Test
+    fun importFeed_savesFeedWithoutArticles() = runTest {
+        val url = channel.link!!
+
+        coEvery { feedFinder.fetch(url = url) }.returns(
+            Result.success(RssChannelResult(channel = channel, conditionalGet = ConditionalGetInfo.EMPTY))
+        )
+
+        val result = delegate.importFeed(url = url, title = null, folderTitles = listOf("Tech"))
+
+        val articlesCount = database
+            .articlesQueries
+            .countAll(read = false, starred = false)
+            .executeAsList()
+            .sumOf { it.COUNT }
+
+        val feed = FeedRecords(database).find(id = url)
+        val folder = FeedRecords(database).findFolder(title = "Tech")
+
+        assertTrue(result.isSuccess)
+        assertEquals(expected = "Ed Zitron", actual = feed?.title)
+        assertEquals(expected = listOf(url), actual = folder?.feeds?.map { it.id })
+        assertEquals(expected = 0L, actual = articlesCount)
+        coVerify(exactly = 0) { feedFinder.find(any()) }
+    }
+
+    @Test
+    fun importFeed_fallsBackToFind() = runTest {
+        val url = "https://wheresyoured.at"
+
+        coEvery { feedFinder.fetch(url = url) }.returns(Result.failure(Error("Not a feed")))
+        coEvery { feedFinder.find(url) }.returns(
+            Result.success(
+                listOf(
+                    TestFeed(
+                        name = "Ed Zitron",
+                        feedURL = URL(channel.link!!),
+                        siteURL = null,
+                    )
+                )
+            )
+        )
+
+        val result = delegate.importFeed(url = url, title = "Where's Your Ed At", folderTitles = emptyList())
+
+        val feed = FeedRecords(database).find(id = channel.link!!)
+
+        assertTrue(result.isSuccess)
+        assertEquals(expected = "Where's Your Ed At", actual = feed?.title)
+    }
+
+    @Test
+    fun importFeed_failure() = runTest {
+        val url = "https://example.com"
+
+        coEvery { feedFinder.fetch(url = url) }.returns(Result.failure(Error("Not a feed")))
+        coEvery { feedFinder.find(url) }.returns(Result.failure(Error("Sorry charlie")))
+
+        val result = delegate.importFeed(url = url, title = null, folderTitles = emptyList())
+
+        assertTrue(result.isFailure)
+    }
+
+    @Test
     fun addFeed() = runTest {
         val url = "wheresyoured.at"
 

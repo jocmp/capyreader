@@ -166,6 +166,18 @@ data class Account(
         )
     }
 
+    suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> {
+        return delegate.importFeed(
+            url = url,
+            title = title,
+            folderTitles = folderTitles
+        )
+    }
+
     suspend fun editFeed(form: EditFeedFormEntry): Result<Feed> {
         val feed = findFeed(form.feedID) ?: return Result.failure(Throwable("Feed not found"))
 
@@ -462,9 +474,14 @@ data class Account(
 
     suspend fun import(
         inputStream: InputStream,
+        concurrency: Int,
         onProgress: (ImportProgress) -> Unit
     ) {
-        OPMLImporter(this).import(onProgress, inputStream)
+        OPMLImporter(this).import(
+            onProgress = onProgress,
+            inputStream = inputStream,
+            concurrency = concurrency,
+        )
     }
 
     suspend fun isFullContentEnabled(feedID: String): Boolean {
