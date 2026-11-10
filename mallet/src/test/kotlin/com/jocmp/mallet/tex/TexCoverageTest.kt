@@ -65,6 +65,17 @@ class TexCoverageTest {
     }
 
     @Test
+    fun doubleIntegralAdvancesByItsGlyphWidth() {
+        val items = Tex.render("\\iint_S (x)", displayMode = true).getOrThrow().box.items.filterIsInstance<TexItem.Glyph>()
+        val integral = items.single { it.text == "\u222C" }
+        val subscript = items.single { it.text == "S" }
+        val paren = items.single { it.text == "(" }
+
+        assertTrue(subscript.x - integral.x > 1.0, "subscript at ${subscript.x}, integral at ${integral.x}")
+        assertTrue(paren.x > subscript.x + 0.4, "paren at ${paren.x}, subscript at ${subscript.x}")
+    }
+
+    @Test
     fun sizesAreCappedForUntrustedInput() {
         val box = Tex.render("\\rule{1500em}{200em}", displayMode = true).getOrThrow().box
 

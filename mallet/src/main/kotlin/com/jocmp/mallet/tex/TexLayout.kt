@@ -133,7 +133,7 @@ class TexLayout(
     /** A glyph run; like KaTeX's `SymbolNode.toNode()`, its inline style applies to the glyph's span. */
     private fun layoutSymbol(node: SymbolNode, context: Context): Laid {
         val fontName = node.fontName ?: "Main-Regular"
-        val width = if (node.hasMetrics) node.width else measurer.measure(node.text, fontName)
+        val width = fontAdvances[fontName to node.text] ?: if (node.hasMetrics) node.width else measurer.measure(node.text, fontName)
         val style = node.style
         val color = style.color ?: context.color
         val paddingLeft = em(style.paddingLeft) ?: 0.0
@@ -558,6 +558,18 @@ class TexLayout(
         val bottomRuleClasses = setOf("frac-line", "overline-line", "underline-line", "katex-hline", "katex-hdashline")
 
         const val MU = 1.0 / 18
+
+        /**
+         * A browser sizes a glyph's span by the font's advance, not KaTeX's metrics. For the
+         * multiple integrals KaTeX reuses \int's metric width, but the glyphs are much wider.
+         */
+        val fontAdvances =
+            mapOf(
+                ("Size1-Regular" to "\u222C") to 0.819,
+                ("Size1-Regular" to "\u222D") to 1.166,
+                ("Size2-Regular" to "\u222C") to 1.084,
+                ("Size2-Regular" to "\u222D") to 1.592,
+            )
 
         val classMarginLeft = mapOf("katex-root" to 5 * MU, "cancel-lap" to -0.2)
         val classMarginRight = mapOf("katex-root" to -10 * MU, "cancel-lap" to -0.2, "angl" to 0.03889)
