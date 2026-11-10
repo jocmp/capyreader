@@ -17,6 +17,14 @@ sealed class Route : NavKey {
     data object Settings : Route()
 
     /**
+     * The feed list. Always the root of the article back stack ([Feeds, ArticleList, ...]). On
+     * compact windows it renders as its own page; on medium and wider,
+     * [FeedsDrawerSceneStrategy] hoists it into a modal drawer around the list and detail panes.
+     */
+    @Serializable
+    data object Feeds : Route()
+
+    /**
      * The article list. [filter] isn't read by the list entry itself — it's a one-way seed that
      * [com.capyreader.app.MainActivity.applyListFilter] copies into
      * [com.capyreader.app.preferences.AppPreferences.filter] at launch/deep-link time, which is

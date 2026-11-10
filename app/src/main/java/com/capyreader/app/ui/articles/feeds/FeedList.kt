@@ -67,12 +67,13 @@ fun FeedList(
     onFeedAdded: (feedID: String) -> Unit,
     onBeforeFeedAdd: () -> Unit = {},
     onNavigateToSettings: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
     val buttonState = rememberRefreshButtonState(refreshState)
 
     Column(
-        Modifier
+        modifier
             .verticalScroll(scrollState)
             .padding(horizontal = 12.dp)
             .fillMaxSize()

@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.VerticalDragHandle
 import androidx.compose.material3.rememberDrawerState
@@ -22,9 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,7 +30,9 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.scene.SinglePaneSceneStrategy
 import androidx.navigation3.ui.NavDisplay
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.accounts.AddAccountScreen
 import com.capyreader.app.ui.accounts.LoginScreen
@@ -42,6 +40,7 @@ import com.capyreader.app.ui.articles.ArticleDetailScreen
 import com.capyreader.app.ui.articles.ArticleScreen
 import com.capyreader.app.ui.articles.LocalArticlePaneExpansion
 import com.capyreader.app.ui.articles.detail.CapyPlaceholder
+import com.capyreader.app.ui.articles.feeds.FeedsScreen
 import com.capyreader.app.ui.articles.media.MediaSceneStrategy
 import com.capyreader.app.ui.articles.media.MediaScreen
 import com.capyreader.app.ui.articles.media.VideoScreen
@@ -69,7 +68,7 @@ fun App(
         val target = deepLink ?: return@LaunchedEffect
         onDeepLinkConsumed()
         backStack.clear()
-        backStack.addAll(target)
+        backStack.addAll(target.withFeedsRoot())
     }
 
     val windowAdaptiveInfo = currentWindowAdaptiveInfoV2()
@@ -96,37 +95,38 @@ fun App(
         },
     )
 
-    // Window-level drawer: hosting it above NavDisplay lets its scrim cover both panes (the list
-    // entry publishes the content + drives open/close through LocalAppDrawer).
+    // Feeds is a page on compact windows and a modal drawer around the panes on medium and wider.
+    // The back stack is [Feeds, ArticleList, ArticleDetail?] either way; only the scene differs.
+    val useFeedsDrawer = windowAdaptiveInfo.windowSizeClass
+        .isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND)
     val drawerState = rememberDrawerState(DrawerValue.Closed)
-    var drawerContent by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
-    val drawerController = remember(drawerState) {
-        AppDrawerController(state = drawerState, setContent = { drawerContent = it })
-    }
-    // Closes from this scope since a close launched by the list entry is cancelled when the
-    // entry leaves composition, which would strand an empty drawer open.
-    val hasDrawerContent = drawerContent != null
-    LaunchedEffect(hasDrawerContent) {
-        if (!hasDrawerContent && !drawerState.isClosed) {
-            drawerState.close()
+    LaunchedEffect(useFeedsDrawer) {
+        if (!useFeedsDrawer) {
+            drawerState.snapTo(DrawerValue.Closed)
         }
     }
+    val feedsDrawerStrategy = remember(drawerState, useFeedsDrawer, listDetailStrategy) {
+        FeedsDrawerSceneStrategy(
+            drawerState = drawerState,
+            enabled = useFeedsDrawer,
+            innerStrategies = listOf(listDetailStrategy, SinglePaneSceneStrategy()),
+        )
+    }
+    val feedsPage = remember(backStack) {
+        FeedsPageDrawer(navigateToFeeds = { backStack.popToFeeds() })
+    }
+    val articleSession = rememberArticleSessionOwner(
+        active = backStack.any { it is Route.Feeds },
+    )
 
     CapyTheme(appPreferences) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-          ModalNavigationDrawer(
-              drawerState = drawerState,
-              gesturesEnabled = drawerState.isOpen,
-              drawerContent = {
-                  ModalDrawerSheet { drawerContent?.invoke() }
-              },
-          ) {
           CompositionLocalProvider(
               LocalArticlePaneExpansion provides paneExpansion,
-              LocalAppDrawer provides drawerController,
+              LocalAppDrawer provides feedsPage,
           ) {
             NavDisplay(
                 backStack = backStack,
@@ -137,7 +137,11 @@ fun App(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
                 ),
-                sceneStrategies = listOf(mediaSceneStrategy, listDetailStrategy),
+                sceneStrategies = listOf(
+                    mediaSceneStrategy,
+                    feedsDrawerStrategy,
+                    listDetailStrategy,
+                ),
                 entryProvider = entryProvider {
                     entry<Route.AddAccount> {
                         AddAccountScreen(
@@ -161,6 +165,16 @@ fun App(
                             onNavigateBack = { backStack.pop(key) }
                         )
                     }
+                    entry<Route.Feeds>(
+                        metadata = FeedsDrawerSceneStrategy.feeds(),
+                    ) {
+                        FeedsScreen(
+                            viewModel = koinViewModel(viewModelStoreOwner = articleSession),
+                            onOpenList = { backStack.openList(appPreferences) },
+                            onCloseArticle = { backStack.closeArticle() },
+                            onNavigateToSettings = { backStack.add(Route.Settings) },
+                        )
+                    }
                     entry<Route.ArticleList>(
                         metadata = ListDetailSceneStrategy.listPane(
                             detailPlaceholder = {
@@ -171,9 +185,10 @@ fun App(
                                     CapyPlaceholder()
                                 }
                             }
-                        )
+                        ) + FeedsDrawerSceneStrategy.drawerPane() + sharedAxisXTransitions(),
                     ) {
                         ArticleScreen(
+                            viewModel = koinViewModel(viewModelStoreOwner = articleSession),
                             onSelectArticle = { id, searchQuery ->
                                 backStack.openArticle(id, searchQuery)
                             },
@@ -191,18 +206,8 @@ fun App(
                         // instead of the default cross-fade. On tablet both panes share one scene,
                         // so this never fires there.
                         metadata = ListDetailSceneStrategy.detailPane() +
-                            NavDisplay.transitionSpec {
-                                sharedAxisXEnter(forward = true) togetherWith
-                                    sharedAxisXExit(forward = true)
-                            } +
-                            NavDisplay.popTransitionSpec {
-                                sharedAxisXEnter(forward = false) togetherWith
-                                    sharedAxisXExit(forward = false)
-                            } +
-                            NavDisplay.predictivePopTransitionSpec {
-                                sharedAxisXEnter(forward = false) togetherWith
-                                    sharedAxisXExit(forward = false)
-                            },
+                            FeedsDrawerSceneStrategy.drawerPane() +
+                            sharedAxisXTransitions(),
                     ) { key ->
                         ArticleDetailScreen(
                             articleID = key.articleID,
@@ -230,12 +235,28 @@ fun App(
                 }
             )
           }
-          }
         }
     }
 }
 
 private const val ARTICLE_DETAIL_CONTENT_KEY = "article_detail"
+
+/**
+ * Article UI stacks are rooted at [Route.Feeds]. Deep links and the launch stack start at the list,
+ * so prepend it there.
+ */
+fun List<NavKey>.withFeedsRoot(): List<NavKey> {
+    return if (firstOrNull() is Route.ArticleList) listOf(Route.Feeds) + this else this
+}
+
+private fun sharedAxisXTransitions() =
+    NavDisplay.transitionSpec {
+        sharedAxisXEnter(forward = true) togetherWith sharedAxisXExit(forward = true)
+    } + NavDisplay.popTransitionSpec {
+        sharedAxisXEnter(forward = false) togetherWith sharedAxisXExit(forward = false)
+    } + NavDisplay.predictivePopTransitionSpec {
+        sharedAxisXEnter(forward = false) togetherWith sharedAxisXExit(forward = false)
+    }
 
 /** Matches the pane scaffold's original shared-axis offset (10% of the pane width). */
 private const val PANE_OFFSET_FACTOR = 0.10f
@@ -266,6 +287,22 @@ private fun NavBackStack<NavKey>.openArticle(articleID: String, searchQuery: Str
     }
 }
 
+/** Shows the article list for the current filter, pushing it when the feeds page is on top. */
+private fun NavBackStack<NavKey>.openList(appPreferences: AppPreferences) {
+    if (lastOrNull() is Route.Feeds) {
+        add(Route.ArticleList(appPreferences.filter.get()))
+    }
+}
+
+private fun NavBackStack<NavKey>.popToFeeds() {
+    val feedsIndex = indexOfFirst { it is Route.Feeds }
+    if (feedsIndex < 0) return
+
+    while (lastIndex > feedsIndex) {
+        removeAt(lastIndex)
+    }
+}
+
 private fun NavBackStack<NavKey>.closeArticle() {
     removeAll { it is Route.ArticleDetail }
 }
@@ -277,5 +314,6 @@ private fun NavBackStack<NavKey>.resetTo(key: NavKey) {
 }
 
 private fun NavBackStack<NavKey>.resetToArticles(appPreferences: AppPreferences) {
-    resetTo(Route.ArticleList(appPreferences.filter.get()))
+    clear()
+    addAll(listOf(Route.ArticleList(appPreferences.filter.get())).withFeedsRoot())
 }

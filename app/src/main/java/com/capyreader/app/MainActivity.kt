@@ -17,6 +17,7 @@ import com.capyreader.app.ui.App
 import com.capyreader.app.ui.AppMotionDurationScale
 import com.capyreader.app.ui.DeepLink
 import com.capyreader.app.ui.Route
+import com.capyreader.app.ui.withFeedsRoot
 import com.capyreader.app.ui.articles.detail.LocalPageTurnKeys
 import com.capyreader.app.ui.articles.detail.PageTurnKeys
 import com.jocmp.capy.ArticleStatus
@@ -98,7 +99,7 @@ class MainActivity : BaseActivity() {
      * neighbor query (both read [AppPreferences.filter]) agree on which articles are siblings.
      */
     private fun applyListFilter(backStack: List<NavKey>) {
-        (backStack.firstOrNull() as? Route.ArticleList)?.let {
+        backStack.filterIsInstance<Route.ArticleList>().firstOrNull()?.let {
             appPreferences.filter.set(it.filter)
         }
     }
@@ -112,8 +113,10 @@ class MainActivity : BaseActivity() {
             return listOf(Route.AddAccount)
         }
 
-        return DeepLink.parse(intent.data, currentStatus)
+        val articles = DeepLink.parse(intent.data, currentStatus)
             ?: listOf(Route.ArticleList(appPreferences.filter.get()))
+
+        return articles.withFeedsRoot()
     }
 
     private val hasAccount: Boolean

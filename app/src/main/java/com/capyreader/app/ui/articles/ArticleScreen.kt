@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -20,10 +19,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -57,6 +54,7 @@ import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AfterReadAllBehavior
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.preferences.ArticleListVerticalSwipe
+import com.capyreader.app.ui.FeedsPageDrawer
 import com.capyreader.app.ui.LocalAppDrawer
 import com.capyreader.app.ui.LocalBadgeStyle
 import com.capyreader.app.ui.LocalConnectivity
@@ -66,9 +64,7 @@ import com.capyreader.app.ui.LocalTimeFormats
 import com.capyreader.app.ui.LocalUnreadCount
 import com.capyreader.app.ui.articles.audio.AudioMiniPlayer
 import com.capyreader.app.ui.articles.audio.AudioPlayerController
-import com.capyreader.app.ui.articles.feeds.AngleRefreshState
 import com.capyreader.app.ui.articles.feeds.FeedActions
-import com.capyreader.app.ui.articles.feeds.FeedList
 import com.capyreader.app.ui.articles.feeds.FolderActions
 import com.capyreader.app.ui.articles.feeds.LocalFeedActions
 import com.capyreader.app.ui.articles.feeds.LocalFolderActions
@@ -94,7 +90,6 @@ import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
-import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.SavedSearch
@@ -122,15 +117,10 @@ fun ArticleScreen(
     selectedArticleID: String? = null,
 ) {
     val currentFeed by viewModel.currentFeed.collectAsStateWithLifecycle(initialValue = null)
-    val feeds by viewModel.topLevelFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
-    val readLaterFeed by viewModel.readLaterFeed.collectAsStateWithLifecycle(initialValue = null)
     val allFeeds by viewModel.allFeeds.collectAsStateWithLifecycle(initialValue = emptyList())
     val allFolders by viewModel.allFolders.collectAsStateWithLifecycle(initialValue = emptyList())
-    val folders by viewModel.folders.collectAsStateWithLifecycle(initialValue = emptyList())
     val savedSearches by viewModel.savedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
     val allSavedSearches by viewModel.allSavedSearches.collectAsStateWithLifecycle(initialValue = emptyList())
-    val statusCount by viewModel.statusCount.collectAsStateWithLifecycle(initialValue = 0)
-    val todayCount by viewModel.todayCount.collectAsStateWithLifecycle(initialValue = 0)
     val unreadCount by viewModel.unreadCount.collectAsStateWithLifecycle(initialValue = 0L)
     val filter by viewModel.filter.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle("")
@@ -153,11 +143,8 @@ fun ArticleScreen(
     val savedSearchActions = rememberSavedSearchActions(viewModel)
     val labelsActions = rememberLabelsActions(viewModel, allSavedSearches)
     val connectivity = rememberLocalConnectivity()
-    // The drawer is hosted at the window level (see App / LocalAppDrawer) so its scrim covers both
-    // panes; this entry only publishes its content and drives open/close. Fall back to a local
-    // state when there's no host (previews).
-    val appDrawer = LocalAppDrawer.current
-    val drawerState = appDrawer?.state ?: rememberDrawerState(DrawerValue.Closed)
+    // A modal drawer around the panes on medium and wider, the feeds page on compact (see App).
+    val drawerState = LocalAppDrawer.current ?: remember { FeedsPageDrawer(navigateToFeeds = {}) }
     val showOnboarding by viewModel.showOnboarding.collectAsState(false)
     val badgeStyle by appPreferences.badgeStyle.collectChangesWithDefault()
 
@@ -207,9 +194,6 @@ fun ArticleScreen(
     ) {
         val openNextFeedOnReadAll = afterReadAll == AfterReadAllBehavior.OPEN_NEXT_FEED
 
-        val refreshAllState by viewModel.refreshAllState.collectAsStateWithLifecycle(
-            initialValue = AngleRefreshState.STOPPED
-        )
         val isRefreshInitialized = viewModel.refreshInitialized
 
         val (isUpdatePasswordDialogOpen, setUpdatePasswordDialogOpen) = rememberSaveable {
@@ -331,10 +315,6 @@ fun ArticleScreen(
             }
         }
 
-        fun refreshAll() {
-            viewModel.refreshAll()
-        }
-
         fun refreshFeeds() {
             viewModel.refresh(filter)
         }
@@ -429,89 +409,12 @@ fun ArticleScreen(
             }
         }
 
-        val selectFeed = { feed: Feed, folderTitle: String? ->
-            if (!filter.isFeedSelected(feed)) {
-                openDrawerSelection { viewModel.selectFeed(feed.id, folderTitle) }
-            } else {
-                closeDrawer()
-            }
-        }
-
         val selectFolder = { folder: Folder ->
             if (!filter.isFolderSelected(folder)) {
                 openDrawerSelection { viewModel.selectFolder(folder.title) }
             } else {
                 closeDrawer()
             }
-        }
-
-        val selectSavedSearch = { savedSearch: SavedSearch ->
-            if (!filter.isSavedSearchSelected(savedSearch)) {
-                openDrawerSelection { viewModel.selectSavedSearch(savedSearch.id) }
-            } else {
-                closeDrawer()
-            }
-        }
-
-        val selectToday = {
-            if (!filter.hasTodaySelected()) {
-                openDrawerSelection { viewModel.selectToday() }
-            } else {
-                closeDrawer()
-            }
-        }
-
-        // Publish the drawer pane up to the window-level host. Keyed on the data so the lambda is
-        // recreated (and the drawer recomposes) only when its contents change; the callbacks it
-        // captures are behaviorally stable.
-        val drawerContent: @Composable () -> Unit = remember(
-            folders, feeds, readLaterFeed, savedSearches, filter,
-            statusCount, todayCount, refreshAllState,
-            badgeStyle, feedActions, folderActions, savedSearchActions,
-        ) {
-            {
-                CompositionLocalProvider(
-                    LocalBadgeStyle provides badgeStyle,
-                    LocalFeedActions provides feedActions,
-                    LocalFolderActions provides folderActions,
-                    LocalSavedSearchActions provides savedSearchActions,
-                ) {
-                    FeedList(
-                        source = viewModel.source,
-                        folders = folders,
-                        feeds = feeds,
-                        readLaterFeed = readLaterFeed,
-                        onSelectFolder = selectFolder,
-                        onSelectFeed = selectFeed,
-                        onMarkAllRead = { viewModel.markAllRead(filter = it) },
-                        onFeedAdded = { onFeedAdded(it) },
-                        savedSearches = savedSearches,
-                        onSelectSavedSearch = selectSavedSearch,
-                        onNavigateToSettings = {
-                            onNavigateToSettings()
-                            coroutineScope.launchUI {
-                                drawerState.close()
-                            }
-                        },
-                        onFilterSelect = selectFilter,
-                        onSelectToday = { selectToday() },
-                        refreshState = refreshAllState,
-                        onRefresh = {
-                            refreshAll()
-                        },
-                        filter = filter,
-                        statusCount = statusCount,
-                        todayCount = todayCount,
-                    )
-                }
-            }
-        }
-
-        LaunchedEffect(appDrawer, drawerContent) {
-            appDrawer?.setContent(drawerContent)
-        }
-        DisposableEffect(appDrawer) {
-            onDispose { appDrawer?.setContent(null) }
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
