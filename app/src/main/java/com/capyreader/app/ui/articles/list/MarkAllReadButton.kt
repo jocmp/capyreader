@@ -3,8 +3,7 @@ package com.capyreader.app.ui.articles.list
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -29,12 +28,11 @@ fun MarkAllReadButton() {
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun MarkAllReadFloatingActionButton(modifier: Modifier = Modifier) {
     val requestMarkAllRead = LocalMarkAllRead.current
 
-    FloatingToolbarDefaults.StandardFloatingActionButton(
+    FloatingActionButton(
         onClick = { requestMarkAllRead() },
         modifier = modifier,
     ) {

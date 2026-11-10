@@ -1,7 +1,6 @@
 package com.capyreader.app.ui.articles.audio
 
 import androidx.annotation.OptIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Headphones
@@ -19,7 +18,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.compose.material3.MiniController
@@ -50,7 +48,7 @@ fun AudioMiniPlayer(
         bitmapLoader = bitmapLoader,
         defaultArtwork = defaultArtwork,
         onClick = onClick,
-        modifier = modifier.padding(horizontal = 8.dp),
+        modifier = modifier,
         playerControls = { player ->
             SeekBackButton(player = player)
             PlayPauseButton(player = player)

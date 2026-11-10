@@ -32,7 +32,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
@@ -40,8 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -50,6 +48,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -242,8 +242,13 @@ fun ArticleScreen(
                 canScroll = { listState.canScrollForward || listState.canScrollBackward },
             )
         }
-        val hideBottomBarSemantics by remember {
-            derivedStateOf { topBarState.collapsedFraction == 1f }
+
+        var floatingActionsHeight by remember { mutableIntStateOf(0) }
+
+        LaunchedEffect(pinToolbars) {
+            if (pinToolbars) {
+                topBarState.heightOffset = 0f
+            }
         }
 
         ResetScrollBehaviorEffect(
@@ -581,34 +586,35 @@ fun ArticleScreen(
                         floatingActionButton = {
                             val audio = audioEnclosure
                             val player = audioPlayer
-                            if (audio != null && player != null) {
-                                AudioMiniPlayer(
-                                    player = player,
-                                    onClick = {
-                                        closeDrawer()
-                                        onSelectArticle(audio.articleID, null)
-                                    },
-                                    onDismiss = {
-                                        audioController.dismiss()
-                                    },
-                                )
-                            }
+
+                            ArticleListFloatingActions(
+                                modifier = Modifier.onSizeChanged {
+                                    floatingActionsHeight = it.height
+                                },
+                                player = if (audio != null && player != null) {
+                                    {
+                                        AudioMiniPlayer(
+                                            player = player,
+                                            onClick = {
+                                                closeDrawer()
+                                                onSelectArticle(audio.articleID, null)
+                                            },
+                                            onDismiss = {
+                                                audioController.dismiss()
+                                            },
+                                            modifier = Modifier.weight(1f),
+                                        )
+                                    }
+                                } else {
+                                    null
+                                },
+                            )
                         },
                         bottomBar = {
                             ArticleStatusBottomBar(
                                 status = filter.status,
                                 onSelectStatus = { selectStatus(it) },
-                                modifier = Modifier
-                                    .graphicsLayer {
-                                        translationY = size.height * topBarState.collapsedFraction
-                                    }
-                                    .then(
-                                        if (hideBottomBarSemantics) {
-                                            Modifier.clearAndSetSemantics {}
-                                        } else {
-                                            Modifier
-                                        }
-                                    ),
+                                collapsedFraction = { topBarState.collapsedFraction },
                             )
                         }
                     ) { innerPadding ->
@@ -646,7 +652,10 @@ fun ArticleScreen(
                                     } else {
                                         ArticleList(
                                             articles = articles,
-                                            contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
+                                            contentPadding = PaddingValues(
+                                                bottom = innerPadding.calculateBottomPadding() +
+                                                    floatingActionsPadding(floatingActionsHeight),
+                                            ),
                                             selectedArticleKey = selectedArticleID,
                                             listState = listState,
                                             enableMarkReadOnScroll = viewModel.markReadOnScrollEnabled,
@@ -959,4 +968,13 @@ private fun MarkReadOnScrollEffect(
                 }
         }
     }
+}
+
+@Composable
+private fun floatingActionsPadding(heightPx: Int): Dp {
+    if (heightPx == 0) {
+        return 0.dp
+    }
+
+    return with(LocalDensity.current) { heightPx.toDp() } + 16.dp
 }
