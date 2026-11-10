@@ -40,10 +40,10 @@ internal fun mathSource(element: Element): MathSource? {
 
     if (tag == "span" || tag == "div") {
         if (element.hasClass("katex-display")) {
-            return element.texAnnotation()?.let { MathSource(it, display = true) }
+            return element.katexAnnotation()?.let { MathSource(it, display = true) }
         }
         if (element.hasClass("katex")) {
-            return element.texAnnotation()?.let { MathSource(it, display = false) }
+            return element.katexAnnotation()?.let { MathSource(it, display = false) }
         }
         if (element.hasClass("math") && (element.hasClass("inline") || element.hasClass("display"))) {
             return pandocMath(element)
@@ -71,6 +71,17 @@ private fun Element.texAnnotation(): String? =
         ?.wholeText()
         ?.trim()
         ?.takeIf { it.isNotEmpty() }
+
+/**
+ * KaTeX emits a single annotation, its TeX. Sanitizers such as full-content extraction strip the
+ * `encoding` attribute, so inside KaTeX markup a bare annotation is still the source.
+ */
+private fun Element.katexAnnotation(): String? =
+    texAnnotation()
+        ?: selectFirst("annotation:not([encoding])")
+            ?.wholeText()
+            ?.trim()
+            ?.takeIf { it.isNotEmpty() }
 
 private fun pandocMath(element: Element): MathSource? {
     val display = element.hasClass("display")

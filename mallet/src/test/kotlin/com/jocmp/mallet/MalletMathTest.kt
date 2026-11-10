@@ -26,6 +26,17 @@ class MalletMathTest {
     }
 
     @Test
+    fun `KaTeX without the annotation encoding still yields its source`() {
+        val stripped = katex("\\frac{1}{2}").replace(" encoding=\"application/x-tex\"", "")
+        val html = "<p>Before</p><span class=\"katex-display\">$stripped</span><p>After</p>"
+
+        val result = Mallet.flatten(html, baseUrl).getOrThrow().elements
+
+        assertEquals(LinearMath(ids = emptySet(), tex = "\\frac{1}{2}"), result[1])
+        assertEquals(3, result.size)
+    }
+
+    @Test
     fun `inline source collapses whitespace but annotation keeps it`() {
         val tex = "a +\n  b"
         val html = "<p>${katex(tex)}</p>"
