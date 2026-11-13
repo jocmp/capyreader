@@ -241,27 +241,26 @@ class AccountTest {
     }
 
     @Test
-    fun `markAllRead before the list cutoff hides articles that markRead keeps`() = runTest {
-        val (individual, bulk, untouched) = 3.repeated {
-            ArticleFixture(account.database).create(read = false)
-        }
-        val since = OffsetDateTime.now()
+    fun `markRead keeps the article in the current unread list`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val listStartedAt = OffsetDateTime.now()
 
-        account.markRead(individual.id)
+        account.markRead(article.id)
+
+        assertEquals(listOf(article.id), unreadListIDs(since = listStartedAt))
+    }
+
+    @Test
+    fun `markAllRead with a read time before the list started hides the articles`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val listStartedAt = OffsetDateTime.now()
+
         account.markAllRead(
-            listOf(bulk.id),
-            lastReadAt = since.minusSeconds(1).toZonedDateTime(),
+            listOf(article.id),
+            lastReadAt = listStartedAt.minusSeconds(1).toZonedDateTime(),
         )
 
-        val listedIDs = account.articleRecords.byStatus.all(
-            status = ArticleStatus.UNREAD,
-            limit = 10,
-            offset = 0,
-            sortOrder = SortOrder.NEWEST_FIRST,
-            since = since,
-        ).executeAsList().map { it.id }.toSet()
-
-        assertEquals(setOf(individual.id, untouched.id), listedIDs)
+        assertEquals(emptyList(), unreadListIDs(since = listStartedAt))
     }
 
     @Test
@@ -365,5 +364,15 @@ class AccountTest {
 
         assertNotNull(account.findFolder(folderTitle))
         assertNotNull(account.findFeed(feed.id))
+    }
+
+    private fun unreadListIDs(since: OffsetDateTime): List<String> {
+        return account.articleRecords.byStatus.all(
+            status = ArticleStatus.UNREAD,
+            limit = 10,
+            offset = 0,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            since = since,
+        ).executeAsList().map { it.id }
     }
 }
