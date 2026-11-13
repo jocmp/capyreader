@@ -50,7 +50,6 @@ class ByArticleStatus(private val database: Database) {
         }
     }
 
-    /** IDs in the same order and membership as [all], for a list session snapshot. */
     fun ids(
         status: ArticleStatus,
         sortOrder: SortOrder,

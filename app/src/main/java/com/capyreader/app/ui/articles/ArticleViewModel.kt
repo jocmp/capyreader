@@ -101,8 +101,6 @@ class ArticleViewModel(
             val filter = appPreferences.filter.get()
             val sortOrder = appPreferences.articleListOptions.getSortOrder(filter).get()
 
-            // Follow the list's own snapshot when it covers this article, so swiping matches the
-            // list exactly. Search and deep links fall back to the neighbor query.
             val fromList = if (searchQuery.isNullOrBlank()) {
                 listSnapshot.neighbors(filter, sortOrder, articleID)
             } else {

@@ -17,7 +17,6 @@ class PresentedArticles(
     val items: ArticleItems,
 )
 
-/** Keeps showing the previous list until [page] has loaded, so switching lists doesn't flash empty. */
 @Composable
 fun rememberPresentedArticles(page: ArticleListPage): PresentedArticles {
     var presented by remember { mutableStateOf(page.present()) }

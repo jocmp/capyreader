@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 
-/** Upper bound for IDs bound in one query, under SQLite's pre-3.32 limit of 999 parameters. */
+/** SQLite before 3.32 allows 999 bound parameters per statement. */
 const val MAX_PAGE_IDS = 500
 
 class ArticleRecords(
@@ -227,11 +227,6 @@ class ArticleRecords(
         )
     }
 
-    /**
-     * Every article in a list session with its status, in list order. Membership matches the
-     * paged queries for the same [since], so it can drive both the list and the reader's
-     * next/previous.
-     */
     fun sessionMembership(
         filter: ArticleFilter,
         sortOrder: SortOrder,
@@ -277,14 +272,6 @@ class ArticleRecords(
         return query.executeAsList()
     }
 
-    /**
-     * List rows for [articleIDs], in the same order, skipping any that no longer exist. Keep
-     * [articleIDs] to a batch: each ID is a bound parameter, and SQLite caps those at 999 before
-     * 3.32.
-     *
-     * Rows from one feed repeat its title and favicon URL, so [sharedStrings] lets a caller that
-     * holds many rows keep one copy of each.
-     */
     fun listByIDs(
         articleIDs: List<String>,
         sharedStrings: MutableMap<String, String> = HashMap(),

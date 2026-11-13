@@ -6,10 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import com.jocmp.capy.preferences.Preference
 
-/**
- * Preference accessors build a new [Preference] on every call, so the flow and
- * initial value are keyed by the preference key rather than the instance.
- */
 @Composable
 fun <T> Preference<T>.asState(): State<T> {
     val key = key()

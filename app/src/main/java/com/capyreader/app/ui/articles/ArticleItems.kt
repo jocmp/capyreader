@@ -9,34 +9,23 @@ import androidx.paging.compose.LazyPagingItems
 import com.jocmp.capy.Article
 import java.time.ZonedDateTime
 
-/**
- * The articles an [ArticleList] shows: the in-memory list session ([SessionArticles]) or paged
- * search results ([PagingArticleItems]).
- */
 @Stable
 interface ArticleItems {
     val itemCount: Int
 
-    /** Whether the first load finished, so an empty list means there are no articles. */
     val isLoaded: Boolean
 
-    /** The article to render at [index], or null while it loads. */
     @Composable
     fun rowAt(index: Int): Article?
 
-    /** The article ID at [index] without loading it, or null if it isn't loaded. */
     fun peekID(index: Int): String?
 
-    /** When the article at [index] was published, without loading it. */
     fun peekPublishedAt(index: Int): ZonedDateTime?
 
-    /** The article ID at [index], loading it if needed. */
     fun idAt(index: Int): String?
 
-    /** A stable key for the row at [index]. */
     fun key(index: Int): Any
 
-    /** The index of [articleID], or -1 when it isn't loaded. */
     fun indexOf(articleID: String): Int
 }
 
@@ -45,11 +34,7 @@ fun rememberPagingArticleItems(items: LazyPagingItems<Article>): ArticleItems {
     return remember(items) { PagingArticleItems(items) }
 }
 
-/**
- * After recreation, paged items first report 0 items and then the cached ones, which resets a
- * restored scroll position. Hand out a throwaway state until items arrive.
- * More info: https://issuetracker.google.com/issues/177245496.
- */
+/** Workaround for https://issuetracker.google.com/issues/177245496 */
 @Composable
 fun ArticleItems.rememberLazyListState(): LazyListState {
     return when (itemCount) {
@@ -80,7 +65,7 @@ private class PagingArticleItems(private val items: LazyPagingItems<Article>) : 
         return items.itemSnapshotList.indexOfFirst { it?.id == articleID }
     }
 
-    /** [LazyPagingItems.peek] throws outside the list, unlike the other lookups here. */
+    // LazyPagingItems.peek throws when out of range.
     private fun peek(index: Int): Article? {
         return if (index in 0 until items.itemCount) items.peek(index) else null
     }

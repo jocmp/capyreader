@@ -164,7 +164,6 @@ AND (articles.published_at < anchor.published_at OR (articles.published_at = anc
 ORDER BY articles.published_at DESC, articles.id DESC
 LIMIT 1;
 
--- Session membership: the same articles and order as all*, with their statuses.
 idsNewestFirst:
 SELECT articles.id, article_statuses.read, article_statuses.starred
 FROM articles

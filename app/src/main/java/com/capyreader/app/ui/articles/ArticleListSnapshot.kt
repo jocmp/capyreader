@@ -3,15 +3,10 @@ package com.capyreader.app.ui.articles
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.SortOrder
 
-/**
- * The ordered article IDs of the current list session, shared with the reader so next/previous
- * follows exactly what the list shows without a query per swipe.
- */
 class ArticleListSnapshot {
     @Volatile
     private var current: Snapshot? = null
 
-    /** [indexOf] finds an ID's position in [articleIDs], or -1. */
     @Synchronized
     fun set(
         owner: Any,
@@ -23,7 +18,6 @@ class ArticleListSnapshot {
         current = Snapshot(owner, filter, sortOrder, articleIDs, indexOf)
     }
 
-    /** Drops the snapshot if [owner] published it, so the reader falls back to querying. */
     @Synchronized
     fun clear(owner: Any) {
         if (current?.owner === owner) {
@@ -31,10 +25,6 @@ class ArticleListSnapshot {
         }
     }
 
-    /**
-     * Previous and next IDs around [articleID], or null when the snapshot doesn't cover it
-     * (a different filter or sort, or an article outside the list, such as a deep link).
-     */
     fun neighbors(
         filter: ArticleFilter,
         sortOrder: SortOrder,

@@ -119,10 +119,9 @@ data class Account(
 
     private val sendArticleStatusMutex = Mutex()
 
-    // Unbounded so tryEmit right after a commit never drops a change.
+    // Unbounded so tryEmit never drops a change.
     private val _statusChanges = MutableSharedFlow<StatusChange>(extraBufferCapacity = Int.MAX_VALUE)
 
-    /** Read and starred writes made through this account, for lists that don't re-query. */
     val statusChanges: SharedFlow<StatusChange> = _statusChanges.asSharedFlow()
 
     private val _refreshes = MutableSharedFlow<Unit>(
@@ -130,7 +129,6 @@ data class Account(
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
-    /** Emits after each refresh, which can change read and starred state from the server. */
     val refreshes: SharedFlow<Unit> = _refreshes.asSharedFlow()
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
@@ -408,7 +406,6 @@ data class Account(
         )
     }
 
-    /** Every article in a list session with its status, in list order. */
     suspend fun sessionMembership(
         filter: ArticleFilter,
         sortOrder: SortOrder,
@@ -417,17 +414,12 @@ data class Account(
         articleRecords.sessionMembership(filter = filter, sortOrder = sortOrder, since = since)
     }
 
-    /**
-     * Emits after writes that can change a list's membership or rows: synced or deleted
-     * articles, feed edits, saved search matches. Status writes don't emit; see [statusChanges].
-     */
     val listChanges: Flow<Unit>
         get() = database.articlesQueries.listChangeSignal()
             .asFlow()
             .drop(1)
             .map { }
 
-    /** List rows for a batch of a session's articles, in the given order. */
     suspend fun listArticlesByIDs(
         articleIDs: List<String>,
         sharedStrings: MutableMap<String, String> = HashMap(),
@@ -445,16 +437,11 @@ data class Account(
         )
     }
 
-    /**
-     * @param lastReadAt when the articles count as read. Lists keep articles read after their
-     * session cutoff visible, so a time before the cutoff hides them from the current list.
-     */
     suspend fun markAllRead(
         articleIDs: List<String>,
         lastReadAt: ZonedDateTime = nowUTC(),
         batchSize: Int = 500,
     ): Result<Unit> {
-        // One transaction so observers see a single change instead of one per batch.
         withIOContext {
             database.transaction {
                 articleIDs.chunked(batchSize).forEach { batchIDs ->

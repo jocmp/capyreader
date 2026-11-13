@@ -17,8 +17,7 @@ JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id = :articleID
 LIMIT 1;
 
--- Count queries start from article_statuses with a literal predicate so SQLite can use the
--- read/starred index. An "OR :read IS NULL" guard forces a full scan of articles instead.
+-- Literal predicates, since "OR :read IS NULL" forces a full scan instead of the status index.
 countAllUnread:
 SELECT
  articles.feed_id,
@@ -319,8 +318,6 @@ deleteArticlesByID {
   DELETE FROM articles WHERE id IN :articleIDs;
 }
 
--- List rows for a slice of a session's articles. Callers keep :articleIDs to a page so the
--- bound parameter count stays under SQLite's limit (999 before 3.32).
 listByIDs:
 SELECT
   articles.id,
@@ -342,9 +339,7 @@ JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id IN :articleIDs;
 
--- Only observed for its table notifications: it reads articles, feeds, and saved_search_articles
--- but not article_statuses, so writes that can change list membership or row content notify it
--- and status writes don't. Callers ignore the result.
+-- Observed only for change notifications; deliberately skips article_statuses.
 listChangeSignal:
 SELECT MAX(rowid) FROM articles
 UNION ALL

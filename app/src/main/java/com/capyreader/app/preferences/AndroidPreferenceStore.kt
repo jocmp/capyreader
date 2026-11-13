@@ -15,10 +15,7 @@ class AndroidPreferenceStore(
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
-    /**
-     * One listener for the whole store. SharedPreferences only weakly references
-     * listeners, so this field keeps it alive for the store's lifetime.
-     */
+    // SharedPreferences holds listeners weakly.
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         keys.tryEmit(key)
     }

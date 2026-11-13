@@ -59,7 +59,6 @@ fun rememberNewArticlesIndicator(
             return@LaunchedEffect
         }
 
-        // IDs only, so a scroll frame doesn't build rows. snapshotFlow emits when they change.
         snapshotFlow {
             val firstVisible = listState.layoutInfo.visibleItemsInfo.firstOrNull()
             val presentedID = firstVisible?.let { items.peekID(it.index) }

@@ -27,15 +27,6 @@ import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 import kotlin.time.Duration.Companion.milliseconds
 
-/**
- * The articles of one list session, held in memory like NetNewsWire's timeline.
- *
- * Membership is fixed by the session's read cutoff, so reading an article never changes the
- * list. Each row keeps its read and starred state as Compose state, so a status change redraws
- * only that row. New, deleted, or remotely changed articles merge in on [reload], which keeps the
- * rows it already has and loads only new ones. Rows hold [ListArticle]s rather than [Article]s
- * to keep the heap small; [rowAt] builds an [Article] only for rows on screen.
- */
 @Stable
 internal class SessionArticles(
     private val account: Account,
@@ -47,7 +38,6 @@ internal class SessionArticles(
 ) : ArticleItems {
     private val syncMutex = Mutex()
 
-    /** One copy of each feed title, favicon URL, and the like across all rows. */
     private val sharedStrings = HashMap<String, String>()
 
     private var rows by mutableStateOf(Rows.EMPTY)
@@ -83,7 +73,6 @@ internal class SessionArticles(
 
     override fun indexOf(articleID: String): Int = rows.indexOf(articleID)
 
-    /** Loads the session's rows, then keeps them in step with the account while [scope] lives. */
     fun start(scope: CoroutineScope, dispatcher: CoroutineDispatcher) {
         scope.launch(dispatcher) {
             sync()
@@ -103,10 +92,8 @@ internal class SessionArticles(
         }
     }
 
-    /** Merges in membership and status changes, keeping the session's cutoff. */
     suspend fun reload() = sync()
 
-    /** Stops the reader from following this session once it's gone. */
     fun close() {
         listSnapshot.clear(owner = this)
     }
@@ -130,7 +117,6 @@ internal class SessionArticles(
                 existing.applySynced(member.read, member.starred, startedAt)
                 existing
             } else {
-                // Deleted between the two queries if missing.
                 loaded[member.id]?.let { ArticleListEntry(it, member.read, member.starred) }
             }
         }
@@ -155,10 +141,6 @@ internal class SessionArticles(
         }
     }
 
-    /**
-     * Whether [change] can add an article this list doesn't have yet, like starring an article
-     * from search while the Starred list is open.
-     */
     private fun canJoinList(change: StatusChange): Boolean {
         return when (filter.status) {
             ArticleStatus.STARRED -> change.starred == true
@@ -167,7 +149,6 @@ internal class SessionArticles(
         }
     }
 
-    /** An immutable list version with an ID index for status updates and reader lookups. */
     private class Rows(val entries: List<ArticleListEntry>) {
         private val indexes: Map<String, Int> =
             HashMap<String, Int>(entries.size * 2).also { map ->
@@ -189,12 +170,10 @@ internal class SessionArticles(
     }
 
     companion object {
-        /** Coalesces a sync's many article writes into one reload. */
         private val CHANGE_DEBOUNCE = 500.milliseconds
     }
 }
 
-/** One list row: its content plus read and starred state that redraws only this row. */
 @Stable
 internal class ArticleListEntry(
     val article: ListArticle,
@@ -220,7 +199,6 @@ internal class ArticleListEntry(
         changedLocallyAt = changedAt
     }
 
-    /** Takes the database's status unless a local change landed after the sync began. */
     fun applySynced(read: Boolean, starred: Boolean, syncStartedAt: Long) {
         if (changedLocallyAt < syncStartedAt) {
             status = statusBits(read, starred)
