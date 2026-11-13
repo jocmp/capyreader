@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -224,7 +225,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val listState = articles.rememberLazyListState()
+        val listState = rememberLazyListState()
 
         ResetScrollBehaviorEffect(
             listState = listState,

@@ -1,12 +1,20 @@
 package com.jocmp.capy.articles
 
 import com.jocmp.capy.Article
+import com.jocmp.capy.common.toDateTimeFromSeconds
 import com.jocmp.capy.persistence.listMapper
+import java.time.ZonedDateTime
 
 class ArticleMembership(
     val id: String,
     val read: Boolean,
     val starred: Boolean,
+)
+
+class ListFeed(
+    val title: String?,
+    val faviconURL: String?,
+    val openInBrowser: Boolean,
 )
 
 class ListArticle(
@@ -18,12 +26,12 @@ class ListArticle(
     val imageURL: String?,
     val publishedAt: Long?,
     val enclosureType: String?,
-    val feedTitle: String?,
-    val faviconURL: String?,
-    val openInBrowser: Boolean,
     val updatedAt: Long?,
 ) {
-    fun toArticle(read: Boolean, starred: Boolean): Article {
+    val publishedAtDateTime: ZonedDateTime?
+        get() = publishedAt?.toDateTimeFromSeconds
+
+    fun toArticle(read: Boolean, starred: Boolean, feed: ListFeed?): Article {
         return listMapper(
             id = id,
             feedID = feedID,
@@ -34,9 +42,9 @@ class ListArticle(
             imageURL = imageURL,
             publishedAt = publishedAt,
             enclosureType = enclosureType,
-            feedTitle = feedTitle,
-            faviconURL = faviconURL,
-            openInBrowser = openInBrowser,
+            feedTitle = feed?.title,
+            faviconURL = feed?.faviconURL,
+            openInBrowser = feed?.openInBrowser ?: false,
             updatedAt = updatedAt,
             starred = starred,
             read = read,

@@ -962,13 +962,12 @@ class ArticleRecordsTest {
     }
 
     @Test
-    fun listByIDs_sharesFeedStringsAcrossRows() {
+    fun listByIDs_sharesFeedIDsAcrossRows() {
         val feed = FeedFixture(database).create()
         val (newest, middle, _) = threeArticles(feed)
 
         val rows = articleRecords.listByIDs(listOf(newest.id, middle.id))
 
-        assertTrue(rows[0].feedTitle === rows[1].feedTitle)
         assertTrue(rows[0].feedID === rows[1].feedID)
     }
 
@@ -988,9 +987,20 @@ class ArticleRecordsTest {
         ).executeAsOne()
 
         val built = articleRecords.listByIDs(listOf(newest.id)).single()
-            .toArticle(read = listed.read, starred = listed.starred)
+            .toArticle(read = listed.read, starred = listed.starred, feed = articleRecords.listFeeds()[feed.id])
 
         assertEquals(expected = listed.copy(author = null), actual = built)
+    }
+
+    @Test
+    fun listByIDs_marksTruncatedSummaries() {
+        val long = "word ".repeat(100)
+        val article = articleFixture.create(summary = long)
+
+        val summary = articleRecords.listByIDs(listOf(article.id)).single().summary.orEmpty()
+
+        assertEquals(expected = 301, actual = summary.length)
+        assertTrue(summary.endsWith("…"))
     }
 
     /** Three articles in [feed], newest to oldest, one day apart. */

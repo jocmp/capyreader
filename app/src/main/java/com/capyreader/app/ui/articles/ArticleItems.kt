@@ -1,6 +1,5 @@
 package com.capyreader.app.ui.articles
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -32,15 +31,6 @@ interface ArticleItems {
 @Composable
 fun rememberPagingArticleItems(items: LazyPagingItems<Article>): ArticleItems {
     return remember(items) { PagingArticleItems(items) }
-}
-
-/** Workaround for https://issuetracker.google.com/issues/177245496 */
-@Composable
-fun ArticleItems.rememberLazyListState(): LazyListState {
-    return when (itemCount) {
-        0 -> remember(this) { LazyListState(0, 0) }
-        else -> androidx.compose.foundation.lazy.rememberLazyListState()
-    }
 }
 
 private class PagingArticleItems(private val items: LazyPagingItems<Article>) : ArticleItems {

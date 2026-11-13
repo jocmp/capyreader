@@ -144,3 +144,7 @@ deleteAllExcept {
 
   DELETE FROM feeds WHERE id NOT IN :feedIDs;
 }
+
+listFeeds:
+SELECT id, title, favicon_url, open_articles_in_browser
+FROM feeds;

@@ -11,6 +11,7 @@ import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
 import com.jocmp.capy.articles.ArticleMembership
 import com.jocmp.capy.articles.ListArticle
+import com.jocmp.capy.articles.ListFeed
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
@@ -282,8 +283,7 @@ class ArticleRecords(
 
         val rows = database.articlesQueries
             .listByIDs(articleIDs) { id, feedID, title, url, summary, imageURL, publishedAt,
-                                     enclosureType, feedTitle, faviconURL, openInBrowser,
-                                     updatedAt, _, _ ->
+                                     enclosureType, updatedAt ->
                 ListArticle(
                     id = id,
                     feedID = shared(feedID),
@@ -293,9 +293,6 @@ class ArticleRecords(
                     imageURL = imageURL,
                     publishedAt = publishedAt,
                     enclosureType = shared(enclosureType),
-                    feedTitle = shared(feedTitle),
-                    faviconURL = shared(faviconURL),
-                    openInBrowser = openInBrowser,
                     updatedAt = updatedAt,
                 )
             }
@@ -303,6 +300,12 @@ class ArticleRecords(
             .associateBy { it.id }
 
         return articleIDs.mapNotNull { rows[it] }
+    }
+
+    fun listFeeds(): Map<String, ListFeed> {
+        return database.feedsQueries.listFeeds { id, title, faviconURL, openInBrowser ->
+            id to ListFeed(title = title, faviconURL = faviconURL, openInBrowser = openInBrowser)
+        }.executeAsList().toMap()
     }
 
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {

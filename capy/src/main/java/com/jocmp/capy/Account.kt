@@ -20,6 +20,7 @@ import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.MercuryParser
 import com.jocmp.capy.articles.ArticleMembership
 import com.jocmp.capy.articles.ListArticle
+import com.jocmp.capy.articles.ListFeed
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.articles.StatusChange
 import com.jocmp.capy.common.TimeHelpers.nowUTC
@@ -419,6 +420,10 @@ data class Account(
             .asFlow()
             .drop(1)
             .map { }
+
+    suspend fun listFeeds(): Map<String, ListFeed> = withIOContext {
+        articleRecords.listFeeds()
+    }
 
     suspend fun listArticlesByIDs(
         articleIDs: List<String>,

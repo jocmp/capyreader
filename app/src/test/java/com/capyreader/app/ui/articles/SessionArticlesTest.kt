@@ -15,6 +15,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -43,6 +44,7 @@ class SessionArticlesTest {
             every { statusChanges } returns this@SessionArticlesTest.statusChanges
             every { refreshes } returns this@SessionArticlesTest.refreshes
             every { listChanges } returns emptyFlow()
+            coEvery { listFeeds() } returns emptyMap()
             coEvery { sessionMembership(any(), any(), any()) } answers { membership }
             coEvery { listArticlesByIDs(any(), any()) } answers {
                 val ids = firstArg<List<String>>()
@@ -83,6 +85,41 @@ class SessionArticlesTest {
 
         assertTrue(articles.isLoaded)
         assertEquals("a", articles.entryAt(0)?.article?.id)
+    }
+
+    @Test
+    fun `a local change during a sync reaches rows the sync adds`() = runTest {
+        membership = listOf(member("a"))
+        val articles = start()
+        val membershipRead = CompletableDeferred<Unit>()
+        coEvery { account.sessionMembership(any(), any(), any()) } coAnswers {
+            membershipRead.await()
+            listOf(member("new"), member("a"))
+        }
+
+        backgroundScope.launch(StandardTestDispatcher(testScheduler)) { articles.reload() }
+        runCurrent()
+        statusChanges.emit(StatusChange(listOf("new"), read = true))
+        runCurrent()
+        membershipRead.complete(Unit)
+        runCurrent()
+
+        assertTrue(entry(articles, "new").read)
+    }
+
+    @Test
+    fun `idAt skips rows that haven't loaded`() = runTest {
+        membership = listOf(member("a"))
+        val rowsReady = CompletableDeferred<Unit>()
+        coEvery { account.listArticlesByIDs(any(), any()) } coAnswers {
+            rowsReady.await()
+            firstArg<List<String>>().map(::listArticle)
+        }
+
+        val articles = start()
+
+        assertNull(articles.idAt(0))
+        assertEquals("a", articles.peekID(0))
     }
 
     @Test
@@ -178,9 +215,6 @@ class SessionArticlesTest {
         imageURL = null,
         publishedAt = 0,
         enclosureType = null,
-        feedTitle = "Feed",
-        faviconURL = null,
-        openInBrowser = false,
         updatedAt = null,
     )
 
