@@ -16,6 +16,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.IOException
+import java.time.OffsetDateTime
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -237,6 +238,30 @@ class AccountTest {
         assertTrue(articles.all { it.read })
         assertTrue(result.isSuccess)
         coVerify(exactly = 0) { account.delegate.markRead(any()) }
+    }
+
+    @Test
+    fun `markAllRead before the list cutoff hides articles that markRead keeps`() = runTest {
+        val (individual, bulk, untouched) = 3.repeated {
+            ArticleFixture(account.database).create(read = false)
+        }
+        val since = OffsetDateTime.now()
+
+        account.markRead(individual.id)
+        account.markAllRead(
+            listOf(bulk.id),
+            lastReadAt = since.minusSeconds(1).toZonedDateTime(),
+        )
+
+        val listedIDs = account.articleRecords.byStatus.all(
+            status = ArticleStatus.UNREAD,
+            limit = 10,
+            offset = 0,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            since = since,
+        ).executeAsList().map { it.id }.toSet()
+
+        assertEquals(setOf(individual.id, untouched.id), listedIDs)
     }
 
     @Test

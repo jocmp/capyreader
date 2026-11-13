@@ -438,7 +438,12 @@ class ArticleScreenViewModel(
                 since = listSession.value.since,
             )
 
-            account.markAllRead(articleIDs)
+            // Read just before the list's cutoff so marked articles drop out of the list, while
+            // articles read one at a time (after the cutoff) stay put.
+            account.markAllRead(
+                articleIDs,
+                lastReadAt = listSession.value.since.minusSeconds(1).toZonedDateTime(),
+            )
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)
