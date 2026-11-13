@@ -10,6 +10,8 @@ import com.jocmp.capy.articles.StatusChange
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import java.time.OffsetDateTime
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
@@ -19,11 +21,11 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.time.OffsetDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SessionArticlesTest {
@@ -59,6 +61,28 @@ class SessionArticlesTest {
         assertTrue(articles.isLoaded)
         assertEquals(listOf("a", "b"), (0 until articles.itemCount).map(articles::idAt))
         assertEquals(1, articles.indexOf("b"))
+    }
+
+    @Test
+    fun `publishes the full count before rows load`() = runTest {
+        membership = listOf(member("a"), member("b"))
+        val rowsReady = CompletableDeferred<Unit>()
+        coEvery { account.listArticlesByIDs(any(), any()) } coAnswers {
+            rowsReady.await()
+            firstArg<List<String>>().map(::listArticle)
+        }
+
+        val articles = start()
+
+        assertEquals(2, articles.itemCount)
+        assertFalse(articles.isLoaded)
+        assertNull(articles.entryAt(0)?.article)
+
+        rowsReady.complete(Unit)
+        runCurrent()
+
+        assertTrue(articles.isLoaded)
+        assertEquals("a", articles.entryAt(0)?.article?.id)
     }
 
     @Test

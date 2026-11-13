@@ -324,7 +324,8 @@ SELECT
   articles.feed_id,
   articles.title,
   articles.url,
-  articles.summary,
+  -- Rows show a few lines, and some services store whole articles as summaries.
+  substr(articles.summary, 1, 300) AS summary,
   articles.image_url,
   articles.published_at,
   articles.enclosure_type,

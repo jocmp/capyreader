@@ -51,10 +51,11 @@ internal class SessionArticles(
     @Composable
     override fun rowAt(index: Int): Article? {
         val entry = entryAt(index) ?: return null
+        val article = entry.article ?: return null
         val read = entry.read
         val starred = entry.starred
 
-        return remember(entry, read, starred) { entry.article.toArticle(read, starred) }
+        return remember(article, read, starred) { article.toArticle(read, starred) }
     }
 
     override fun peekID(index: Int): String? = idAt(index)
@@ -62,7 +63,7 @@ internal class SessionArticles(
     override fun peekPublishedAt(index: Int): ZonedDateTime? {
         val entry = entryAt(index) ?: return null
 
-        return entry.article.toArticle(entry.read, entry.starred).publishedAt
+        return entry.article?.toArticle(entry.read, entry.starred)?.publishedAt
     }
 
     override fun idAt(index: Int): String? = entryAt(index)?.id
@@ -76,7 +77,6 @@ internal class SessionArticles(
     fun start(scope: CoroutineScope, dispatcher: CoroutineDispatcher) {
         scope.launch(dispatcher) {
             sync()
-            isLoaded = true
         }
 
         scope.launch(dispatcher) {
@@ -102,26 +102,28 @@ internal class SessionArticles(
         val startedAt = System.nanoTime()
         val membership = account.sessionMembership(filter = filter, sortOrder = sortOrder, since = since)
         val current = rows
+        val pending = ArrayList<ArticleListEntry>()
 
-        val newIDs = membership.mapNotNull { member -> member.id.takeIf { current.indexOf(it) < 0 } }
-        val loaded = HashMap<String, ListArticle>(newIDs.size)
-
-        newIDs.chunked(MAX_PAGE_IDS).forEach { batch ->
-            account.listArticlesByIDs(batch, sharedStrings).associateByTo(loaded) { it.id }
-        }
-
-        val entries = membership.mapNotNull { member ->
-            val existing = current.entryFor(member.id)
-
-            if (existing != null) {
-                existing.applySynced(member.read, member.starred, startedAt)
-                existing
-            } else {
-                loaded[member.id]?.let { ArticleListEntry(it, member.read, member.starred) }
-            }
+        val entries = membership.map { member ->
+            current.entryFor(member.id)?.also { it.applySynced(member.read, member.starred, startedAt) }
+                ?: ArticleListEntry(member.id, member.read, member.starred).also(pending::add)
         }
 
         publish(Rows(entries))
+
+        // In list order, so the first screen fills before the rest of the list.
+        pending.chunked(MAX_PAGE_IDS).forEach { batch ->
+            val loaded = account.listArticlesByIDs(batch.map { it.id }, sharedStrings)
+                .associateBy { it.id }
+
+            batch.forEach { entry -> entry.article = loaded[entry.id] }
+            isLoaded = true
+        }
+        isLoaded = true
+
+        if (pending.any { it.article == null }) {
+            publish(Rows(entries.filter { it.article != null }))
+        }
     }
 
     private fun publish(next: Rows) {
@@ -176,17 +178,16 @@ internal class SessionArticles(
 
 @Stable
 internal class ArticleListEntry(
-    val article: ListArticle,
+    val id: String,
     read: Boolean,
     starred: Boolean,
 ) {
+    var article by mutableStateOf<ListArticle?>(null)
+
     private var status by mutableIntStateOf(statusBits(read, starred))
 
     @Volatile
     private var changedLocallyAt = 0L
-
-    val id: String
-        get() = article.id
 
     val read: Boolean
         get() = status and READ != 0
