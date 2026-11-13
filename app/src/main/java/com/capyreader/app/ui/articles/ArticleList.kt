@@ -39,6 +39,8 @@ import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.StatusOverride
+import com.jocmp.capy.articles.withStatus
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
@@ -55,6 +57,7 @@ fun ArticleList(
     showNewArticles: Boolean = false,
     scrollToTop: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(),
+    statusOverrides: Map<String, StatusOverride> = emptyMap(),
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -76,7 +79,10 @@ fun ArticleList(
                         }
                 ) {
                     items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
-                        val item = articles[index]
+                        val loaded = articles[index]
+                        val override = loaded?.let { statusOverrides[it.id] }
+                        // Same instance when nothing changed, so unchanged rows skip recomposition.
+                        val item = remember(loaded, override) { loaded?.withStatus(override) }
 
                         Box(Modifier.animateItem()) {
                             if (item == null) {

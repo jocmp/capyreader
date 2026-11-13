@@ -156,3 +156,28 @@ AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summ
 AND (articles.published_at < anchor.published_at OR (articles.published_at = anchor.published_at AND articles.id < anchor.id))
 ORDER BY articles.published_at DESC, articles.id DESC
 LIMIT 1;
+
+-- Session snapshots: the same membership and order as all*, IDs only.
+idsNewestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
+ORDER BY articles.published_at DESC, articles.id DESC;
+
+idsOldestFirst:
+SELECT articles.id
+FROM articles
+JOIN feeds ON articles.feed_id = feeds.id
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE ((article_statuses.read = :read AND article_statuses.last_read_at IS NULL OR article_statuses.last_read_at >= :lastReadAt) OR :read IS NULL)
+AND (feeds.priority IS NULL OR feeds.priority IN ('main', 'important'))
+AND ((article_statuses.starred = :starred AND article_statuses.last_unstarred_at IS NULL OR article_statuses.last_unstarred_at >= :lastUnstarredAt) OR :starred IS NULL)
+AND (articles.published_at >= :publishedSince OR :publishedSince IS NULL)
+AND (:query IS NULL OR articles.title LIKE '%' || :query || '%' OR articles.summary LIKE '%' || :query || '%')
+ORDER BY articles.published_at ASC, articles.id ASC;

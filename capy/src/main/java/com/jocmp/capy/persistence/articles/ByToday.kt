@@ -49,6 +49,36 @@ class ByToday(private val database: Database) {
         }
     }
 
+    /** IDs in the same order and membership as [all], for a list session snapshot. */
+    fun ids(
+        status: ArticleStatus,
+        sortOrder: SortOrder,
+        since: OffsetDateTime?,
+    ): Query<String> {
+        val (read, starred) = status.toStatusPair
+        val queries = database.articlesByStatusQueries
+
+        return if (isNewestFirst(sortOrder)) {
+            queries.idsNewestFirst(
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = mapTodayStartDate(since),
+                query = null
+            )
+        } else {
+            queries.idsOldestFirst(
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = mapTodayStartDate(since),
+                query = null
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         range: MarkRead,

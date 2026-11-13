@@ -2,6 +2,7 @@ package com.jocmp.capy
 
 import com.jocmp.capy.accounts.AutoDelete
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.articles.StatusChange
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.fixtures.AccountFixture
 import com.jocmp.capy.fixtures.ArticleFixture
@@ -12,6 +13,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockkObject
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -238,6 +241,66 @@ class AccountTest {
         assertTrue(articles.all { it.read })
         assertTrue(result.isSuccess)
         coVerify(exactly = 0) { account.delegate.markRead(any()) }
+    }
+
+    @Test
+    fun `status writes emit status changes`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val changes = mutableListOf<StatusChange>()
+
+        val collector = launch(UnconfinedTestDispatcher(testScheduler)) {
+            account.statusChanges.collect { changes.add(it) }
+        }
+
+        account.markRead(article.id)
+        account.addStar(article.id)
+        account.markUnread(article.id)
+        account.removeStar(article.id)
+
+        assertEquals(
+            listOf(
+                StatusChange(listOf(article.id), read = true),
+                StatusChange(listOf(article.id), starred = true),
+                StatusChange(listOf(article.id), read = false),
+                StatusChange(listOf(article.id), starred = false),
+            ),
+            changes,
+        )
+
+        collector.cancel()
+    }
+
+    @Test
+    fun `refresh emits refreshes even when it fails`() = runTest {
+        var emissions = 0
+        val collector = launch(UnconfinedTestDispatcher(testScheduler)) {
+            account.refreshes.collect { emissions += 1 }
+        }
+        coEvery { account.delegate.refresh(any(), any()) } throws IOException("offline")
+
+        account.refresh()
+
+        assertEquals(1, emissions)
+        collector.cancel()
+    }
+
+    @Test
+    fun `listChanges ignores status writes and emits for new articles`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val emissions = mutableListOf<Unit>()
+
+        val collector = launch(UnconfinedTestDispatcher(testScheduler)) {
+            account.listChanges.collect { emissions.add(it) }
+        }
+
+        account.markRead(article.id)
+        account.addStar(article.id)
+        assertEquals(0, emissions.size)
+
+        ArticleFixture(account.database).create(read = false)
+        assertTrue(emissions.isNotEmpty())
+
+        collector.cancel()
     }
 
     @Test

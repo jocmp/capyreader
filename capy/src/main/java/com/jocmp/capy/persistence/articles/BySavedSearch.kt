@@ -53,6 +53,40 @@ class BySavedSearch(private val database: Database) {
         }
     }
 
+    /** IDs in the same order and membership as [all], for a list session snapshot. */
+    fun ids(
+        savedSearchID: String,
+        status: ArticleStatus,
+        since: OffsetDateTime,
+        sortOrder: SortOrder,
+    ): Query<String> {
+        val (read, starred) = status.toStatusPair
+
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.idsNewestFirst(
+                savedSearchID = savedSearchID,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null
+            )
+        } else {
+            queries.idsOldestFirst(
+                savedSearchID = savedSearchID,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         savedSearchID: String,

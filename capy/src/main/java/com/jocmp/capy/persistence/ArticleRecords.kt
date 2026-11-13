@@ -23,7 +23,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
+
+/** Upper bound for IDs bound in one query, under SQLite's pre-3.32 limit of 999 parameters. */
+const val MAX_PAGE_IDS = 500
 
 class ArticleRecords(
     private val database: Database
@@ -219,6 +223,70 @@ class ArticleRecords(
             starred = false,
             lastUnstarredAt = nowUTC().toEpochSecond(),
         )
+    }
+
+    /**
+     * Every article ID in a list session, in list order. Membership matches the paged list for
+     * the same [since], so the IDs can drive both the list and the reader's next/previous.
+     */
+    fun sessionArticleIDs(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: OffsetDateTime,
+    ): List<String> {
+        val query = when (filter) {
+            is ArticleFilter.Articles -> byStatus.ids(
+                status = filter.articleStatus,
+                sortOrder = sortOrder,
+                since = since,
+            )
+
+            is ArticleFilter.Feeds -> byFeed.ids(
+                feedIDs = listOf(filter.feedID),
+                status = filter.feedStatus,
+                since = since,
+                sortOrder = sortOrder,
+                priority = FeedPriority.FEED,
+            )
+
+            is ArticleFilter.Folders -> byFeed.ids(
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                since = since,
+                sortOrder = sortOrder,
+                priority = FeedPriority.CATEGORY,
+            )
+
+            is ArticleFilter.SavedSearches -> bySavedSearch.ids(
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                since = since,
+                sortOrder = sortOrder,
+            )
+
+            is ArticleFilter.Today -> byToday.ids(
+                status = filter.status,
+                sortOrder = sortOrder,
+                since = since,
+            )
+        }
+
+        return query.executeAsList()
+    }
+
+    /**
+     * List rows for [articleIDs], in the same order. Keep [articleIDs] to a page: each ID is a
+     * bound parameter, and SQLite caps those at 999 before 3.32.
+     */
+    fun listByIDs(articleIDs: List<String>): List<Article> {
+        require(articleIDs.size <= MAX_PAGE_IDS) { "${articleIDs.size} IDs exceed one query's limit" }
+
+        val rows = database.articlesQueries
+            .listByIDs(articleIDs, ::listMapper)
+            .executeAsList()
+            .associateBy { it.id }
+
+        return articleIDs.mapNotNull { rows[it] }
     }
 
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {

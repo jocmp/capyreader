@@ -57,6 +57,43 @@ class ByFeed(private val database: Database) {
         }
     }
 
+    /** IDs in the same order and membership as [all], for a list session snapshot. */
+    fun ids(
+        feedIDs: List<String>,
+        status: ArticleStatus,
+        since: OffsetDateTime,
+        sortOrder: SortOrder,
+        priority: FeedPriority,
+    ): Query<String> {
+        val (read, starred) = status.toStatusPair
+
+        val queries = database.articlesByFeedQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.idsNewestFirst(
+                feedIDs = feedIDs,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities
+            )
+        } else {
+            queries.idsOldestFirst(
+                feedIDs = feedIDs,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                priorities = priority.inclusivePriorities
+            )
+        }
+    }
+
     fun unreadArticleIDs(
         status: ArticleStatus,
         feedIDs: List<String>,

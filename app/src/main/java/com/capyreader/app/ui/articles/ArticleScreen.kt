@@ -163,6 +163,7 @@ fun ArticleScreen(
 
     val articleList by viewModel.articleList.collectAsStateWithLifecycle()
     val presentedArticles = rememberPresentedArticles(articleList)
+    val statusOverrides by presentedArticles.overrides.collectAsStateWithLifecycle()
     val articles = presentedArticles.items
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
@@ -631,6 +632,7 @@ fun ArticleScreen(
                                             onSelect = { article ->
                                                 selectArticle(article)
                                             },
+                                            statusOverrides = statusOverrides,
                                         )
                                     }
                                 }

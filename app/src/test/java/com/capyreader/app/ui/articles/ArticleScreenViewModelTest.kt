@@ -25,7 +25,9 @@ import java.time.ZonedDateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -72,6 +74,9 @@ class ArticleScreenViewModelTest {
                 every { changes() } returns flowOf(false)
             }
             every { countAll(any()) } returns flowOf(emptyMap())
+            every { statusChanges } returns MutableSharedFlow()
+            every { refreshes } returns MutableSharedFlow()
+            every { listChanges } returns emptyFlow()
             every { countAllBySavedSearch(any()) } returns flowOf(emptyMap())
             every { source } returns Source.LOCAL
             coEvery { refresh(any()) } returns Result.success(Unit)
@@ -385,6 +390,7 @@ class ArticleScreenViewModelTest {
             computeDispatcher = testDispatcher,
             syncFlushInterval = syncFlushInterval,
             articleCutoff = articleCutoff,
+            listSnapshot = ArticleListSnapshot(),
         )
     }
 }

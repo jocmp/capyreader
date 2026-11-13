@@ -903,6 +903,63 @@ class ArticleRecordsTest {
             query = query,
         )
 
+    @Test
+    fun sessionArticleIDs_matchesTheListInOrder() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        listOf(newest, middle, oldest).forEach { articleRecords.markUnread(it.id) }
+        val filter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD,
+        )
+        val since = OffsetDateTime.now()
+
+        listOf(SortOrder.NEWEST_FIRST, SortOrder.OLDEST_FIRST).forEach { sortOrder ->
+            val listed = articleRecords.byFeed.all(
+                feedIDs = listOf(feed.id),
+                status = ArticleStatus.UNREAD,
+                since = since,
+                limit = 10,
+                offset = 0,
+                sortOrder = sortOrder,
+                priority = FeedPriority.FEED,
+            ).executeAsList().map { it.id }
+
+            val snapshot = articleRecords.sessionArticleIDs(filter, sortOrder, since)
+
+            assertEquals(expected = listed, actual = snapshot)
+        }
+    }
+
+    @Test
+    fun sessionArticleIDs_keepsArticlesReadAfterTheCutoff() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        listOf(newest, middle, oldest).forEach { articleRecords.markUnread(it.id) }
+        val since = OffsetDateTime.now()
+
+        articleRecords.markAllRead(listOf(middle.id))
+
+        val snapshot = articleRecords.sessionArticleIDs(
+            ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD),
+            SortOrder.NEWEST_FIRST,
+            since,
+        )
+
+        assertEquals(expected = listOf(newest.id, middle.id, oldest.id), actual = snapshot)
+    }
+
+    @Test
+    fun listByIDs_returnsRowsInRequestedOrderAndSkipsMissing() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+
+        val rows = articleRecords.listByIDs(listOf(oldest.id, "missing", newest.id, middle.id))
+
+        assertEquals(expected = listOf(oldest.id, newest.id, middle.id), actual = rows.map { it.id })
+    }
+
     /** Three articles in [feed], newest to oldest, one day apart. */
     private fun threeArticles(feed: Feed): Triple<Article, Article, Article> {
         val start = nowUTC()
