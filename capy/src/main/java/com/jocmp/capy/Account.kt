@@ -41,8 +41,6 @@ import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -311,15 +309,23 @@ data class Account(
     }
 
     suspend fun addStar(articleID: String): Result<Unit> {
-        articleRecords.addStar(articleID = articleID)
-        queueStatus(articleID, SyncStatus.Key.STARRED, flag = true)
+        withIOContext {
+            database.transaction {
+                articleRecords.addStar(articleID = articleID)
+                queueStatus(articleID, SyncStatus.Key.STARRED, flag = true)
+            }
+        }
 
         return Result.success(Unit)
     }
 
     suspend fun removeStar(articleID: String): Result<Unit> {
-        articleRecords.removeStar(articleID = articleID)
-        queueStatus(articleID, SyncStatus.Key.STARRED, flag = false)
+        withIOContext {
+            database.transaction {
+                articleRecords.removeStar(articleID = articleID)
+                queueStatus(articleID, SyncStatus.Key.STARRED, flag = false)
+            }
+        }
 
         return Result.success(Unit)
     }
@@ -387,15 +393,16 @@ data class Account(
     }
 
     suspend fun markAllRead(articleIDs: List<String>, batchSize: Int = 500): Result<Unit> {
+        // One transaction so observers see a single change instead of one per batch.
         withIOContext {
-            articleIDs.chunked(batchSize).map { batchIDs ->
-                async {
+            database.transaction {
+                articleIDs.chunked(batchSize).forEach { batchIDs ->
                     val changesetIDs = articleRecords.filterUnreadStatuses(batchIDs)
 
                     articleRecords.markAllRead(changesetIDs)
                     queueStatuses(changesetIDs, SyncStatus.Key.READ, flag = true)
                 }
-            }.awaitAll()
+            }
         }
 
         return Result.success(Unit)
@@ -406,8 +413,12 @@ data class Account(
     }
 
     suspend fun markUnread(articleID: String): Result<Unit> {
-        articleRecords.markUnread(articleID = articleID)
-        queueStatus(articleID, SyncStatus.Key.READ, flag = false)
+        withIOContext {
+            database.transaction {
+                articleRecords.markUnread(articleID = articleID)
+                queueStatus(articleID, SyncStatus.Key.READ, flag = false)
+            }
+        }
 
         return Result.success(Unit)
     }

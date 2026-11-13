@@ -196,7 +196,7 @@ class ArticleScreenViewModel(
             query = key.query,
             sortOrder = key.sort,
             since = key.since,
-        ).flow
+        ).flow.flowOn(ioDispatcher)
 
     val folders: Flow<List<Folder>> = combine(
         accountFolders,
