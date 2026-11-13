@@ -438,12 +438,24 @@ class ArticleScreenViewModel(
                 since = listSession.value.since,
             )
 
-            // Marked articles drop out of the list and the reader's neighbors, while articles
-            // read one at a time (after the cutoff) stay put.
-            account.markAllRead(
-                articleIDs,
-                lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
-            )
+            val clearsList = range == MarkRead.All && filter == latestFilter
+
+            if (clearsList || range != MarkRead.All) {
+                // Mark above/below works like reading one at a time: rows stay, dimmed.
+                account.markAllRead(articleIDs)
+            } else {
+                // Another filter, e.g. a feed marked read from the drawer: its articles leave
+                // this list without resetting it.
+                account.markAllRead(
+                    articleIDs,
+                    lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
+                )
+            }
+
+            if (clearsList) {
+                // A fresh session moves the cutoff past every read article, so the list resets.
+                startListSession(latestFilter)
+            }
 
             launchIO {
                 notificationHelper.dismissNotifications(articleIDs)

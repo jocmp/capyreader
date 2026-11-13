@@ -12,15 +12,19 @@ import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
+import com.jocmp.capy.MarkRead
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import java.time.ZonedDateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -28,9 +32,13 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotSame
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -47,6 +55,7 @@ class ArticleScreenViewModelTest {
     private lateinit var account: Account
     private lateinit var appPreferences: AppPreferences
     private lateinit var notificationHelper: NotificationHelper
+    private val articleCutoff = ArticleSessionCutoff()
 
     @Before
     fun setUp() {
@@ -285,6 +294,42 @@ class ArticleScreenViewModelTest {
     }
 
     @Test
+    fun `mark all read on the shown list starts a new list session`() = runTest {
+        val unread = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        appPreferences.filter.set(unread)
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+        val listBefore = viewModel.articleList.value
+        val cutoffBefore = articleCutoff.value
+
+        viewModel.markAllRead(filter = unread)
+        waitFor { articleCutoff.value != cutoffBefore }
+        advanceUntilIdle()
+
+        assertNotSame(listBefore, viewModel.articleList.value)
+    }
+
+    @Test
+    fun `mark above keeps the list session so read rows stay`() = runTest {
+        val unread = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
+        appPreferences.filter.set(unread)
+        val viewModel = buildViewModel()
+        advanceUntilIdle()
+        val listBefore = viewModel.articleList.value
+
+        val lastReadAt = slot<ZonedDateTime>()
+
+        viewModel.markAllRead(filter = unread, range = MarkRead.After("article"))
+        coVerify(timeout = 5_000) { account.markAllRead(any(), capture(lastReadAt), any()) }
+        advanceUntilIdle()
+
+        assertSame(listBefore, viewModel.articleList.value)
+        // Not backdated before the cutoff, so the marked rows stay in the list.
+        val cutoff = articleCutoff.value!!.toEpochSecond()
+        assertTrue(lastReadAt.captured.toEpochSecond() >= cutoff - 1)
+    }
+
+    @Test
     fun `markAllRead uses the sort order for the filter status`() = runTest {
         appPreferences.articleListOptions.getSortOrder(ArticleStatus.UNREAD).set(SortOrder.OLDEST_FIRST)
         val unread = ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD)
@@ -317,6 +362,15 @@ class ArticleScreenViewModelTest {
         }
     }
 
+    /** Waits in real time for work on Dispatchers.IO, which the test scheduler doesn't control. */
+    private suspend fun waitFor(condition: () -> Boolean) {
+        withContext(Dispatchers.Default) {
+            withTimeout(5_000) {
+                while (!condition()) delay(10)
+            }
+        }
+    }
+
     private fun buildViewModel(
         syncFlushInterval: kotlin.time.Duration? = null,
     ): ArticleScreenViewModel {
@@ -330,7 +384,7 @@ class ArticleScreenViewModelTest {
             ioDispatcher = testDispatcher,
             computeDispatcher = testDispatcher,
             syncFlushInterval = syncFlushInterval,
-            articleCutoff = ArticleSessionCutoff(),
+            articleCutoff = articleCutoff,
         )
     }
 }
