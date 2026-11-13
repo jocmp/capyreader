@@ -25,8 +25,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkObject
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.net.URL
@@ -106,6 +108,11 @@ class LocalAccountDelegateTest {
             feedFinder = feedFinder,
             preferences = accountPreferences
         )
+    }
+
+    @After
+    fun teardown() {
+        unmockkObject(TimeHelpers)
     }
 
     @Test
