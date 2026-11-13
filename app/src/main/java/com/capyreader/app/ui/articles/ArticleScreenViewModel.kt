@@ -438,11 +438,11 @@ class ArticleScreenViewModel(
                 since = listSession.value.since,
             )
 
-            // Read just before the list's cutoff so marked articles drop out of the list, while
-            // articles read one at a time (after the cutoff) stay put.
+            // Marked articles drop out of the list and the reader's neighbors, while articles
+            // read one at a time (after the cutoff) stay put.
             account.markAllRead(
                 articleIDs,
-                lastReadAt = listSession.value.since.minusSeconds(1).toZonedDateTime(),
+                lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
             )
 
             launchIO {
@@ -914,4 +914,12 @@ class ArticleListPage(
 private data class ListSession(
     val filter: ArticleFilter,
     val since: OffsetDateTime,
-)
+) {
+    /**
+     * A read time that falls outside this session. [since] is stamped a second ahead of the
+     * session's start, and the reader's cutoff is never earlier than that start, so two seconds
+     * back clears both.
+     */
+    val hiddenReadAt: OffsetDateTime
+        get() = since.minusSeconds(2)
+}
