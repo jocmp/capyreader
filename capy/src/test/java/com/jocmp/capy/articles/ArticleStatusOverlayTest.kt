@@ -37,6 +37,16 @@ class ArticleStatusOverlayTest {
     }
 
     @Test
+    fun `retainOnly drops overrides outside the list`() {
+        val overlay = ArticleStatusOverlay()
+        overlay.apply(StatusChange(listOf("listed", "gone"), read = true))
+
+        overlay.retainOnly(setOf("listed"))
+
+        assertEquals(setOf("listed"), overlay.overrides.value.keys)
+    }
+
+    @Test
     fun `withStatus returns the same article when nothing changes`() {
         val article = article(read = true, starred = false)
 

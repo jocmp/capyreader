@@ -48,6 +48,13 @@ class ArticleStatusOverlay {
         }
     }
 
+    /** Drops overrides for articles outside [articleIDs], such as ones that left the list. */
+    fun retainOnly(articleIDs: Set<String>) {
+        _overrides.update { current ->
+            if (current.keys.all(articleIDs::contains)) current else current.filterKeys(articleIDs::contains)
+        }
+    }
+
     companion object {
         /** A monotonic timestamp comparable with each override's [StatusOverride.changedAt]. */
         fun now(): Long = System.nanoTime()

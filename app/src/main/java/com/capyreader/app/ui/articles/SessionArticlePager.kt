@@ -51,6 +51,9 @@ internal class SessionArticlePager(
     private var articleIDs: List<String> = emptyList()
 
     @Volatile
+    private var articleIDSet: Set<String> = emptySet()
+
+    @Volatile
     private var source: SnapshotPagingSource? = null
 
     val overrides: StateFlow<Map<String, StatusOverride>> = overlay.overrides
@@ -73,7 +76,12 @@ internal class SessionArticlePager(
     /** Keeps the session in step with the account while [scope] is active. */
     fun bind(scope: CoroutineScope, dispatcher: CoroutineDispatcher) {
         scope.launch(dispatcher) {
-            account.statusChanges.collect(overlay::apply)
+            // Only articles in this list: anything else would never be loaded or cleared. An
+            // article that joins later loads fresh from the database anyway.
+            account.statusChanges.collect { change ->
+                val inList = articleIDSet
+                overlay.apply(change.copy(articleIDs = change.articleIDs.filter(inList::contains)))
+            }
         }
 
         scope.launch(dispatcher) {
@@ -129,7 +137,13 @@ internal class SessionArticlePager(
     }
 
     private fun publish(ids: List<String>) {
-        synchronized(idsLock) { articleIDs = ids }
+        val idSet = ids.toHashSet()
+
+        synchronized(idsLock) {
+            articleIDs = ids
+            articleIDSet = idSet
+        }
+        overlay.retainOnly(idSet)
 
         if (isCurrent(this)) {
             listSnapshot.set(owner = this, filter, sortOrder, ids)
