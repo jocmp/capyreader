@@ -317,3 +317,30 @@ deleteArticlesByID {
   DELETE FROM enclosures WHERE article_id IN :articleIDs;
   DELETE FROM articles WHERE id IN :articleIDs;
 }
+
+listByIDs:
+SELECT
+  articles.id,
+  articles.feed_id,
+  articles.title,
+  articles.url,
+  -- Rows show a few lines, and some services store whole articles as summaries.
+  CASE WHEN length(articles.summary) > 300
+    THEN substr(articles.summary, 1, 300) || '…'
+    ELSE articles.summary
+  END AS summary,
+  articles.image_url,
+  articles.published_at,
+  articles.enclosure_type,
+  article_statuses.updated_at
+FROM articles
+JOIN article_statuses ON articles.id = article_statuses.article_id
+WHERE articles.id IN :articleIDs;
+
+-- Observed only for change notifications; deliberately skips article_statuses.
+listChangeSignal:
+SELECT MAX(rowid) FROM articles
+UNION ALL
+SELECT MAX(rowid) FROM feeds
+UNION ALL
+SELECT MAX(rowid) FROM saved_search_articles;

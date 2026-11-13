@@ -60,11 +60,11 @@ fun rememberNewArticlesIndicator(
         }
 
         snapshotFlow {
-            val head = items.itemSnapshotList.firstOrNull()?.let {
-                ListHead(id = it.id, publishedAt = it.publishedAt)
+            val head = items.peekID(0)?.let { id ->
+                items.peekPublishedAt(0)?.let { ListHead(id = id, publishedAt = it) }
             }
             val firstVisible = listState.layoutInfo.visibleItemsInfo.firstOrNull()
-            val presentedID = firstVisible?.let { items.itemSnapshotList.getOrNull(it.index)?.id }
+            val presentedID = firstVisible?.let { items.peekID(it.index) }
 
             Triple(head, firstVisible?.key as? String, presentedID)
         }.collect { (head, firstVisibleID, presentedID) ->

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -48,8 +49,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Saver
@@ -89,7 +88,6 @@ import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberDisplayTimeFormats
-import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -164,7 +162,7 @@ fun ArticleScreen(
     val articleList by viewModel.articleList.collectAsStateWithLifecycle()
     val presentedArticles = rememberPresentedArticles(articleList)
     val articles = presentedArticles.items
-    val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+    val searchResults = rememberPagingArticleItems(viewModel.searchResults.collectAsLazyPagingItems())
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -227,7 +225,7 @@ fun ArticleScreen(
             viewModel.dismissUnauthorizedMessage()
             setUpdatePasswordDialogOpen(true)
         }
-        val listState = articles.rememberLazyListState()
+        val listState = rememberLazyListState()
 
         ResetScrollBehaviorEffect(
             listState = listState,
@@ -845,13 +843,11 @@ fun canOpenNextFeed(
 
 @OptIn(FlowPreview::class)
 @Composable
-private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
-    var loaded by remember(items) {
-        mutableStateOf(items.loadState.refresh is LoadState.NotLoading)
-    }
+private fun rememberInitialLoad(items: ArticleItems): Boolean {
+    var loaded by remember(items) { mutableStateOf(items.isLoaded) }
 
     LaunchedEffect(items) {
-        snapshotFlow { items.loadState.refresh }.first { it is LoadState.NotLoading }
+        snapshotFlow { items.isLoaded }.first { it }
         loaded = true
     }
 
@@ -861,7 +857,7 @@ private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
 @Composable
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
-    articles: LazyPagingItems<Article>,
+    articles: ArticleItems,
     active: Boolean,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
@@ -917,15 +913,15 @@ private fun MarkReadOnScrollEffect(
                     )
                     if (scrolledPastIndex > currentHighWaterMark && scrolledPastIndex < currentArticles.itemCount) {
                         updateScrollHighWaterMark(scrolledPastIndex)
-                        val boundaryArticle = currentArticles[scrolledPastIndex]
-                        if (boundaryArticle != null && currentActive) {
+                        val boundaryID = currentArticles.idAt(scrolledPastIndex)
+                        if (boundaryID != null && currentActive) {
                             CapyLog.debug(
                                 "mark_read_on_scroll:boundary", mapOf(
-                                    "articleID" to boundaryArticle.id,
+                                    "articleID" to boundaryID,
                                     "index" to scrolledPastIndex,
                                 )
                             )
-                            markReadOnScroll(boundaryArticle.id)
+                            markReadOnScroll(boundaryID)
                         }
                     }
                 }

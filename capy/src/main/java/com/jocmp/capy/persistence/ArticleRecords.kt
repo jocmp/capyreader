@@ -9,6 +9,9 @@ import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleMembership
+import com.jocmp.capy.articles.ListArticle
+import com.jocmp.capy.articles.ListFeed
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
@@ -23,7 +26,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
+
+/** SQLite before 3.32 allows 999 bound parameters per statement. */
+const val MAX_PAGE_IDS = 500
 
 class ArticleRecords(
     private val database: Database
@@ -219,6 +226,86 @@ class ArticleRecords(
             starred = false,
             lastUnstarredAt = nowUTC().toEpochSecond(),
         )
+    }
+
+    fun sessionMembership(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: OffsetDateTime,
+    ): List<ArticleMembership> {
+        val query = when (filter) {
+            is ArticleFilter.Articles -> byStatus.ids(
+                status = filter.articleStatus,
+                sortOrder = sortOrder,
+                since = since,
+            )
+
+            is ArticleFilter.Feeds -> byFeed.ids(
+                feedIDs = listOf(filter.feedID),
+                status = filter.feedStatus,
+                since = since,
+                sortOrder = sortOrder,
+                priority = FeedPriority.FEED,
+            )
+
+            is ArticleFilter.Folders -> byFeed.ids(
+                feedIDs = folderFeedIDs(filter),
+                status = filter.status,
+                since = since,
+                sortOrder = sortOrder,
+                priority = FeedPriority.CATEGORY,
+            )
+
+            is ArticleFilter.SavedSearches -> bySavedSearch.ids(
+                savedSearchID = filter.savedSearchID,
+                status = filter.status,
+                since = since,
+                sortOrder = sortOrder,
+            )
+
+            is ArticleFilter.Today -> byToday.ids(
+                status = filter.status,
+                sortOrder = sortOrder,
+                since = since,
+            )
+        }
+
+        return query.executeAsList()
+    }
+
+    fun listByIDs(
+        articleIDs: List<String>,
+        sharedStrings: MutableMap<String, String> = HashMap(),
+    ): List<ListArticle> {
+        require(articleIDs.size <= MAX_PAGE_IDS) { "${articleIDs.size} IDs exceed one query's limit" }
+
+        fun shared(value: String?) = value?.let { sharedStrings.getOrPut(it) { it } }
+
+        val rows = database.articlesQueries
+            .listByIDs(articleIDs) { id, feedID, title, url, summary, imageURL, publishedAt,
+                                     enclosureType, updatedAt ->
+                ListArticle(
+                    id = id,
+                    feedID = shared(feedID),
+                    title = title,
+                    url = url,
+                    summary = summary,
+                    imageURL = imageURL,
+                    publishedAt = publishedAt,
+                    enclosureType = shared(enclosureType),
+                    updatedAt = updatedAt,
+                )
+            }
+            .executeAsList()
+            .associateBy { it.id }
+
+        return articleIDs.mapNotNull { rows[it] }
+    }
+
+    fun listFeeds(): Map<String, ListFeed> {
+        return database.feedsQueries.listFeeds { id, title, faviconURL, openInBrowser ->
+            id to ListFeed(title = title, faviconURL = faviconURL, openInBrowser = openInBrowser)
+        }.executeAsList().toMap()
     }
 
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {

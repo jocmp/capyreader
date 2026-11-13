@@ -903,6 +903,106 @@ class ArticleRecordsTest {
             query = query,
         )
 
+    @Test
+    fun sessionMembership_matchesTheListInOrder() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        listOf(newest, middle, oldest).forEach { articleRecords.markUnread(it.id) }
+        val filter = ArticleFilter.Feeds(
+            feedID = feed.id,
+            folderTitle = null,
+            feedStatus = ArticleStatus.UNREAD,
+        )
+        val since = OffsetDateTime.now()
+
+        listOf(SortOrder.NEWEST_FIRST, SortOrder.OLDEST_FIRST).forEach { sortOrder ->
+            val listed = articleRecords.byFeed.all(
+                feedIDs = listOf(feed.id),
+                status = ArticleStatus.UNREAD,
+                since = since,
+                limit = 10,
+                offset = 0,
+                sortOrder = sortOrder,
+                priority = FeedPriority.FEED,
+            ).executeAsList().map { it.id }
+
+            val snapshot = articleRecords.sessionMembership(filter, sortOrder, since).map { it.id }
+
+            assertEquals(expected = listed, actual = snapshot)
+        }
+    }
+
+    @Test
+    fun sessionMembership_keepsArticlesReadAfterTheCutoff() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+        listOf(newest, middle, oldest).forEach { articleRecords.markUnread(it.id) }
+        val since = OffsetDateTime.now()
+
+        articleRecords.markAllRead(listOf(middle.id))
+
+        val membership = articleRecords.sessionMembership(
+            ArticleFilter.Articles(articleStatus = ArticleStatus.UNREAD),
+            SortOrder.NEWEST_FIRST,
+            since,
+        )
+
+        assertEquals(expected = listOf(newest.id, middle.id, oldest.id), actual = membership.map { it.id })
+        assertEquals(expected = listOf(false, true, false), actual = membership.map { it.read })
+    }
+
+    @Test
+    fun listByIDs_returnsRowsInRequestedOrderAndSkipsMissing() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, oldest) = threeArticles(feed)
+
+        val rows = articleRecords.listByIDs(listOf(oldest.id, "missing", newest.id, middle.id))
+
+        assertEquals(expected = listOf(oldest.id, newest.id, middle.id), actual = rows.map { it.id })
+    }
+
+    @Test
+    fun listByIDs_sharesFeedIDsAcrossRows() {
+        val feed = FeedFixture(database).create()
+        val (newest, middle, _) = threeArticles(feed)
+
+        val rows = articleRecords.listByIDs(listOf(newest.id, middle.id))
+
+        assertTrue(rows[0].feedID === rows[1].feedID)
+    }
+
+    @Test
+    fun listArticle_buildsTheSameRowAsTheListQuery() {
+        val feed = FeedFixture(database).create()
+        val (newest, _, _) = threeArticles(feed)
+
+        val listed = articleRecords.byFeed.all(
+            feedIDs = listOf(feed.id),
+            status = ArticleStatus.ALL,
+            since = OffsetDateTime.now(),
+            limit = 1,
+            offset = 0,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            priority = FeedPriority.FEED,
+        ).executeAsOne()
+
+        val built = articleRecords.listByIDs(listOf(newest.id)).single()
+            .toArticle(read = listed.read, starred = listed.starred, feed = articleRecords.listFeeds()[feed.id])
+
+        assertEquals(expected = listed.copy(author = null), actual = built)
+    }
+
+    @Test
+    fun listByIDs_marksTruncatedSummaries() {
+        val long = "word ".repeat(100)
+        val article = articleFixture.create(summary = long)
+
+        val summary = articleRecords.listByIDs(listOf(article.id)).single().summary.orEmpty()
+
+        assertEquals(expected = 301, actual = summary.length)
+        assertTrue(summary.endsWith("…"))
+    }
+
     /** Three articles in [feed], newest to oldest, one day apart. */
     private fun threeArticles(feed: Feed): Triple<Article, Article, Article> {
         val start = nowUTC()

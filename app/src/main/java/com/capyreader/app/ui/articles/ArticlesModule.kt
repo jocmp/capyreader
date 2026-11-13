@@ -11,6 +11,7 @@ import org.koin.dsl.module
 
 internal val articlesModule = module {
     single { ArticleSessionCutoff() }
+    single { ArticleListSnapshot() }
     factory {
         AddFeedViewModel(
             account = get(),
@@ -40,6 +41,7 @@ internal val articlesModule = module {
             notificationHelper = get(),
             application = get(),
             articleCutoff = get(),
+            listSnapshot = get(),
         )
     }
     viewModel {
@@ -49,6 +51,7 @@ internal val articlesModule = module {
             application = get(),
             notificationHelper = get(),
             articleCutoff = get(),
+            listSnapshot = get(),
         )
     }
     viewModel {

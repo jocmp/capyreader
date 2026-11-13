@@ -73,6 +73,7 @@ class ArticleScreenViewModel(
     private val application: Application,
     private val notificationHelper: NotificationHelper,
     private val articleCutoff: ArticleSessionCutoff,
+    private val listSnapshot: ArticleListSnapshot,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val computeDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
@@ -148,6 +149,8 @@ class ArticleScreenViewModel(
     // (which keys off the persisted filter), so search no longer participates here.
     private var articleListScope: CoroutineScope? = null
 
+    private var sessionArticles: SessionArticles? = null
+
     private var articleListKey = listPagerKey(listSession.value, sortOrder(listSession.value.filter))
 
     private val _articleList = MutableStateFlow(buildArticleList(articleListKey))
@@ -175,16 +178,28 @@ class ArticleScreenViewModel(
 
     private fun buildArticleList(key: ArticlePagerKey): ArticleListPage {
         articleListScope?.cancel()
+        sessionArticles?.close()
 
         val parent = viewModelScope.coroutineContext
         val scope = CoroutineScope(parent + SupervisorJob(parent.job))
         articleListScope = scope
         articleListKey = key
 
+        val articles = SessionArticles(
+            account = account,
+            listSnapshot = listSnapshot,
+            filter = key.filter,
+            sortOrder = key.sort,
+            since = key.since,
+            isCurrent = { it === sessionArticles },
+        )
+        sessionArticles = articles
+        articles.start(scope, ioDispatcher)
+
         return ArticleListPage(
             filter = key.filter,
             sortOrder = key.sort,
-            articles = pagerFlow(key).cachedIn(scope),
+            items = articles,
         )
     }
 
@@ -445,6 +460,7 @@ class ArticleScreenViewModel(
                     articleIDs,
                     lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
                 )
+                sessionArticles?.reload()
             }
 
             if (clearsList) {
@@ -771,6 +787,11 @@ class ArticleScreenViewModel(
             replay = 1,
         )
 
+    override fun onCleared() {
+        sessionArticles?.close()
+        super.onCleared()
+    }
+
     private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
         return feed.copy(count = counts.getOrDefault(feed.id, 0))
     }
@@ -914,7 +935,7 @@ private data class ArticlePagerKey(
 class ArticleListPage(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
-    val articles: Flow<PagingData<Article>>,
+    val items: ArticleItems,
 )
 
 private data class ListSession(

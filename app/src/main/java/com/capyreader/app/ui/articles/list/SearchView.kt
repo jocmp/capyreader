@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
+import com.capyreader.app.ui.articles.ArticleItems
 import com.capyreader.app.ui.articles.ArticleList
 import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.articles.listPaneInsets
@@ -52,7 +52,7 @@ import com.jocmp.capy.MarkRead
 @Composable
 fun SearchView(
     search: ArticleSearch,
-    results: LazyPagingItems<Article>,
+    results: ArticleItems,
     listState: LazyListState,
     selectedArticleID: String?,
     dimReadArticles: Boolean,

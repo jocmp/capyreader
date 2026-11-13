@@ -4,6 +4,7 @@ import app.cash.sqldelight.Query
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleMembership
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.listMapper
@@ -49,6 +50,41 @@ class BySavedSearch(private val database: Database) {
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
                 mapper = ::listMapper
+            )
+        }
+    }
+
+    fun ids(
+        savedSearchID: String,
+        status: ArticleStatus,
+        since: OffsetDateTime,
+        sortOrder: SortOrder,
+    ): Query<ArticleMembership> {
+        val (read, starred) = status.toStatusPair
+
+        val queries = database.articlesBySavedSearchQueries
+
+        return if (isDescendingOrder(sortOrder)) {
+            queries.idsNewestFirst(
+                savedSearchID = savedSearchID,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::ArticleMembership
+            )
+        } else {
+            queries.idsOldestFirst(
+                savedSearchID = savedSearchID,
+                query = null,
+                read = read,
+                starred = starred,
+                lastReadAt = mapLastRead(read, since),
+                lastUnstarredAt = mapLastUnstarred(starred, since),
+                publishedSince = null,
+                mapper = ::ArticleMembership
             )
         }
     }

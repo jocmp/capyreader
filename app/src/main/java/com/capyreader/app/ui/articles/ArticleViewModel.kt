@@ -39,6 +39,7 @@ class ArticleViewModel(
     private val application: Application,
     private val notificationHelper: NotificationHelper,
     private val articleCutoff: ArticleSessionCutoff,
+    private val listSnapshot: ArticleListSnapshot,
 ) : AndroidViewModel(application) {
 
     private var fullContentJob: Job? = null
@@ -98,9 +99,17 @@ class ArticleViewModel(
 
         viewModelScope.launchIO {
             val filter = appPreferences.filter.get()
-            val (previous, next) = account.neighbors(
+            val sortOrder = appPreferences.articleListOptions.getSortOrder(filter).get()
+
+            val fromList = if (searchQuery.isNullOrBlank()) {
+                listSnapshot.neighbors(filter, sortOrder, articleID)
+            } else {
+                null
+            }
+
+            val (previous, next) = fromList ?: account.neighbors(
                 filter = filter,
-                sortOrder = appPreferences.articleListOptions.getSortOrder(filter).get(),
+                sortOrder = sortOrder,
                 since = articleCutoff.value,
                 articleID = articleID,
                 query = searchQuery,

@@ -18,7 +18,11 @@ import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.MercuryParser
+import com.jocmp.capy.articles.ArticleMembership
+import com.jocmp.capy.articles.ListArticle
+import com.jocmp.capy.articles.ListFeed
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.articles.StatusChange
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
@@ -40,16 +44,21 @@ import com.jocmp.feedbinclient.Feedbin
 import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
+import java.io.InputStream
+import java.net.URI
+import java.time.ZonedDateTime
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import okhttp3.OkHttpClient
-import java.io.InputStream
-import java.net.URI
-import java.time.ZonedDateTime
 
 data class Account(
     val id: String,
@@ -110,6 +119,18 @@ data class Account(
     private val syncStatusRecords = SyncStatusRecords(database)
 
     private val sendArticleStatusMutex = Mutex()
+
+    // Unbounded so tryEmit never drops a change.
+    private val _statusChanges = MutableSharedFlow<StatusChange>(extraBufferCapacity = Int.MAX_VALUE)
+
+    val statusChanges: SharedFlow<StatusChange> = _statusChanges.asSharedFlow()
+
+    private val _refreshes = MutableSharedFlow<Unit>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+
+    val refreshes: SharedFlow<Unit> = _refreshes.asSharedFlow()
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
@@ -238,6 +259,8 @@ data class Account(
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
             Result.failure(e)
+        } finally {
+            _refreshes.tryEmit(Unit)
         }
     }
 
@@ -314,6 +337,7 @@ data class Account(
                 articleRecords.addStar(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.STARRED, flag = true)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), starred = true))
         }
 
         return Result.success(Unit)
@@ -325,6 +349,7 @@ data class Account(
                 articleRecords.removeStar(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.STARRED, flag = false)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), starred = false))
         }
 
         return Result.success(Unit)
@@ -382,6 +407,31 @@ data class Account(
         )
     }
 
+    suspend fun sessionMembership(
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        since: java.time.OffsetDateTime,
+    ): List<ArticleMembership> = withIOContext {
+        articleRecords.sessionMembership(filter = filter, sortOrder = sortOrder, since = since)
+    }
+
+    val listChanges: Flow<Unit>
+        get() = database.articlesQueries.listChangeSignal()
+            .asFlow()
+            .drop(1)
+            .map { }
+
+    suspend fun listFeeds(): Map<String, ListFeed> = withIOContext {
+        articleRecords.listFeeds()
+    }
+
+    suspend fun listArticlesByIDs(
+        articleIDs: List<String>,
+        sharedStrings: MutableMap<String, String> = HashMap(),
+    ): List<ListArticle> = withIOContext {
+        articleRecords.listByIDs(articleIDs, sharedStrings)
+    }
+
     fun countUnread(
         filter: ArticleFilter,
         query: String?,
@@ -406,6 +456,7 @@ data class Account(
                     queueStatuses(changesetIDs, SyncStatus.Key.READ, flag = true)
                 }
             }
+            _statusChanges.tryEmit(StatusChange(articleIDs, read = true))
         }
 
         return Result.success(Unit)
@@ -421,6 +472,7 @@ data class Account(
                 articleRecords.markUnread(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.READ, flag = false)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), read = false))
         }
 
         return Result.success(Unit)
