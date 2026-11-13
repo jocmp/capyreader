@@ -806,7 +806,7 @@ fun rememberLabelsActions(
 ): LabelsActions {
     var selectedArticleID by remember { mutableStateOf<String?>(null) }
 
-    val articleLabels by viewModel.getArticleLabels(selectedArticleID)
+    val articleLabels by remember(selectedArticleID) { viewModel.getArticleLabels(selectedArticleID) }
         .collectAsState(initial = emptyList())
 
     return remember(savedSearches, selectedArticleID, articleLabels) {

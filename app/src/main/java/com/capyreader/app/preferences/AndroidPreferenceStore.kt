@@ -3,13 +3,31 @@ package com.capyreader.app.preferences
 import android.content.SharedPreferences
 import com.jocmp.capy.preferences.Preference
 import com.jocmp.capy.preferences.PreferenceStore
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 class AndroidPreferenceStore(
     private val sharedPreferences: SharedPreferences,
 ) : PreferenceStore {
-    private val keyFlow = sharedPreferences.keyFlow
+    private val keys = MutableSharedFlow<String?>(
+        extraBufferCapacity = 64,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+
+    /**
+     * One listener for the whole store. SharedPreferences only weakly references
+     * listeners, so this field keeps it alive for the store's lifetime.
+     */
+    private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        keys.tryEmit(key)
+    }
+
+    private val keyFlow: Flow<String?> = keys
+
+    init {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
 
     override fun getString(key: String, defaultValue: String): Preference<String> {
         return AndroidPreference.StringPrimitive(sharedPreferences, keyFlow, key, defaultValue)
@@ -55,13 +73,3 @@ class AndroidPreferenceStore(
         sharedPreferences.edit().clear().apply()
     }
 }
-
-private val SharedPreferences.keyFlow
-    get() = callbackFlow {
-        val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { _, key: String? -> trySend(key) }
-        registerOnSharedPreferenceChangeListener(listener)
-        awaitClose {
-            unregisterOnSharedPreferenceChangeListener(listener)
-        }
-    }

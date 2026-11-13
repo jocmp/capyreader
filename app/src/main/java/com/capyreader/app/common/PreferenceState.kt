@@ -3,14 +3,18 @@ package com.capyreader.app.common
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import com.jocmp.capy.preferences.Preference
 
+/**
+ * Preference accessors build a new [Preference] on every call, so the flow and
+ * initial value are keyed by the preference key rather than the instance.
+ */
 @Composable
 fun <T> Preference<T>.asState(): State<T> {
-    val scope = rememberCoroutineScope()
+    val key = key()
+    val changes = remember(key) { changes() }
+    val initial = remember(key) { get() }
 
-    return this
-        .stateIn(scope)
-        .collectAsState()
+    return changes.collectAsState(initial = initial)
 }
