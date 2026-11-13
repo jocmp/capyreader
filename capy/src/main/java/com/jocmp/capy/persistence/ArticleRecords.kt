@@ -222,35 +222,35 @@ class ArticleRecords(
     }
 
     fun countAll(status: ArticleStatus): Flow<Map<String, Long>> {
-        val (read, starred) = status.forCounts
+        val queries = database.articlesQueries
+        val mapper = { feedID: String?, count: Long -> feedID.orEmpty() to count }
 
-        return database.articlesQueries.countAll(
-            read = read,
-            starred = starred,
-        )
+        val query = if (status == ArticleStatus.STARRED) {
+            queries.countAllStarred(mapper)
+        } else {
+            queries.countAllUnread(mapper)
+        }
+
+        return query
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map { list ->
-                list.associate {
-                    val feedID = it.feed_id ?: ""
-
-                    feedID to it.COUNT
-                }
-            }
+            .map { it.toMap() }
     }
 
     fun countAllBySavedSearch(status: ArticleStatus): Flow<Map<String, Long>> {
-        val (read, starred) = status.forCounts
+        val queries = database.articlesQueries
+        val mapper = { savedSearchID: String, count: Long -> savedSearchID to count }
 
-        return database.articlesQueries.countAllBySavedSearch(
-            read = read,
-            starred = starred,
-        )
+        val query = if (status == ArticleStatus.STARRED) {
+            queries.countAllStarredBySavedSearch(mapper)
+        } else {
+            queries.countAllUnreadBySavedSearch(mapper)
+        }
+
+        return query
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map { list ->
-                list.associate { it.saved_search_id to it.COUNT }
-            }
+            .map { it.toMap() }
     }
 
     fun countUnread(

@@ -17,25 +17,44 @@ JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id = :articleID
 LIMIT 1;
 
-countAll:
+-- Count queries start from article_statuses with a literal predicate so SQLite can use the
+-- read/starred index. An "OR :read IS NULL" guard forces a full scan of articles instead.
+countAllUnread:
 SELECT
  articles.feed_id,
  COUNT(*)
-FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
-WHERE (article_statuses.read = :read OR :read IS NULL)
-AND (article_statuses.starred = :starred OR :starred IS NULL)
+FROM article_statuses
+JOIN articles ON articles.id = article_statuses.article_id
+WHERE article_statuses.read = 0
 GROUP BY articles.feed_id;
 
-countAllBySavedSearch:
+countAllStarred:
+SELECT
+ articles.feed_id,
+ COUNT(*)
+FROM article_statuses
+JOIN articles ON articles.id = article_statuses.article_id
+WHERE article_statuses.starred = 1
+GROUP BY articles.feed_id;
+
+countAllUnreadBySavedSearch:
 SELECT
  saved_search_articles.saved_search_id,
  COUNT(*)
-FROM articles
-JOIN article_statuses ON articles.id = article_statuses.article_id
+FROM article_statuses
+JOIN articles ON articles.id = article_statuses.article_id
 JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
-WHERE (article_statuses.read = :read OR :read IS NULL)
-AND (article_statuses.starred = :starred OR :starred IS NULL)
+WHERE article_statuses.read = 0
+GROUP BY saved_search_articles.saved_search_id;
+
+countAllStarredBySavedSearch:
+SELECT
+ saved_search_articles.saved_search_id,
+ COUNT(*)
+FROM article_statuses
+JOIN articles ON articles.id = article_statuses.article_id
+JOIN saved_search_articles ON articles.id = saved_search_articles.article_id
+WHERE article_statuses.starred = 1
 GROUP BY saved_search_articles.saved_search_id;
 
 lastUpdatedAt:
