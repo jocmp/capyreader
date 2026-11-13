@@ -51,12 +51,15 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -71,6 +74,7 @@ class ArticleScreenViewModel(
     private val notificationHelper: NotificationHelper,
     private val articleCutoff: ArticleSessionCutoff,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val computeDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val syncFlushInterval: Duration? = SYNC_FLUSH_INTERVAL,
 ) : AndroidViewModel(application) {
     private var refreshJob: Job? = null
@@ -124,13 +128,23 @@ class ArticleScreenViewModel(
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
+    // Counts and feeds back several drawer flows. Share them so each status write runs
+    // each aggregate once, not once per collector.
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
-    }
+    }.shareInViewModel()
 
     private val _savedSearchCounts = filter.flatMapLatest { latestFilter ->
         account.countAllBySavedSearch(latestFilter.status)
-    }
+    }.shareInViewModel()
+
+    private val taggedFeeds = account.taggedFeeds.shareInViewModel()
+
+    private val accountFeeds = account.feeds.shareInViewModel()
+
+    private val accountFolders = account.folders.shareInViewModel()
+
+    private val accountSavedSearches = account.savedSearches.shareInViewModel()
 
     // The list pager is filter-only: it must stay in lockstep with the reader's neighbor query
     // (which keys off the persisted filter), so search no longer participates here.
@@ -185,48 +199,48 @@ class ArticleScreenViewModel(
         ).flow
 
     val folders: Flow<List<Folder>> = combine(
-        account.folders,
+        accountFolders,
         _counts,
         filter,
     ) { folders, latestCounts, filter ->
         folders.map { copyFolderCounts(it, latestCounts, filter) }
             .withPositiveCount(filter.status)
-    }
+    }.shareInViewModel()
 
     val savedSearches: Flow<List<SavedSearch>> = combine(
-        account.savedSearches,
+        accountSavedSearches,
         _savedSearchCounts,
         filter,
     ) { searches, latestCounts, filter ->
         searches.map { copySavedSearchCounts(it, latestCounts) }
             .withPositiveCount(filter.status)
-    }
+    }.shareInViewModel()
 
-    val allFeeds = account.taggedFeeds
+    val allFeeds: Flow<List<Feed>> = taggedFeeds
 
     val showOnboarding = allFeeds.map { it.isEmpty() && account.source == Source.LOCAL }
 
-    val allSavedSearches = account.savedSearches
+    val allSavedSearches: Flow<List<SavedSearch>> = accountSavedSearches
 
-    val allFolders = account.folders
+    val allFolders: Flow<List<Folder>> = accountFolders
 
     val topLevelFeeds = combine(
-        account.feeds,
+        accountFeeds,
         _counts,
         filter,
     ) { feeds, latestCounts, filter ->
         feeds.filter { !it.isReadLater }
             .map { copyFeedCounts(it, latestCounts) }
             .withPositiveCount(filter.status)
-    }
+    }.shareInViewModel()
 
     val readLaterFeed: Flow<Feed?> = combine(
-        account.feeds,
+        accountFeeds,
         _counts,
     ) { feeds, latestCounts ->
         feeds.find { it.isReadLater }
             ?.let { copyFeedCounts(it, latestCounts) }
-    }
+    }.shareInViewModel()
 
     val currentFeed: Flow<Feed?> = combine(allFeeds, filter) { feeds, filter ->
         if (filter is ArticleFilter.Feeds) {
@@ -250,7 +264,7 @@ class ArticleScreenViewModel(
             folders = folders,
             feeds = feeds,
         )
-    }
+    }.flowOn(computeDispatcher)
 
     private val _sidebarItem = MutableStateFlow<SidebarItem?>(null)
 
@@ -738,6 +752,13 @@ class ArticleScreenViewModel(
             count = folderFeeds.sumOf { it.count }
         )
     }
+
+    private fun <T> Flow<T>.shareInViewModel(): Flow<T> =
+        flowOn(computeDispatcher).shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000, replayExpirationMillis = 0),
+            replay = 1,
+        )
 
     private fun copyFeedCounts(feed: Feed, counts: Map<String, Long>): Feed {
         return feed.copy(count = counts.getOrDefault(feed.id, 0))

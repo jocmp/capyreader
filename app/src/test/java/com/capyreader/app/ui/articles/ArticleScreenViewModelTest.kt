@@ -328,6 +328,7 @@ class ArticleScreenViewModelTest {
             application = application,
             notificationHelper = notificationHelper,
             ioDispatcher = testDispatcher,
+            computeDispatcher = testDispatcher,
             syncFlushInterval = syncFlushInterval,
             articleCutoff = ArticleSessionCutoff(),
         )
