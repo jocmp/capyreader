@@ -392,16 +392,11 @@ data class Account(
         )
     }
 
-    /**
-     * @param lastReadAt when the articles count as read. Lists keep articles read after their
-     * session cutoff visible, so a time before the cutoff hides them from the current list.
-     */
     suspend fun markAllRead(
         articleIDs: List<String>,
         lastReadAt: ZonedDateTime = nowUTC(),
         batchSize: Int = 500,
     ): Result<Unit> {
-        // One transaction so observers see a single change instead of one per batch.
         withIOContext {
             database.transaction {
                 articleIDs.chunked(batchSize).forEach { batchIDs ->

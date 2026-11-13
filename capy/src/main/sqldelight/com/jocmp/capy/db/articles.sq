@@ -17,8 +17,7 @@ JOIN article_statuses ON articles.id = article_statuses.article_id
 WHERE articles.id = :articleID
 LIMIT 1;
 
--- Count queries start from article_statuses with a literal predicate so SQLite can use the
--- read/starred index. An "OR :read IS NULL" guard forces a full scan of articles instead.
+-- Literal predicates, since "OR :read IS NULL" forces a full scan instead of the status index.
 countAllUnread:
 SELECT
  articles.feed_id,

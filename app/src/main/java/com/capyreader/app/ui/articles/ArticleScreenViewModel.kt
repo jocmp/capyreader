@@ -128,8 +128,6 @@ class ArticleScreenViewModel(
     val afterReadAll =
         appPreferences.articleListOptions.afterReadAllBehavior.stateIn(viewModelScope)
 
-    // Counts and feeds back several drawer flows. Share them so each status write runs
-    // each aggregate once, not once per collector.
     private val _counts = filter.flatMapLatest { latestFilter ->
         account.countAll(latestFilter.status)
     }.shareInViewModel()
@@ -441,11 +439,8 @@ class ArticleScreenViewModel(
             val clearsList = range == MarkRead.All && filter == latestFilter
 
             if (clearsList || range != MarkRead.All) {
-                // Mark above/below works like reading one at a time: rows stay, dimmed.
                 account.markAllRead(articleIDs)
             } else {
-                // Another filter, e.g. a feed marked read from the drawer: its articles leave
-                // this list without resetting it.
                 account.markAllRead(
                     articleIDs,
                     lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
@@ -453,7 +448,6 @@ class ArticleScreenViewModel(
             }
 
             if (clearsList) {
-                // A fresh session moves the cutoff past every read article, so the list resets.
                 startListSession(latestFilter)
             }
 
@@ -927,11 +921,8 @@ private data class ListSession(
     val filter: ArticleFilter,
     val since: OffsetDateTime,
 ) {
-    /**
-     * A read time that falls outside this session. [since] is stamped a second ahead of the
-     * session's start, and the reader's cutoff is never earlier than that start, so two seconds
-     * back clears both.
-     */
+    // [since] is a second ahead of the session's start; two seconds back also clears the
+    // reader's cutoff.
     val hiddenReadAt: OffsetDateTime
         get() = since.minusSeconds(2)
 }

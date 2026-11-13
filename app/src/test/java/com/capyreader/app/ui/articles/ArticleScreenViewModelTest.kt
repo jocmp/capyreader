@@ -324,7 +324,6 @@ class ArticleScreenViewModelTest {
         advanceUntilIdle()
 
         assertSame(listBefore, viewModel.articleList.value)
-        // Not backdated before the cutoff, so the marked rows stay in the list.
         val cutoff = articleCutoff.value!!.toEpochSecond()
         assertTrue(lastReadAt.captured.toEpochSecond() >= cutoff - 1)
     }
@@ -362,7 +361,7 @@ class ArticleScreenViewModelTest {
         }
     }
 
-    /** Waits in real time for work on Dispatchers.IO, which the test scheduler doesn't control. */
+    // launchIO runs on the real IO dispatcher, outside the test scheduler.
     private suspend fun waitFor(condition: () -> Boolean) {
         withContext(Dispatchers.Default) {
             withTimeout(5_000) {
