@@ -18,6 +18,8 @@ import com.jocmp.capy.accounts.miniflux.MinifluxAccountDelegate
 import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.MercuryParser
+import com.jocmp.capy.articles.ArticleMembership
+import com.jocmp.capy.articles.ListArticle
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.articles.StatusChange
 import com.jocmp.capy.common.TimeHelpers.nowUTC
@@ -406,13 +408,13 @@ data class Account(
         )
     }
 
-    /** Every article ID in a list session, in list order. */
-    suspend fun sessionArticleIDs(
+    /** Every article in a list session with its status, in list order. */
+    suspend fun sessionMembership(
         filter: ArticleFilter,
         sortOrder: SortOrder,
         since: java.time.OffsetDateTime,
-    ): List<String> = withIOContext {
-        articleRecords.sessionArticleIDs(filter = filter, sortOrder = sortOrder, since = since)
+    ): List<ArticleMembership> = withIOContext {
+        articleRecords.sessionMembership(filter = filter, sortOrder = sortOrder, since = since)
     }
 
     /**
@@ -425,9 +427,12 @@ data class Account(
             .drop(1)
             .map { }
 
-    /** List rows for one page of a session snapshot, in the given order. */
-    suspend fun articlesByIDs(articleIDs: List<String>): List<Article> = withIOContext {
-        articleRecords.listByIDs(articleIDs)
+    /** List rows for a batch of a session's articles, in the given order. */
+    suspend fun listArticlesByIDs(
+        articleIDs: List<String>,
+        sharedStrings: MutableMap<String, String> = HashMap(),
+    ): List<ListArticle> = withIOContext {
+        articleRecords.listByIDs(articleIDs, sharedStrings)
     }
 
     fun countUnread(

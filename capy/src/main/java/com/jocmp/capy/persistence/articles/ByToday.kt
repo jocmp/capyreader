@@ -4,6 +4,7 @@ import app.cash.sqldelight.Query
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleMembership
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.listMapper
@@ -54,7 +55,7 @@ class ByToday(private val database: Database) {
         status: ArticleStatus,
         sortOrder: SortOrder,
         since: OffsetDateTime?,
-    ): Query<String> {
+    ): Query<ArticleMembership> {
         val (read, starred) = status.toStatusPair
         val queries = database.articlesByStatusQueries
 
@@ -65,7 +66,8 @@ class ByToday(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = mapTodayStartDate(since),
-                query = null
+                query = null,
+                mapper = ::ArticleMembership
             )
         } else {
             queries.idsOldestFirst(
@@ -74,7 +76,8 @@ class ByToday(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = mapTodayStartDate(since),
-                query = null
+                query = null,
+                mapper = ::ArticleMembership
             )
         }
     }

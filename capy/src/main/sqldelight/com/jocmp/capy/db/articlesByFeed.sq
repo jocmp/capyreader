@@ -167,9 +167,9 @@ AND (articles.published_at < anchor.published_at OR (articles.published_at = anc
 ORDER BY articles.published_at DESC, articles.id DESC
 LIMIT 1;
 
--- Session snapshots: the same membership and order as all*, IDs only.
+-- Session membership: the same articles and order as all*, with their statuses.
 idsNewestFirst:
-SELECT articles.id
+SELECT articles.id, article_statuses.read, article_statuses.starred
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id
@@ -182,7 +182,7 @@ AND (feeds.priority IN :priorities OR feeds.priority IS NULL)
 ORDER BY articles.published_at DESC, articles.id DESC;
 
 idsOldestFirst:
-SELECT articles.id
+SELECT articles.id, article_statuses.read, article_statuses.starred
 FROM articles
 JOIN feeds ON articles.feed_id = feeds.id
 JOIN article_statuses ON articles.id = article_statuses.article_id

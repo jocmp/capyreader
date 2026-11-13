@@ -11,9 +11,16 @@ class ArticleListSnapshot {
     @Volatile
     private var current: Snapshot? = null
 
+    /** [indexOf] finds an ID's position in [articleIDs], or -1. */
     @Synchronized
-    fun set(owner: Any, filter: ArticleFilter, sortOrder: SortOrder, articleIDs: List<String>) {
-        current = Snapshot(owner, filter, sortOrder, articleIDs)
+    fun set(
+        owner: Any,
+        filter: ArticleFilter,
+        sortOrder: SortOrder,
+        articleIDs: List<String>,
+        indexOf: (String) -> Int,
+    ) {
+        current = Snapshot(owner, filter, sortOrder, articleIDs, indexOf)
     }
 
     /** Drops the snapshot if [owner] published it, so the reader falls back to querying. */
@@ -39,7 +46,7 @@ class ArticleListSnapshot {
             return null
         }
 
-        val index = snapshot.indexOf(articleID) ?: return null
+        val index = snapshot.indexOf(articleID).takeIf { it >= 0 } ?: return null
 
         return snapshot.articleIDs.getOrNull(index - 1) to snapshot.articleIDs.getOrNull(index + 1)
     }
@@ -49,11 +56,6 @@ class ArticleListSnapshot {
         val filter: ArticleFilter,
         val sortOrder: SortOrder,
         val articleIDs: List<String>,
-    ) {
-        private val indexes by lazy {
-            articleIDs.withIndex().associate { (index, id) -> id to index }
-        }
-
-        fun indexOf(articleID: String): Int? = indexes[articleID]
-    }
+        val indexOf: (String) -> Int,
+    )
 }

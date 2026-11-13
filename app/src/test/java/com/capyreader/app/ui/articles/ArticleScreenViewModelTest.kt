@@ -77,6 +77,8 @@ class ArticleScreenViewModelTest {
             every { statusChanges } returns MutableSharedFlow()
             every { refreshes } returns MutableSharedFlow()
             every { listChanges } returns emptyFlow()
+            coEvery { sessionMembership(any(), any(), any()) } returns emptyList()
+            coEvery { listArticlesByIDs(any(), any()) } returns emptyList()
             every { countAllBySavedSearch(any()) } returns flowOf(emptyMap())
             every { source } returns Source.LOCAL
             coEvery { refresh(any()) } returns Result.success(Unit)

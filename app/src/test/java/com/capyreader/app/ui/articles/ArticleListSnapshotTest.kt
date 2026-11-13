@@ -13,7 +13,7 @@ class ArticleListSnapshotTest {
     @Test
     fun `neighbors come from the list order`() {
         val snapshot = ArticleListSnapshot()
-        snapshot.set(owner = this, filter, SortOrder.NEWEST_FIRST, listOf("a", "b", "c"))
+        snapshot.publish(owner = this, "a", "b", "c")
 
         assertEquals(null to "b", snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "a"))
         assertEquals("a" to "c", snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "b"))
@@ -26,7 +26,7 @@ class ArticleListSnapshotTest {
 
         assertNull(snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "a"))
 
-        snapshot.set(owner = this, filter, SortOrder.NEWEST_FIRST, listOf("a", "b"))
+        snapshot.publish(owner = this, "a", "b")
 
         assertNull(snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "elsewhere"))
         assertNull(snapshot.neighbors(filter, SortOrder.OLDEST_FIRST, "a"))
@@ -43,12 +43,16 @@ class ArticleListSnapshotTest {
     fun `clear only drops a snapshot from the same owner`() {
         val snapshot = ArticleListSnapshot()
         val current = Any()
-        snapshot.set(owner = current, filter, SortOrder.NEWEST_FIRST, listOf("a", "b"))
+        snapshot.publish(owner = current, "a", "b")
 
         snapshot.clear(owner = Any())
         assertEquals(null to "b", snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "a"))
 
         snapshot.clear(owner = current)
         assertNull(snapshot.neighbors(filter, SortOrder.NEWEST_FIRST, "a"))
+    }
+
+    private fun ArticleListSnapshot.publish(owner: Any, vararg articleIDs: String) {
+        set(owner, filter, SortOrder.NEWEST_FIRST, articleIDs.toList(), articleIDs::indexOf)
     }
 }

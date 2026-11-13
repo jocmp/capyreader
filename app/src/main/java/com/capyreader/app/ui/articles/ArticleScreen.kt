@@ -48,8 +48,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.common.Saver
@@ -89,7 +87,6 @@ import com.capyreader.app.ui.components.LocalSnackbarHost
 import com.capyreader.app.ui.components.SearchState
 import com.capyreader.app.ui.provideLinkOpener
 import com.capyreader.app.ui.rememberDisplayTimeFormats
-import com.capyreader.app.ui.rememberLazyListState
 import com.capyreader.app.ui.rememberLocalConnectivity
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -163,9 +160,8 @@ fun ArticleScreen(
 
     val articleList by viewModel.articleList.collectAsStateWithLifecycle()
     val presentedArticles = rememberPresentedArticles(articleList)
-    val statusOverrides by presentedArticles.overrides.collectAsStateWithLifecycle()
     val articles = presentedArticles.items
-    val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+    val searchResults = rememberPagingArticleItems(viewModel.searchResults.collectAsLazyPagingItems())
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -632,7 +628,6 @@ fun ArticleScreen(
                                             onSelect = { article ->
                                                 selectArticle(article)
                                             },
-                                            statusOverrides = statusOverrides,
                                         )
                                     }
                                 }
@@ -847,13 +842,11 @@ fun canOpenNextFeed(
 
 @OptIn(FlowPreview::class)
 @Composable
-private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
-    var loaded by remember(items) {
-        mutableStateOf(items.loadState.refresh is LoadState.NotLoading)
-    }
+private fun rememberInitialLoad(items: ArticleItems): Boolean {
+    var loaded by remember(items) { mutableStateOf(items.isLoaded) }
 
     LaunchedEffect(items) {
-        snapshotFlow { items.loadState.refresh }.first { it is LoadState.NotLoading }
+        snapshotFlow { items.isLoaded }.first { it }
         loaded = true
     }
 
@@ -863,7 +856,7 @@ private fun rememberInitialLoad(items: LazyPagingItems<*>): Boolean {
 @Composable
 private fun MarkReadOnScrollEffect(
     listState: LazyListState,
-    articles: LazyPagingItems<Article>,
+    articles: ArticleItems,
     active: Boolean,
     scrollHighWaterMark: Int,
     updateScrollHighWaterMark: (Int) -> Unit,
@@ -919,15 +912,15 @@ private fun MarkReadOnScrollEffect(
                     )
                     if (scrolledPastIndex > currentHighWaterMark && scrolledPastIndex < currentArticles.itemCount) {
                         updateScrollHighWaterMark(scrolledPastIndex)
-                        val boundaryArticle = currentArticles[scrolledPastIndex]
-                        if (boundaryArticle != null && currentActive) {
+                        val boundaryID = currentArticles.idAt(scrolledPastIndex)
+                        if (boundaryID != null && currentActive) {
                             CapyLog.debug(
                                 "mark_read_on_scroll:boundary", mapOf(
-                                    "articleID" to boundaryArticle.id,
+                                    "articleID" to boundaryID,
                                     "index" to scrolledPastIndex,
                                 )
                             )
-                            markReadOnScroll(boundaryArticle.id)
+                            markReadOnScroll(boundaryID)
                         }
                     }
                 }

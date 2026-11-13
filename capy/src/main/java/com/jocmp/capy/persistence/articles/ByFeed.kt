@@ -5,6 +5,7 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleMembership
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.listMapper
@@ -64,7 +65,7 @@ class ByFeed(private val database: Database) {
         since: OffsetDateTime,
         sortOrder: SortOrder,
         priority: FeedPriority,
-    ): Query<String> {
+    ): Query<ArticleMembership> {
         val (read, starred) = status.toStatusPair
 
         val queries = database.articlesByFeedQueries
@@ -78,7 +79,8 @@ class ByFeed(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
-                priorities = priority.inclusivePriorities
+                priorities = priority.inclusivePriorities,
+                mapper = ::ArticleMembership
             )
         } else {
             queries.idsOldestFirst(
@@ -89,7 +91,8 @@ class ByFeed(private val database: Database) {
                 lastReadAt = mapLastRead(read, since),
                 lastUnstarredAt = mapLastUnstarred(starred, since),
                 publishedSince = null,
-                priorities = priority.inclusivePriorities
+                priorities = priority.inclusivePriorities,
+                mapper = ::ArticleMembership
             )
         }
     }

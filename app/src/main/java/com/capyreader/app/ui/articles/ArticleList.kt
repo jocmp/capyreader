@@ -31,23 +31,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.capyreader.app.R
 import com.capyreader.app.common.asState
 import com.capyreader.app.preferences.AppPreferences
 import com.capyreader.app.ui.isSinglePane
 import com.jocmp.capy.Article
 import com.jocmp.capy.MarkRead
-import com.jocmp.capy.articles.StatusOverride
-import com.jocmp.capy.articles.withStatus
 import kotlinx.coroutines.delay
 import org.koin.compose.koinInject
 import java.time.LocalDateTime
 
 @Composable
 fun ArticleList(
-    articles: LazyPagingItems<Article>,
+    articles: ArticleItems,
     onSelect: (article: Article) -> Unit,
     selectedArticleKey: String?,
     listState: LazyListState,
@@ -57,7 +53,6 @@ fun ArticleList(
     showNewArticles: Boolean = false,
     scrollToTop: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(),
-    statusOverrides: Map<String, StatusOverride> = emptyMap(),
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -78,11 +73,8 @@ fun ArticleList(
                             listHeight = with(localDensity) { coordinates.size.height.toDp() }
                         }
                 ) {
-                    items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
-                        val loaded = articles[index]
-                        val override = loaded?.let { statusOverrides[it.id] }
-                        // Same instance when nothing changed, so unchanged rows skip recomposition.
-                        val item = remember(loaded, override) { loaded?.withStatus(override) }
+                    items(count = articles.itemCount, key = articles::key) { index ->
+                        val item = articles.rowAt(index)
 
                         Box(Modifier.animateItem()) {
                             if (item == null) {
@@ -138,7 +130,7 @@ fun ArticleList(
 @Composable
 fun ScrollToSelectedArticleEffect(
     selectedArticleKey: String?,
-    articles: LazyPagingItems<Article>,
+    articles: ArticleItems,
     listState: LazyListState,
 ) {
     val isSinglePane = isSinglePane()
@@ -146,7 +138,7 @@ fun ScrollToSelectedArticleEffect(
     LaunchedEffect(selectedArticleKey, isSinglePane, articles.itemCount) {
         if (isSinglePane) return@LaunchedEffect
         val id = selectedArticleKey ?: return@LaunchedEffect
-        val index = articles.itemSnapshotList.indexOfFirst { it?.id == id }
+        val index = articles.indexOf(id)
         if (index > -1 && listState.layoutInfo.visibleItemsInfo.none { it.index == index }) {
             listState.animateScrollToItem(index)
         }

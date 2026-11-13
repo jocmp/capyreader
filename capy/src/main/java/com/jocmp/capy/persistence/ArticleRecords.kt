@@ -9,6 +9,8 @@ import com.jocmp.capy.ArticleNotification
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.FeedPriority
 import com.jocmp.capy.MarkRead
+import com.jocmp.capy.articles.ArticleMembership
+import com.jocmp.capy.articles.ListArticle
 import com.jocmp.capy.articles.SortOrder
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.toDateTimeFromSeconds
@@ -226,14 +228,15 @@ class ArticleRecords(
     }
 
     /**
-     * Every article ID in a list session, in list order. Membership matches the paged list for
-     * the same [since], so the IDs can drive both the list and the reader's next/previous.
+     * Every article in a list session with its status, in list order. Membership matches the
+     * paged queries for the same [since], so it can drive both the list and the reader's
+     * next/previous.
      */
-    fun sessionArticleIDs(
+    fun sessionMembership(
         filter: ArticleFilter,
         sortOrder: SortOrder,
         since: OffsetDateTime,
-    ): List<String> {
+    ): List<ArticleMembership> {
         val query = when (filter) {
             is ArticleFilter.Articles -> byStatus.ids(
                 status = filter.articleStatus,
@@ -275,14 +278,40 @@ class ArticleRecords(
     }
 
     /**
-     * List rows for [articleIDs], in the same order. Keep [articleIDs] to a page: each ID is a
-     * bound parameter, and SQLite caps those at 999 before 3.32.
+     * List rows for [articleIDs], in the same order, skipping any that no longer exist. Keep
+     * [articleIDs] to a batch: each ID is a bound parameter, and SQLite caps those at 999 before
+     * 3.32.
+     *
+     * Rows from one feed repeat its title and favicon URL, so [sharedStrings] lets a caller that
+     * holds many rows keep one copy of each.
      */
-    fun listByIDs(articleIDs: List<String>): List<Article> {
+    fun listByIDs(
+        articleIDs: List<String>,
+        sharedStrings: MutableMap<String, String> = HashMap(),
+    ): List<ListArticle> {
         require(articleIDs.size <= MAX_PAGE_IDS) { "${articleIDs.size} IDs exceed one query's limit" }
 
+        fun shared(value: String?) = value?.let { sharedStrings.getOrPut(it) { it } }
+
         val rows = database.articlesQueries
-            .listByIDs(articleIDs, ::listMapper)
+            .listByIDs(articleIDs) { id, feedID, title, url, summary, imageURL, publishedAt,
+                                     enclosureType, feedTitle, faviconURL, openInBrowser,
+                                     updatedAt, _, _ ->
+                ListArticle(
+                    id = id,
+                    feedID = shared(feedID),
+                    title = title,
+                    url = url,
+                    summary = summary,
+                    imageURL = imageURL,
+                    publishedAt = publishedAt,
+                    enclosureType = shared(enclosureType),
+                    feedTitle = shared(feedTitle),
+                    faviconURL = shared(faviconURL),
+                    openInBrowser = openInBrowser,
+                    updatedAt = updatedAt,
+                )
+            }
             .executeAsList()
             .associateBy { it.id }
 

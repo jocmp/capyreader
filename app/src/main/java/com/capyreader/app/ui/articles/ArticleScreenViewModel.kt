@@ -26,7 +26,6 @@ import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.articles.SortOrder
-import com.jocmp.capy.articles.StatusOverride
 import com.jocmp.capy.ArticleStatus
 import com.jocmp.capy.ArticleStatus.UNREAD
 import com.jocmp.capy.Feed
@@ -152,7 +151,7 @@ class ArticleScreenViewModel(
     // (which keys off the persisted filter), so search no longer participates here.
     private var articleListScope: CoroutineScope? = null
 
-    private var sessionPager: SessionArticlePager? = null
+    private var sessionArticles: SessionArticles? = null
 
     private var articleListKey = listPagerKey(listSession.value, sortOrder(listSession.value.filter))
 
@@ -181,29 +180,28 @@ class ArticleScreenViewModel(
 
     private fun buildArticleList(key: ArticlePagerKey): ArticleListPage {
         articleListScope?.cancel()
-        sessionPager?.close()
+        sessionArticles?.close()
 
         val parent = viewModelScope.coroutineContext
         val scope = CoroutineScope(parent + SupervisorJob(parent.job))
         articleListScope = scope
         articleListKey = key
 
-        val pager = SessionArticlePager(
+        val articles = SessionArticles(
             account = account,
             listSnapshot = listSnapshot,
             filter = key.filter,
             sortOrder = key.sort,
             since = key.since,
-            isCurrent = { it === sessionPager },
+            isCurrent = { it === sessionArticles },
         )
-        sessionPager = pager
-        pager.bind(scope, ioDispatcher)
+        sessionArticles = articles
+        articles.start(scope, ioDispatcher)
 
         return ArticleListPage(
             filter = key.filter,
             sortOrder = key.sort,
-            articles = pager.articles.flowOn(ioDispatcher).cachedIn(scope),
-            overrides = pager.overrides,
+            items = articles,
         )
     }
 
@@ -467,7 +465,7 @@ class ArticleScreenViewModel(
                     articleIDs,
                     lastReadAt = listSession.value.hiddenReadAt.toZonedDateTime(),
                 )
-                sessionPager?.reload()
+                sessionArticles?.reload()
             }
 
             if (clearsList) {
@@ -796,7 +794,7 @@ class ArticleScreenViewModel(
         )
 
     override fun onCleared() {
-        sessionPager?.close()
+        sessionArticles?.close()
         super.onCleared()
     }
 
@@ -943,9 +941,7 @@ private data class ArticlePagerKey(
 class ArticleListPage(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
-    val articles: Flow<PagingData<Article>>,
-    /** Read and starred changes to apply over this session's loaded rows. */
-    val overrides: StateFlow<Map<String, StatusOverride>> = MutableStateFlow(emptyMap()),
+    val items: ArticleItems,
 )
 
 private data class ListSession(

@@ -319,14 +319,13 @@ deleteArticlesByID {
   DELETE FROM articles WHERE id IN :articleIDs;
 }
 
--- Rows for one page of a session snapshot. Callers keep :articleIDs to a page so the
+-- List rows for a slice of a session's articles. Callers keep :articleIDs to a page so the
 -- bound parameter count stays under SQLite's limit (999 before 3.32).
 listByIDs:
 SELECT
   articles.id,
   articles.feed_id,
   articles.title,
-  articles.author,
   articles.url,
   articles.summary,
   articles.image_url,
