@@ -20,9 +20,11 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.capyreader.app.R
+import com.capyreader.app.common.activityManager
 import com.capyreader.app.common.notificationManager
 import com.capyreader.app.notifications.Notifications
 import com.jocmp.capy.Account
+import com.jocmp.capy.accounts.Source
 import com.jocmp.capy.logging.CapyLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -65,7 +67,7 @@ class OPMLImportWorker(
     private suspend fun import(opmlUri: Uri) {
         val inputStream = applicationContext.contentResolver.openInputStream(opmlUri)!!
 
-        account.import(inputStream) { progress ->
+        account.import(inputStream, concurrency = importConcurrency()) { progress ->
             val notification = buildNotification(
                 percentProgress = (progress.percent * 100f).roundToInt(),
             )
@@ -91,6 +93,22 @@ class OPMLImportWorker(
                 account.refresh()
             }
         }
+    }
+
+    private fun importConcurrency(): Int {
+        if (account.source != Source.LOCAL) {
+            return CONCURRENT_IMPORTS
+        }
+
+        val activityManager = applicationContext.activityManager
+        val isLowMemory = activityManager.isLowRamDevice ||
+                activityManager.memoryClass < LOW_MEMORY_CLASS_MB
+
+        if (isLowMemory) {
+            return 1
+        }
+
+        return CONCURRENT_IMPORTS
     }
 
     private fun createForegroundInfo(): ForegroundInfo {
@@ -154,6 +172,10 @@ class OPMLImportWorker(
         private const val OPML_URI_KEY = "OPML_URI_KEY"
 
         private const val WORK_NAME = "OPML_IMPORT"
+
+        private const val CONCURRENT_IMPORTS = 4
+
+        private const val LOW_MEMORY_CLASS_MB = 256
 
         fun performAsync(context: Context, uri: Uri): UUID {
             val request = OneTimeWorkRequestBuilder<OPMLImportWorker>()

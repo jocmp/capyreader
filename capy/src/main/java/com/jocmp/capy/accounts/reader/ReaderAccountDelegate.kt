@@ -171,6 +171,41 @@ internal class ReaderAccountDelegate(
         }
     }
 
+    override suspend fun importFeed(
+        url: String,
+        title: String?,
+        folderTitles: List<String>,
+    ): Result<Unit> = withErrorHandling {
+        val result = withPostToken {
+            googleReader.quickAddSubscription(url = url.withProtocol, postToken = postToken.get())
+        }.body()
+
+        val subscription = result?.toSubscription
+
+        if (subscription == null) {
+            if (result?.alreadySubscribedURL == null) {
+                throw AddFeedResult.Error.FeedNotFound()
+            }
+
+            return@withErrorHandling
+        }
+
+        val folderTitle = folderTitles.firstOrNull() ?: return@withErrorHandling
+
+        val response = withPostToken {
+            googleReader.editSubscription(
+                id = subscription.id,
+                action = SubscriptionEditAction.EDIT,
+                addCategoryID = userLabel(folderTitle),
+                postToken = postToken.get(),
+            )
+        }
+
+        if (!response.isSuccessful) {
+            throw ValidationError(response.message())
+        }
+    }
+
     override suspend fun updateFeed(
         feed: Feed,
         title: String,
