@@ -16,6 +16,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import java.io.IOException
+import java.time.OffsetDateTime
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -240,6 +241,29 @@ class AccountTest {
     }
 
     @Test
+    fun `markRead keeps the article in the current unread list`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val listStartedAt = OffsetDateTime.now()
+
+        account.markRead(article.id)
+
+        assertEquals(listOf(article.id), unreadListIDs(since = listStartedAt))
+    }
+
+    @Test
+    fun `markAllRead with a read time before the list started hides the articles`() = runTest {
+        val article = ArticleFixture(account.database).create(read = false)
+        val listStartedAt = OffsetDateTime.now()
+
+        account.markAllRead(
+            listOf(article.id),
+            lastReadAt = listStartedAt.minusSeconds(1).toZonedDateTime(),
+        )
+
+        assertEquals(emptyList(), unreadListIDs(since = listStartedAt))
+    }
+
+    @Test
     fun `markAllRead queues sync statuses`() = runTest {
         val articles = 3.repeated { ArticleFixture(account.database).create(read = false) }
         val articleIDs = articles.map { it.id }
@@ -340,5 +364,15 @@ class AccountTest {
 
         assertNotNull(account.findFolder(folderTitle))
         assertNotNull(account.findFeed(feed.id))
+    }
+
+    private fun unreadListIDs(since: OffsetDateTime): List<String> {
+        return account.articleRecords.byStatus.all(
+            status = ArticleStatus.UNREAD,
+            limit = 10,
+            offset = 0,
+            sortOrder = SortOrder.NEWEST_FIRST,
+            since = since,
+        ).executeAsList().map { it.id }
     }
 }

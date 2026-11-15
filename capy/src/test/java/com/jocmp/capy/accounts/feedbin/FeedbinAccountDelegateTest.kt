@@ -176,7 +176,7 @@ class FeedbinAccountDelegateTest {
 
         val articles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         val taggedNames = database

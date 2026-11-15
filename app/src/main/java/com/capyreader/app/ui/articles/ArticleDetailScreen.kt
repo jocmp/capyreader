@@ -66,7 +66,7 @@ fun ArticleDetailScreen(
     }
 
     var labelSheetArticleID by remember { mutableStateOf<String?>(null) }
-    val articleLabels by viewModel.getArticleLabels(labelSheetArticleID)
+    val articleLabels by remember(labelSheetArticleID) { viewModel.getArticleLabels(labelSheetArticleID) }
         .collectAsState(initial = emptyList())
 
     val labelsActions = remember(savedSearches, labelSheetArticleID, articleLabels) {

@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import com.capyreader.app.R
+import com.capyreader.app.common.asState
 import com.capyreader.app.common.AudioEnclosure
 import com.capyreader.app.common.Media
 import com.capyreader.app.common.shareImage
@@ -306,10 +306,7 @@ private fun ScrollableArticle(
 
 @Composable
 fun rememberImageVisibility(appPreferences: AppPreferences = koinInject()): Boolean {
-    val imagePreference by appPreferences.readerOptions
-        .imageVisibility
-        .changes()
-        .collectAsState(appPreferences.readerOptions.imageVisibility.get())
+    val imagePreference by appPreferences.readerOptions.imageVisibility.asState()
 
     val connectivity = LocalConnectivity.current
 

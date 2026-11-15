@@ -201,7 +201,7 @@ class ReaderAccountDelegateTest {
 
         val articles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         val taggedNames = database
@@ -309,7 +309,7 @@ class ReaderAccountDelegateTest {
 
         val unreadArticles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         assertEquals(expected = 1, actual = unreadArticles.size)
@@ -336,7 +336,7 @@ class ReaderAccountDelegateTest {
 
         val articles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)
@@ -435,7 +435,7 @@ class ReaderAccountDelegateTest {
 
         val articles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)
@@ -465,7 +465,7 @@ class ReaderAccountDelegateTest {
 
         val articles = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
 
         assertEquals(expected = 1, actual = articles.size)

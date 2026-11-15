@@ -708,6 +708,56 @@ class ArticleRecordsTest {
     }
 
     @Test
+    fun countAll_unread() = runTest {
+        val feed = FeedFixture(database).create()
+        val otherFeed = FeedFixture(database).create()
+
+        2.repeated { articleFixture.create(feed = feed, read = false) }
+        articleFixture.create(feed = feed, read = false, starred = true)
+        articleFixture.create(feed = feed, read = true)
+        articleFixture.create(feed = otherFeed, read = false)
+
+        val counts = articleRecords.countAll(ArticleStatus.UNREAD).first()
+
+        assertEquals(expected = mapOf(feed.id to 3L, otherFeed.id to 1L), actual = counts)
+    }
+
+    @Test
+    fun countAll_starred() = runTest {
+        val feed = FeedFixture(database).create()
+        val otherFeed = FeedFixture(database).create()
+
+        articleFixture.create(feed = feed, read = true, starred = true)
+        articleFixture.create(feed = feed, read = false, starred = true)
+        articleFixture.create(feed = feed, read = false, starred = false)
+        articleFixture.create(feed = otherFeed, read = true, starred = false)
+
+        val counts = articleRecords.countAll(ArticleStatus.STARRED).first()
+
+        assertEquals(expected = mapOf(feed.id to 2L), actual = counts)
+    }
+
+    @Test
+    fun countAllBySavedSearch_starred() = runTest {
+        val savedSearch = SavedSearchFixture(database).create()
+        val savedSearchRecords = SavedSearchRecords(database)
+
+        val articles = listOf(
+            articleFixture.create(read = true, starred = true),
+            articleFixture.create(read = false, starred = true),
+            articleFixture.create(read = false, starred = false),
+        )
+
+        articles.forEach { article ->
+            savedSearchRecords.upsertArticle(articleID = article.id, savedSearchID = savedSearch.id)
+        }
+
+        val counts = articleRecords.countAllBySavedSearch(ArticleStatus.STARRED).first()
+
+        assertEquals(expected = mapOf(savedSearch.id to 2L), actual = counts)
+    }
+
+    @Test
     fun neighbors_newestFirst_returnsAdjacentArticlesAndBoundaries() {
         val feed = FeedFixture(database).create()
         val (newest, middle, oldest) = threeArticles(feed)

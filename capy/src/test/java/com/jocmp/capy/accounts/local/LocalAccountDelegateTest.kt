@@ -118,7 +118,7 @@ class LocalAccountDelegateTest {
 
         val articlesCount = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsOne()
             .COUNT
 
@@ -142,7 +142,7 @@ class LocalAccountDelegateTest {
 
         val articlesCount = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsOne()
             .COUNT
 
@@ -193,7 +193,7 @@ class LocalAccountDelegateTest {
 
         val articlesCount = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsOne()
             .COUNT
 
@@ -236,7 +236,7 @@ class LocalAccountDelegateTest {
 
         val articleCounts = database
             .articlesQueries
-            .countAll(read = false, starred = false)
+            .countAllUnread()
             .executeAsList()
         assertTrue(articleCounts.isEmpty())
 
