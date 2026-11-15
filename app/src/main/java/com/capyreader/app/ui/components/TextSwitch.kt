@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -13,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ fun TextSwitch(
     title: String,
     subtitle: String? = null,
     enabled: Boolean = true,
+    titleIcon: ImageVector? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -40,10 +44,23 @@ fun TextSwitch(
                 .padding(vertical = 8.dp)
         ) {
             val color = LocalContentColor.current
-            Text(
-                title,
-                color = if (enabled) color else color.copy(alpha = ListItemDisabledLabelTextOpacity)
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    title,
+                    color = if (enabled) color else color.copy(alpha = ListItemDisabledLabelTextOpacity)
+                )
+                if (titleIcon != null) {
+                    Icon(
+                        imageVector = titleIcon,
+                        contentDescription = null,
+                        tint = colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(16.dp),
+                    )
+                }
+            }
             if (subtitle != null) {
                 Text(
                     text = subtitle,
