@@ -55,6 +55,7 @@ fun ArticleList(
     showNewArticles: Boolean = false,
     scrollToTop: () -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(),
+    statuses: Map<String, ArticleListStatus> = emptyMap(),
 ) {
     val articleOptions = rememberArticleOptions().copy(
         dim = dimReadArticles,
@@ -76,7 +77,9 @@ fun ArticleList(
                         }
                 ) {
                     items(count = articles.itemCount, key = articles.itemKey { it.id }) { index ->
-                        val item = articles[index]
+                        val loaded = articles[index]
+                        val status = loaded?.let { statuses[it.id] }
+                        val item = remember(loaded, status) { loaded?.withStatus(status) }
 
                         Box(Modifier.animateItem()) {
                             if (item == null) {

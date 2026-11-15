@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.InvalidatingPagingSourceFactory
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.flowOf
 import com.capyreader.app.R
@@ -53,17 +54,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -154,12 +159,25 @@ class ArticleScreenViewModel(
 
     val articleList: StateFlow<ArticleListPage> = _articleList
 
+    private val _searchStatuses =
+        MutableStateFlow<StateFlow<Map<String, ArticleListStatus>>>(MutableStateFlow(emptyMap()))
+
+    val searchStatuses: Flow<Map<String, ArticleListStatus>> = _searchStatuses.flatMapLatest { it }
+
     // Search has its own pager so it can filter freely without disturbing the list above.
     val searchResults: Flow<PagingData<Article>> =
         combine(_searchQuery, listSession.flatMapLatest(::listPagerKeys)) { query, key ->
             key.copy(query = query)
         }.flatMapLatest { key ->
-            if (key.query.isNullOrBlank()) flowOf(PagingData.empty()) else pagerFlow(key)
+            if (key.query.isNullOrBlank()) {
+                flowOf(PagingData.empty())
+            } else {
+                channelFlow {
+                    val (articles, statuses) = sessionArticles(key, scope = this)
+                    _searchStatuses.value = statuses
+                    articles.collect { send(it) }
+                }
+            }
         }.cachedIn(viewModelScope)
 
     private fun listPagerKey(session: ListSession, sort: SortOrder) =
@@ -181,20 +199,50 @@ class ArticleScreenViewModel(
         articleListScope = scope
         articleListKey = key
 
+        val (articles, statuses) = sessionArticles(key, scope)
+
         return ArticleListPage(
             filter = key.filter,
             sortOrder = key.sort,
-            articles = pagerFlow(key).cachedIn(scope),
+            articles = articles.cachedIn(scope),
+            statuses = statuses,
         )
     }
 
-    private fun pagerFlow(key: ArticlePagerKey): Flow<PagingData<Article>> =
-        account.buildArticlePager(
-            filter = key.filter,
-            query = key.query,
-            sortOrder = key.sort,
-            since = key.since,
-        ).flow.flowOn(ioDispatcher)
+    /**
+     * Pages that only reload when articles, feeds, or saved searches change, with this session's
+     * read and starred changes kept in a map while [scope] is active.
+     */
+    private fun sessionArticles(
+        key: ArticlePagerKey,
+        scope: CoroutineScope,
+    ): Pair<Flow<PagingData<Article>>, StateFlow<Map<String, ArticleListStatus>>> {
+        val statuses = ArticleListStatuses()
+        val sources = InvalidatingPagingSourceFactory {
+            account.articlePagingSource(
+                filter = key.filter,
+                query = key.query,
+                sortOrder = key.sort,
+                since = key.since,
+                observeChanges = false,
+            )
+        }
+
+        scope.launch(ioDispatcher) {
+            account.statusChanges.collect(statuses::apply)
+        }
+
+        scope.launch(ioDispatcher) {
+            merge(account.listChanges, account.refreshes)
+                .conflate()
+                .collect {
+                    sources.invalidate()
+                    delay(LIST_CHANGE_INTERVAL)
+                }
+        }
+
+        return articlePager(sources).flow.flowOn(ioDispatcher) to statuses.statuses
+    }
 
     val folders: Flow<List<Folder>> = combine(
         accountFolders,
@@ -881,6 +929,8 @@ class ArticleScreenViewModel(
 
     companion object {
         val SYNC_FLUSH_INTERVAL = 2.minutes
+
+        private val LIST_CHANGE_INTERVAL = 500.milliseconds
     }
 }
 
@@ -915,6 +965,7 @@ class ArticleListPage(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
     val articles: Flow<PagingData<Article>>,
+    val statuses: StateFlow<Map<String, ArticleListStatus>> = MutableStateFlow(emptyMap()),
 )
 
 private data class ListSession(

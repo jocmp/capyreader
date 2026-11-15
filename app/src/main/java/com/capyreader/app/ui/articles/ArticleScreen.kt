@@ -164,7 +164,9 @@ fun ArticleScreen(
     val articleList by viewModel.articleList.collectAsStateWithLifecycle()
     val presentedArticles = rememberPresentedArticles(articleList)
     val articles = presentedArticles.items
+    val articleStatuses by presentedArticles.statuses.collectAsStateWithLifecycle()
     val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+    val searchStatuses by viewModel.searchStatuses.collectAsStateWithLifecycle(initialValue = emptyMap())
 
     val onMarkAllRead = { range: MarkRead ->
         viewModel.markAllRead(
@@ -631,6 +633,7 @@ fun ArticleScreen(
                                             onSelect = { article ->
                                                 selectArticle(article)
                                             },
+                                            statuses = articleStatuses,
                                         )
                                     }
                                 }
@@ -673,6 +676,7 @@ fun ArticleScreen(
                 SearchView(
                     search = search,
                     results = searchResults,
+                    statuses = searchStatuses,
                     listState = searchListState,
                     selectedArticleID = selectedArticleID,
                     dimReadArticles = filter.status != ArticleStatus.STARRED,

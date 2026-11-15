@@ -1,6 +1,10 @@
 package com.capyreader.app.ui.articles
 
 import androidx.paging.PagingSource
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.Transacter
+import app.cash.sqldelight.db.QueryResult
+import app.cash.sqldelight.db.SqlCursor
 import app.cash.sqldelight.paging3.QueryPagingSource
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
@@ -10,8 +14,12 @@ import com.jocmp.capy.db.Database
 import com.jocmp.capy.persistence.ArticleRecords
 import kotlinx.coroutines.Dispatchers
 import java.time.OffsetDateTime
+import kotlin.coroutines.CoroutineContext
 
-class ArticlePagerFactory(private val database: Database) {
+class ArticlePagerFactory(
+    private val database: Database,
+    private val observeChanges: Boolean = true,
+) {
     private val articles = ArticleRecords(database)
 
     fun findArticles(
@@ -35,7 +43,7 @@ class ArticlePagerFactory(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        return QueryPagingSource(
+        return pagingSource(
             countQuery = articles.byStatus.count(
                 status = filter.status,
                 query = query,
@@ -103,7 +111,7 @@ class ArticlePagerFactory(private val database: Database) {
         priority: FeedPriority,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        return QueryPagingSource(
+        return pagingSource(
             countQuery = articles.byFeed.count(
                 feedIDs = feedIDs,
                 status = filter.status,
@@ -134,7 +142,7 @@ class ArticlePagerFactory(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        return QueryPagingSource(
+        return pagingSource(
             countQuery = articles.bySavedSearch.count(
                 savedSearchID = filter.savedSearchID,
                 status = filter.status,
@@ -163,7 +171,7 @@ class ArticlePagerFactory(private val database: Database) {
         sortOrder: SortOrder,
         since: OffsetDateTime
     ): PagingSource<Int, Article> {
-        return QueryPagingSource(
+        return pagingSource(
             countQuery = articles.byToday.count(
                 status = filter.status,
                 query = query,
@@ -183,4 +191,38 @@ class ArticlePagerFactory(private val database: Database) {
             }
         )
     }
+
+    private fun pagingSource(
+        countQuery: Query<Long>,
+        transacter: Transacter,
+        context: CoroutineContext,
+        queryProvider: (limit: Long, offset: Long) -> Query<Article>,
+    ): PagingSource<Int, Article> {
+        if (observeChanges) {
+            return QueryPagingSource(
+                countQuery = countQuery,
+                transacter = transacter,
+                context = context,
+                queryProvider = queryProvider,
+            )
+        }
+
+        return QueryPagingSource(
+            countQuery = UnobservedQuery(countQuery),
+            transacter = transacter,
+            context = context,
+            queryProvider = { limit, offset -> UnobservedQuery(queryProvider(limit, offset)) },
+        )
+    }
+}
+
+/** Runs [query] without registering for table changes, so its owner decides when to invalidate. */
+private class UnobservedQuery<T : Any>(private val query: Query<T>) : Query<T>(query.mapper) {
+    override fun <R> execute(mapper: (SqlCursor) -> QueryResult<R>): QueryResult<R> {
+        return query.execute(mapper)
+    }
+
+    override fun addListener(listener: Listener) = Unit
+
+    override fun removeListener(listener: Listener) = Unit
 }

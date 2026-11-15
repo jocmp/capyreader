@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.capyreader.app.R
 import com.capyreader.app.ui.articles.ArticleList
+import com.capyreader.app.ui.articles.ArticleListStatus
 import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
@@ -53,6 +54,7 @@ import com.jocmp.capy.MarkRead
 fun SearchView(
     search: ArticleSearch,
     results: LazyPagingItems<Article>,
+    statuses: Map<String, ArticleListStatus>,
     listState: LazyListState,
     selectedArticleID: String?,
     dimReadArticles: Boolean,
@@ -141,6 +143,7 @@ fun SearchView(
                         dimReadArticles = dimReadArticles,
                         onMarkAllRead = onMarkAllRead,
                         onSelect = onSelect,
+                        statuses = statuses,
                     )
                 }
             }

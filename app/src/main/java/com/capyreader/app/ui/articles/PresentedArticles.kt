@@ -14,23 +14,28 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.jocmp.capy.Article
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.articles.SortOrder
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 
 class PresentedArticles(
     val filter: ArticleFilter,
     val sortOrder: SortOrder,
     val items: LazyPagingItems<Article>,
+    val statuses: StateFlow<Map<String, ArticleListStatus>>,
 )
 
 @Composable
 fun rememberPresentedArticles(page: ArticleListPage): PresentedArticles {
     val items = key(page) { page.articles.collectAsLazyPagingItems() }
-    var presented by remember { mutableStateOf(PresentedArticles(page.filter, page.sortOrder, items)) }
+    var presented by remember { mutableStateOf(page.present(items)) }
 
     LaunchedEffect(items) {
         snapshotFlow { items.loadState.refresh }.first { it !is LoadState.Loading }
-        presented = PresentedArticles(page.filter, page.sortOrder, items)
+        presented = page.present(items)
     }
 
     return presented
 }
+
+private fun ArticleListPage.present(items: LazyPagingItems<Article>) =
+    PresentedArticles(filter, sortOrder, items, statuses)

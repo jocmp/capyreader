@@ -19,6 +19,7 @@ import com.jocmp.capy.accounts.reader.buildReaderDelegate
 import com.jocmp.capy.articles.ArticleContent
 import com.jocmp.capy.articles.MercuryParser
 import com.jocmp.capy.articles.SortOrder
+import com.jocmp.capy.articles.StatusChange
 import com.jocmp.capy.common.TimeHelpers.nowUTC
 import com.jocmp.capy.common.sortedByName
 import com.jocmp.capy.common.sortedByTitle
@@ -41,7 +42,12 @@ import com.jocmp.feedfinder.DefaultFeedFinder
 import com.jocmp.feedfinder.FeedFinder
 import com.jocmp.minifluxclient.Miniflux
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
@@ -110,6 +116,25 @@ data class Account(
     private val syncStatusRecords = SyncStatusRecords(database)
 
     private val sendArticleStatusMutex = Mutex()
+
+    // Unbounded so tryEmit never drops a change.
+    private val _statusChanges = MutableSharedFlow<StatusChange>(extraBufferCapacity = Int.MAX_VALUE)
+
+    val statusChanges: SharedFlow<StatusChange> = _statusChanges.asSharedFlow()
+
+    private val _refreshes = MutableSharedFlow<Unit>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+
+    val refreshes: SharedFlow<Unit> = _refreshes.asSharedFlow()
+
+    /** Emits after writes that can change list membership or rows. Status writes don't. */
+    val listChanges: Flow<Unit>
+        get() = database.articlesQueries.listChangeSignal()
+            .asFlow()
+            .drop(1)
+            .map { }
 
     private val feedFinder: FeedFinder by lazy { DefaultFeedFinder(localHttpClient) }
 
@@ -238,6 +263,8 @@ data class Account(
         } catch (e: Throwable) {
             CapyLog.error("refresh", e)
             Result.failure(e)
+        } finally {
+            _refreshes.tryEmit(Unit)
         }
     }
 
@@ -314,6 +341,7 @@ data class Account(
                 articleRecords.addStar(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.STARRED, flag = true)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), starred = true))
         }
 
         return Result.success(Unit)
@@ -325,6 +353,7 @@ data class Account(
                 articleRecords.removeStar(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.STARRED, flag = false)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), starred = false))
         }
 
         return Result.success(Unit)
@@ -398,13 +427,18 @@ data class Account(
         batchSize: Int = 500,
     ): Result<Unit> {
         withIOContext {
-            database.transaction {
-                articleIDs.chunked(batchSize).forEach { batchIDs ->
+            val changedIDs = database.transactionWithResult {
+                articleIDs.chunked(batchSize).flatMap { batchIDs ->
                     val changesetIDs = articleRecords.filterUnreadStatuses(batchIDs)
 
                     articleRecords.markAllRead(changesetIDs, lastReadAt = lastReadAt)
                     queueStatuses(changesetIDs, SyncStatus.Key.READ, flag = true)
+                    changesetIDs
                 }
+            }
+
+            if (changedIDs.isNotEmpty()) {
+                _statusChanges.tryEmit(StatusChange(changedIDs, read = true))
             }
         }
 
@@ -421,6 +455,7 @@ data class Account(
                 articleRecords.markUnread(articleID = articleID)
                 queueStatus(articleID, SyncStatus.Key.READ, flag = false)
             }
+            _statusChanges.tryEmit(StatusChange(listOf(articleID), read = false))
         }
 
         return Result.success(Unit)

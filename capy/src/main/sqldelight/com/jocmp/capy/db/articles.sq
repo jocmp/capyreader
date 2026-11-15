@@ -317,3 +317,11 @@ deleteArticlesByID {
   DELETE FROM enclosures WHERE article_id IN :articleIDs;
   DELETE FROM articles WHERE id IN :articleIDs;
 }
+
+-- Observed only for change notifications; deliberately skips article_statuses.
+listChangeSignal:
+SELECT MAX(rowid) FROM articles
+UNION ALL
+SELECT MAX(rowid) FROM feeds
+UNION ALL
+SELECT MAX(rowid) FROM saved_search_articles;
