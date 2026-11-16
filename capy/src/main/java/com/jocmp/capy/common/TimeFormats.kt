@@ -9,8 +9,8 @@ import java.util.Locale
 internal object TimeFormats {
     private const val RFC_822 = "[EEE, ]d MMM yy HH:mm[:ss][ z][ Z]"
 
-    // The RFC_1123_DATE_TIME in the standard library doesn't fully conform to spec,
-    // make up for it with this.
+    // Covers RFC_1123_DATE_TIME in Java which doesn't fully conform to spec
+    // https://github.com/openjdk/jdk/blob/ad645ad30bf45420174153859d87a6110412b115/src/java.base/share/classes/java/time/format/DateTimeFormatter.java#L1335
     private const val RFC_1123 = "[EEE, ]d MMM yyyy HH:mm[:ss][ z][ Z]"
 
     private val DATETIME_PATTERNS = listOf(
