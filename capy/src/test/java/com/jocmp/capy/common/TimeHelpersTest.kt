@@ -130,6 +130,24 @@ class TimeHelpersTest {
     }
 
     @Test
+    fun `RFC1123 with UT offset`() {
+        val result = "4 Nov 2026 01:02:03 UT".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2026,
+            11,
+            4,
+            1,
+            2,
+            3,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
     fun `RFC1123 with timezone abbreviation`() {
         val result = "Sun, 22 Dec 2024 08:18:56 EDT".toDateTime
 
@@ -232,6 +250,24 @@ class TimeHelpersTest {
             2025,
             2,
             27,
+            10,
+            8,
+            0,
+            0,
+            ZoneOffset.UTC
+        )
+
+        assertEquals(expected = expected, actual = result)
+    }
+
+    @Test
+    fun `RFC822 single digit date`() {
+        val result = "7 Feb 25 10:08 UTC".toDateTime
+
+        val expected = ZonedDateTime.of(
+            2025,
+            2,
+            7,
             10,
             8,
             0,
