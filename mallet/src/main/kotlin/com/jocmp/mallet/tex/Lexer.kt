@@ -11,6 +11,8 @@ val combiningDiacriticalMarksEndRegex = Regex("$COMBINING_DIACRITICAL_MARK+$")
 
 // Java regexes match a surrogate pair as one code point, so KaTeX's surrogate-pair branch
 // becomes a supplementary code point range.
+private val defaultCatcodes: Map<String, Int> = mapOf("%" to 14, "~" to 13)
+
 private val tokenRegex =
     Regex(
         "($SPACE+)|" +
@@ -29,15 +31,20 @@ class Lexer(
     override val input: String,
     val settings: Settings,
 ) : LexerInterface {
-    val catcodes: MutableMap<String, Int> = mutableMapOf("%" to 14, "~" to 13)
+    private var catcodeOverrides: MutableMap<String, Int>? = null
+
+    /** KaTeX's per-lexer catcode table, shared until a lexer changes it: one is made per macro expansion. */
+    val catcodes: Map<String, Int>
+        get() = catcodeOverrides ?: defaultCatcodes
     private val matcher = tokenRegex.toPattern().matcher(input)
     private var lastIndex = 0
 
     fun setCatcode(char: String, code: Int?) {
+        val table = catcodeOverrides ?: HashMap(defaultCatcodes).also { catcodeOverrides = it }
         if (code == null) {
-            catcodes.remove(char)
+            table.remove(char)
         } else {
-            catcodes[char] = code
+            table[char] = code
         }
     }
 

@@ -2,6 +2,7 @@ package com.jocmp.mallet.tex
 
 import java.math.BigDecimal
 import java.math.RoundingMode
+import kotlin.math.abs
 
 private val ptPerUnit =
     mapOf(
@@ -55,6 +56,19 @@ private fun roundEm(n: Double): String {
     if (!n.isFinite()) {
         return n.toString()
     }
-    val rounded = BigDecimal(n).setScale(4, RoundingMode.HALF_UP).stripTrailingZeros()
-    return if (rounded.signum() == 0) "0" else rounded.toPlainString()
+    if (abs(n) >= 1e12) {
+        val rounded = BigDecimal(n).setScale(4, RoundingMode.HALF_UP).stripTrailingZeros()
+        return if (rounded.signum() == 0) "0" else rounded.toPlainString()
+    }
+    val scaled = Math.round(abs(n) * 10_000)
+    if (scaled == 0L) {
+        return "0"
+    }
+    val sign = if (n < 0) "-" else ""
+    val whole = scaled / 10_000
+    val fraction = scaled % 10_000
+    if (fraction == 0L) {
+        return "$sign$whole"
+    }
+    return "$sign$whole." + fraction.toString().padStart(4, '0').trimEnd('0')
 }

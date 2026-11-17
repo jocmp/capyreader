@@ -540,6 +540,13 @@ class TexLayout(
             if (value == null) {
                 return null
             }
+            if (value.endsWith("em")) {
+                try {
+                    return java.lang.Double.parseDouble(value.substring(0, value.length - 2))
+                } catch (_: NumberFormatException) {
+                    // Fall through to the regex for padded or unusual values.
+                }
+            }
             if (value.trim() == "0") {
                 return 0.0
             }
