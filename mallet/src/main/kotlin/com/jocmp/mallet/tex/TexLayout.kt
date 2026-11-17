@@ -83,21 +83,31 @@ class TexLayout(
     private val equationNumbers = IdentityHashMap<Span, Int>()
     private val rootAlign = if (displayMode) Align.CENTER else Align.LEFT
 
+    /**
+     * Every node lays out into this one buffer and is then shifted in place, so items are not
+     * copied once per nesting level.
+     */
+    private val out = ArrayList<Item>()
+    private val prefix = ArrayList<Item>()
+    private val margin = Margin()
+
     fun layout(root: Span): Pair<TexBox, TexBox?> {
         val context = Context(color = null, align = rootAlign)
         val tag = root.children.filterIsInstance<Span>().find { it.hasClass("katex-tag") }
         val body = root.children.filter { it !== tag }
-        val laid = layoutRun(body, context, fill = null)
-        val box = TexBox(laid.width, root.height, root.depth, laid.items)
+        val width = layoutRun(body, context, fill = null)
+        val box = TexBox(width, root.height, root.depth, publish(0))
         val tagBox =
             tag?.let {
-                val tagLaid = layoutRun(it.children, context, fill = null)
-                TexBox(tagLaid.width, it.height, it.depth, tagLaid.items)
+                val tagWidth = layoutRun(it.children, context, fill = null)
+                TexBox(tagWidth, it.height, it.depth, publish(0))
             }
         return box to tagBox
     }
 
     private enum class Align { LEFT, CENTER, RIGHT }
+
+    private enum class Kind { GLYPH, RECT, SVG, LINE }
 
     private data class Context(
         val color: String?,
@@ -105,9 +115,9 @@ class TexLayout(
         val clip: TexItem.Clip? = null,
     )
 
-    private class Laid(
-        val width: Double,
-        val items: List<TexItem>,
+    private class Margin(
+        var left: Double = 0.0,
+        var right: Double = 0.0,
     )
 
     private class Edges(
@@ -117,55 +127,113 @@ class TexLayout(
         val bottom: Double = 0.0,
     )
 
-    private fun layoutNode(node: VirtualNode, context: Context, fill: Double?): Laid =
+    /**
+     * A mutable [TexItem] while layout shifts it into place. For a line, ([x], [y]) is its first
+     * end and ([x2], [y2]) its second. Each SVG keeps its own copy of the clip it was drawn with.
+     */
+    private class Item(
+        val kind: Kind,
+        var x: Double,
+        var y: Double,
+        var width: Double = 0.0,
+        var height: Double = 0.0,
+        var x2: Double = 0.0,
+        var y2: Double = 0.0,
+        var size: Double = 1.0,
+        var strokeWidth: Double = 0.0,
+        val text: String = "",
+        val fontName: String = "",
+        val color: String? = null,
+        var mirrored: Boolean = false,
+        val dashed: Boolean = false,
+        val viewBox: List<Double>? = null,
+        val preserveAspectRatio: String? = null,
+        val paths: List<String> = emptyList(),
+        var clip: DoubleArray? = null,
+    ) {
+        fun toTexItem(): TexItem =
+            when (kind) {
+                Kind.GLYPH -> TexItem.Glyph(x, y, text, fontName, size, color, mirrored)
+                Kind.RECT -> TexItem.Rect(x, y, width, height, color, dashed)
+                Kind.SVG ->
+                    TexItem.Svg(
+                        x = x,
+                        y = y,
+                        width = width,
+                        height = height,
+                        viewBox = viewBox,
+                        preserveAspectRatio = preserveAspectRatio,
+                        paths = paths,
+                        clip = clip?.let { TexItem.Clip(it[0], it[1], it[2], it[3]) },
+                        color = color,
+                    )
+                Kind.LINE -> TexItem.Line(x, y, x2, y2, strokeWidth, color)
+            }
+    }
+
+    /** The items from [start] on, as the public immutable type; the buffer drops them. */
+    private fun publish(start: Int): List<TexItem> {
+        val items = ArrayList<TexItem>(out.size - start)
+        (start until out.size).forEach { i -> items.add(out[i].toTexItem()) }
+        truncate(start)
+        return items
+    }
+
+    private fun truncate(start: Int) {
+        out.subList(start, out.size).clear()
+    }
+
+    private fun layoutNode(node: VirtualNode, context: Context, fill: Double?): Double =
         when (node) {
             is SymbolNode -> layoutSymbol(node, context)
             is DocumentFragment -> layoutRun(node.children, context, fill)
             is VListSpan -> layoutVList(node, context)
             is Span -> layoutSpan(node, context, fill)
-            is Img -> Laid(0.0, emptyList())
-            is SvgNode -> Laid(0.0, emptyList())
+            is Img -> 0.0
+            is SvgNode -> 0.0
         }
 
     private fun naturalWidth(node: VirtualNode, context: Context): Double =
-        naturalWidths.getOrPut(node) { layoutNode(node, context, fill = null).width }
+        naturalWidths.getOrPut(node) {
+            val start = out.size
+            layoutNode(node, context, fill = null).also { truncate(start) }
+        }
 
     /** A glyph run; like KaTeX's `SymbolNode.toNode()`, its inline style applies to the glyph's span. */
-    private fun layoutSymbol(node: SymbolNode, context: Context): Laid {
+    private fun layoutSymbol(node: SymbolNode, context: Context): Double {
         val fontName = node.fontName ?: "Main-Regular"
-        val width = fontAdvances[fontName to node.text] ?: if (node.hasMetrics) node.width else measurer.measure(node.text, fontName)
+        val width = advanceOverride(fontName, node.text) ?: if (node.hasMetrics) node.width else measurer.measure(node.text, fontName)
         val style = node.style
         val color = style.color ?: context.color
         val paddingLeft = em(style.paddingLeft) ?: 0.0
         val dx = paddingLeft + (em(style.left) ?: 0.0)
         val dy = (em(style.top) ?: 0.0) - (em(style.bottom) ?: 0.0) - (em(style.verticalAlign) ?: 0.0)
-        val items =
-            if (node.text.isEmpty() || node.text == "​" || color == "transparent") {
-                emptyList()
-            } else {
-                listOf(TexItem.Glyph(dx, dy, node.text, fontName, 1.0, color))
-            }
-        return Laid(paddingLeft + width, items)
+        if (node.text.isNotEmpty() && node.text != "​" && color != "transparent") {
+            out.add(Item(Kind.GLYPH, dx, dy, text = node.text, fontName = fontName, color = color))
+        }
+        return paddingLeft + width
     }
 
     /** Children placed left to right on a shared baseline, as inline-blocks. */
-    private fun layoutRun(children: List<VirtualNode>, context: Context, fill: Double?): Laid {
+    private fun layoutRun(children: List<VirtualNode>, context: Context, fill: Double?): Double {
         var x = 0.0
-        val items = mutableListOf<TexItem>()
         children.forEach { child ->
             if (child is SvgNode || isAbsolute(child)) {
                 return@forEach
             }
-            val (marginLeft, marginRight) = margins(child)
-            val laid = layoutNode(child, context, fill)
-            items.addAll(translate(laid.items, x + marginLeft, 0.0))
+            margins(child)
+            val marginLeft = margin.left
+            val marginRight = margin.right
+            val start = out.size
+            val width = layoutNode(child, context, fill)
+            shift(start, x + marginLeft, 0.0)
             val italic = (child as? SymbolNode)?.italic?.takeIf { it > 0 } ?: 0.0
-            x += marginLeft + laid.width + marginRight + italic
+            x += marginLeft + width + marginRight + italic
         }
-        return Laid(x, items)
+        return x
     }
 
-    private fun layoutVList(vlist: VListSpan, context: Context): Laid {
+    private fun layoutVList(vlist: VListSpan, context: Context): Double {
         val align = alignFor(vlist, context.align)
         val entryContexts =
             vlist.entries.map { entry ->
@@ -177,27 +245,31 @@ class TexLayout(
         val width =
             vlist.entries.indices.maxOfOrNull { i ->
                 val entry = vlist.entries[i]
-                val (marginLeft, marginRight) = margins(entry.wrapper)
+                margins(entry.wrapper)
+                val marginLeft = margin.left
+                val marginRight = margin.right
                 marginLeft + naturalWidth(entry.elem, entryContexts[i]) + marginRight
             } ?: 0.0
 
-        val items = mutableListOf<TexItem>()
         vlist.entries.forEachIndexed { i, entry ->
-            val (marginLeft, marginRight) = margins(entry.wrapper)
-            val laid = layoutNode(entry.elem, entryContexts[i], width - marginLeft - marginRight)
-            val entryWidth = marginLeft + laid.width + marginRight
+            margins(entry.wrapper)
+            val marginLeft = margin.left
+            val marginRight = margin.right
+            val start = out.size
+            val laidWidth = layoutNode(entry.elem, entryContexts[i], width - marginLeft - marginRight)
+            val entryWidth = marginLeft + laidWidth + marginRight
             val offset =
                 when (entryContexts[i].align) {
                     Align.LEFT -> 0.0
                     Align.CENTER -> (width - entryWidth) / 2
                     Align.RIGHT -> width - entryWidth
                 }
-            items.addAll(translate(laid.items, offset + marginLeft, entry.baseline))
+            shift(start, offset + marginLeft, entry.baseline)
         }
-        return Laid(width, items)
+        return width
     }
 
-    private fun layoutSpan(span: Span, parentContext: Context, parentFill: Double?): Laid {
+    private fun layoutSpan(span: Span, parentContext: Context, parentFill: Double?): Double {
         val factor = sizingFactor(span)
         val fill = parentFill?.div(factor)
         val style = span.style
@@ -219,8 +291,9 @@ class TexLayout(
             context = context.copy(clip = TexItem.Clip(0.0, top, clipWidth, bottom - top))
         }
 
-        val run = if (span.hasClass("eqn-num")) equationNumber(span, context) else layoutRun(span.children, context, innerFill)
-        var contentWidth = explicitWidth ?: run.width
+        val start = out.size
+        val runWidth = if (span.hasClass("eqn-num")) equationNumber(span, context) else layoutRun(span.children, context, innerFill)
+        var contentWidth = explicitWidth ?: runWidth
         em(style.minWidth)?.let { contentWidth = maxOf(contentWidth, it - horizontalExtras) }
         if (span.classes.any { it in zeroWidthClasses } && !span.hasClass("accent-full")) {
             contentWidth = 0.0
@@ -230,113 +303,127 @@ class TexLayout(
         }
         val width = contentWidth + horizontalExtras
 
-        val items = mutableListOf<TexItem>()
+        shift(start, border.left + padding.left, 0.0)
         style.backgroundColor?.let { background ->
-            items.add(TexItem.Rect(0.0, top, width, bottom - top, background))
+            prefix.add(Item(Kind.RECT, 0.0, top, width = width, height = bottom - top, color = background))
         }
-        items.addAll(borderRects(span, border, width, top, bottom, color))
-        items.addAll(translate(run.items, border.left + padding.left, 0.0))
+        borderRects(span, border, width, top, bottom, color)
+        if (prefix.isNotEmpty()) {
+            out.addAll(start, prefix)
+            prefix.clear()
+        }
         val svgWidth = (explicitWidth ?: fill?.minus(horizontalExtras) ?: contentWidth) + horizontalExtras
-        items.addAll(absoluteChildren(span, context, width, svgWidth, top, bottom))
+        absoluteChildren(span, context, width, svgWidth, top, bottom)
 
         if (style.textShadow != null) {
-            items.addAll(items.filterIsInstance<TexItem.Glyph>().map { it.copy(x = it.x + 0.02, y = it.y + 0.01) })
+            val end = out.size
+            (start until end).forEach { i ->
+                val item = out[i]
+                if (item.kind == Kind.GLYPH) {
+                    out.add(Item(Kind.GLYPH, item.x + 0.02, item.y + 0.01, size = item.size, text = item.text, fontName = item.fontName, color = item.color, mirrored = item.mirrored))
+                }
+            }
         }
-        var result = if (span.hasClass("reflectbox")) mirror(items, width) else items
+        if (span.hasClass("reflectbox")) {
+            mirror(start, width)
+        }
 
         var dx = em(style.left) ?: 0.0
         var dy = (em(style.top) ?: 0.0) - (em(style.bottom) ?: 0.0) - (em(style.verticalAlign) ?: 0.0)
         if (factor != 1.0) {
-            result = scale(result, factor)
+            scale(start, factor)
             dx *= factor
             dy *= factor
         }
-        return Laid(width * factor, translate(result, dx, dy))
+        shift(start, dx, dy)
+        return width * factor
+    }
+
+    /** KaTeX numbers equations with a CSS counter, `.eqn-num::before { content: "(" counter ")" }`. */
+    private fun equationNumber(span: Span, context: Context): Double {
+        val number = equationNumbers.getOrPut(span) { equationNumbers.size + 1 }
+        var x = 0.0
+        "($number)".forEach { char ->
+            val text = char.toString()
+            if (context.color != "transparent") {
+                out.add(Item(Kind.GLYPH, x, 0.0, text = text, fontName = "Main-Regular", color = context.color))
+            }
+            x += getCharacterMetrics(text, "Main-Regular", Mode.TEXT)?.width ?: measurer.measure(text, "Main-Regular")
+        }
+        return x
     }
 
     /**
      * An SVG with no width of its own fills its nearest positioned ancestor, which for KaTeX is
      * usually the vlist row, hence [svgWidth] rather than the span's own [width].
      */
-    /** KaTeX numbers equations with a CSS counter, `.eqn-num::before { content: "(" counter ")" }`. */
-    private fun equationNumber(span: Span, context: Context): Laid {
-        val number = equationNumbers.getOrPut(span) { equationNumbers.size + 1 }
-        var x = 0.0
-        val items = mutableListOf<TexItem>()
-        "($number)".forEach { char ->
-            val text = char.toString()
-            if (context.color != "transparent") {
-                items.add(TexItem.Glyph(x, 0.0, text, "Main-Regular", 1.0, context.color))
-            }
-            x += getCharacterMetrics(text, "Main-Regular", Mode.TEXT)?.width ?: measurer.measure(text, "Main-Regular")
-        }
-        return Laid(x, items)
-    }
-
-    private fun absoluteChildren(span: Span, context: Context, width: Double, svgWidth: Double, top: Double, bottom: Double): List<TexItem> {
-        val items = mutableListOf<TexItem>()
+    private fun absoluteChildren(span: Span, context: Context, width: Double, svgWidth: Double, top: Double, bottom: Double) {
         span.children.forEach { child ->
             when {
-                child is SvgNode -> items.addAll(layoutSvg(child, span, context, svgWidth, top))
+                child is SvgNode -> layoutSvg(child, span, context, svgWidth, top)
                 child is Span && child.hasClass("katex-inner") -> {
-                    val laid = layoutSpan(child, context, null)
+                    val start = out.size
+                    val laidWidth = layoutSpan(child, context, null)
                     val x =
                         when {
-                            span.hasClass("llap") -> -laid.width
-                            span.hasClass("clap") -> -laid.width / 2
+                            span.hasClass("llap") -> -laidWidth
+                            span.hasClass("clap") -> -laidWidth / 2
                             else -> 0.0
                         }
-                    items.addAll(translate(laid.items, x, 0.0))
+                    shift(start, x, 0.0)
                 }
                 child is Span && child.classes.any { it in percentPieces } -> {
                     val (left, pieceWidth) = percentPiece(child, width)
                     val pieceContext = context.copy(clip = TexItem.Clip(left, top, pieceWidth, bottom - top))
-                    val laid = layoutSpan(child, pieceContext, pieceWidth)
-                    items.addAll(translate(laid.items, left, 0.0))
+                    val start = out.size
+                    layoutSpan(child, pieceContext, pieceWidth)
+                    shift(start, left, 0.0)
                 }
             }
         }
-        return items
     }
 
-    private fun layoutSvg(svg: SvgNode, parent: Span, context: Context, parentWidth: Double, parentTop: Double): List<TexItem> {
+    private fun layoutSvg(svg: SvgNode, parent: Span, context: Context, parentWidth: Double, parentTop: Double) {
         val styleWidth = svg.attributes["style"]?.substringAfter("width:", "")?.let { em(it) }
         val width = styleWidth ?: parentWidth
         val height = em(parent.style.height) ?: em(svg.attributes["height"]) ?: 0.0
         val top = if (parent.style.height != null) parentTop else -height
         val color = context.color
         if (color == "transparent") {
-            return emptyList()
+            return
         }
-        val items = mutableListOf<TexItem>()
         val paths = svg.children.filterIsInstance<PathNode>().mapNotNull { it.alternate ?: SvgGeometry.path[it.pathName] }
         if (paths.isNotEmpty()) {
-            val viewBox = svg.attributes["viewBox"]?.trim()?.split(Regex("[\\s,]+"))?.map { it.toDouble() }
-            items.add(
-                TexItem.Svg(
-                    x = 0.0,
-                    y = top,
+            val viewBox = svg.attributes["viewBox"]?.trim()?.split(viewBoxSeparator)?.map { it.toDouble() }
+            val clip = context.clip?.let { doubleArrayOf(it.x, it.y, it.width, it.height) }
+            out.add(
+                Item(
+                    Kind.SVG,
+                    0.0,
+                    top,
                     width = width,
                     height = height,
                     viewBox = viewBox,
                     preserveAspectRatio = svg.attributes["preserveAspectRatio"],
                     paths = paths,
-                    clip = context.clip,
+                    clip = clip,
                     color = color,
                 ),
             )
         }
-        svg.children.filterIsInstance<LineNode>().forEach { line ->
+        svg.children.forEach { child ->
+            val line = child as? LineNode ?: return@forEach
             fun coordinate(value: String?, extent: Double): Double =
                 when {
                     value == null -> 0.0
                     value.endsWith("%") -> value.dropLast(1).toDouble() / 100 * extent
                     else -> em(value) ?: value.toDoubleOrNull()?.div(1000) ?: 0.0
                 }
-            items.add(
-                TexItem.Line(
-                    x1 = coordinate(line.attributes["x1"], width),
-                    y1 = top + coordinate(line.attributes["y1"], height),
+            out.add(
+                Item(
+                    Kind.LINE,
+                    coordinate(line.attributes["x1"], width),
+                    top + coordinate(line.attributes["y1"], height),
                     x2 = coordinate(line.attributes["x2"], width),
                     y2 = top + coordinate(line.attributes["y2"], height),
                     strokeWidth = em(line.attributes["stroke-width"]) ?: 0.04,
@@ -344,7 +431,6 @@ class TexLayout(
                 ),
             )
         }
-        return items
     }
 
     private fun percentPiece(piece: Span, parentWidth: Double): Pair<Double, Double> =
@@ -400,17 +486,22 @@ class TexLayout(
             else -> inherited
         }
 
-    private fun margins(node: VirtualNode): Pair<Double, Double> {
+    /** Sets [margin]; callers copy it out before laying out anything else. */
+    private fun margins(node: VirtualNode) {
         if (node is SymbolNode) {
-            return (em(node.style.marginLeft) ?: 0.0) to (em(node.style.marginRight) ?: 0.0)
+            margin.left = em(node.style.marginLeft) ?: 0.0
+            margin.right = em(node.style.marginRight) ?: 0.0
+            return
         }
         if (node !is Span) {
-            return 0.0 to 0.0
+            margin.left = 0.0
+            margin.right = 0.0
+            return
         }
         var left = node.classes.sumOf { classMarginLeft[it] ?: 0.0 }
         var right = node.classes.sumOf { classMarginRight[it] ?: 0.0 }
-        node.style.margin?.let { margin ->
-            val parts = margin.trim().split(Regex("\\s+")).map { em(it) ?: 0.0 }
+        node.style.margin?.let { cssMargin ->
+            val parts = cssMargin.trim().split(whitespace).map { em(it) ?: 0.0 }
             when (parts.size) {
                 1 -> {
                     left = parts[0]
@@ -429,7 +520,8 @@ class TexLayout(
         em(node.style.marginLeft)?.let { left = it }
         em(node.style.marginRight)?.let { right = it }
         val factor = sizingFactor(node)
-        return left * factor to right * factor
+        margin.left = left * factor
+        margin.right = right * factor
     }
 
     private fun paddings(span: Span): Edges {
@@ -460,80 +552,108 @@ class TexLayout(
         }
     }
 
-    private fun borderRects(span: Span, border: Edges, width: Double, top: Double, bottom: Double, color: String?): List<TexItem> {
+    /** Appends the border rules to [prefix], which [layoutSpan] places before the content. */
+    private fun borderRects(span: Span, border: Edges, width: Double, top: Double, bottom: Double, color: String?) {
         val borderColor = span.style.borderColor ?: color
         if (borderColor == "transparent") {
-            return emptyList()
+            return
         }
         val dashed = span.hasClass("katex-hdashline") || span.style.borderRightStyle == "dashed" || span.style.borderStyle == "dashed"
         val hasContent = span.children.isNotEmpty()
         val boxTop = if (!hasContent && span.style.height == null) -(border.top + border.bottom) else top
         val boxBottom = if (!hasContent && span.style.height == null) 0.0 else bottom
-        val rects = mutableListOf<TexItem>()
         if (border.top > 0) {
-            rects.add(TexItem.Rect(0.0, boxTop, width, border.top, borderColor, dashed))
+            prefix.add(Item(Kind.RECT, 0.0, boxTop, width = width, height = border.top, color = borderColor, dashed = dashed))
         }
         if (border.bottom > 0) {
-            rects.add(TexItem.Rect(0.0, boxBottom - border.bottom, width, border.bottom, borderColor, dashed))
+            prefix.add(Item(Kind.RECT, 0.0, boxBottom - border.bottom, width = width, height = border.bottom, color = borderColor, dashed = dashed))
         }
         if (border.left > 0) {
-            rects.add(TexItem.Rect(0.0, boxTop, border.left, boxBottom - boxTop, borderColor, dashed))
+            prefix.add(Item(Kind.RECT, 0.0, boxTop, width = border.left, height = boxBottom - boxTop, color = borderColor, dashed = dashed))
         }
         if (border.right > 0) {
-            rects.add(TexItem.Rect(width - border.right, boxTop, border.right, boxBottom - boxTop, borderColor, dashed))
+            prefix.add(Item(Kind.RECT, width - border.right, boxTop, width = border.right, height = boxBottom - boxTop, color = borderColor, dashed = dashed))
         }
-        return rects
     }
 
-    private fun translate(items: List<TexItem>, dx: Double, dy: Double): List<TexItem> {
+    private fun shift(start: Int, dx: Double, dy: Double) {
         if (dx == 0.0 && dy == 0.0) {
-            return items
+            return
         }
-        return items.map { item ->
-            when (item) {
-                is TexItem.Glyph -> item.copy(x = item.x + dx, y = item.y + dy)
-                is TexItem.Rect -> item.copy(x = item.x + dx, y = item.y + dy)
-                is TexItem.Svg -> item.copy(x = item.x + dx, y = item.y + dy, clip = item.clip?.let { it.copy(x = it.x + dx, y = it.y + dy) })
-                is TexItem.Line -> item.copy(x1 = item.x1 + dx, y1 = item.y1 + dy, x2 = item.x2 + dx, y2 = item.y2 + dy)
+        (start until out.size).forEach { i ->
+            val item = out[i]
+            item.x += dx
+            item.y += dy
+            if (item.kind == Kind.LINE) {
+                item.x2 += dx
+                item.y2 += dy
+            }
+            item.clip?.let { clip ->
+                clip[0] += dx
+                clip[1] += dy
             }
         }
     }
 
-    private fun scale(items: List<TexItem>, factor: Double): List<TexItem> =
-        items.map { item ->
-            when (item) {
-                is TexItem.Glyph -> item.copy(x = item.x * factor, y = item.y * factor, size = item.size * factor)
-                is TexItem.Rect -> item.copy(x = item.x * factor, y = item.y * factor, width = item.width * factor, height = item.height * factor)
-                is TexItem.Svg ->
-                    item.copy(
-                        x = item.x * factor,
-                        y = item.y * factor,
-                        width = item.width * factor,
-                        height = item.height * factor,
-                        clip = item.clip?.let { TexItem.Clip(it.x * factor, it.y * factor, it.width * factor, it.height * factor) },
-                    )
-                is TexItem.Line ->
-                    item.copy(
-                        x1 = item.x1 * factor,
-                        y1 = item.y1 * factor,
-                        x2 = item.x2 * factor,
-                        y2 = item.y2 * factor,
-                        strokeWidth = item.strokeWidth * factor,
-                    )
+    private fun scale(start: Int, factor: Double) {
+        (start until out.size).forEach { i ->
+            val item = out[i]
+            item.x *= factor
+            item.y *= factor
+            when (item.kind) {
+                Kind.GLYPH -> item.size *= factor
+                Kind.RECT, Kind.SVG -> {
+                    item.width *= factor
+                    item.height *= factor
+                }
+                Kind.LINE -> {
+                    item.x2 *= factor
+                    item.y2 *= factor
+                    item.strokeWidth *= factor
+                }
+            }
+            item.clip?.let { clip ->
+                clip[0] *= factor
+                clip[1] *= factor
+                clip[2] *= factor
+                clip[3] *= factor
             }
         }
+    }
 
-    private fun mirror(items: List<TexItem>, width: Double): List<TexItem> =
-        items.map { item ->
-            when (item) {
-                is TexItem.Glyph -> item.copy(x = width - item.x, mirrored = !item.mirrored)
-                is TexItem.Rect -> item.copy(x = width - item.x - item.width)
-                is TexItem.Svg -> item
-                is TexItem.Line -> item.copy(x1 = width - item.x1, x2 = width - item.x2)
+    private fun mirror(start: Int, width: Double) {
+        (start until out.size).forEach { i ->
+            val item = out[i]
+            when (item.kind) {
+                Kind.GLYPH -> {
+                    item.x = width - item.x
+                    item.mirrored = !item.mirrored
+                }
+                Kind.RECT -> item.x = width - item.x - item.width
+                Kind.SVG -> Unit
+                Kind.LINE -> {
+                    item.x = width - item.x
+                    item.x2 = width - item.x2
+                }
             }
+        }
+    }
+
+    /**
+     * A browser sizes a glyph's span by the font's advance, not KaTeX's metrics. For the
+     * multiple integrals KaTeX reuses \int's metric width, but the glyphs are much wider.
+     */
+    private fun advanceOverride(fontName: String, text: String): Double? =
+        when (text) {
+            "∬" -> if (fontName == "Size2-Regular") 1.084 else if (fontName == "Size1-Regular") 0.819 else null
+            "∭" -> if (fontName == "Size2-Regular") 1.592 else if (fontName == "Size1-Regular") 1.166 else null
+            else -> null
         }
 
     private companion object {
+        val whitespace = Regex("\\s+")
+        val viewBoxSeparator = Regex("[\\s,]+")
+
         val emRegex = Regex("^\\s*(-?\\d*\\.?\\d+(?:[eE][-+]?\\d+)?)em\\s*$")
 
         fun em(value: String?): Double? {
@@ -566,17 +686,6 @@ class TexLayout(
 
         const val MU = 1.0 / 18
 
-        /**
-         * A browser sizes a glyph's span by the font's advance, not KaTeX's metrics. For the
-         * multiple integrals KaTeX reuses \int's metric width, but the glyphs are much wider.
-         */
-        val fontAdvances =
-            mapOf(
-                ("Size1-Regular" to "\u222C") to 0.819,
-                ("Size1-Regular" to "\u222D") to 1.166,
-                ("Size2-Regular" to "\u222C") to 1.084,
-                ("Size2-Regular" to "\u222D") to 1.592,
-            )
 
         val classMarginLeft = mapOf("katex-root" to 5 * MU, "cancel-lap" to -0.2)
         val classMarginRight = mapOf("katex-root" to -10 * MU, "cancel-lap" to -0.2, "angl" to 0.03889)

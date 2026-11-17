@@ -482,7 +482,8 @@ class Parser(
         val nucleus = fetch()
         var text = nucleus.text
 
-        if (verbRegex.containsMatchIn(text)) {
+        // The startsWith guards skip a regex per symbol; the regex still decides.
+        if (text.startsWith("\\verb") && verbRegex.containsMatchIn(text)) {
             consume()
             var arg = text.substring(5)
             val star = arg.firstOrNull() == '*'
@@ -502,7 +503,7 @@ class Parser(
             text = decomposed + text.substring(1)
         }
 
-        val match = combiningDiacriticalMarksEndRegex.find(text)
+        val match = if (text.isNotEmpty() && text.last() in '\u0300'..'\u036f') combiningDiacriticalMarksEndRegex.find(text) else null
         if (match != null) {
             text = text.substring(0, match.range.first)
             if (text == "i") {
