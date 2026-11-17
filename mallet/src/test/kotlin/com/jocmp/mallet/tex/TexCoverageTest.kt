@@ -105,7 +105,7 @@ class TexCoverageTest {
     }
 
     companion object {
-        private val displayOnly = listOf("\\tag", "{align}", "{CD}")
+        val displayOnly = listOf("\\tag", "{align}", "{CD}")
 
         val corpus =
             listOf(
