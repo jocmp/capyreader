@@ -1,0 +1,29 @@
+{
+  "code": 0,
+  "message": "The full River of News is a premium feature.",
+  "stories": [
+    {
+      "story_hash": "9451748:a6f371",
+      "story_tags": [
+        "news"
+      ],
+      "story_date": "2026-10-28 13:30:28",
+      "story_timestamp": "1793194228",
+      "story_authors": "Damien Wilde",
+      "story_title": "The Samsung Galaxy S25 Ultra is at its lowest price for a while",
+      "story_content": "<div class=\"feat-image\"><img src=\"https://9to5google.com/wp-content/uploads/sites/4/2025/02/samsung-galaxy-s25-ultra-7.jpg?quality=82&#038;strip=all&#038;w=1600\" /></div><p class=\"wp-block-paragraph\">If you\u2019re a patient buyer, you can get a 256GB Galaxy S25 Ultra for a reasonable price, as one of 2025\u2019s best flagship phones is down to\u00a0just $799 in the latest Amazon discount.</p>\n\n\n\n <a class=\"more</p>",
+      "story_permalink": "https://9to5google.com/2026/10/28/the-samsung-galaxy-s25-ultra-is-at-its-lowest-price-for-a-while/",
+      "image_urls": [
+        "https://9to5google.com/wp-content/uploads/sites/4/2025/02/samsung-galaxy-s25-ultra-7.jpg?quality=82&strip=all&w=1600"
+      ],
+      "story_feed_id": 9451748,
+      "guid_hash": "a6f371",
+      "id": "https://9to5google.com/?p=734867",
+      "read_status": 0,
+      "starred": true,
+      "starred_timestamp": 1793195752
+    }
+  ],
+  "result": "ok",
+  "authenticated": true
+}

@@ -70,6 +70,7 @@ fun AuthFields(
     onClearClientCert: () -> Unit = {},
     clientCertAlias: String = "",
     setApiTokenPreference: (Boolean) -> Unit = {},
+    serverField: (@Composable () -> Unit)? = null,
 ) {
     val hasApiToken = source == Source.MINIFLUX_TOKEN
     val showApiTokenToggle = source == Source.MINIFLUX || hasApiToken
@@ -199,11 +200,16 @@ fun AuthFields(
                         expanded = showAdvanced,
                         onToggle = { setShowAdvanced(!showAdvanced) },
                     ) {
-                        CertificateField(
-                            onChooseClientCert = onChooseClientCert,
-                            onClearClientCert = onClearClientCert,
-                            certAlias = clientCertAlias,
-                        )
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            serverField?.invoke()
+                            CertificateField(
+                                onChooseClientCert = onChooseClientCert,
+                                onClearClientCert = onClearClientCert,
+                                certAlias = clientCertAlias,
+                            )
+                        }
                     }
                 }
             }
