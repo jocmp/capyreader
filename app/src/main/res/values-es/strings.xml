@@ -353,4 +353,9 @@
     <string name="settings_section_content">Contenido</string>
     <string name="settings_reduce_motion_title">Reducir animaciones</string>
     <string name="settings_reduce_motion_subtitle">Saltar transiciones y efectos de movimiento</string>
+    <string name="feed_action_unsubscribe_error">Hubo un problema al cancelar la suscripción al feed</string>
+    <string name="article_list_row_swipe_share">Compartir artículo</string>
+    <string name="settings_section_layout">Diseño</string>
+    <string name="settings_e_ink_tap_to_page_title">Tocar para pasar páginas</string>
+    <string name="settings_e_ink_tap_to_page_subtitle">Toca el borde izquierdo o derecho de un artículo para retroceder o avanzar una página</string>
 </resources>
