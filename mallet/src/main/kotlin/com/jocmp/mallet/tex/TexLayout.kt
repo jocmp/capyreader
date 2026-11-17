@@ -91,6 +91,9 @@ class TexLayout(
     private val prefix = ArrayList<Item>()
     private val margin = Margin()
 
+    /** Above zero inside a natural-width pass, which needs widths only, so no items are made. */
+    private var measuring = 0
+
     fun layout(root: Span): Pair<TexBox, TexBox?> {
         val context = Context(color = null, align = rootAlign)
         val tag = root.children.filterIsInstance<Span>().find { it.has(KATEX_TAG) }
@@ -195,8 +198,12 @@ class TexLayout(
 
     private fun naturalWidth(node: VirtualNode, context: Context): Double =
         naturalWidths.getOrPut(node) {
-            val start = out.size
-            layoutNode(node, context, fill = null).also { truncate(start) }
+            measuring += 1
+            try {
+                layoutNode(node, context, fill = null)
+            } finally {
+                measuring -= 1
+            }
         }
 
     /** A glyph run; like KaTeX's `SymbolNode.toNode()`, its inline style applies to the glyph's span. */
@@ -208,7 +215,7 @@ class TexLayout(
         val paddingLeft = em(style.paddingLeft) ?: 0.0
         val dx = paddingLeft + (em(style.left) ?: 0.0)
         val dy = (em(style.top) ?: 0.0) - (em(style.bottom) ?: 0.0) - (em(style.verticalAlign) ?: 0.0)
-        if (node.text.isNotEmpty() && node.text != "​" && color != "transparent") {
+        if (measuring == 0 && node.text.isNotEmpty() && node.text != "​" && color != "transparent") {
             out.add(Item(Kind.GLYPH, dx, dy, text = node.text, fontName = fontName, color = color))
         }
         return paddingLeft + width
@@ -302,6 +309,9 @@ class TexLayout(
             contentWidth = 0.12
         }
         val width = contentWidth + horizontalExtras
+        if (measuring > 0) {
+            return width * factor
+        }
 
         shift(start, border.left + padding.left, 0.0)
         style.backgroundColor?.let { background ->
@@ -345,7 +355,7 @@ class TexLayout(
         var x = 0.0
         "($number)".forEach { char ->
             val text = char.toString()
-            if (context.color != "transparent") {
+            if (measuring == 0 && context.color != "transparent") {
                 out.add(Item(Kind.GLYPH, x, 0.0, text = text, fontName = "Main-Regular", color = context.color))
             }
             x += getCharacterMetrics(text, "Main-Regular", Mode.TEXT)?.width ?: measurer.measure(text, "Main-Regular")
