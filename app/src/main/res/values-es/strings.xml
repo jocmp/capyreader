@@ -358,4 +358,27 @@
     <string name="settings_section_layout">Diseño</string>
     <string name="settings_e_ink_tap_to_page_title">Tocar para pasar páginas</string>
     <string name="settings_e_ink_tap_to_page_subtitle">Toca el borde izquierdo o derecho de un artículo para retroceder o avanzar una página</string>
+    <string name="settings_section_e_ink">E-Ink</string>
+    <string name="settings_e_ink_scrollbar_title">Barra de desplazamiento E-Ink</string>
+    <string name="settings_e_ink_scrollbar_subtitle">Mostrar una barra de desplazamiento mas ancha en el listado de artículos</string>
+    <string name="reader_tap_zone_previous">Desplazarse arriba</string>
+    <string name="reader_tap_zone_next">Desplazarse abajo</string>
+    <string name="settings_e_ink_page_turn_keys_title">Botones de vuelta de pagina</string>
+    <string name="settings_e_ink_page_turn_keys_subtitle">Botones de volumen, avanzadores de pagina, y Page Up/Down cambian las paginas en los artículos</string>
+    <string name="settings_e_ink_keep_screen_on_title">Mantener la pantalla encendida</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">No permite que la pantalla se apague mientras se lee un articulo</string>
+    <string name="settings_section_storage">Almacenamiento</string>
+    <string name="settings_search_placeholder">Ajustes de búsqueda</string>
+    <string name="settings_search_no_results">Sin resultados</string>
+    <string name="search_no_results">No se encontraron resultados</string>
+    <string name="feed_nav_drawer_open">Abrir el cajón de navegación</string>
+    <string name="badge_style_count">Contador</string>
+    <string name="badge_style_dot">Punto</string>
+    <string name="badge_style_hide">Ocultar</string>
+    <string name="reader_play_video">Reproducir video</string>
+    <string name="reader_video_enter_fullscreen">Activar pantalla completa</string>
+    <string name="reader_video_exit_fullscreen">Desactivar pantalla completa</string>
+    <string name="reader_play_audio">Reproducir audio</string>
+    <string name="reader_article_truncated">Este artículo es demasiado largo para mostrarlo completamente.</string>
+    <string name="reader_open_in_browser">Abrir en el navegador</string>
 </resources>
