@@ -93,7 +93,7 @@ class TexLayout(
 
     fun layout(root: Span): Pair<TexBox, TexBox?> {
         val context = Context(color = null, align = rootAlign)
-        val tag = root.children.filterIsInstance<Span>().find { it.hasClass("katex-tag") }
+        val tag = root.children.filterIsInstance<Span>().find { it.has(KATEX_TAG) }
         val body = root.children.filter { it !== tag }
         val width = layoutRun(body, context, fill = null)
         val box = TexBox(width, root.height, root.depth, publish(0))
@@ -274,7 +274,7 @@ class TexLayout(
         val fill = parentFill?.div(factor)
         val style = span.style
         val color = style.color ?: parentContext.color
-        val clipsChildren = span.classes.any { it in overflowHidden }
+        val clipsChildren = span.has(OVERFLOW_HIDDEN)
         var context = parentContext.copy(color = color, align = alignFor(span, parentContext.align))
 
         val border = borders(span)
@@ -292,13 +292,13 @@ class TexLayout(
         }
 
         val start = out.size
-        val runWidth = if (span.hasClass("eqn-num")) equationNumber(span, context) else layoutRun(span.children, context, innerFill)
+        val runWidth = if (span.has(EQN_NUM)) equationNumber(span, context) else layoutRun(span.children, context, innerFill)
         var contentWidth = explicitWidth ?: runWidth
         em(style.minWidth)?.let { contentWidth = maxOf(contentWidth, it - horizontalExtras) }
-        if (span.classes.any { it in zeroWidthClasses } && !span.hasClass("accent-full")) {
+        if (span.has(ZERO_WIDTH) && !span.has(ACCENT_FULL)) {
             contentWidth = 0.0
         }
-        if (span.hasClass("nulldelimiter")) {
+        if (span.has(NULLDELIMITER)) {
             contentWidth = 0.12
         }
         val width = contentWidth + horizontalExtras
@@ -324,7 +324,7 @@ class TexLayout(
                 }
             }
         }
-        if (span.hasClass("reflectbox")) {
+        if (span.has(REFLECTBOX)) {
             mirror(start, width)
         }
 
@@ -361,18 +361,18 @@ class TexLayout(
         span.children.forEach { child ->
             when {
                 child is SvgNode -> layoutSvg(child, span, context, svgWidth, top)
-                child is Span && child.hasClass("katex-inner") -> {
+                child is Span && child.has(KATEX_INNER) -> {
                     val start = out.size
                     val laidWidth = layoutSpan(child, context, null)
                     val x =
                         when {
-                            span.hasClass("llap") -> -laidWidth
-                            span.hasClass("clap") -> -laidWidth / 2
+                            span.has(LLAP) -> -laidWidth
+                            span.has(CLAP) -> -laidWidth / 2
                             else -> 0.0
                         }
                     shift(start, x, 0.0)
                 }
-                child is Span && child.classes.any { it in percentPieces } -> {
+                child is Span && child.has(PERCENT_PIECE) -> {
                     val (left, pieceWidth) = percentPiece(child, width)
                     val pieceContext = context.copy(clip = TexItem.Clip(left, top, pieceWidth, bottom - top))
                     val start = out.size
@@ -435,22 +435,22 @@ class TexLayout(
 
     private fun percentPiece(piece: Span, parentWidth: Double): Pair<Double, Double> =
         when {
-            piece.hasClass("halfarrow-left") -> 0.0 to parentWidth * 0.502
-            piece.hasClass("halfarrow-right") -> parentWidth * (1 - 0.502) to parentWidth * 0.502
-            piece.hasClass("brace-left") -> 0.0 to parentWidth * 0.251
-            piece.hasClass("brace-center") -> parentWidth * 0.25 to parentWidth * 0.5
+            piece.has(HALFARROW_LEFT) -> 0.0 to parentWidth * 0.502
+            piece.has(HALFARROW_RIGHT) -> parentWidth * (1 - 0.502) to parentWidth * 0.502
+            piece.has(BRACE_LEFT) -> 0.0 to parentWidth * 0.251
+            piece.has(BRACE_CENTER) -> parentWidth * 0.25 to parentWidth * 0.5
             else -> parentWidth * (1 - 0.251) to parentWidth * 0.251
         }
 
     private fun isAbsolute(node: VirtualNode): Boolean =
-        node is Span && (node.hasClass("katex-inner") || node.classes.any { it in percentPieces })
+        node is Span && (node.has(KATEX_INNER) || node.has(PERCENT_PIECE))
 
-    private fun isBlock(span: Span): Boolean = span.classes.any { it in blockClasses }
+    private fun isBlock(span: Span): Boolean = span.has(BLOCK)
 
     private fun explicitWidth(span: Span, fill: Double?, horizontalExtras: Double): Double? {
         val width = span.style.width
         if (width == null) {
-            if (span.classes.any { it in fullWidthClasses }) {
+            if (span.has(FULL_WIDTH)) {
                 return fill?.minus(horizontalExtras) ?: 0.0
             }
             return null
@@ -459,7 +459,7 @@ class TexLayout(
             return (fill ?: 0.0) * width.dropLast(1).toDouble() / 100 - horizontalExtras
         }
         val value = em(width) ?: return null
-        return if (span.classes.any { it in borderBoxClasses }) value - horizontalExtras else value
+        return if (span.has(BORDER_BOX)) value - horizontalExtras else value
     }
 
     private fun boxTop(span: Span): Double = em(span.style.height)?.let { -it } ?: -span.height
@@ -467,7 +467,7 @@ class TexLayout(
     private fun boxBottom(span: Span): Double = if (span.style.height != null) 0.0 else span.depth
 
     private fun sizingFactor(span: Span): Double {
-        if (!span.hasClass("katex-sizing") && !span.hasClass("fontsize-ensurer")) {
+        if (!span.has(KATEX_SIZING) && !span.has(FONTSIZE_ENSURER)) {
             return 1.0
         }
         val from = span.classes.firstNotNullOfOrNull { it.removePrefix("reset-size").takeIf { _ -> it.startsWith("reset-size") }?.toIntOrNull() }
@@ -480,9 +480,9 @@ class TexLayout(
 
     private fun alignFor(node: Span, inherited: Align): Align =
         when {
-            node.hasClass("msupsub") || node.hasClass("svg-align") || node.hasClass("col-align-l") -> Align.LEFT
-            node.hasClass("col-align-r") -> Align.RIGHT
-            node.classes.any { it in centeringClasses } -> Align.CENTER
+            node.has(MSUPSUB) || node.has(SVG_ALIGN) || node.has(COL_ALIGN_L) -> Align.LEFT
+            node.has(COL_ALIGN_R) -> Align.RIGHT
+            node.has(CENTERING) -> Align.CENTER
             else -> inherited
         }
 
@@ -498,8 +498,9 @@ class TexLayout(
             margin.right = 0.0
             return
         }
-        var left = node.classes.sumOf { classMarginLeft[it] ?: 0.0 }
-        var right = node.classes.sumOf { classMarginRight[it] ?: 0.0 }
+        val hasMarginClass = node.has(MARGIN_CLASS)
+        var left = if (hasMarginClass) node.classes.sumOf { classMarginLeft[it] ?: 0.0 } else 0.0
+        var right = if (hasMarginClass) node.classes.sumOf { classMarginRight[it] ?: 0.0 } else 0.0
         node.style.margin?.let { cssMargin ->
             val parts = cssMargin.trim().split(whitespace).map { em(it) ?: 0.0 }
             when (parts.size) {
@@ -525,8 +526,9 @@ class TexLayout(
     }
 
     private fun paddings(span: Span): Edges {
-        var left = span.classes.sumOf { classPaddingLeft[it] ?: 0.0 }
-        val right = span.classes.sumOf { classPaddingRight[it] ?: 0.0 }
+        val hasPaddingClass = span.has(PADDING_CLASS)
+        var left = if (hasPaddingClass) span.classes.sumOf { classPaddingLeft[it] ?: 0.0 } else 0.0
+        val right = if (hasPaddingClass) span.classes.sumOf { classPaddingRight[it] ?: 0.0 } else 0.0
         em(span.style.paddingLeft)?.let { left = it }
         return Edges(left = left, right = right)
     }
@@ -535,13 +537,13 @@ class TexLayout(
         val style = span.style
         val all = em(style.borderWidth)
         return when {
-            span.hasClass("fbox") || span.hasClass("fcolorbox") -> {
+            span.has(FBOX) || span.has(FCOLORBOX) -> {
                 val width = all ?: 0.04
                 Edges(width, width, width, width)
             }
-            span.hasClass("angl") -> Edges(right = all ?: 0.049, top = all ?: 0.049)
-            span.hasClass("katex-sout") -> Edges(bottom = em(style.borderBottomWidth) ?: 0.08)
-            span.classes.any { it in bottomRuleClasses } -> Edges(bottom = em(style.borderBottomWidth) ?: 0.0)
+            span.has(ANGL) -> Edges(right = all ?: 0.049, top = all ?: 0.049)
+            span.has(KATEX_SOUT) -> Edges(bottom = em(style.borderBottomWidth) ?: 0.08)
+            span.has(BOTTOM_RULE) -> Edges(bottom = em(style.borderBottomWidth) ?: 0.0)
             else ->
                 Edges(
                     left = all ?: 0.0,
@@ -558,7 +560,7 @@ class TexLayout(
         if (borderColor == "transparent") {
             return
         }
-        val dashed = span.hasClass("katex-hdashline") || span.style.borderRightStyle == "dashed" || span.style.borderStyle == "dashed"
+        val dashed = span.has(KATEX_HDASHLINE) || span.style.borderRightStyle == "dashed" || span.style.borderStyle == "dashed"
         val hasContent = span.children.isNotEmpty()
         val boxTop = if (!hasContent && span.style.height == null) -(border.top + border.bottom) else top
         val boxBottom = if (!hasContent && span.style.height == null) 0.0 else bottom
@@ -650,6 +652,16 @@ class TexLayout(
             else -> null
         }
 
+    /** Whether this span has any class in [bits], from a mask built once per span. */
+    private fun Span.has(bits: Long): Boolean {
+        if (layoutFlags == UNSET_LAYOUT_FLAGS) {
+            var flags = 0L
+            classes.forEach { flags = flags or (classFlags[it] ?: 0L) }
+            layoutFlags = flags
+        }
+        return layoutFlags and bits != 0L
+    }
+
     private companion object {
         val whitespace = Regex("\\s+")
         val viewBoxSeparator = Regex("[\\s,]+")
@@ -693,5 +705,78 @@ class TexLayout(
             mapOf("boxpad" to 0.3, "cancel-pad" to 0.2, "x-arrow-pad" to 0.5, "cd-arrow-pad" to 0.27778, "anglpad" to 0.03889)
         val classPaddingRight =
             mapOf("boxpad" to 0.3, "cancel-pad" to 0.2, "x-arrow-pad" to 0.5, "cd-arrow-pad" to 0.55556, "anglpad" to 0.03889)
+
+        const val KATEX_INNER = 1L shl 0
+        const val SVG_ALIGN = 1L shl 1
+        const val REFLECTBOX = 1L shl 2
+        const val NULLDELIMITER = 1L shl 3
+        const val MSUPSUB = 1L shl 4
+        const val LLAP = 1L shl 5
+        const val KATEX_TAG = 1L shl 6
+        const val KATEX_SOUT = 1L shl 7
+        const val KATEX_SIZING = 1L shl 8
+        const val KATEX_HDASHLINE = 1L shl 9
+        const val HALFARROW_RIGHT = 1L shl 10
+        const val HALFARROW_LEFT = 1L shl 11
+        const val FONTSIZE_ENSURER = 1L shl 12
+        const val FCOLORBOX = 1L shl 13
+        const val FBOX = 1L shl 14
+        const val EQN_NUM = 1L shl 15
+        const val COL_ALIGN_R = 1L shl 16
+        const val COL_ALIGN_L = 1L shl 17
+        const val CLAP = 1L shl 18
+        const val BRACE_LEFT = 1L shl 19
+        const val BRACE_CENTER = 1L shl 20
+        const val ANGL = 1L shl 21
+        const val ACCENT_FULL = 1L shl 22
+        const val OVERFLOW_HIDDEN = 1L shl 23
+        const val ZERO_WIDTH = 1L shl 24
+        const val PERCENT_PIECE = 1L shl 25
+        const val BLOCK = 1L shl 26
+        const val FULL_WIDTH = 1L shl 27
+        const val BORDER_BOX = 1L shl 28
+        const val CENTERING = 1L shl 29
+        const val BOTTOM_RULE = 1L shl 30
+        const val MARGIN_CLASS = 1L shl 31
+        const val PADDING_CLASS = 1L shl 32
+
+        /** Every class [TexLayout] checks, mapped to its bits; set-membership bits are or-ed in. */
+        val classFlags: Map<String, Long> =
+            HashMap<String, Long>().apply {
+                fun add(names: Iterable<String>, bit: Long) = names.forEach { put(it, (get(it) ?: 0L) or bit) }
+                add(listOf("katex-inner"), KATEX_INNER)
+                add(listOf("svg-align"), SVG_ALIGN)
+                add(listOf("reflectbox"), REFLECTBOX)
+                add(listOf("nulldelimiter"), NULLDELIMITER)
+                add(listOf("msupsub"), MSUPSUB)
+                add(listOf("llap"), LLAP)
+                add(listOf("katex-tag"), KATEX_TAG)
+                add(listOf("katex-sout"), KATEX_SOUT)
+                add(listOf("katex-sizing"), KATEX_SIZING)
+                add(listOf("katex-hdashline"), KATEX_HDASHLINE)
+                add(listOf("halfarrow-right"), HALFARROW_RIGHT)
+                add(listOf("halfarrow-left"), HALFARROW_LEFT)
+                add(listOf("fontsize-ensurer"), FONTSIZE_ENSURER)
+                add(listOf("fcolorbox"), FCOLORBOX)
+                add(listOf("fbox"), FBOX)
+                add(listOf("eqn-num"), EQN_NUM)
+                add(listOf("col-align-r"), COL_ALIGN_R)
+                add(listOf("col-align-l"), COL_ALIGN_L)
+                add(listOf("clap"), CLAP)
+                add(listOf("brace-left"), BRACE_LEFT)
+                add(listOf("brace-center"), BRACE_CENTER)
+                add(listOf("angl"), ANGL)
+                add(listOf("accent-full"), ACCENT_FULL)
+                add(overflowHidden, OVERFLOW_HIDDEN)
+                add(zeroWidthClasses, ZERO_WIDTH)
+                add(percentPieces, PERCENT_PIECE)
+                add(blockClasses, BLOCK)
+                add(fullWidthClasses, FULL_WIDTH)
+                add(borderBoxClasses, BORDER_BOX)
+                add(centeringClasses, CENTERING)
+                add(bottomRuleClasses, BOTTOM_RULE)
+                add(classMarginLeft.keys + classMarginRight.keys, MARGIN_CLASS)
+                add(classPaddingLeft.keys + classPaddingRight.keys, PADDING_CLASS)
+            }
     }
 }

@@ -90,6 +90,9 @@ open class Span(
     /** Set on `\middle` delimiters so `\left`...`\right` can resize them. */
     var isMiddle: MiddleDelim? = null
 
+    /** [TexLayout]'s bitmask of the classes it checks, computed on first use. */
+    internal var layoutFlags: Long = UNSET_LAYOUT_FLAGS
+
     init {
         initNode(this.classes, this.style, options)
     }
@@ -202,3 +205,5 @@ class VListEntry(
 class VListSpan(
     val entries: List<VListEntry>,
 ) : Span(listOf("vlist-t"), entries.map { it.wrapper })
+
+internal const val UNSET_LAYOUT_FLAGS = Long.MIN_VALUE
