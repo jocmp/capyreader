@@ -1,7 +1,5 @@
 package com.capyreader.app.ui.settings.panels
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Science
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -67,8 +65,6 @@ fun RenderMathRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
             checked = renderMath,
             onCheckedChange = viewModel::updateRenderMath,
             title = stringResource(R.string.settings_reader_render_math_title),
-            subtitle = stringResource(R.string.settings_reader_render_math_subtitle),
-            titleIcon = Icons.Rounded.Science,
         )
     }
 }

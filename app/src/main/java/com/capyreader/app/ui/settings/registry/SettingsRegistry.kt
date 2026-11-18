@@ -270,7 +270,6 @@ object SettingsRegistry {
                 R.string.mark_read_position_floating_action_button,
             )
             Setting.STICKY_FULL_CONTENT -> listOf(R.string.settings_option_full_content_subtitle)
-            Setting.RENDER_MATH -> listOf(R.string.settings_reader_render_math_subtitle)
             Setting.HORIZONTAL_PAGINATION -> listOf(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
             Setting.REDUCE_MOTION -> listOf(R.string.settings_reduce_motion_subtitle)
             Setting.TAP_TO_PAGE -> listOf(R.string.settings_e_ink_tap_to_page_subtitle)
