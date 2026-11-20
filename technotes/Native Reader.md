@@ -37,6 +37,37 @@ Fullscreen goes through `WebChromeClient.onShowCustomView` into a `Dialog`. Embe
 
 - <https://developers.google.com/youtube/terms/required-minimum-functionality>
 
+## Math
+
+Feeds carry server-rendered math. KaTeX emits three copies of each formula (MathML, the TeX in `<annotation encoding="application/x-tex">`, and a visual `katex-html` copy), and flattening all three garbled the text.
+
+- `mathSource` in `mallet/MathSource.kt` recovers TeX from KaTeX spans, bare `<math>` with a TeX annotation, Pandoc `span.math`, and MathJax 2 `script[type=math/tex]`. Inline math becomes `LinearTextAnnotationMath`; display math becomes `LinearMath`.
+- `replaceMathWithSource()` does the same for plain-text summaries (`ContentFormatter`).
+- Default: the TeX source as inline code or a code block. "Render math formulas" (`article_render_math`, off by default) typesets it with `com.jocmp.mallet.tex`.
+
+### KaTeX port
+
+`mallet.tex` is a port of KaTeX (MIT, `LICENSE-KaTeX.txt`) at `9b2280d`. Feed TeX is whatever KaTeX accepted when the blog was built, so the parser follows KaTeX rather than LaTeX: anything KaTeX rejects fails here too and the source is shown.
+
+- **Ported line for line:** Lexer, MacroExpander, macros (including the four `defineMacro` calls that live in `operatorname.ts`, `phantom.ts`, and `array.ts`), Parser, symbols, Unicode tables, Options/Style/units, buildCommon, buildHTML, delimiter, stretchy, svgGeometry, and the HTML builders in `functions/` and `environments/`. MathML builders are skipped. Files keep KaTeX's names, so a KaTeX change maps onto one Kotlin file.
+- **Settings** are KaTeX's defaults: `strict: "warn"` (so strict checks never change behavior), `trust: false` (so `\href`, `\url`, `\includegraphics`, and `\html*` take the untrusted path), `throwOnError: true` (so errors fall back to source instead of red text).
+- **`TexLayout` stands in for the browser.** KaTeX computes heights and depths but leaves widths, baselines, and stretchy SVG sizing to katex.css. `TexLayout` emulates the rules the builders rely on (inline-block runs, `text-align` in vlists, `width: 100%`, sizing classes, margins, padding, borders, laps, relative offsets, absolutely positioned SVG, overflow clipping) and emits `TexItem`s in ems. `makeVList` stores resolved row baselines in `VListSpan` instead of pstrut spans; no builder looks inside a vlist, so this is invisible to them.
+- **Metrics:** `fontMetricsData.tsv` is KaTeX's `fontMetricsData.js`, regenerated with `node mallet/scripts/katex_metrics.mjs <katex-checkout>`. Glyphs without metrics (e.g. CJK in `\text`) are measured by the renderer's `TexTextMeasurer`, as a browser would.
+- **Fonts:** the 18 KaTeX TTFs with metrics are in `app/src/main/res/font/katex_*` (~500 KB). `MathFonts` draws glyphs with `Paint`, so missing glyphs fall back to system fonts.
+- `tryCombineChars` is a no-op: merging symbols only shrinks the DOM and would lose per-glyph metrics.
+- Formulas render at 1.21× the body size (`Tex.FONT_SCALE`), as `.katex` does.
+
+`TexCoverageTest` renders a corpus of feed-shaped formulas; `TEX_PNG=1 ./gradlew :mallet:test --tests '*TexCoverageTest' --rerun` writes Java2D PNGs to `mallet/build/tex-png` for comparing against katex.org. `MathElementTest` (instrumented) checks the Compose path and saves a sample to the app's files dir with `-e mathScreenshot true`.
+
+Known gaps:
+
+- Equation numbers come from a CSS counter in KaTeX, which counts across the page; here each formula counts from (1).
+- `\color` values aren't adjusted for dark themes.
+- `\tag` sits at the end of the row and can overlap a formula wider than the screen, as `.katex-tag` does.
+- Display math scrolls horizontally when it can. With horizontal pagination or in a table cell, it scales down to fit the width instead.
+- An inline placeholder covers only the formula's height (`AboveBaseline`), because Compose has no baseline-offset alignment. The depth draws into the line spacing, so a tall denominator or subscript can touch the line below.
+- An inline formula is one unbreakable placeholder. KaTeX breaks inline math after top-level relations and binary operators; here, a formula wider than the line overflows.
+
 ## Gaps
 
 - Non-YouTube iframe embeds (Instagram, Bluesky, Vimeo, Spotify) are dropped at parse time, not just unrendered — `parseIframeVideo` only emits for YouTube. The blockquote form of an Instagram embed survives as quoted fallback text. These all worked under the WebView.

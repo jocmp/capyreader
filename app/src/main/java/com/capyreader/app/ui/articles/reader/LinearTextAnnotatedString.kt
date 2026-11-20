@@ -1,5 +1,6 @@
 package com.capyreader.app.ui.articles.reader
 
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,12 +28,14 @@ import com.jocmp.mallet.LinearTextAnnotationH5
 import com.jocmp.mallet.LinearTextAnnotationH6
 import com.jocmp.mallet.LinearTextAnnotationItalic
 import com.jocmp.mallet.LinearTextAnnotationLink
+import com.jocmp.mallet.LinearTextAnnotationMath
 import com.jocmp.mallet.LinearTextAnnotationMonospace
 import com.jocmp.mallet.LinearTextAnnotationStrikethrough
 import com.jocmp.mallet.LinearTextAnnotationSubscript
 import com.jocmp.mallet.LinearTextAnnotationSuperscript
 import com.jocmp.mallet.LinearTextAnnotationUnderline
 import com.jocmp.mallet.LinearTextBlockStyle
+import com.capyreader.app.ui.articles.reader.math.inlineMathId
 
 val LinearText.headingScale: Float?
     get() = annotations.firstNotNullOfOrNull { annotation ->
@@ -50,10 +53,15 @@ val LinearText.headingScale: Float?
 val LinearText.links: List<LinearTextAnnotation>
     get() = annotations.filter { it.data is LinearTextAnnotationLink }
 
+/**
+ * @param renderedMath math annotations drawn as inline content, keyed by [inlineMathId]. Other math
+ * annotations show their TeX source as inline code.
+ */
 @Composable
 fun LinearText.toAnnotatedString(
     idToIndex: Map<String, Int>,
     onLinkClick: (url: String, elementIndex: Int?) -> Unit,
+    renderedMath: Set<LinearTextAnnotation> = emptySet(),
 ): AnnotatedString {
     val colors = MaterialTheme.colorScheme
     val baseSize = LocalTextStyle.current.fontSize
@@ -62,7 +70,7 @@ fun LinearText.toAnnotatedString(
     )
 
     return buildAnnotatedString {
-        append(text)
+        appendWithInlineMath(text, renderedMath)
 
         annotations.forEach { annotation ->
             val link = annotation.data as? LinearTextAnnotationLink
@@ -94,6 +102,11 @@ fun LinearText.toAnnotatedString(
                 is LinearTextAnnotationLink -> null
                 is LinearTextAnnotationFont -> SpanStyle(fontFamily = data.face.toFontFamily())
                 LinearTextAnnotationCode -> inlineCodeStyle(colors.surfaceContainer)
+                is LinearTextAnnotationMath -> if (annotation in renderedMath) {
+                    null
+                } else {
+                    inlineCodeStyle(colors.surfaceContainer)
+                }
                 LinearTextAnnotationSubscript -> shiftedStyle(BaselineShift.Subscript, baseSize)
                 LinearTextAnnotationSuperscript -> shiftedStyle(BaselineShift.Superscript, baseSize)
                 LinearTextAnnotationH1,
@@ -109,6 +122,28 @@ fun LinearText.toAnnotatedString(
             }
         }
     }
+}
+
+/**
+ * Appends [text], swapping each rendered formula's range for inline content. The swapped range
+ * keeps its TeX as alternate text, so other annotation offsets stay valid.
+ */
+private fun AnnotatedString.Builder.appendWithInlineMath(
+    text: String,
+    renderedMath: Set<LinearTextAnnotation>,
+) {
+    var cursor = 0
+
+    renderedMath.sortedBy { it.start }.forEach { annotation ->
+        append(text.substring(cursor, annotation.start))
+        appendInlineContent(
+            id = inlineMathId(annotation),
+            alternateText = text.substring(annotation.start, annotation.endExclusive),
+        )
+        cursor = annotation.endExclusive
+    }
+
+    append(text.substring(cursor))
 }
 
 private fun LinearText.inlineCodeStyle(background: androidx.compose.ui.graphics.Color): SpanStyle? {

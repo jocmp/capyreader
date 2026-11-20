@@ -1,12 +1,15 @@
 package com.capyreader.app.ui.articles.reader
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.platform.LocalDensity
+import com.capyreader.app.ui.articles.reader.math.preloadMathFonts
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -27,6 +30,7 @@ data class ReaderStyle(
     val titleAlignment: TextAlign,
     val wrapPreformattedText: Boolean,
     val showImages: Boolean,
+    val renderMath: Boolean = false,
 ) {
     val bodyTextStyle: TextStyle
         get() = TextStyle(
@@ -80,6 +84,14 @@ fun rememberReaderStyle(
     val titleAlignment by options.titleTextAlignment.collectChangesWithCurrent()
     val titleFollowsBodyFont by options.titleFollowsBodyFont.collectChangesWithCurrent()
     val horizontalPagination by options.enableHorizontaPagination.collectChangesWithCurrent()
+    val renderMath by options.renderMath.collectChangesWithCurrent()
+    val context = LocalContext.current
+
+    LaunchedEffect(renderMath) {
+        if (renderMath) {
+            preloadMathFonts(context)
+        }
+    }
 
     val bodyFont = fontOption.toFontFamily()
     val titleFont = if (titleFollowsBodyFont) {
@@ -96,6 +108,7 @@ fun rememberReaderStyle(
         titleAlignment = titleAlignment.toTextAlign(),
         wrapPreformattedText = horizontalPagination,
         showImages = showImages,
+        renderMath = renderMath,
     )
 }
 

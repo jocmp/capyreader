@@ -139,6 +139,9 @@ class AppPreferences(context: Context) {
         val keepScreenOn: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_keep_screen_on", false)
 
+        val renderMath: Preference<Boolean>
+            get() = preferenceStore.getBoolean("article_render_math", false)
+
         val enableHorizontaPagination: Preference<Boolean>
             get() = preferenceStore.getBoolean("article_enable_horizontal_pagination", false)
 

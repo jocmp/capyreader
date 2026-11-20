@@ -105,11 +105,20 @@ private class Flattening {
 
                 is Element -> {
                     val element = node
-                    // Id is used for in-page links
-                    pushId(element.id())
+                    val math = mathSource(element)
+                    // Id is used for in-page links. Display math carries its own ids.
+                    if (math?.display != true) {
+                        pushId(element.id())
+                    }
 
                     if (isHiddenByCSS(element)) {
                         // Element is not supposed to be shown because javascript and/or tracking
+                        node = node.nextSibling()
+                        continue
+                    }
+
+                    if (math != null) {
+                        addMath(element, math, blockStyle)
                         node = node.nextSibling()
                         continue
                     }
@@ -715,6 +724,24 @@ private class Flattening {
             }
 
             node = node.nextSibling()
+        }
+    }
+
+    private fun ListBuilderScope<LinearElement>.addMath(
+        element: Element,
+        math: MathSource,
+        blockStyle: LinearTextBlockStyle,
+    ) {
+        charCount += math.tex.length
+
+        if (math.display) {
+            finalizeAndAddCurrentElement(blockStyle)
+            addLimited(LinearMath(ids = element.allIds(), tex = math.tex))
+            return
+        }
+
+        withLinearTextAnnotation(LinearTextAnnotationMath(math.tex)) {
+            append(math.tex.collapseWhitespace())
         }
     }
 

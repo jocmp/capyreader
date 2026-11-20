@@ -1,0 +1,2391 @@
+== display F_0 = 0, F_1 = 1, F_{n+1} = F_n + F_{n-1}
+box 14.325905 0.683330 0.208331
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 70
+glyph 0.643050 0.150000 0.700000 Main-Regular null false 48
+glyph 1.320850 0.000000 1.000000 Main-Regular null false 61
+glyph 2.376430 0.000000 1.000000 Main-Regular null false 48
+glyph 2.876430 0.000000 1.000000 Main-Regular null false 44
+glyph 3.320910 0.000000 1.000000 Math-Italic null false 70
+glyph 3.963960 0.150000 0.700000 Main-Regular null false 49
+glyph 4.641760 0.000000 1.000000 Main-Regular null false 61
+glyph 5.697340 0.000000 1.000000 Main-Regular null false 49
+glyph 6.197340 0.000000 1.000000 Main-Regular null false 44
+glyph 6.641820 0.000000 1.000000 Math-Italic null false 70
+glyph 7.284870 0.150000 0.700000 Math-Italic null false 110
+glyph 7.705031 0.150000 0.700000 Main-Regular null false 43
+glyph 8.249477 0.150000 0.700000 Main-Regular null false 49
+glyph 8.927277 0.000000 1.000000 Main-Regular null false 61
+glyph 9.982857 0.000000 1.000000 Math-Italic null false 70
+glyph 10.625907 0.150000 0.700000 Math-Italic null false 110
+glyph 11.318268 0.000000 1.000000 Main-Regular null false 43
+glyph 12.318248 0.000000 1.000000 Math-Italic null false 70
+glyph 12.961298 0.150000 0.700000 Math-Italic null false 110
+glyph 13.381459 0.150000 0.700000 Main-Regular null false 8722
+glyph 13.925905 0.150000 0.700000 Main-Regular null false 49
+== display \begin{pmatrix} F_{n+1} \\ F_n \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
+box 11.932054 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size3-Regular null false 40
+glyph 0.736110 -0.610000 1.000000 Math-Italic null false 70
+glyph 1.379160 -0.460000 0.700000 Math-Italic null false 110
+glyph 1.799321 -0.460000 0.700000 Main-Regular null false 43
+glyph 2.343767 -0.460000 0.700000 Main-Regular null false 49
+glyph 1.183333 0.590000 1.000000 Math-Italic null false 70
+glyph 1.826383 0.740000 0.700000 Math-Italic null false 110
+glyph 2.743767 0.000000 1.000000 Size3-Regular null false 41
+glyph 3.757677 0.000000 1.000000 Main-Regular null false 61
+glyph 4.813257 0.000000 1.000000 Size3-Regular null false 40
+glyph 5.549367 -0.610000 1.000000 Main-Regular null false 49
+glyph 5.549367 0.590000 1.000000 Main-Regular null false 49
+glyph 7.049367 -0.610000 1.000000 Main-Regular null false 49
+glyph 7.049367 0.590000 1.000000 Main-Regular null false 48
+glyph 7.549367 0.000000 1.000000 Size3-Regular null false 41
+glyph 8.452177 0.000000 1.000000 Size3-Regular null false 40
+glyph 9.635510 -0.610000 1.000000 Math-Italic null false 70
+glyph 10.278560 -0.460000 0.700000 Math-Italic null false 110
+glyph 9.188287 0.590000 1.000000 Math-Italic null false 70
+glyph 9.831337 0.740000 0.700000 Math-Italic null false 110
+glyph 10.251498 0.740000 0.700000 Main-Regular null false 8722
+glyph 10.795944 0.740000 0.700000 Main-Regular null false 49
+glyph 11.195944 0.000000 1.000000 Size3-Regular null false 41
+== display F_n = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^n - \left( \frac{1 - \sqrt{5}}{2} \right)^n \right)
+box 17.689173 1.804292 1.250030
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 70
+glyph 0.643050 0.150000 0.700000 Math-Italic null false 110
+glyph 1.391011 0.000000 1.000000 Main-Regular null false 61
+glyph 3.399591 0.797220 1.000000 Main-Regular null false 53
+svg 2.566591 -0.150000 1.333000 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 2.566591 -0.150000 1.333000 1.080000
+rect 2.566591 -0.270000 1.333000 0.040000 null false
+glyph 2.983091 -0.677000 1.000000 Main-Regular null false 49
+glyph 4.186291 0.000000 1.000000 Size4-Regular null false 40
+glyph 4.977961 0.000000 1.000000 Size4-Regular null false 40
+glyph 7.167221 0.686000 1.000000 Main-Regular null false 50
+rect 5.889631 -0.270000 3.055180 0.040000 null false
+glyph 5.889631 -0.677000 1.000000 Main-Regular null false 49
+glyph 6.611831 -0.677000 1.000000 Main-Regular null false 43
+glyph 8.444811 -0.677000 1.000000 Main-Regular null false 53
+svg 7.611811 -1.624220 1.333000 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 7.611811 -1.624220 1.333000 1.080000
+glyph 9.064811 0.000000 1.000000 Size4-Regular null false 41
+glyph 9.856481 -1.502900 0.700000 Math-Italic null false 110
+glyph 10.548842 0.000000 1.000000 Main-Regular null false 8722
+glyph 11.548822 0.000000 1.000000 Size4-Regular null false 40
+glyph 13.738082 0.686000 1.000000 Main-Regular null false 50
+rect 12.460492 -0.270000 3.055180 0.040000 null false
+glyph 12.460492 -0.677000 1.000000 Main-Regular null false 49
+glyph 13.182692 -0.677000 1.000000 Main-Regular null false 8722
+glyph 15.015672 -0.677000 1.000000 Main-Regular null false 53
+svg 14.182672 -1.624220 1.333000 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 14.182672 -1.624220 1.333000 1.080000
+glyph 15.635672 0.000000 1.000000 Size4-Regular null false 41
+glyph 16.427342 -1.502900 0.700000 Math-Italic null false 110
+glyph 16.897503 0.000000 1.000000 Size4-Regular null false 41
+== display \varphi = \frac{1+\sqrt5}{2} \approx 1.618
+box 8.893890 1.584220 0.686000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 966
+glyph 0.931970 0.000000 1.000000 Main-Regular null false 61
+glyph 3.385140 0.686000 1.000000 Main-Regular null false 50
+rect 2.107550 -0.270000 3.055180 0.040000 null false
+glyph 2.107550 -0.677000 1.000000 Main-Regular null false 49
+glyph 2.829750 -0.677000 1.000000 Main-Regular null false 43
+glyph 4.662730 -0.677000 1.000000 Main-Regular null false 53
+svg 3.829730 -1.624220 1.333000 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 3.829730 -1.624220 1.333000 1.080000
+glyph 5.560530 0.000000 1.000000 Main-Regular null false 8776
+glyph 6.616110 0.000000 1.000000 Main-Regular null false 49
+glyph 7.116110 0.000000 1.000000 Main-Regular null false 46
+glyph 7.393890 0.000000 1.000000 Main-Regular null false 54
+glyph 7.893890 0.000000 1.000000 Main-Regular null false 49
+glyph 8.393890 0.000000 1.000000 Main-Regular null false 56
+== display \int_0^\infty e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}
+box 7.947847 1.477280 0.911950
+glyph 0.000000 -0.001100 1.000000 Size2-Regular null false 8747
+glyph 0.555510 0.911950 0.700000 Main-Regular null false 48
+glyph 1.000010 -1.112900 0.700000 Main-Regular null false 8734
+glyph 1.916710 0.000000 1.000000 Math-Italic null false 101
+glyph 2.382340 -0.413000 0.700000 Main-Regular null false 8722
+glyph 2.926786 -0.413000 0.700000 Math-Italic null false 120
+glyph 3.326857 -0.714700 0.500000 Main-Regular null false 50
+glyph 3.843537 0.000000 1.000000 Math-Italic null false 100
+glyph 4.364027 0.000000 1.000000 Math-Italic null false 120
+glyph 5.213357 0.000000 1.000000 Main-Regular null false 61
+glyph 6.858392 0.686000 1.000000 Main-Regular null false 50
+rect 6.388937 -0.270000 1.438910 0.040000 null false
+glyph 7.221937 -0.677000 1.000000 Math-Italic null false 960
+svg 6.388937 -1.517280 1.438910 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 6.388937 -1.517280 1.438910 1.080000
+== display \lim_{x \to 0} \frac{\sin x}{x} = 1
+box 5.656171 1.344860 0.717108
+glyph 0.000000 0.617108 0.700000 Math-Italic null false 120
+glyph 0.400071 0.617108 0.700000 Main-Regular null false 8594
+glyph 1.100071 0.617108 0.700000 Main-Regular null false 48
+glyph 0.030585 0.000000 1.000000 Main-Regular null false 108
+glyph 0.308365 0.000000 1.000000 Main-Regular null false 105
+glyph 0.586146 0.000000 1.000000 Main-Regular null false 109
+glyph 2.434016 0.686000 1.000000 Math-Italic null false 120
+rect 1.736771 -0.270000 1.966020 0.040000 null false
+glyph 1.736771 -0.677000 1.000000 Main-Regular null false 115
+glyph 2.131221 -0.677000 1.000000 Main-Regular null false 105
+glyph 2.409001 -0.677000 1.000000 Main-Regular null false 110
+glyph 3.131261 -0.677000 1.000000 Math-Italic null false 120
+glyph 4.100591 0.000000 1.000000 Main-Regular null false 61
+glyph 5.156171 0.000000 1.000000 Main-Regular null false 49
+== display f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+box 12.296032 1.427000 0.752108
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 102
+glyph 0.597230 -0.413000 0.700000 Main-Regular null false 8242
+glyph 0.839730 0.000000 1.000000 Main-Regular null false 40
+glyph 1.228620 0.000000 1.000000 Math-Italic null false 120
+glyph 1.800150 0.000000 1.000000 Main-Regular null false 41
+glyph 2.466840 0.000000 1.000000 Main-Regular null false 61
+glyph 3.522420 0.652108 0.700000 Math-Italic null false 104
+glyph 3.925732 0.652108 0.700000 Main-Regular null false 8594
+glyph 4.625732 0.652108 0.700000 Main-Regular null false 48
+glyph 3.554626 0.000000 1.000000 Main-Regular null false 108
+glyph 3.832406 0.000000 1.000000 Main-Regular null false 105
+glyph 4.110186 0.000000 1.000000 Main-Regular null false 109
+glyph 8.431152 0.686000 1.000000 Math-Italic null false 104
+rect 5.262432 -0.270000 6.913600 0.040000 null false
+glyph 5.262432 -0.677000 1.000000 Math-Italic null false 102
+glyph 5.859662 -0.677000 1.000000 Main-Regular null false 40
+glyph 6.248552 -0.677000 1.000000 Math-Italic null false 120
+glyph 7.042282 -0.677000 1.000000 Main-Regular null false 43
+glyph 8.042262 -0.677000 1.000000 Math-Italic null false 104
+glyph 8.618422 -0.677000 1.000000 Main-Regular null false 41
+glyph 9.229512 -0.677000 1.000000 Main-Regular null false 8722
+glyph 10.229492 -0.677000 1.000000 Math-Italic null false 102
+glyph 10.826722 -0.677000 1.000000 Main-Regular null false 40
+glyph 11.215612 -0.677000 1.000000 Math-Italic null false 120
+glyph 11.787142 -0.677000 1.000000 Main-Regular null false 41
+== display \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u
+box 5.770860 1.491108 0.686000
+glyph 0.225675 0.686000 1.000000 Main-Regular null false 8706
+glyph 0.812135 0.686000 1.000000 Math-Italic null false 116
+glyph 1.173245 0.397000 0.700000 Main-Regular null false 50
+rect 0.120000 -0.270000 1.558920 0.040000 null false
+glyph 0.120000 -0.677000 1.000000 Main-Regular null false 8706
+glyph 0.706460 -1.040000 0.700000 Main-Regular null false 50
+glyph 1.106460 -0.677000 1.000000 Math-Italic null false 117
+glyph 2.076720 0.000000 1.000000 Main-Regular null false 61
+glyph 3.132300 0.000000 1.000000 Math-Italic null false 99
+glyph 3.565060 -0.413000 0.700000 Main-Regular null false 50
+glyph 3.965060 0.000000 1.000000 Main-Regular null false 8711
+glyph 4.798400 -0.413000 0.700000 Main-Regular null false 50
+glyph 5.198400 0.000000 1.000000 Math-Italic null false 117
+== display \oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}
+box 12.137863 1.360000 0.911950
+glyph 0.000000 -0.001100 1.000000 Size2-Regular null false 8750
+glyph 0.555510 0.911950 0.700000 Math-Italic null false 67
+glyph 1.322585 0.000000 1.000000 Main-Bold null false 70
+glyph 2.268395 0.000000 1.000000 Main-Regular null false 8901
+glyph 2.768375 0.000000 1.000000 Math-Italic null false 100
+glyph 3.288865 0.000000 1.000000 Main-Bold null false 114
+glyph 4.040275 0.000000 1.000000 Main-Regular null false 61
+glyph 5.095855 -0.001000 1.000000 Size2-Regular null false 8748
+glyph 6.179805 0.911700 0.700000 Math-Italic null false 83
+glyph 6.699393 0.000000 1.000000 Main-Regular null false 40
+glyph 7.088283 0.000000 1.000000 Main-Regular null false 8711
+glyph 8.143823 0.000000 1.000000 Main-Regular null false 215
+glyph 9.143803 0.000000 1.000000 Main-Bold null false 70
+glyph 9.867413 0.000000 1.000000 Main-Regular null false 41
+glyph 10.478503 0.000000 1.000000 Main-Regular null false 8901
+glyph 10.978483 0.000000 1.000000 Math-Italic null false 100
+glyph 11.498973 0.000000 1.000000 Main-Bold null false 83
+== display \sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x
+box 5.108217 1.651397 1.302113
+glyph 0.081774 1.202113 0.700000 Math-Italic null false 107
+glyph 0.468230 1.202113 0.700000 Main-Regular null false 61
+glyph 1.012676 1.202113 0.700000 Main-Regular null false 48
+glyph 0.000000 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 0.372225 -1.250005 0.700000 Main-Regular null false 8734
+glyph 1.820213 0.686000 1.000000 Math-Italic null false 107
+glyph 2.372293 0.686000 1.000000 Main-Regular null false 33
+rect 1.731150 -0.270000 1.007986 0.040000 null false
+glyph 1.731150 -0.677000 1.000000 Math-Italic null false 120
+glyph 2.302680 -1.040000 0.700000 Math-Italic null false 107
+glyph 3.136936 0.000000 1.000000 Main-Regular null false 61
+glyph 4.192516 0.000000 1.000000 Math-Italic null false 101
+glyph 4.658146 -0.413000 0.700000 Math-Italic null false 120
+== display A = U \Sigma V^\top
+box 4.997406 0.899108 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 65
+glyph 1.027800 0.000000 1.000000 Main-Regular null false 61
+glyph 2.083380 0.000000 1.000000 Math-Italic null false 85
+glyph 2.875190 0.000000 1.000000 Main-Regular null false 931
+glyph 3.597410 0.000000 1.000000 Math-Italic null false 86
+glyph 4.402960 -0.413000 0.700000 Main-Regular null false 8868
+== display \det \begin{vmatrix} a & b \\ c & d \end{vmatrix} = ad - bc
+box 8.737250 1.450000 0.950020
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 100
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 101
+glyph 1.000010 0.000000 1.000000 Main-Regular null false 116
+svg 1.555600 -1.449980 0.333000 2.400000 0.000000,0.000000,333.000000,2400.000000 null null -530756831 noclip
+glyph 1.888600 -0.610000 1.000000 Math-Italic null false 97
+glyph 1.936515 0.590000 1.000000 Math-Italic null false 99
+glyph 3.462850 -0.610000 1.000000 Math-Italic null false 98
+glyph 3.417190 0.590000 1.000000 Math-Italic null false 100
+svg 3.937680 -1.449980 0.333000 2.400000 0.000000,0.000000,333.000000,2400.000000 null null -530756831 noclip
+glyph 4.548480 0.000000 1.000000 Main-Regular null false 61
+glyph 5.604060 0.000000 1.000000 Math-Italic null false 97
+glyph 6.132650 0.000000 1.000000 Math-Italic null false 100
+glyph 6.875340 0.000000 1.000000 Main-Regular null false 8722
+glyph 7.875320 0.000000 1.000000 Math-Italic null false 98
+glyph 8.304490 0.000000 1.000000 Math-Italic null false 99
+== display \mathbb{E}[X] = \sum_{x} x \, \Pr(X = x)
+box 10.640490 1.050005 1.250005
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 69
+glyph 0.666670 0.000000 1.000000 Main-Regular null false 91
+glyph 0.944450 0.000000 1.000000 Math-Italic null false 88
+glyph 1.851390 0.000000 1.000000 Main-Regular null false 93
+glyph 2.406970 0.000000 1.000000 Main-Regular null false 61
+glyph 3.984740 1.150005 0.700000 Math-Italic null false 120
+glyph 3.462550 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 5.073700 0.000000 1.000000 Math-Italic null false 120
+glyph 5.978630 0.000000 1.000000 Main-Regular null false 80
+glyph 6.659190 0.000000 1.000000 Main-Regular null false 114
+glyph 7.050860 0.000000 1.000000 Main-Regular null false 40
+glyph 7.439750 0.000000 1.000000 Math-Italic null false 88
+glyph 8.624490 0.000000 1.000000 Main-Regular null false 61
+glyph 9.680070 0.000000 1.000000 Math-Italic null false 120
+glyph 10.251600 0.000000 1.000000 Main-Regular null false 41
+== display P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}
+box 11.783540 1.427000 0.936000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 80
+glyph 0.780900 0.000000 1.000000 Main-Regular null false 40
+glyph 1.169790 0.000000 1.000000 Math-Italic null false 65
+glyph 2.197590 0.000000 1.000000 Main-Regular null false 8739
+glyph 2.753170 0.000000 1.000000 Math-Italic null false 66
+glyph 3.561850 0.000000 1.000000 Main-Regular null false 41
+glyph 4.228540 0.000000 1.000000 Main-Regular null false 61
+glyph 7.350150 0.686000 1.000000 Math-Italic null false 80
+glyph 8.131050 0.686000 1.000000 Main-Regular null false 40
+glyph 8.519940 0.686000 1.000000 Math-Italic null false 66
+glyph 9.328620 0.686000 1.000000 Main-Regular null false 41
+rect 5.404120 -0.270000 6.259420 0.040000 null false
+glyph 5.404120 -0.677000 1.000000 Math-Italic null false 80
+glyph 6.185020 -0.677000 1.000000 Main-Regular null false 40
+glyph 6.573910 -0.677000 1.000000 Math-Italic null false 66
+glyph 7.660390 -0.677000 1.000000 Main-Regular null false 8739
+glyph 8.215970 -0.677000 1.000000 Math-Italic null false 65
+glyph 8.965970 -0.677000 1.000000 Main-Regular null false 41
+glyph 9.354860 -0.677000 1.000000 Math-Italic null false 80
+glyph 10.135760 -0.677000 1.000000 Main-Regular null false 40
+glyph 10.524650 -0.677000 1.000000 Math-Italic null false 65
+glyph 11.274650 -0.677000 1.000000 Main-Regular null false 41
+== display \mathcal{N}(\mu, \sigma^2)
+box 3.799950 0.864108 0.250000
+glyph 0.000000 0.000000 1.000000 Caligraphic-Regular null false 78
+glyph 0.967850 0.000000 1.000000 Main-Regular null false 40
+glyph 1.356740 0.000000 1.000000 Math-Italic null false 956
+glyph 1.959290 0.000000 1.000000 Main-Regular null false 44
+glyph 2.403770 0.000000 1.000000 Math-Italic null false 963
+glyph 3.011060 -0.413000 0.700000 Main-Regular null false 50
+glyph 3.411060 0.000000 1.000000 Main-Regular null false 41
+== display \| x \|_2 = \sqrt{\sum_i x_i^2}
+box 6.887590 1.520043 1.519957
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+glyph 0.500000 0.000000 1.000000 Math-Italic null false 120
+glyph 1.071530 0.000000 1.000000 Main-Regular null false 8741
+glyph 1.571530 0.150000 0.700000 Main-Regular null false 50
+glyph 2.249330 0.000000 1.000000 Main-Regular null false 61
+glyph 4.906557 1.177669 0.700000 Math-Italic null false 105
+glyph 4.304910 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 5.916060 0.000000 1.000000 Math-Italic null false 120
+glyph 6.487590 0.276864 0.700000 Math-Italic null false 105
+glyph 6.487590 -0.344800 0.700000 Main-Regular null false 50
+svg 3.304910 -1.560043 3.582680 3.080000 0.000000,0.000000,400000.000000,3240.000000 xMinYMin slice null 123992840 clip 3.304910 -1.560043 3.582680 3.080000
+== display \langle u, v \rangle = \sum_{i=1}^n u_i \bar{v}_i
+box 6.863444 1.651397 1.277669
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10216
+glyph 0.388890 0.000000 1.000000 Math-Italic null false 117
+glyph 0.961350 0.000000 1.000000 Main-Regular null false 44
+glyph 1.405830 0.000000 1.000000 Math-Italic null false 118
+glyph 1.926430 0.000000 1.000000 Main-Regular null false 10217
+glyph 2.593120 0.000000 1.000000 Main-Regular null false 61
+glyph 3.803124 1.177669 0.700000 Math-Italic null false 105
+glyph 4.044281 1.177669 0.700000 Main-Regular null false 61
+glyph 4.588727 1.177669 0.700000 Main-Regular null false 49
+glyph 3.648700 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 4.160845 -1.250005 0.700000 Math-Italic null false 110
+glyph 5.259850 0.000000 1.000000 Math-Italic null false 117
+glyph 5.832310 0.150000 0.700000 Math-Italic null false 105
+glyph 6.123467 0.000000 1.000000 Math-Italic null false 118
+glyph 6.143627 0.000000 1.000000 Main-Regular null false 713
+glyph 6.572287 0.150000 0.700000 Math-Italic null false 105
+== display \hat{y} = \operatorname*{arg\,max}_{y} p(y \mid x)
+box 8.635720 0.750000 1.030548
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 121
+glyph 0.050740 0.000000 1.000000 Main-Regular null false 94
+glyph 0.768080 0.000000 1.000000 Main-Regular null false 61
+glyph 3.356194 0.794440 0.700000 Math-Italic null false 121
+glyph 1.823660 0.000000 1.000000 Main-Regular null false 97
+glyph 2.323660 0.000000 1.000000 Main-Regular null false 114
+glyph 2.715330 0.000000 1.000000 Main-Regular null false 103
+glyph 3.395920 0.000000 1.000000 Main-Regular null false 109
+glyph 4.229260 0.000000 1.000000 Main-Regular null false 97
+glyph 4.729260 0.000000 1.000000 Main-Regular null false 120
+glyph 5.423740 0.000000 1.000000 Math-Italic null false 112
+glyph 5.926870 0.000000 1.000000 Main-Regular null false 40
+glyph 6.315760 0.000000 1.000000 Math-Italic null false 121
+glyph 7.119720 0.000000 1.000000 Main-Regular null false 8739
+glyph 7.675300 0.000000 1.000000 Math-Italic null false 120
+glyph 8.246830 0.000000 1.000000 Main-Regular null false 41
+== display \mathcal{L}(\theta) = -\frac{1}{N} \sum_{i=1}^{N} \log p_\theta(y_i \mid x_i)
+box 12.621048 1.828336 1.277669
+glyph 0.000000 0.000000 1.000000 Caligraphic-Regular null false 76
+glyph 0.689720 0.000000 1.000000 Main-Regular null false 40
+glyph 1.078610 0.000000 1.000000 Math-Italic null false 952
+glyph 1.575830 0.000000 1.000000 Main-Regular null false 41
+glyph 2.242520 0.000000 1.000000 Main-Regular null false 61
+glyph 3.298100 0.000000 1.000000 Main-Regular null false 8722
+glyph 4.195880 0.686000 1.000000 Math-Italic null false 78
+rect 4.195880 -0.270000 0.912500 0.040000 null false
+glyph 4.402130 -0.677000 1.000000 Main-Regular null false 49
+glyph 5.549504 1.177669 0.700000 Math-Italic null false 105
+glyph 5.790660 1.177669 0.700000 Main-Regular null false 61
+glyph 6.335107 1.177669 0.700000 Main-Regular null false 49
+glyph 5.395080 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 5.797930 -1.250005 0.700000 Math-Italic null false 78
+glyph 7.006230 0.000000 1.000000 Main-Regular null false 108
+glyph 7.284010 0.000000 1.000000 Main-Regular null false 111
+glyph 7.784010 0.000000 1.000000 Main-Regular null false 103
+glyph 8.464600 0.000000 1.000000 Math-Italic null false 112
+glyph 8.967730 0.150000 0.700000 Math-Italic null false 952
+glyph 9.365784 0.000000 1.000000 Main-Regular null false 40
+glyph 9.754674 0.000000 1.000000 Math-Italic null false 121
+glyph 10.244934 0.150000 0.700000 Math-Italic null false 105
+glyph 10.813891 0.000000 1.000000 Main-Regular null false 8739
+glyph 11.369471 0.000000 1.000000 Math-Italic null false 120
+glyph 11.941001 0.150000 0.700000 Math-Italic null false 105
+glyph 12.232158 0.000000 1.000000 Main-Regular null false 41
+== display \text{softmax}(z)_i = \frac{e^{z_i}}{\sum_j e^{z_j}}
+box 9.327618 1.341392 1.121818
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 115
+glyph 0.394450 0.000000 1.000000 Main-Regular null false 111
+glyph 0.894450 0.000000 1.000000 Main-Regular null false 102
+glyph 1.200010 0.000000 1.000000 Main-Regular null false 116
+glyph 1.588900 0.000000 1.000000 Main-Regular null false 109
+glyph 2.422240 0.000000 1.000000 Main-Regular null false 97
+glyph 2.922240 0.000000 1.000000 Main-Regular null false 120
+glyph 3.450020 0.000000 1.000000 Main-Regular null false 40
+glyph 3.838910 0.000000 1.000000 Math-Italic null false 122
+glyph 4.347940 0.000000 1.000000 Main-Regular null false 41
+glyph 4.736830 0.150000 0.700000 Math-Italic null false 105
+glyph 5.305787 0.000000 1.000000 Main-Regular null false 61
+glyph 6.481367 0.686000 1.000000 Size1-Regular null false 8721
+glyph 7.536927 0.985710 0.700000 Math-Italic null false 106
+glyph 8.081962 0.686000 1.000000 Math-Italic null false 101
+glyph 8.547592 0.380930 0.700000 Math-Italic null false 122
+glyph 8.873113 0.481030 0.500000 Math-Italic null false 106
+rect 6.481367 -0.270000 2.726251 0.040000 null false
+glyph 7.312800 -0.677000 1.000000 Math-Italic null false 101
+glyph 7.778430 -1.040000 0.700000 Math-Italic null false 122
+glyph 8.103951 -0.939900 0.500000 Math-Italic null false 105
+== display \theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)
+box 8.958871 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 952
+glyph 0.469420 0.150000 0.700000 Math-Italic null false 116
+glyph 0.722197 0.150000 0.700000 Main-Regular null false 43
+glyph 1.266643 0.150000 0.700000 Main-Regular null false 49
+glyph 1.944443 0.000000 1.000000 Main-Regular null false 61
+glyph 3.000023 0.000000 1.000000 Math-Italic null false 952
+glyph 3.469443 0.150000 0.700000 Math-Italic null false 116
+glyph 3.994420 0.000000 1.000000 Main-Regular null false 8722
+glyph 4.994400 0.000000 1.000000 Math-Italic null false 951
+glyph 5.526810 0.000000 1.000000 Main-Regular null false 8711
+glyph 6.360150 0.150000 0.700000 Math-Italic null false 952
+glyph 6.758204 0.000000 1.000000 Math-Italic null false 74
+glyph 7.408894 0.000000 1.000000 Main-Regular null false 40
+glyph 7.797784 0.000000 1.000000 Math-Italic null false 952
+glyph 8.267204 0.150000 0.700000 Math-Italic null false 116
+glyph 8.569981 0.000000 1.000000 Main-Regular null false 41
+== display |x| = \begin{cases} x & \text{if } x \geq 0 \\ -x & \text{otherwise} \end{cases}
+box 9.854810 1.750000 1.250030
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+glyph 0.277780 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849310 0.000000 1.000000 Main-Regular null false 8739
+glyph 1.404890 0.000000 1.000000 Main-Regular null false 61
+glyph 2.460470 0.000000 1.000000 Size4-Regular null false 123
+glyph 3.266030 -0.682000 1.000000 Math-Italic null false 120
+glyph 3.266030 0.758000 1.000000 Main-Regular null false 8722
+glyph 4.043810 0.758000 1.000000 Math-Italic null false 120
+glyph 5.615340 -0.682000 1.000000 Main-Regular null false 105
+glyph 5.893120 -0.682000 1.000000 Main-Regular null false 102
+glyph 6.198680 -0.682000 1.000000 Main-Regular null false 160
+glyph 6.448680 -0.682000 1.000000 Math-Italic null false 120
+glyph 7.298010 -0.682000 1.000000 Main-Regular null false 8805
+glyph 8.353590 -0.682000 1.000000 Main-Regular null false 48
+glyph 5.615340 0.758000 1.000000 Main-Regular null false 111
+glyph 6.115340 0.758000 1.000000 Main-Regular null false 116
+glyph 6.504230 0.758000 1.000000 Main-Regular null false 104
+glyph 7.059790 0.758000 1.000000 Main-Regular null false 101
+glyph 7.504240 0.758000 1.000000 Main-Regular null false 114
+glyph 7.895910 0.758000 1.000000 Main-Regular null false 119
+glyph 8.618130 0.758000 1.000000 Main-Regular null false 105
+glyph 8.895910 0.758000 1.000000 Main-Regular null false 115
+glyph 9.290360 0.758000 1.000000 Main-Regular null false 101
+== display \begin{aligned} (a+b)^2 &= a^2 + 2ab + b^2 \\ &\geq 4ab \end{aligned}
+box 10.350980 1.612054 1.112054
+glyph 0.000000 -0.747946 1.000000 Main-Regular null false 40
+glyph 0.388890 -0.747946 1.000000 Math-Italic null false 97
+glyph 1.139680 -0.747946 1.000000 Main-Regular null false 43
+glyph 2.139660 -0.747946 1.000000 Math-Italic null false 98
+glyph 2.568830 -0.747946 1.000000 Main-Regular null false 41
+glyph 2.957720 -1.160946 0.700000 Main-Regular null false 50
+glyph 3.635520 -0.747946 1.000000 Main-Regular null false 61
+glyph 4.691100 -0.747946 1.000000 Math-Italic null false 97
+glyph 5.219690 -1.160946 0.700000 Main-Regular null false 50
+glyph 5.841890 -0.747946 1.000000 Main-Regular null false 43
+glyph 6.841870 -0.747946 1.000000 Main-Regular null false 50
+glyph 7.341870 -0.747946 1.000000 Math-Italic null false 97
+glyph 7.870460 -0.747946 1.000000 Math-Italic null false 98
+glyph 8.521830 -0.747946 1.000000 Main-Regular null false 43
+glyph 9.521810 -0.747946 1.000000 Math-Italic null false 98
+glyph 9.950980 -1.160946 0.700000 Main-Regular null false 50
+glyph 3.635520 0.752054 1.000000 Main-Regular null false 8805
+glyph 4.691100 0.752054 1.000000 Main-Regular null false 52
+glyph 5.191100 0.752054 1.000000 Math-Italic null false 97
+glyph 5.719690 0.752054 1.000000 Math-Italic null false 98
+== display \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+box 3.055560 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size3-Regular null false 91
+glyph 0.527780 -0.610000 1.000000 Main-Regular null false 49
+glyph 0.527780 0.590000 1.000000 Main-Regular null false 48
+glyph 2.027780 -0.610000 1.000000 Main-Regular null false 48
+glyph 2.027780 0.590000 1.000000 Main-Regular null false 49
+glyph 2.527780 0.000000 1.000000 Size3-Regular null false 93
+== display \begin{array}{c|c} a & b \\ \hline c & d \end{array}
+box 3.049080 1.450000 0.950000
+glyph 0.500000 -0.610000 1.000000 Math-Italic null false 97
+glyph 0.547915 0.590000 1.000000 Math-Italic null false 99
+rect 1.508590 -1.450000 0.040000 2.400000 null false
+glyph 2.074250 -0.610000 1.000000 Math-Italic null false 98
+glyph 2.028590 0.590000 1.000000 Math-Italic null false 100
+rect 0.000000 -0.290000 3.049080 0.040000 null false
+== display \begin{gathered} a = b \\ c = d \end{gathered}
+box 2.291140 1.600000 1.100000
+glyph 0.000000 -0.760000 1.000000 Math-Italic null false 97
+glyph 0.806390 -0.760000 1.000000 Main-Regular null false 61
+glyph 1.861970 -0.760000 1.000000 Math-Italic null false 98
+glyph 0.002255 0.740000 1.000000 Math-Italic null false 99
+glyph 0.712815 0.740000 1.000000 Main-Regular null false 61
+glyph 1.768395 0.740000 1.000000 Math-Italic null false 100
+== display a \equiv b \pmod{n}
+box 6.891350 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 97
+glyph 0.806390 0.000000 1.000000 Main-Regular null false 8801
+glyph 1.861970 0.000000 1.000000 Math-Italic null false 98
+glyph 3.291140 0.000000 1.000000 Main-Regular null false 40
+glyph 3.680030 0.000000 1.000000 Main-Regular null false 109
+glyph 4.513370 0.000000 1.000000 Main-Regular null false 111
+glyph 5.013370 0.000000 1.000000 Main-Regular null false 100
+glyph 5.902230 0.000000 1.000000 Math-Italic null false 110
+glyph 6.502460 0.000000 1.000000 Main-Regular null false 41
+== display \forall \epsilon > 0 \; \exists \delta > 0
+box 5.943870 0.694440 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8704
+glyph 0.555560 0.000000 1.000000 Math-Italic null false 1013
+glyph 1.239260 0.000000 1.000000 Main-Regular null false 62
+glyph 2.294840 0.000000 1.000000 Main-Regular null false 48
+glyph 3.072640 0.000000 1.000000 Main-Regular null false 8707
+glyph 3.628200 0.000000 1.000000 Math-Italic null false 948
+glyph 4.388290 0.000000 1.000000 Main-Regular null false 62
+glyph 5.443870 0.000000 1.000000 Main-Regular null false 48
+== display \neg (p \land q) \iff \neg p \lor \neg q
+box 9.939970 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 172
+glyph 0.666670 0.000000 1.000000 Main-Regular null false 40
+glyph 1.055560 0.000000 1.000000 Math-Italic null false 112
+glyph 1.780890 0.000000 1.000000 Main-Regular null false 8743
+glyph 2.669760 0.000000 1.000000 Math-Italic null false 113
+glyph 3.152050 0.000000 1.000000 Main-Regular null false 41
+glyph 4.096540 0.000000 1.000000 Main-Regular null false 10234
+glyph 6.510140 0.000000 1.000000 Main-Regular null false 172
+glyph 7.176810 0.000000 1.000000 Math-Italic null false 112
+glyph 7.902140 0.000000 1.000000 Main-Regular null false 8744
+glyph 8.791010 0.000000 1.000000 Main-Regular null false 172
+glyph 9.457680 0.000000 1.000000 Math-Italic null false 113
+== display \gcd(a, b) = \gcd(b, a \bmod b)
+box 11.594890 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 103
+glyph 0.513890 0.000000 1.000000 Main-Regular null false 99
+glyph 0.958340 0.000000 1.000000 Main-Regular null false 100
+glyph 1.513900 0.000000 1.000000 Main-Regular null false 40
+glyph 1.902790 0.000000 1.000000 Math-Italic null false 97
+glyph 2.431380 0.000000 1.000000 Main-Regular null false 44
+glyph 2.875860 0.000000 1.000000 Math-Italic null false 98
+glyph 3.305030 0.000000 1.000000 Main-Regular null false 41
+glyph 3.971720 0.000000 1.000000 Main-Regular null false 61
+glyph 5.027300 0.000000 1.000000 Main-Regular null false 103
+glyph 5.541190 0.000000 1.000000 Main-Regular null false 99
+glyph 5.985640 0.000000 1.000000 Main-Regular null false 100
+glyph 6.541200 0.000000 1.000000 Main-Regular null false 40
+glyph 6.930090 0.000000 1.000000 Math-Italic null false 98
+glyph 7.359260 0.000000 1.000000 Main-Regular null false 44
+glyph 7.803740 0.000000 1.000000 Math-Italic null false 97
+glyph 8.610130 0.000000 1.000000 Main-Regular null false 109
+glyph 9.443470 0.000000 1.000000 Main-Regular null false 111
+glyph 9.943470 0.000000 1.000000 Main-Regular null false 100
+glyph 10.776830 0.000000 1.000000 Math-Italic null false 98
+glyph 11.206000 0.000000 1.000000 Main-Regular null false 41
+== display \binom{n}{k} = \frac{n!}{k!(n-k)!}
+box 7.905740 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size3-Regular null false 40
+glyph 0.760185 0.686000 1.000000 Math-Italic null false 107
+glyph 0.736110 -0.677000 1.000000 Math-Italic null false 110
+glyph 1.336340 0.000000 1.000000 Size3-Regular null false 41
+glyph 2.350250 0.000000 1.000000 Main-Regular null false 61
+glyph 3.525830 0.686000 1.000000 Math-Italic null false 107
+glyph 4.077910 0.686000 1.000000 Main-Regular null false 33
+glyph 4.355690 0.686000 1.000000 Main-Regular null false 40
+glyph 4.744580 0.686000 1.000000 Math-Italic null false 110
+glyph 5.567010 0.686000 1.000000 Main-Regular null false 8722
+glyph 6.566990 0.686000 1.000000 Math-Italic null false 107
+glyph 7.119070 0.686000 1.000000 Main-Regular null false 41
+glyph 7.507960 0.686000 1.000000 Main-Regular null false 33
+rect 3.525830 -0.270000 4.259910 0.040000 null false
+glyph 5.216780 -0.677000 1.000000 Math-Italic null false 110
+glyph 5.817010 -0.677000 1.000000 Main-Regular null false 33
+== display \lfloor x \rfloor \leq x < \lfloor x \rfloor + 1
+box 7.881330 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8970
+glyph 0.444450 0.000000 1.000000 Math-Italic null false 120
+glyph 1.015980 0.000000 1.000000 Main-Regular null false 8971
+glyph 1.738230 0.000000 1.000000 Main-Regular null false 8804
+glyph 2.793810 0.000000 1.000000 Math-Italic null false 120
+glyph 3.643140 0.000000 1.000000 Main-Regular null false 60
+glyph 4.698720 0.000000 1.000000 Main-Regular null false 8970
+glyph 5.143170 0.000000 1.000000 Math-Italic null false 120
+glyph 5.714700 0.000000 1.000000 Main-Regular null false 8971
+glyph 6.381350 0.000000 1.000000 Main-Regular null false 43
+glyph 7.381330 0.000000 1.000000 Main-Regular null false 49
+== display x \in \mathbb{R}^n, \quad A \subseteq B
+box 7.322721 0.714392 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 8712
+glyph 1.793800 0.000000 1.000000 AMS-Regular null false 82
+glyph 2.516020 -0.413000 0.700000 Math-Italic null false 110
+glyph 2.986181 0.000000 1.000000 Main-Regular null false 44
+glyph 4.430661 0.000000 1.000000 Math-Italic null false 65
+glyph 5.458461 0.000000 1.000000 Main-Regular null false 8838
+glyph 6.514041 0.000000 1.000000 Math-Italic null false 66
+== display \boxed{E = mc^2}
+box 4.439990 1.204108 0.340000
+glyph 0.300000 0.000000 1.000000 Math-Italic null false 69
+glyph 1.373640 0.000000 1.000000 Main-Regular null false 61
+glyph 2.429220 0.000000 1.000000 Math-Italic null false 109
+glyph 3.307230 0.000000 1.000000 Math-Italic null false 99
+glyph 3.739990 -0.413000 0.700000 Main-Regular null false 50
+rect 0.000000 -1.204100 4.439990 0.040000 null false
+rect 0.000000 0.300000 4.439990 0.040000 null false
+rect 0.000000 -1.204100 0.040000 1.544100 null false
+rect 4.399990 -1.204100 0.040000 1.544100 null false
+== display \boldsymbol{\Sigma}^k = \underbrace{\left( \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{\top} \right) \dots \left( \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{\top} \right)}_{\text{$k$ times}} = \mathbf{Q} \boldsymbol{\Lambda}^k \mathbf{Q}^{\top}. \tag{5}
+box 17.370030 0.925118 1.892450
+glyph 0.000000 0.000000 1.000000 Main-Bold null false 931
+glyph 0.830550 -0.439010 0.700000 Math-Italic null false 107
+glyph 1.544806 0.000000 1.000000 Main-Regular null false 61
+glyph 6.298176 1.892450 0.700000 Math-Italic null false 107
+glyph 6.684632 1.892450 0.700000 Main-Regular null false 160
+glyph 6.859632 1.892450 0.700000 Main-Regular null false 116
+glyph 7.131854 1.892450 0.700000 Main-Regular null false 105
+glyph 7.326301 1.892450 0.700000 Main-Regular null false 109
+glyph 7.909639 1.892450 0.700000 Main-Regular null false 101
+glyph 8.220753 1.892450 0.700000 Main-Regular null false 115
+svg 2.600386 0.450010 2.408162 0.548000 0.000000,0.000000,400000.000000,548.000000 xMinYMin slice null 1022872644 clip 2.600386 0.450010 2.408162 0.548000
+svg 4.998954 0.450010 4.797136 0.548000 0.000000,0.000000,400000.000000,548.000000 xMidYMin slice null 1378454522 clip 4.998954 0.450010 4.797136 0.548000
+svg 9.786496 0.450010 2.408162 0.548000 0.000000,0.000000,400000.000000,548.000000 xMaxYMin slice null -388856571 clip 9.786496 0.450010 2.408162 0.548000
+glyph 2.600386 0.000000 1.000000 Size1-Regular null false 40
+glyph 3.058726 0.000000 1.000000 Main-Bold null false 81
+glyph 3.922606 0.000000 1.000000 Main-Bold null false 923
+glyph 4.728156 0.000000 1.000000 Main-Bold null false 81
+glyph 5.592036 -0.413000 0.700000 Main-Regular null false 8868
+glyph 6.186482 0.000000 1.000000 Size1-Regular null false 41
+glyph 6.811522 0.000000 1.000000 Main-Regular null false 8230
+glyph 8.150222 0.000000 1.000000 Size1-Regular null false 40
+glyph 8.608562 0.000000 1.000000 Main-Bold null false 81
+glyph 9.472442 0.000000 1.000000 Main-Bold null false 923
+glyph 10.277992 0.000000 1.000000 Main-Bold null false 81
+glyph 11.141872 -0.413000 0.700000 Main-Regular null false 8868
+glyph 11.736318 0.000000 1.000000 Size1-Regular null false 41
+glyph 12.472458 0.000000 1.000000 Main-Regular null false 61
+glyph 13.528038 0.000000 1.000000 Main-Bold null false 81
+glyph 14.391918 0.000000 1.000000 Main-Bold null false 923
+glyph 15.197468 -0.439010 0.700000 Math-Italic null false 107
+glyph 15.633924 0.000000 1.000000 Main-Bold null false 81
+glyph 16.497804 -0.413000 0.700000 Main-Regular null false 8868
+glyph 17.092250 0.000000 1.000000 Main-Regular null false 46
+tag 1.277780 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 40
+glyph 0.388890 0.000000 1.000000 Main-Regular null false 53
+glyph 0.888890 0.000000 1.000000 Main-Regular null false 41
+== display \overbrace{1 + 1 + \cdots + 1}^{n}
+box 6.338540 1.793832 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 49
+glyph 0.722200 0.000000 1.000000 Main-Regular null false 43
+glyph 1.722180 0.000000 1.000000 Main-Regular null false 49
+glyph 2.444380 0.000000 1.000000 Main-Regular null false 43
+glyph 3.444360 0.000000 1.000000 Main-Regular null false 8943
+glyph 4.838560 0.000000 1.000000 Main-Regular null false 43
+glyph 5.838540 0.000000 1.000000 Main-Regular null false 49
+svg 0.000000 -1.292440 1.590974 0.548000 0.000000,0.000000,400000.000000,548.000000 xMinYMin slice null 604595574 clip 0.000000 -1.292440 1.590974 0.548000
+svg 1.584635 -1.292440 3.169270 0.548000 0.000000,0.000000,400000.000000,548.000000 xMidYMin slice null -1552791255 clip 1.584635 -1.292440 3.169270 0.548000
+svg 4.747566 -1.292440 1.590974 0.548000 0.000000,0.000000,400000.000000,548.000000 xMaxYMin slice null -1344393884 clip 4.747566 -1.292440 1.590974 0.548000
+glyph 2.959189 -1.492440 0.700000 Math-Italic null false 110
+== display \overset{\text{def}}{=}
+box 0.913899 1.152978 0.000000
+glyph 0.068060 0.000000 1.000000 Main-Regular null false 61
+glyph 0.000000 -0.566870 0.700000 Main-Regular null false 100
+glyph 0.388892 -0.566870 0.700000 Main-Regular null false 101
+glyph 0.700007 -0.566870 0.700000 Main-Regular null false 102
+== display a \xrightarrow{f} b \xleftarrow[\text{under}]{\text{over}} c
+box 6.422680 1.108108 0.608108
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 97
+glyph 1.331860 -0.622000 0.700000 Math-Italic null false 102
+svg 0.806390 -0.511000 1.469000 0.522000 0.000000,0.000000,400000.000000,522.000000 xMaxYMin slice null -739828107 clip 0.806390 -0.511000 1.469000 0.522000
+glyph 2.553190 0.000000 1.000000 Math-Italic null false 98
+glyph 3.833775 -0.622000 0.700000 Main-Regular null false 111
+glyph 4.183775 -0.622000 0.700000 Main-Regular null false 118
+glyph 4.553221 -0.622000 0.700000 Main-Regular null false 101
+glyph 4.864336 -0.622000 0.700000 Main-Regular null false 114
+svg 3.260160 -0.511000 2.451960 0.522000 0.000000,0.000000,400000.000000,522.000000 xMinYMin slice null -1616045929 clip 3.260160 -0.511000 2.451960 0.522000
+glyph 3.610160 0.608108 0.700000 Main-Regular null false 117
+glyph 3.999052 0.608108 0.700000 Main-Regular null false 110
+glyph 4.387944 0.608108 0.700000 Main-Regular null false 100
+glyph 4.776836 0.608108 0.700000 Main-Regular null false 101
+glyph 5.087951 0.608108 0.700000 Main-Regular null false 114
+glyph 5.989920 0.000000 1.000000 Math-Italic null false 99
+== display \bigl( \Bigl[ \biggl\{ x \biggr\} \Bigr] \bigr)
+box 3.932650 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 40
+glyph 0.458340 0.000000 1.000000 Size2-Regular null false 91
+glyph 0.930560 0.000000 1.000000 Size3-Regular null false 123
+glyph 1.680560 0.000000 1.000000 Math-Italic null false 120
+glyph 2.252090 0.000000 1.000000 Size3-Regular null false 125
+glyph 3.002090 0.000000 1.000000 Size2-Regular null false 93
+glyph 3.474310 0.000000 1.000000 Size1-Regular null false 41
+== display \left\lVert \frac{a}{b} \right\rVert
+box 1.880590 1.149985 0.686000
+svg 0.000000 -1.149985 0.556000 1.800000 0.000000,0.000000,556.000000,1800.000000 null null 1424225264 noclip
+glyph 0.725710 0.686000 1.000000 Math-Italic null false 98
+rect 0.676000 -0.270000 0.528590 0.040000 null false
+glyph 0.676000 -0.677000 1.000000 Math-Italic null false 97
+svg 1.324590 -1.149985 0.556000 1.800000 0.000000,0.000000,556.000000,1800.000000 null null 1424225264 noclip
+== display \left( \frac{a}{b} \middle| \frac{c}{d} \right)
+box 3.056520 1.150000 0.686000
+glyph 0.000000 0.000000 1.000000 Size2-Regular null false 40
+glyph 0.766930 0.686000 1.000000 Math-Italic null false 98
+rect 0.717220 -0.270000 0.528590 0.040000 null false
+glyph 0.717220 -0.677000 1.000000 Math-Italic null false 97
+svg 1.365810 -1.149985 0.333000 1.800000 0.000000,0.000000,333.000000,1800.000000 null null -1093916660 noclip
+glyph 1.818810 0.686000 1.000000 Math-Italic null false 100
+rect 1.818810 -0.270000 0.520490 0.040000 null false
+glyph 1.862675 -0.677000 1.000000 Math-Italic null false 99
+glyph 2.459300 0.000000 1.000000 Size2-Regular null false 41
+== display \vec{v} = \dot{x} \hat{i} + \ddot{y} \tilde{j} + \widehat{abc}
+box 7.471110 0.994440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 118
+svg 0.034660 -0.714000 0.471000 0.714000 0.000000,0.000000,471.000000,714.000000 xMinYMin null -910393288 noclip
+glyph 0.762520 0.000000 1.000000 Main-Regular null false 61
+glyph 1.818100 0.000000 1.000000 Math-Italic null false 120
+glyph 1.992765 0.000000 1.000000 Main-Regular null false 729
+glyph 2.389630 0.000000 1.000000 Math-Italic null false 105
+glyph 2.311885 -0.228520 1.000000 Main-Regular null false 94
+glyph 2.956340 0.000000 1.000000 Main-Regular null false 43
+glyph 3.956320 0.000000 1.000000 Math-Italic null false 121
+glyph 4.007060 0.000000 1.000000 Main-Regular null false 168
+glyph 4.446600 0.000000 1.000000 Math-Italic null false 106
+glyph 4.402505 -0.578520 1.000000 Main-Regular null false 126
+glyph 5.080610 0.000000 1.000000 Main-Regular null false 43
+glyph 6.080590 0.000000 1.000000 Math-Italic null false 97
+glyph 6.609180 0.000000 1.000000 Math-Italic null false 98
+glyph 7.038350 0.000000 1.000000 Math-Italic null false 99
+svg 6.080590 -0.994440 1.390520 0.300000 0.000000,0.000000,2364.000000,300.000000 none null 1563847495 noclip
+== display \overline{z} = \underline{w}
+box 2.585240 0.630560 0.200000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 122
+rect 0.000000 -0.590560 0.509030 0.040000 null false
+glyph 0.786830 0.000000 1.000000 Main-Regular null false 61
+rect 1.842410 0.120000 0.742830 0.040000 null false
+glyph 1.842410 0.000000 1.000000 Math-Italic null false 119
+== display \color{blue} x^2 + \textcolor{red}{y}
+box 2.719870 0.864108 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic blue false 120
+glyph 0.571530 -0.413000 0.700000 Main-Regular blue false 50
+glyph 1.193730 0.000000 1.000000 Main-Regular blue false 43
+glyph 2.193710 0.000000 1.000000 Math-Italic red false 121
+== display \displaystyle \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6} \tag{1}
+box 5.430670 1.651397 1.267113
+glyph 0.064921 1.167113 0.700000 Math-Italic null false 110
+glyph 0.485082 1.167113 0.700000 Main-Regular null false 61
+glyph 1.029529 1.167113 0.700000 Main-Regular null false 49
+glyph 0.000000 -0.000005 1.000000 Size2-Regular null false 8721
+glyph 0.372225 -1.250005 0.700000 Main-Regular null false 8734
+glyph 1.731150 0.686000 1.000000 Math-Italic null false 110
+glyph 2.331380 0.397000 0.700000 Main-Regular null false 50
+rect 1.731150 -0.270000 1.000230 0.040000 null false
+glyph 1.981265 -0.677000 1.000000 Main-Regular null false 49
+glyph 3.129180 0.000000 1.000000 Main-Regular null false 61
+glyph 4.557715 0.686000 1.000000 Main-Regular null false 54
+rect 4.304760 -0.270000 1.005910 0.040000 null false
+glyph 4.304760 -0.677000 1.000000 Math-Italic null false 960
+glyph 4.910670 -1.040000 0.700000 Main-Regular null false 50
+tag 1.277780 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 40
+glyph 0.388890 0.000000 1.000000 Main-Regular null false 49
+glyph 0.888890 0.000000 1.000000 Main-Regular null false 41
+== display \sqrt[3]{x} \cdot \sqrt[n]{y} \cdot \sqrt{\frac{a}{b}}
+box 5.971199 1.544655 0.895345
+glyph 0.277778 -0.394986 0.500000 Main-Regular null false 51
+glyph 0.805222 0.000000 1.000000 Math-Italic null false 120
+svg -0.027778 -0.889155 1.404530 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip -0.027778 -0.889155 1.404530 1.080000
+glyph 1.598952 0.000000 1.000000 Main-Regular null false 8901
+glyph 2.376710 -0.278322 0.500000 Math-Italic null false 110
+glyph 2.954269 0.000000 1.000000 Math-Italic null false 121
+svg 2.121269 -0.791935 1.359160 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 2.121269 -0.791935 1.359160 1.080000
+glyph 3.702629 0.000000 1.000000 Main-Regular null false 8901
+glyph 5.372319 0.686000 1.000000 Math-Italic null false 98
+rect 5.322609 -0.270000 0.528590 0.040000 null false
+glyph 5.322609 -0.677000 1.000000 Math-Italic null false 97
+svg 4.202609 -1.584655 1.768590 2.480000 0.000000,0.000000,400000.000000,2592.000000 xMinYMin slice null -1635151503 clip 4.202609 -1.584655 1.768590 2.480000
+== display x \not\in A, \; y \neq z
+box 5.634650 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 57376
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 8712
+glyph 1.793800 0.000000 1.000000 Math-Italic null false 65
+glyph 2.543800 0.000000 1.000000 Main-Regular null false 44
+glyph 3.266080 0.000000 1.000000 Math-Italic null false 121
+glyph 4.070040 0.000000 1.000000 Main-Regular null false 57376
+glyph 4.070040 0.000000 1.000000 Main-Regular null false 61
+glyph 5.125620 0.000000 1.000000 Math-Italic null false 122
+== display \dfrac{1}{2} + \tfrac{3}{4}
+box 2.552180 1.321440 0.686000
+glyph 0.120000 0.686000 1.000000 Main-Regular null false 50
+rect 0.120000 -0.270000 0.500000 0.040000 null false
+glyph 0.120000 -0.677000 1.000000 Main-Regular null false 49
+glyph 0.962200 0.000000 1.000000 Main-Regular null false 43
+glyph 2.082180 0.345000 0.700000 Main-Regular null false 52
+rect 2.082180 -0.270000 0.350000 0.040000 null false
+glyph 2.082180 -0.394000 0.700000 Main-Regular null false 51
+== display \cdots \ldots \vdots \ddots
+box 4.404100 1.500000 0.030000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8943
+glyph 1.338700 0.000000 1.000000 Main-Regular null false 8230
+glyph 2.677400 0.000000 1.000000 Main-Regular null false 8942
+rect 2.955400 -1.500000 0.000000 1.500000 null false
+glyph 3.122100 0.000000 1.000000 Main-Regular null false 8945
+== display 100\% \; \$5 \; \#1
+box 5.222280 0.750000 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 49
+glyph 0.500000 0.000000 1.000000 Main-Regular null false 48
+glyph 1.000000 0.000000 1.000000 Main-Regular null false 48
+glyph 1.500000 0.000000 1.000000 Main-Regular null false 37
+glyph 2.611140 0.000000 1.000000 Main-Regular null false 36
+glyph 3.111140 0.000000 1.000000 Main-Regular null false 53
+glyph 3.888940 0.000000 1.000000 Main-Regular null false 35
+glyph 4.722280 0.000000 1.000000 Main-Regular null false 49
+== display \newcommand{\RR}{\mathbb{R}} f: \RR \to \RR
+box 4.430650 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 102
+glyph 0.875030 0.000000 1.000000 Main-Regular null false 58
+glyph 1.430610 0.000000 1.000000 AMS-Regular null false 82
+glyph 2.430630 0.000000 1.000000 Main-Regular null false 8594
+glyph 3.708430 0.000000 1.000000 AMS-Regular null false 82
+== display \def\abs#1{\left|#1\right|} \abs{x}
+box 1.127090 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+glyph 0.277780 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849310 0.000000 1.000000 Main-Regular null false 8739
+== display \cancel{x} + \bcancel{y} + \xcancel{z} + \sout{w}
+box 6.016090 0.583330 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+line 0.000000 0.200000 0.571530 -0.630600 0.046000 null
+glyph 0.793730 0.000000 1.000000 Main-Regular null false 43
+glyph 1.793710 0.000000 1.000000 Math-Italic null false 121
+line 1.793710 -0.630560 2.319870 0.394440 0.046000 null
+glyph 2.542070 0.000000 1.000000 Main-Regular null false 43
+glyph 3.542050 0.000000 1.000000 Math-Italic null false 122
+line 3.542050 -0.630600 4.051080 0.200000 0.046000 null
+line 3.542050 0.200000 4.051080 -0.630600 0.046000 null
+glyph 4.273280 0.000000 1.000000 Main-Regular null false 43
+glyph 5.273260 0.000000 1.000000 Math-Italic null false 119
+rect 5.273260 -0.295500 0.742830 0.080000 null false
+== display \begin{align} a &= b \\ c &= d \end{align}
+box 2.382460 1.600000 1.100000
+glyph 0.000000 -0.760000 1.000000 Math-Italic null false 97
+glyph 0.095830 0.740000 1.000000 Math-Italic null false 99
+glyph 0.806390 -0.760000 1.000000 Main-Regular null false 61
+glyph 1.861970 -0.760000 1.000000 Math-Italic null false 98
+glyph 0.806390 0.740000 1.000000 Main-Regular null false 61
+glyph 1.861970 0.740000 1.000000 Math-Italic null false 100
+tag 1.277780 1.600000 1.100000
+glyph 0.000000 -0.760000 1.000000 Main-Regular null false 40
+glyph 0.388890 -0.760000 1.000000 Main-Regular null false 49
+glyph 0.888890 -0.760000 1.000000 Main-Regular null false 41
+glyph 0.000000 0.740000 1.000000 Main-Regular null false 40
+glyph 0.388890 0.740000 1.000000 Main-Regular null false 50
+glyph 0.888890 0.740000 1.000000 Main-Regular null false 41
+== display \begin{CD} A @>f>> B \\ @VgVV @VVhV \\ C @>>k> D \end{CD}
+box 6.095707 3.751618 1.958618
+glyph 0.137848 -2.643510 1.000000 Math-Italic null false 65
+glyph 0.000000 -1.269335 0.700000 Math-Italic null false 103
+glyph 0.359010 -0.154600 1.000000 Size1-Regular null false 8595
+svg 0.358995 -1.362600 0.666700 0.616000 0.000000,0.000000,666.670000,616.000000 xMinYMin null -742929088 noclip
+glyph 0.359010 -1.354610 1.000000 Size1-Regular null false 9168
+glyph 0.119723 1.050510 1.000000 Math-Italic null false 67
+glyph 2.719442 -3.265510 0.700000 Math-Italic null false 102
+svg 1.525695 -3.154510 3.000000 0.522000 0.000000,0.000000,400000.000000,522.000000 xMaxYMin slice null -739828107 clip 1.525695 -3.154510 3.000000 0.522000
+svg 1.525695 0.539510 3.000000 0.522000 0.000000,0.000000,400000.000000,522.000000 xMaxYMin slice null -739828107 clip 1.525695 0.539510 3.000000 0.522000
+glyph 2.735244 1.658618 0.700000 Math-Italic null false 107
+glyph 5.156361 -2.643510 1.000000 Math-Italic null false 66
+glyph 5.025710 -0.154600 1.000000 Size1-Regular null false 8595
+svg 5.025695 -1.362600 0.666700 0.616000 0.000000,0.000000,666.670000,616.000000 xMinYMin null -742929088 noclip
+glyph 5.025710 -1.354610 1.000000 Size1-Regular null false 9168
+glyph 5.692395 -1.364605 0.700000 Math-Italic null false 104
+glyph 5.132851 1.050510 1.000000 Math-Italic null false 68
+== display \fbox{boxed} \colorbox{yellow}{fill} \fcolorbox{red}{white}{both}
+box 7.522260 1.034440 0.340000
+glyph 0.300000 0.000000 1.000000 Main-Regular null false 98
+glyph 0.855560 0.000000 1.000000 Main-Regular null false 111
+glyph 1.355560 0.000000 1.000000 Main-Regular null false 120
+glyph 1.883340 0.000000 1.000000 Main-Regular null false 101
+glyph 2.327790 0.000000 1.000000 Main-Regular null false 100
+rect 0.000000 -1.034400 3.183350 0.040000 null false
+rect 0.000000 0.300000 3.183350 0.040000 null false
+rect 0.000000 -1.034400 0.040000 1.374400 null false
+rect 3.143350 -1.034400 0.040000 1.374400 null false
+rect 3.183350 -0.994400 1.738900 1.294400 yellow false
+glyph 3.483350 0.000000 1.000000 Main-Regular null false 102
+glyph 3.788910 0.000000 1.000000 Main-Regular null false 105
+glyph 4.066690 0.000000 1.000000 Main-Regular null false 108
+glyph 4.344470 0.000000 1.000000 Main-Regular null false 108
+rect 4.922250 -1.034400 2.600010 1.374400 white false
+rect 4.922250 -1.034400 2.600010 0.040000 red false
+rect 4.922250 0.300000 2.600010 0.040000 red false
+rect 4.922250 -1.034400 0.040000 1.374400 red false
+rect 7.482260 -1.034400 0.040000 1.374400 red false
+glyph 5.222250 0.000000 1.000000 Main-Regular null false 98
+glyph 5.777810 0.000000 1.000000 Main-Regular null false 111
+glyph 6.277810 0.000000 1.000000 Main-Regular null false 116
+glyph 6.666700 0.000000 1.000000 Main-Regular null false 104
+== display \mathrm{d}x \mathit{abc} \mathsf{abc} \mathtt{abc} \mathfrak{ABC} \mathscr{ABC}
+box 10.604300 0.700000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 100
+glyph 0.555560 0.000000 1.000000 Math-Italic null false 120
+glyph 1.127090 0.000000 1.000000 Main-Italic null false 97
+glyph 1.638200 0.000000 1.000000 Main-Italic null false 98
+glyph 2.098200 0.000000 1.000000 Main-Italic null false 99
+glyph 2.558200 0.000000 1.000000 SansSerif-Regular null false 97
+glyph 3.038760 0.000000 1.000000 SansSerif-Regular null false 98
+glyph 3.555430 0.000000 1.000000 SansSerif-Regular null false 99
+glyph 3.999880 0.000000 1.000000 Typewriter-Regular null false 97
+glyph 4.524880 0.000000 1.000000 Typewriter-Regular null false 98
+glyph 5.049880 0.000000 1.000000 Typewriter-Regular null false 99
+glyph 5.574880 0.000000 1.000000 Fraktur-Regular null false 65
+glyph 6.292480 0.000000 1.000000 Fraktur-Regular null false 66
+glyph 7.176450 0.000000 1.000000 Fraktur-Regular null false 67
+glyph 7.788990 0.000000 1.000000 Script-Regular null false 65
+glyph 8.820770 0.000000 1.000000 Script-Regular null false 66
+glyph 9.769210 0.000000 1.000000 Script-Regular null false 67
+== display \text{Unicode: café ü} \; x²
+box 7.804930 0.864108 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 85
+glyph 0.750000 0.000000 1.000000 Main-Regular null false 110
+glyph 1.305560 0.000000 1.000000 Main-Regular null false 105
+glyph 1.583340 0.000000 1.000000 Main-Regular null false 99
+glyph 2.027790 0.000000 1.000000 Main-Regular null false 111
+glyph 2.527790 0.000000 1.000000 Main-Regular null false 100
+glyph 3.083350 0.000000 1.000000 Main-Regular null false 101
+glyph 3.527800 0.000000 1.000000 Main-Regular null false 58
+glyph 3.805580 0.000000 1.000000 Main-Regular null false 160
+glyph 4.055580 0.000000 1.000000 Main-Regular null false 99
+glyph 4.500030 0.000000 1.000000 Main-Regular null false 97
+glyph 5.000030 0.000000 1.000000 Main-Regular null false 102
+glyph 5.305590 0.000000 1.000000 Main-Regular null false 101
+glyph 5.277815 0.000000 1.000000 Main-Regular null false 714
+glyph 5.750040 0.000000 1.000000 Main-Regular null false 160
+glyph 6.000040 0.000000 1.000000 Main-Regular null false 117
+glyph 6.027820 0.000000 1.000000 Main-Regular null false 168
+glyph 6.833400 0.000000 1.000000 Math-Italic null false 120
+glyph 7.404930 -0.413000 0.700000 Main-Regular null false 50
+== inline F_0 = 0, F_1 = 1, F_{n+1} = F_n + F_{n-1}
+box 14.325905 0.683330 0.208331
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 70
+glyph 0.643050 0.150000 0.700000 Main-Regular null false 48
+glyph 1.320850 0.000000 1.000000 Main-Regular null false 61
+glyph 2.376430 0.000000 1.000000 Main-Regular null false 48
+glyph 2.876430 0.000000 1.000000 Main-Regular null false 44
+glyph 3.320910 0.000000 1.000000 Math-Italic null false 70
+glyph 3.963960 0.150000 0.700000 Main-Regular null false 49
+glyph 4.641760 0.000000 1.000000 Main-Regular null false 61
+glyph 5.697340 0.000000 1.000000 Main-Regular null false 49
+glyph 6.197340 0.000000 1.000000 Main-Regular null false 44
+glyph 6.641820 0.000000 1.000000 Math-Italic null false 70
+glyph 7.284870 0.150000 0.700000 Math-Italic null false 110
+glyph 7.705031 0.150000 0.700000 Main-Regular null false 43
+glyph 8.249477 0.150000 0.700000 Main-Regular null false 49
+glyph 8.927277 0.000000 1.000000 Main-Regular null false 61
+glyph 9.982857 0.000000 1.000000 Math-Italic null false 70
+glyph 10.625907 0.150000 0.700000 Math-Italic null false 110
+glyph 11.318268 0.000000 1.000000 Main-Regular null false 43
+glyph 12.318248 0.000000 1.000000 Math-Italic null false 70
+glyph 12.961298 0.150000 0.700000 Math-Italic null false 110
+glyph 13.381459 0.150000 0.700000 Main-Regular null false 8722
+glyph 13.925905 0.150000 0.700000 Main-Regular null false 49
+== inline \begin{pmatrix} F_{n+1} \\ F_n \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} F_n \\ F_{n-1} \end{pmatrix}
+box 11.932054 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size3-Regular null false 40
+glyph 0.736110 -0.610000 1.000000 Math-Italic null false 70
+glyph 1.379160 -0.460000 0.700000 Math-Italic null false 110
+glyph 1.799321 -0.460000 0.700000 Main-Regular null false 43
+glyph 2.343767 -0.460000 0.700000 Main-Regular null false 49
+glyph 1.183333 0.590000 1.000000 Math-Italic null false 70
+glyph 1.826383 0.740000 0.700000 Math-Italic null false 110
+glyph 2.743767 0.000000 1.000000 Size3-Regular null false 41
+glyph 3.757677 0.000000 1.000000 Main-Regular null false 61
+glyph 4.813257 0.000000 1.000000 Size3-Regular null false 40
+glyph 5.549367 -0.610000 1.000000 Main-Regular null false 49
+glyph 5.549367 0.590000 1.000000 Main-Regular null false 49
+glyph 7.049367 -0.610000 1.000000 Main-Regular null false 49
+glyph 7.049367 0.590000 1.000000 Main-Regular null false 48
+glyph 7.549367 0.000000 1.000000 Size3-Regular null false 41
+glyph 8.452177 0.000000 1.000000 Size3-Regular null false 40
+glyph 9.635510 -0.610000 1.000000 Math-Italic null false 70
+glyph 10.278560 -0.460000 0.700000 Math-Italic null false 110
+glyph 9.188287 0.590000 1.000000 Math-Italic null false 70
+glyph 9.831337 0.740000 0.700000 Math-Italic null false 110
+glyph 10.251498 0.740000 0.700000 Main-Regular null false 8722
+glyph 10.795944 0.740000 0.700000 Main-Regular null false 49
+glyph 11.195944 0.000000 1.000000 Size3-Regular null false 41
+== inline F_n = \frac{1}{\sqrt{5}} \left( \left( \frac{1 + \sqrt{5}}{2} \right)^n - \left( \frac{1 - \sqrt{5}}{2} \right)^n \right)
+box 13.667305 1.204292 0.650020
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 70
+glyph 0.643050 0.150000 0.700000 Math-Italic null false 110
+glyph 1.391011 0.000000 1.000000 Main-Regular null false 61
+glyph 3.149691 0.448991 0.700000 Main-Regular null false 53
+svg 2.566591 -0.218000 0.933100 0.756000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 2.566591 -0.218000 0.933100 0.756000
+rect 2.566591 -0.270000 0.933100 0.040000 null false
+glyph 2.858141 -0.394000 0.700000 Main-Regular null false 49
+glyph 3.786391 0.000000 1.000000 Size2-Regular null false 40
+glyph 4.383611 0.000000 1.000000 Size2-Regular null false 40
+glyph 5.839604 0.345000 0.700000 Main-Regular null false 50
+rect 5.100831 -0.270000 1.827546 0.040000 null false
+glyph 5.100831 -0.399008 0.700000 Main-Regular null false 49
+glyph 5.450831 -0.399008 0.700000 Main-Regular null false 43
+glyph 6.578377 -0.399008 0.700000 Main-Regular null false 53
+svg 5.995277 -1.066000 0.933100 0.756000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 5.995277 -1.066000 0.933100 0.756000
+glyph 7.048377 0.000000 1.000000 Size2-Regular null false 41
+glyph 7.645597 -0.902900 0.700000 Math-Italic null false 110
+glyph 8.337958 0.000000 1.000000 Main-Regular null false 8722
+glyph 9.337938 0.000000 1.000000 Size2-Regular null false 40
+glyph 10.793931 0.345000 0.700000 Main-Regular null false 50
+rect 10.055158 -0.270000 1.827546 0.040000 null false
+glyph 10.055158 -0.399008 0.700000 Main-Regular null false 49
+glyph 10.405158 -0.399008 0.700000 Main-Regular null false 8722
+glyph 11.532704 -0.399008 0.700000 Main-Regular null false 53
+svg 10.949604 -1.066000 0.933100 0.756000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 10.949604 -1.066000 0.933100 0.756000
+glyph 12.002704 0.000000 1.000000 Size2-Regular null false 41
+glyph 12.599924 -0.902900 0.700000 Math-Italic null false 110
+glyph 13.070085 0.000000 1.000000 Size2-Regular null false 41
+== inline \varphi = \frac{1+\sqrt5}{2} \approx 1.618
+box 7.666256 1.038000 0.345000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 966
+glyph 0.931970 0.000000 1.000000 Main-Regular null false 61
+glyph 2.846323 0.345000 0.700000 Main-Regular null false 50
+rect 2.107550 -0.270000 1.827546 0.040000 null false
+glyph 2.107550 -0.399008 0.700000 Main-Regular null false 49
+glyph 2.457550 -0.399008 0.700000 Main-Regular null false 43
+glyph 3.585096 -0.399008 0.700000 Main-Regular null false 53
+svg 3.001996 -1.066000 0.933100 0.756000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 3.001996 -1.066000 0.933100 0.756000
+glyph 4.332896 0.000000 1.000000 Main-Regular null false 8776
+glyph 5.388476 0.000000 1.000000 Main-Regular null false 49
+glyph 5.888476 0.000000 1.000000 Main-Regular null false 46
+glyph 6.166256 0.000000 1.000000 Main-Regular null false 54
+glyph 6.666256 0.000000 1.000000 Main-Regular null false 49
+glyph 7.166256 0.000000 1.000000 Main-Regular null false 56
+== inline \int_0^\infty e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}
+box 7.182834 1.038000 0.355820
+glyph 0.000000 -0.000600 1.000000 Size1-Regular null false 8747
+glyph 0.472170 0.355820 0.700000 Main-Regular null false 48
+glyph 0.666670 -0.557900 0.700000 Main-Regular null false 8734
+glyph 1.583370 0.000000 1.000000 Math-Italic null false 101
+glyph 2.049000 -0.363000 0.700000 Main-Regular null false 8722
+glyph 2.593446 -0.363000 0.700000 Math-Italic null false 120
+glyph 2.993517 -0.664700 0.500000 Main-Regular null false 50
+glyph 3.510197 0.000000 1.000000 Math-Italic null false 100
+glyph 4.030687 0.000000 1.000000 Math-Italic null false 120
+glyph 4.880017 0.000000 1.000000 Main-Regular null false 61
+glyph 6.384216 0.345000 0.700000 Main-Regular null false 50
+rect 6.055597 -0.270000 1.007237 0.040000 null false
+glyph 6.638697 -0.473866 0.700000 Math-Italic null false 960
+svg 6.055597 -1.066000 1.007237 0.756000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 6.055597 -1.066000 1.007237 0.756000
+== inline \lim_{x \to 0} \frac{\sin x}{x} = 1
+box 6.525215 0.861502 0.345000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 105
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 109
+glyph 1.388900 0.150000 0.700000 Math-Italic null false 120
+glyph 1.788971 0.150000 0.700000 Main-Regular null false 8594
+glyph 2.488971 0.150000 0.700000 Main-Regular null false 48
+glyph 3.673717 0.345000 0.700000 Math-Italic null false 120
+rect 3.175671 -0.270000 1.396164 0.040000 null false
+glyph 3.175671 -0.394000 0.700000 Main-Regular null false 115
+glyph 3.451786 -0.394000 0.700000 Main-Regular null false 105
+glyph 3.646232 -0.394000 0.700000 Main-Regular null false 110
+glyph 4.171764 -0.394000 0.700000 Math-Italic null false 120
+glyph 4.969635 0.000000 1.000000 Main-Regular null false 61
+glyph 6.025215 0.000000 1.000000 Main-Regular null false 49
+== inline f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+box 11.038692 1.010000 0.345000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 102
+glyph 0.597230 -0.363000 0.700000 Main-Regular null false 8242
+glyph 0.839730 0.000000 1.000000 Main-Regular null false 40
+glyph 1.228620 0.000000 1.000000 Math-Italic null false 120
+glyph 1.800150 0.000000 1.000000 Main-Regular null false 41
+glyph 2.466840 0.000000 1.000000 Main-Regular null false 61
+glyph 3.522420 0.000000 1.000000 Main-Regular null false 108
+glyph 3.800200 0.000000 1.000000 Main-Regular null false 105
+glyph 4.077980 0.000000 1.000000 Main-Regular null false 109
+glyph 4.911320 0.150000 0.700000 Math-Italic null false 104
+glyph 5.314632 0.150000 0.700000 Main-Regular null false 8594
+glyph 6.014632 0.150000 0.700000 Main-Regular null false 48
+glyph 8.608356 0.345000 0.700000 Math-Italic null false 104
+rect 6.701332 -0.270000 4.217360 0.040000 null false
+glyph 6.701332 -0.485000 0.700000 Math-Italic null false 102
+glyph 7.119393 -0.485000 0.700000 Main-Regular null false 40
+glyph 7.391616 -0.485000 0.700000 Math-Italic null false 120
+glyph 7.791687 -0.485000 0.700000 Main-Regular null false 43
+glyph 8.336133 -0.485000 0.700000 Math-Italic null false 104
+glyph 8.739445 -0.485000 0.700000 Main-Regular null false 41
+glyph 9.011668 -0.485000 0.700000 Main-Regular null false 8722
+glyph 9.556114 -0.485000 0.700000 Math-Italic null false 102
+glyph 9.974175 -0.485000 0.700000 Main-Regular null false 40
+glyph 10.246398 -0.485000 0.700000 Math-Italic null false 120
+glyph 10.646469 -0.485000 0.700000 Main-Regular null false 41
+== inline \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u
+box 5.323164 1.017920 0.345000
+glyph 0.193972 0.345000 0.700000 Main-Regular null false 8706
+glyph 0.604494 0.345000 0.700000 Math-Italic null false 116
+glyph 0.857271 0.144800 0.500000 Main-Regular null false 50
+rect 0.120000 -0.270000 1.111224 0.040000 null false
+glyph 0.120000 -0.394000 0.700000 Main-Regular null false 8706
+glyph 0.530522 -0.695700 0.500000 Main-Regular null false 50
+glyph 0.830502 -0.394000 0.700000 Math-Italic null false 117
+glyph 1.629024 0.000000 1.000000 Main-Regular null false 61
+glyph 2.684604 0.000000 1.000000 Math-Italic null false 99
+glyph 3.117364 -0.363000 0.700000 Main-Regular null false 50
+glyph 3.517364 0.000000 1.000000 Main-Regular null false 8711
+glyph 4.350704 -0.363000 0.700000 Main-Regular null false 50
+glyph 4.750704 0.000000 1.000000 Math-Italic null false 117
+== inline \oint_C \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}
+box 11.789523 0.805000 0.355820
+glyph 0.000000 -0.000600 1.000000 Size1-Regular null false 8750
+glyph 0.472170 0.355820 0.700000 Math-Italic null false 67
+glyph 1.239245 0.000000 1.000000 Main-Bold null false 70
+glyph 2.185055 0.000000 1.000000 Main-Regular null false 8901
+glyph 2.685035 0.000000 1.000000 Math-Italic null false 100
+glyph 3.205525 0.000000 1.000000 Main-Bold null false 114
+glyph 3.956935 0.000000 1.000000 Main-Regular null false 61
+glyph 5.012515 -0.000500 1.000000 Size1-Regular null false 8748
+glyph 5.831465 0.355700 0.700000 Math-Italic null false 83
+glyph 6.351053 0.000000 1.000000 Main-Regular null false 40
+glyph 6.739943 0.000000 1.000000 Main-Regular null false 8711
+glyph 7.795483 0.000000 1.000000 Main-Regular null false 215
+glyph 8.795463 0.000000 1.000000 Main-Bold null false 70
+glyph 9.519073 0.000000 1.000000 Main-Regular null false 41
+glyph 10.130163 0.000000 1.000000 Main-Regular null false 8901
+glyph 10.630143 0.000000 1.000000 Math-Italic null false 100
+glyph 11.150633 0.000000 1.000000 Main-Bold null false 83
+== inline \sum_{k=0}^{\infty} \frac{x^k}{k!} = e^x
+box 5.768334 1.042920 0.345000
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8721
+glyph 1.055560 0.299710 0.700000 Math-Italic null false 107
+glyph 1.442016 0.299710 0.700000 Main-Regular null false 61
+glyph 1.986462 0.299710 0.700000 Main-Regular null false 48
+glyph 1.055560 -0.502900 0.700000 Main-Regular null false 8734
+glyph 2.745756 0.345000 0.700000 Math-Italic null false 107
+glyph 3.132212 0.345000 0.700000 Main-Regular null false 33
+rect 2.673162 -0.270000 0.726091 0.040000 null false
+glyph 2.673162 -0.394000 0.700000 Math-Italic null false 120
+glyph 3.073233 -0.695700 0.500000 Math-Italic null false 107
+glyph 3.797053 0.000000 1.000000 Main-Regular null false 61
+glyph 4.852633 0.000000 1.000000 Math-Italic null false 101
+glyph 5.318263 -0.363000 0.700000 Math-Italic null false 120
+== inline A = U \Sigma V^\top
+box 4.997406 0.849108 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 65
+glyph 1.027800 0.000000 1.000000 Main-Regular null false 61
+glyph 2.083380 0.000000 1.000000 Math-Italic null false 85
+glyph 2.875190 0.000000 1.000000 Main-Regular null false 931
+glyph 3.597410 0.000000 1.000000 Math-Italic null false 86
+glyph 4.402960 -0.363000 0.700000 Main-Regular null false 8868
+== inline \det \begin{vmatrix} a & b \\ c & d \end{vmatrix} = ad - bc
+box 8.737250 1.450000 0.950020
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 100
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 101
+glyph 1.000010 0.000000 1.000000 Main-Regular null false 116
+svg 1.555600 -1.449980 0.333000 2.400000 0.000000,0.000000,333.000000,2400.000000 null null -530756831 noclip
+glyph 1.888600 -0.610000 1.000000 Math-Italic null false 97
+glyph 1.936515 0.590000 1.000000 Math-Italic null false 99
+glyph 3.462850 -0.610000 1.000000 Math-Italic null false 98
+glyph 3.417190 0.590000 1.000000 Math-Italic null false 100
+svg 3.937680 -1.449980 0.333000 2.400000 0.000000,0.000000,333.000000,2400.000000 null null -530756831 noclip
+glyph 4.548480 0.000000 1.000000 Main-Regular null false 61
+glyph 5.604060 0.000000 1.000000 Math-Italic null false 97
+glyph 6.132650 0.000000 1.000000 Math-Italic null false 100
+glyph 6.875340 0.000000 1.000000 Main-Regular null false 8722
+glyph 7.875320 0.000000 1.000000 Math-Italic null false 98
+glyph 8.304490 0.000000 1.000000 Math-Italic null false 99
+== inline \mathbb{E}[X] = \sum_{x} x \, \Pr(X = x)
+box 10.701671 0.750000 0.299710
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 69
+glyph 0.666670 0.000000 1.000000 Main-Regular null false 91
+glyph 0.944450 0.000000 1.000000 Math-Italic null false 88
+glyph 1.851390 0.000000 1.000000 Main-Regular null false 93
+glyph 2.406970 0.000000 1.000000 Main-Regular null false 61
+glyph 3.462550 0.000000 1.000000 Size1-Regular null false 8721
+glyph 4.518110 0.299710 0.700000 Math-Italic null false 120
+glyph 5.134881 0.000000 1.000000 Math-Italic null false 120
+glyph 6.039811 0.000000 1.000000 Main-Regular null false 80
+glyph 6.720371 0.000000 1.000000 Main-Regular null false 114
+glyph 7.112041 0.000000 1.000000 Main-Regular null false 40
+glyph 7.500931 0.000000 1.000000 Math-Italic null false 88
+glyph 8.685671 0.000000 1.000000 Main-Regular null false 61
+glyph 9.741251 0.000000 1.000000 Math-Italic null false 120
+glyph 10.312781 0.000000 1.000000 Main-Regular null false 41
+== inline P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}
+box 9.516794 1.010000 0.520000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 80
+glyph 0.780900 0.000000 1.000000 Main-Regular null false 40
+glyph 1.169790 0.000000 1.000000 Math-Italic null false 65
+glyph 2.197590 0.000000 1.000000 Main-Regular null false 8739
+glyph 2.753170 0.000000 1.000000 Math-Italic null false 66
+glyph 3.561850 0.000000 1.000000 Main-Regular null false 41
+glyph 4.228540 0.000000 1.000000 Main-Regular null false 61
+glyph 6.571881 0.345000 0.700000 Math-Italic null false 80
+glyph 7.118511 0.345000 0.700000 Main-Regular null false 40
+glyph 7.390734 0.345000 0.700000 Math-Italic null false 66
+glyph 7.956810 0.345000 0.700000 Main-Regular null false 41
+rect 5.404120 -0.270000 3.992674 0.040000 null false
+glyph 5.404120 -0.485000 0.700000 Math-Italic null false 80
+glyph 5.950750 -0.485000 0.700000 Main-Regular null false 40
+glyph 6.222973 -0.485000 0.700000 Math-Italic null false 66
+glyph 6.789049 -0.485000 0.700000 Main-Regular null false 8739
+glyph 6.983495 -0.485000 0.700000 Math-Italic null false 65
+glyph 7.508495 -0.485000 0.700000 Main-Regular null false 41
+glyph 7.780718 -0.485000 0.700000 Math-Italic null false 80
+glyph 8.327348 -0.485000 0.700000 Main-Regular null false 40
+glyph 8.599571 -0.485000 0.700000 Math-Italic null false 65
+glyph 9.124571 -0.485000 0.700000 Main-Regular null false 41
+== inline \mathcal{N}(\mu, \sigma^2)
+box 3.799950 0.814108 0.250000
+glyph 0.000000 0.000000 1.000000 Caligraphic-Regular null false 78
+glyph 0.967850 0.000000 1.000000 Main-Regular null false 40
+glyph 1.356740 0.000000 1.000000 Math-Italic null false 956
+glyph 1.959290 0.000000 1.000000 Main-Regular null false 44
+glyph 2.403770 0.000000 1.000000 Math-Italic null false 963
+glyph 3.011060 -0.363000 0.700000 Main-Regular null false 50
+glyph 3.411060 0.000000 1.000000 Main-Regular null false 41
+== inline \| x \|_2 = \sqrt{\sum_i x_i^2}
+box 6.789857 0.933099 0.306901
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+glyph 0.500000 0.000000 1.000000 Math-Italic null false 120
+glyph 1.071530 0.000000 1.000000 Main-Regular null false 8741
+glyph 1.571530 0.150000 0.700000 Main-Regular null false 50
+glyph 2.249330 0.000000 1.000000 Main-Regular null false 61
+glyph 4.304910 0.000000 1.000000 Size1-Regular null false 8721
+glyph 5.360470 0.299710 0.700000 Math-Italic null false 105
+glyph 5.818327 0.000000 1.000000 Math-Italic null false 120
+glyph 6.389857 0.276864 0.700000 Math-Italic null false 105
+glyph 6.389857 -0.344800 0.700000 Main-Regular null false 50
+svg 3.304910 -0.973099 3.484947 1.280000 0.000000,0.000000,400000.000000,1296.000000 xMinYMin slice null 1535133910 clip 3.304910 -0.973099 3.484947 1.280000
+== inline \langle u, v \rangle = \sum_{i=1}^n u_i \bar{v}_i
+box 7.660157 0.804292 0.299710
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10216
+glyph 0.388890 0.000000 1.000000 Math-Italic null false 117
+glyph 0.961350 0.000000 1.000000 Main-Regular null false 44
+glyph 1.405830 0.000000 1.000000 Math-Italic null false 118
+glyph 1.926430 0.000000 1.000000 Main-Regular null false 10217
+glyph 2.593120 0.000000 1.000000 Main-Regular null false 61
+glyph 3.648700 0.000000 1.000000 Size1-Regular null false 8721
+glyph 4.704260 0.299710 0.700000 Math-Italic null false 105
+glyph 4.945417 0.299710 0.700000 Main-Regular null false 61
+glyph 5.489863 0.299710 0.700000 Main-Regular null false 49
+glyph 4.704260 -0.502900 0.700000 Math-Italic null false 110
+glyph 6.056563 0.000000 1.000000 Math-Italic null false 117
+glyph 6.629023 0.150000 0.700000 Math-Italic null false 105
+glyph 6.920180 0.000000 1.000000 Math-Italic null false 118
+glyph 6.940340 0.000000 1.000000 Main-Regular null false 713
+glyph 7.369000 0.150000 0.700000 Math-Italic null false 105
+== inline \hat{y} = \operatorname*{arg\,max}_{y} p(y \mid x)
+box 9.054032 0.750000 0.380248
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 121
+glyph 0.050740 0.000000 1.000000 Main-Regular null false 94
+glyph 0.768080 0.000000 1.000000 Main-Regular null false 61
+glyph 1.823660 0.000000 1.000000 Main-Regular null false 97
+glyph 2.323660 0.000000 1.000000 Main-Regular null false 114
+glyph 2.715330 0.000000 1.000000 Main-Regular null false 103
+glyph 3.395920 0.000000 1.000000 Main-Regular null false 109
+glyph 4.229260 0.000000 1.000000 Main-Regular null false 97
+glyph 4.729260 0.000000 1.000000 Main-Regular null false 120
+glyph 5.257040 0.244140 0.700000 Math-Italic null false 121
+glyph 5.842052 0.000000 1.000000 Math-Italic null false 112
+glyph 6.345182 0.000000 1.000000 Main-Regular null false 40
+glyph 6.734072 0.000000 1.000000 Math-Italic null false 121
+glyph 7.538032 0.000000 1.000000 Main-Regular null false 8739
+glyph 8.093612 0.000000 1.000000 Math-Italic null false 120
+glyph 8.665142 0.000000 1.000000 Main-Regular null false 41
+== inline \mathcal{L}(\theta) = -\frac{1}{N} \sum_{i=1}^{N} \log p_\theta(y_i \mid x_i)
+box 13.144011 0.981231 0.345000
+glyph 0.000000 0.000000 1.000000 Caligraphic-Regular null false 76
+glyph 0.689720 0.000000 1.000000 Main-Regular null false 40
+glyph 1.078610 0.000000 1.000000 Math-Italic null false 952
+glyph 1.575830 0.000000 1.000000 Main-Regular null false 41
+glyph 2.242520 0.000000 1.000000 Main-Regular null false 61
+glyph 3.298100 0.000000 1.000000 Main-Regular null false 8722
+glyph 4.195880 0.345000 0.700000 Math-Italic null false 78
+rect 4.195880 -0.270000 0.638750 0.040000 null false
+glyph 4.340255 -0.394000 0.700000 Main-Regular null false 49
+glyph 5.121330 0.000000 1.000000 Size1-Regular null false 8721
+glyph 6.176890 0.299710 0.700000 Math-Italic null false 105
+glyph 6.418047 0.299710 0.700000 Main-Regular null false 61
+glyph 6.962493 0.299710 0.700000 Main-Regular null false 49
+glyph 6.176890 -0.502900 0.700000 Math-Italic null false 78
+glyph 7.529193 0.000000 1.000000 Main-Regular null false 108
+glyph 7.806973 0.000000 1.000000 Main-Regular null false 111
+glyph 8.306973 0.000000 1.000000 Main-Regular null false 103
+glyph 8.987563 0.000000 1.000000 Math-Italic null false 112
+glyph 9.490693 0.150000 0.700000 Math-Italic null false 952
+glyph 9.888747 0.000000 1.000000 Main-Regular null false 40
+glyph 10.277637 0.000000 1.000000 Math-Italic null false 121
+glyph 10.767897 0.150000 0.700000 Math-Italic null false 105
+glyph 11.336854 0.000000 1.000000 Main-Regular null false 8739
+glyph 11.892434 0.000000 1.000000 Math-Italic null false 120
+glyph 12.463964 0.150000 0.700000 Math-Italic null false 105
+glyph 12.755121 0.000000 1.000000 Main-Regular null false 41
+== inline \text{softmax}(z)_i = \frac{e^{z_i}}{\sum_j e^{z_j}}
+box 8.625745 0.910980 0.677512
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 115
+glyph 0.394450 0.000000 1.000000 Main-Regular null false 111
+glyph 0.894450 0.000000 1.000000 Main-Regular null false 102
+glyph 1.200010 0.000000 1.000000 Main-Regular null false 116
+glyph 1.588900 0.000000 1.000000 Main-Regular null false 109
+glyph 2.422240 0.000000 1.000000 Main-Regular null false 97
+glyph 2.922240 0.000000 1.000000 Main-Regular null false 120
+glyph 3.450020 0.000000 1.000000 Main-Regular null false 40
+glyph 3.838910 0.000000 1.000000 Math-Italic null false 122
+glyph 4.347940 0.000000 1.000000 Main-Regular null false 41
+glyph 4.736830 0.150000 0.700000 Math-Italic null false 105
+glyph 5.305787 0.000000 1.000000 Main-Regular null false 61
+glyph 6.481367 0.355285 0.700000 Size1-Regular null false 8721
+glyph 7.220259 0.580292 0.500000 Math-Italic null false 106
+glyph 7.641404 0.355285 0.700000 Math-Italic null false 101
+glyph 7.967345 0.025280 0.500000 Math-Italic null false 122
+glyph 8.199860 0.182640 0.500000 Math-Italic null false 106
+rect 6.481367 -0.270000 2.024378 0.040000 null false
+glyph 7.078211 -0.394000 0.700000 Math-Italic null false 101
+glyph 7.404151 -0.695700 0.500000 Math-Italic null false 122
+glyph 7.636667 -0.538340 0.500000 Math-Italic null false 105
+== inline \theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)
+box 8.958871 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 952
+glyph 0.469420 0.150000 0.700000 Math-Italic null false 116
+glyph 0.722197 0.150000 0.700000 Main-Regular null false 43
+glyph 1.266643 0.150000 0.700000 Main-Regular null false 49
+glyph 1.944443 0.000000 1.000000 Main-Regular null false 61
+glyph 3.000023 0.000000 1.000000 Math-Italic null false 952
+glyph 3.469443 0.150000 0.700000 Math-Italic null false 116
+glyph 3.994420 0.000000 1.000000 Main-Regular null false 8722
+glyph 4.994400 0.000000 1.000000 Math-Italic null false 951
+glyph 5.526810 0.000000 1.000000 Main-Regular null false 8711
+glyph 6.360150 0.150000 0.700000 Math-Italic null false 952
+glyph 6.758204 0.000000 1.000000 Math-Italic null false 74
+glyph 7.408894 0.000000 1.000000 Main-Regular null false 40
+glyph 7.797784 0.000000 1.000000 Math-Italic null false 952
+glyph 8.267204 0.150000 0.700000 Math-Italic null false 116
+glyph 8.569981 0.000000 1.000000 Main-Regular null false 41
+== inline |x| = \begin{cases} x & \text{if } x \geq 0 \\ -x & \text{otherwise} \end{cases}
+box 9.854810 1.750000 1.250030
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+glyph 0.277780 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849310 0.000000 1.000000 Main-Regular null false 8739
+glyph 1.404890 0.000000 1.000000 Main-Regular null false 61
+glyph 2.460470 0.000000 1.000000 Size4-Regular null false 123
+glyph 3.266030 -0.682000 1.000000 Math-Italic null false 120
+glyph 3.266030 0.758000 1.000000 Main-Regular null false 8722
+glyph 4.043810 0.758000 1.000000 Math-Italic null false 120
+glyph 5.615340 -0.682000 1.000000 Main-Regular null false 105
+glyph 5.893120 -0.682000 1.000000 Main-Regular null false 102
+glyph 6.198680 -0.682000 1.000000 Main-Regular null false 160
+glyph 6.448680 -0.682000 1.000000 Math-Italic null false 120
+glyph 7.298010 -0.682000 1.000000 Main-Regular null false 8805
+glyph 8.353590 -0.682000 1.000000 Main-Regular null false 48
+glyph 5.615340 0.758000 1.000000 Main-Regular null false 111
+glyph 6.115340 0.758000 1.000000 Main-Regular null false 116
+glyph 6.504230 0.758000 1.000000 Main-Regular null false 104
+glyph 7.059790 0.758000 1.000000 Main-Regular null false 101
+glyph 7.504240 0.758000 1.000000 Main-Regular null false 114
+glyph 7.895910 0.758000 1.000000 Main-Regular null false 119
+glyph 8.618130 0.758000 1.000000 Main-Regular null false 105
+glyph 8.895910 0.758000 1.000000 Main-Regular null false 115
+glyph 9.290360 0.758000 1.000000 Main-Regular null false 101
+== inline \begin{aligned} (a+b)^2 &= a^2 + 2ab + b^2 \\ &\geq 4ab \end{aligned}
+box 10.350980 1.612054 1.112054
+glyph 0.000000 -0.747946 1.000000 Main-Regular null false 40
+glyph 0.388890 -0.747946 1.000000 Math-Italic null false 97
+glyph 1.139680 -0.747946 1.000000 Main-Regular null false 43
+glyph 2.139660 -0.747946 1.000000 Math-Italic null false 98
+glyph 2.568830 -0.747946 1.000000 Main-Regular null false 41
+glyph 2.957720 -1.160946 0.700000 Main-Regular null false 50
+glyph 3.635520 -0.747946 1.000000 Main-Regular null false 61
+glyph 4.691100 -0.747946 1.000000 Math-Italic null false 97
+glyph 5.219690 -1.160946 0.700000 Main-Regular null false 50
+glyph 5.841890 -0.747946 1.000000 Main-Regular null false 43
+glyph 6.841870 -0.747946 1.000000 Main-Regular null false 50
+glyph 7.341870 -0.747946 1.000000 Math-Italic null false 97
+glyph 7.870460 -0.747946 1.000000 Math-Italic null false 98
+glyph 8.521830 -0.747946 1.000000 Main-Regular null false 43
+glyph 9.521810 -0.747946 1.000000 Math-Italic null false 98
+glyph 9.950980 -1.160946 0.700000 Main-Regular null false 50
+glyph 3.635520 0.752054 1.000000 Main-Regular null false 8805
+glyph 4.691100 0.752054 1.000000 Main-Regular null false 52
+glyph 5.191100 0.752054 1.000000 Math-Italic null false 97
+glyph 5.719690 0.752054 1.000000 Math-Italic null false 98
+== inline \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}
+box 3.055560 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size3-Regular null false 91
+glyph 0.527780 -0.610000 1.000000 Main-Regular null false 49
+glyph 0.527780 0.590000 1.000000 Main-Regular null false 48
+glyph 2.027780 -0.610000 1.000000 Main-Regular null false 48
+glyph 2.027780 0.590000 1.000000 Main-Regular null false 49
+glyph 2.527780 0.000000 1.000000 Size3-Regular null false 93
+== inline \begin{array}{c|c} a & b \\ \hline c & d \end{array}
+box 3.049080 1.450000 0.950000
+glyph 0.500000 -0.610000 1.000000 Math-Italic null false 97
+glyph 0.547915 0.590000 1.000000 Math-Italic null false 99
+rect 1.508590 -1.450000 0.040000 2.400000 null false
+glyph 2.074250 -0.610000 1.000000 Math-Italic null false 98
+glyph 2.028590 0.590000 1.000000 Math-Italic null false 100
+rect 0.000000 -0.290000 3.049080 0.040000 null false
+== inline \begin{gathered} a = b \\ c = d \end{gathered}
+box 2.291140 1.600000 1.100000
+glyph 0.000000 -0.760000 1.000000 Math-Italic null false 97
+glyph 0.806390 -0.760000 1.000000 Main-Regular null false 61
+glyph 1.861970 -0.760000 1.000000 Math-Italic null false 98
+glyph 0.002255 0.740000 1.000000 Math-Italic null false 99
+glyph 0.712815 0.740000 1.000000 Main-Regular null false 61
+glyph 1.768395 0.740000 1.000000 Math-Italic null false 100
+== inline a \equiv b \pmod{n}
+box 6.335750 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 97
+glyph 0.806390 0.000000 1.000000 Main-Regular null false 8801
+glyph 1.861970 0.000000 1.000000 Math-Italic null false 98
+glyph 2.735540 0.000000 1.000000 Main-Regular null false 40
+glyph 3.124430 0.000000 1.000000 Main-Regular null false 109
+glyph 3.957770 0.000000 1.000000 Main-Regular null false 111
+glyph 4.457770 0.000000 1.000000 Main-Regular null false 100
+glyph 5.346630 0.000000 1.000000 Math-Italic null false 110
+glyph 5.946860 0.000000 1.000000 Main-Regular null false 41
+== inline \forall \epsilon > 0 \; \exists \delta > 0
+box 5.943870 0.694440 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8704
+glyph 0.555560 0.000000 1.000000 Math-Italic null false 1013
+glyph 1.239260 0.000000 1.000000 Main-Regular null false 62
+glyph 2.294840 0.000000 1.000000 Main-Regular null false 48
+glyph 3.072640 0.000000 1.000000 Main-Regular null false 8707
+glyph 3.628200 0.000000 1.000000 Math-Italic null false 948
+glyph 4.388290 0.000000 1.000000 Main-Regular null false 62
+glyph 5.443870 0.000000 1.000000 Main-Regular null false 48
+== inline \neg (p \land q) \iff \neg p \lor \neg q
+box 9.939970 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 172
+glyph 0.666670 0.000000 1.000000 Main-Regular null false 40
+glyph 1.055560 0.000000 1.000000 Math-Italic null false 112
+glyph 1.780890 0.000000 1.000000 Main-Regular null false 8743
+glyph 2.669760 0.000000 1.000000 Math-Italic null false 113
+glyph 3.152050 0.000000 1.000000 Main-Regular null false 41
+glyph 4.096540 0.000000 1.000000 Main-Regular null false 10234
+glyph 6.510140 0.000000 1.000000 Main-Regular null false 172
+glyph 7.176810 0.000000 1.000000 Math-Italic null false 112
+glyph 7.902140 0.000000 1.000000 Main-Regular null false 8744
+glyph 8.791010 0.000000 1.000000 Main-Regular null false 172
+glyph 9.457680 0.000000 1.000000 Math-Italic null false 113
+== inline \gcd(a, b) = \gcd(b, a \bmod b)
+box 11.594890 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 103
+glyph 0.513890 0.000000 1.000000 Main-Regular null false 99
+glyph 0.958340 0.000000 1.000000 Main-Regular null false 100
+glyph 1.513900 0.000000 1.000000 Main-Regular null false 40
+glyph 1.902790 0.000000 1.000000 Math-Italic null false 97
+glyph 2.431380 0.000000 1.000000 Main-Regular null false 44
+glyph 2.875860 0.000000 1.000000 Math-Italic null false 98
+glyph 3.305030 0.000000 1.000000 Main-Regular null false 41
+glyph 3.971720 0.000000 1.000000 Main-Regular null false 61
+glyph 5.027300 0.000000 1.000000 Main-Regular null false 103
+glyph 5.541190 0.000000 1.000000 Main-Regular null false 99
+glyph 5.985640 0.000000 1.000000 Main-Regular null false 100
+glyph 6.541200 0.000000 1.000000 Main-Regular null false 40
+glyph 6.930090 0.000000 1.000000 Math-Italic null false 98
+glyph 7.359260 0.000000 1.000000 Main-Regular null false 44
+glyph 7.803740 0.000000 1.000000 Math-Italic null false 97
+glyph 8.610130 0.000000 1.000000 Main-Regular null false 109
+glyph 9.443470 0.000000 1.000000 Main-Regular null false 111
+glyph 9.943470 0.000000 1.000000 Main-Regular null false 100
+glyph 10.776830 0.000000 1.000000 Math-Italic null false 98
+glyph 11.206000 0.000000 1.000000 Main-Regular null false 41
+== inline \binom{n}{k} = \frac{n!}{k!(n-k)!}
+box 5.581078 0.880108 0.520000
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 40
+glyph 0.475193 0.345000 0.700000 Math-Italic null false 107
+glyph 0.458340 -0.444000 0.700000 Math-Italic null false 110
+glyph 0.878501 0.000000 1.000000 Size1-Regular null false 41
+glyph 1.614641 0.000000 1.000000 Main-Regular null false 61
+glyph 2.790221 0.345000 0.700000 Math-Italic null false 107
+glyph 3.176677 0.345000 0.700000 Main-Regular null false 33
+glyph 3.371123 0.345000 0.700000 Main-Regular null false 40
+glyph 3.643346 0.345000 0.700000 Math-Italic null false 110
+glyph 4.063507 0.345000 0.700000 Main-Regular null false 8722
+glyph 4.607953 0.345000 0.700000 Math-Italic null false 107
+glyph 4.994409 0.345000 0.700000 Main-Regular null false 41
+glyph 5.266632 0.345000 0.700000 Main-Regular null false 33
+rect 2.790221 -0.270000 2.670857 0.040000 null false
+glyph 3.818346 -0.394000 0.700000 Math-Italic null false 110
+glyph 4.238507 -0.394000 0.700000 Main-Regular null false 33
+== inline \lfloor x \rfloor \leq x < \lfloor x \rfloor + 1
+box 7.881330 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8970
+glyph 0.444450 0.000000 1.000000 Math-Italic null false 120
+glyph 1.015980 0.000000 1.000000 Main-Regular null false 8971
+glyph 1.738230 0.000000 1.000000 Main-Regular null false 8804
+glyph 2.793810 0.000000 1.000000 Math-Italic null false 120
+glyph 3.643140 0.000000 1.000000 Main-Regular null false 60
+glyph 4.698720 0.000000 1.000000 Main-Regular null false 8970
+glyph 5.143170 0.000000 1.000000 Math-Italic null false 120
+glyph 5.714700 0.000000 1.000000 Main-Regular null false 8971
+glyph 6.381350 0.000000 1.000000 Main-Regular null false 43
+glyph 7.381330 0.000000 1.000000 Main-Regular null false 49
+== inline x \in \mathbb{R}^n, \quad A \subseteq B
+box 7.322721 0.688890 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 8712
+glyph 1.793800 0.000000 1.000000 AMS-Regular null false 82
+glyph 2.516020 -0.363000 0.700000 Math-Italic null false 110
+glyph 2.986181 0.000000 1.000000 Main-Regular null false 44
+glyph 4.430661 0.000000 1.000000 Math-Italic null false 65
+glyph 5.458461 0.000000 1.000000 Main-Regular null false 8838
+glyph 6.514041 0.000000 1.000000 Math-Italic null false 66
+== inline \boxed{E = mc^2}
+box 4.439990 1.204108 0.340000
+glyph 0.300000 0.000000 1.000000 Math-Italic null false 69
+glyph 1.373640 0.000000 1.000000 Main-Regular null false 61
+glyph 2.429220 0.000000 1.000000 Math-Italic null false 109
+glyph 3.307230 0.000000 1.000000 Math-Italic null false 99
+glyph 3.739990 -0.413000 0.700000 Main-Regular null false 50
+rect 0.000000 -1.204100 4.439990 0.040000 null false
+rect 0.000000 0.300000 4.439990 0.040000 null false
+rect 0.000000 -1.204100 0.040000 1.544100 null false
+rect 4.399990 -1.204100 0.040000 1.544100 null false
+== inline \overbrace{1 + 1 + \cdots + 1}^{n}
+box 6.338540 1.793832 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 49
+glyph 0.722200 0.000000 1.000000 Main-Regular null false 43
+glyph 1.722180 0.000000 1.000000 Main-Regular null false 49
+glyph 2.444380 0.000000 1.000000 Main-Regular null false 43
+glyph 3.444360 0.000000 1.000000 Main-Regular null false 8943
+glyph 4.838560 0.000000 1.000000 Main-Regular null false 43
+glyph 5.838540 0.000000 1.000000 Main-Regular null false 49
+svg 0.000000 -1.292440 1.590974 0.548000 0.000000,0.000000,400000.000000,548.000000 xMinYMin slice null 604595574 clip 0.000000 -1.292440 1.590974 0.548000
+svg 1.584635 -1.292440 3.169270 0.548000 0.000000,0.000000,400000.000000,548.000000 xMidYMin slice null -1552791255 clip 1.584635 -1.292440 3.169270 0.548000
+svg 4.747566 -1.292440 1.590974 0.548000 0.000000,0.000000,400000.000000,548.000000 xMaxYMin slice null -1344393884 clip 4.747566 -1.292440 1.590974 0.548000
+glyph 2.959189 -1.492440 0.700000 Math-Italic null false 110
+== inline \overset{\text{def}}{=}
+box 0.913899 1.152978 0.000000
+glyph 0.068060 0.000000 1.000000 Main-Regular null false 61
+glyph 0.000000 -0.566870 0.700000 Main-Regular null false 100
+glyph 0.388892 -0.566870 0.700000 Main-Regular null false 101
+glyph 0.700007 -0.566870 0.700000 Main-Regular null false 102
+== inline a \xrightarrow{f} b \xleftarrow[\text{under}]{\text{over}} c
+box 6.422680 1.108108 0.608108
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 97
+glyph 1.331860 -0.622000 0.700000 Math-Italic null false 102
+svg 0.806390 -0.511000 1.469000 0.522000 0.000000,0.000000,400000.000000,522.000000 xMaxYMin slice null -739828107 clip 0.806390 -0.511000 1.469000 0.522000
+glyph 2.553190 0.000000 1.000000 Math-Italic null false 98
+glyph 3.833775 -0.622000 0.700000 Main-Regular null false 111
+glyph 4.183775 -0.622000 0.700000 Main-Regular null false 118
+glyph 4.553221 -0.622000 0.700000 Main-Regular null false 101
+glyph 4.864336 -0.622000 0.700000 Main-Regular null false 114
+svg 3.260160 -0.511000 2.451960 0.522000 0.000000,0.000000,400000.000000,522.000000 xMinYMin slice null -1616045929 clip 3.260160 -0.511000 2.451960 0.522000
+glyph 3.610160 0.608108 0.700000 Main-Regular null false 117
+glyph 3.999052 0.608108 0.700000 Main-Regular null false 110
+glyph 4.387944 0.608108 0.700000 Main-Regular null false 100
+glyph 4.776836 0.608108 0.700000 Main-Regular null false 101
+glyph 5.087951 0.608108 0.700000 Main-Regular null false 114
+glyph 5.989920 0.000000 1.000000 Math-Italic null false 99
+== inline \bigl( \Bigl[ \biggl\{ x \biggr\} \Bigr] \bigr)
+box 3.932650 1.450000 0.950030
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 40
+glyph 0.458340 0.000000 1.000000 Size2-Regular null false 91
+glyph 0.930560 0.000000 1.000000 Size3-Regular null false 123
+glyph 1.680560 0.000000 1.000000 Math-Italic null false 120
+glyph 2.252090 0.000000 1.000000 Size3-Regular null false 125
+glyph 3.002090 0.000000 1.000000 Size2-Regular null false 93
+glyph 3.474310 0.000000 1.000000 Size1-Regular null false 41
+== inline \left\lVert \frac{a}{b} \right\rVert
+box 1.722013 0.849990 0.350010
+svg 0.000000 -0.849990 0.556000 1.200000 0.000000,0.000000,556.000000,1200.000000 null null -1129005296 noclip
+glyph 0.710797 0.345000 0.700000 Math-Italic null false 98
+rect 0.676000 -0.270000 0.370013 0.040000 null false
+glyph 0.676000 -0.394000 0.700000 Math-Italic null false 97
+svg 1.166013 -0.849990 0.556000 1.200000 0.000000,0.000000,556.000000,1200.000000 null null -1129005296 noclip
+== inline \left( \frac{a}{b} \middle| \frac{c}{d} \right)
+box 2.464036 0.850000 0.350010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 40
+glyph 0.613137 0.345000 0.700000 Math-Italic null false 98
+rect 0.578340 -0.270000 0.370013 0.040000 null false
+glyph 0.578340 -0.394000 0.700000 Math-Italic null false 97
+svg 1.068353 -0.849990 0.333000 1.200000 0.000000,0.000000,333.000000,1200.000000 null null 1764220147 noclip
+glyph 1.521353 0.345000 0.700000 Math-Italic null false 100
+rect 1.521353 -0.270000 0.364343 0.040000 null false
+glyph 1.552058 -0.394000 0.700000 Math-Italic null false 99
+glyph 2.005696 0.000000 1.000000 Size1-Regular null false 41
+== inline \vec{v} = \dot{x} \hat{i} + \ddot{y} \tilde{j} + \widehat{abc}
+box 7.471110 0.994440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 118
+svg 0.034660 -0.714000 0.471000 0.714000 0.000000,0.000000,471.000000,714.000000 xMinYMin null -910393288 noclip
+glyph 0.762520 0.000000 1.000000 Main-Regular null false 61
+glyph 1.818100 0.000000 1.000000 Math-Italic null false 120
+glyph 1.992765 0.000000 1.000000 Main-Regular null false 729
+glyph 2.389630 0.000000 1.000000 Math-Italic null false 105
+glyph 2.311885 -0.228520 1.000000 Main-Regular null false 94
+glyph 2.956340 0.000000 1.000000 Main-Regular null false 43
+glyph 3.956320 0.000000 1.000000 Math-Italic null false 121
+glyph 4.007060 0.000000 1.000000 Main-Regular null false 168
+glyph 4.446600 0.000000 1.000000 Math-Italic null false 106
+glyph 4.402505 -0.578520 1.000000 Main-Regular null false 126
+glyph 5.080610 0.000000 1.000000 Main-Regular null false 43
+glyph 6.080590 0.000000 1.000000 Math-Italic null false 97
+glyph 6.609180 0.000000 1.000000 Math-Italic null false 98
+glyph 7.038350 0.000000 1.000000 Math-Italic null false 99
+svg 6.080590 -0.994440 1.390520 0.300000 0.000000,0.000000,2364.000000,300.000000 none null 1563847495 noclip
+== inline \overline{z} = \underline{w}
+box 2.585240 0.630560 0.200000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 122
+rect 0.000000 -0.590560 0.509030 0.040000 null false
+glyph 0.786830 0.000000 1.000000 Main-Regular null false 61
+rect 1.842410 0.120000 0.742830 0.040000 null false
+glyph 1.842410 0.000000 1.000000 Math-Italic null false 119
+== inline \color{blue} x^2 + \textcolor{red}{y}
+box 2.719870 0.814108 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic blue false 120
+glyph 0.571530 -0.363000 0.700000 Main-Regular blue false 50
+glyph 1.193730 0.000000 1.000000 Main-Regular blue false 43
+glyph 2.193710 0.000000 1.000000 Math-Italic red false 121
+== inline \sqrt[3]{x} \cdot \sqrt[n]{y} \cdot \sqrt{\frac{a}{b}}
+box 5.812622 0.860196 0.379804
+glyph 0.277778 -0.336336 0.500000 Main-Regular null false 51
+glyph 0.805222 0.000000 1.000000 Math-Italic null false 120
+svg -0.027778 -0.840280 1.404530 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip -0.027778 -0.840280 1.404530 1.080000
+glyph 1.598952 0.000000 1.000000 Main-Regular null false 8901
+glyph 2.376710 -0.219672 0.500000 Math-Italic null false 110
+glyph 2.954269 0.000000 1.000000 Math-Italic null false 121
+svg 2.121269 -0.743060 1.359160 1.080000 0.000000,0.000000,400000.000000,1080.000000 xMinYMin slice null -1329338115 clip 2.121269 -0.743060 1.359160 1.080000
+glyph 3.702629 0.000000 1.000000 Main-Regular null false 8901
+glyph 5.357406 0.345000 0.700000 Math-Italic null false 98
+rect 5.322609 -0.270000 0.370013 0.040000 null false
+glyph 5.322609 -0.394000 0.700000 Math-Italic null false 97
+svg 4.202609 -0.900196 1.610013 1.280000 0.000000,0.000000,400000.000000,1296.000000 xMinYMin slice null 1535133910 clip 4.202609 -0.900196 1.610013 1.280000
+== inline x \not\in A, \; y \neq z
+box 5.634650 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 57376
+glyph 0.849330 0.000000 1.000000 Main-Regular null false 8712
+glyph 1.793800 0.000000 1.000000 Math-Italic null false 65
+glyph 2.543800 0.000000 1.000000 Main-Regular null false 44
+glyph 3.266080 0.000000 1.000000 Math-Italic null false 121
+glyph 4.070040 0.000000 1.000000 Main-Regular null false 57376
+glyph 4.070040 0.000000 1.000000 Main-Regular null false 61
+glyph 5.125620 0.000000 1.000000 Math-Italic null false 122
+== inline \dfrac{1}{2} + \tfrac{3}{4}
+box 2.552180 1.321440 0.686000
+glyph 0.120000 0.686000 1.000000 Main-Regular null false 50
+rect 0.120000 -0.270000 0.500000 0.040000 null false
+glyph 0.120000 -0.677000 1.000000 Main-Regular null false 49
+glyph 0.962200 0.000000 1.000000 Main-Regular null false 43
+glyph 2.082180 0.345000 0.700000 Main-Regular null false 52
+rect 2.082180 -0.270000 0.350000 0.040000 null false
+glyph 2.082180 -0.394000 0.700000 Main-Regular null false 51
+== inline \cdots \ldots \vdots \ddots
+box 4.404100 1.500000 0.030000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8943
+glyph 1.338700 0.000000 1.000000 Main-Regular null false 8230
+glyph 2.677400 0.000000 1.000000 Main-Regular null false 8942
+rect 2.955400 -1.500000 0.000000 1.500000 null false
+glyph 3.122100 0.000000 1.000000 Main-Regular null false 8945
+== inline 100\% \; \$5 \; \#1
+box 5.222280 0.750000 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 49
+glyph 0.500000 0.000000 1.000000 Main-Regular null false 48
+glyph 1.000000 0.000000 1.000000 Main-Regular null false 48
+glyph 1.500000 0.000000 1.000000 Main-Regular null false 37
+glyph 2.611140 0.000000 1.000000 Main-Regular null false 36
+glyph 3.111140 0.000000 1.000000 Main-Regular null false 53
+glyph 3.888940 0.000000 1.000000 Main-Regular null false 35
+glyph 4.722280 0.000000 1.000000 Main-Regular null false 49
+== inline \newcommand{\RR}{\mathbb{R}} f: \RR \to \RR
+box 4.430650 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 102
+glyph 0.875030 0.000000 1.000000 Main-Regular null false 58
+glyph 1.430610 0.000000 1.000000 AMS-Regular null false 82
+glyph 2.430630 0.000000 1.000000 Main-Regular null false 8594
+glyph 3.708430 0.000000 1.000000 AMS-Regular null false 82
+== inline \def\abs#1{\left|#1\right|} \abs{x}
+box 1.127090 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+glyph 0.277780 0.000000 1.000000 Math-Italic null false 120
+glyph 0.849310 0.000000 1.000000 Main-Regular null false 8739
+== inline \cancel{x} + \bcancel{y} + \xcancel{z} + \sout{w}
+box 6.016090 0.583330 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 120
+line 0.000000 0.200000 0.571530 -0.630600 0.046000 null
+glyph 0.793730 0.000000 1.000000 Main-Regular null false 43
+glyph 1.793710 0.000000 1.000000 Math-Italic null false 121
+line 1.793710 -0.630560 2.319870 0.394440 0.046000 null
+glyph 2.542070 0.000000 1.000000 Main-Regular null false 43
+glyph 3.542050 0.000000 1.000000 Math-Italic null false 122
+line 3.542050 -0.630600 4.051080 0.200000 0.046000 null
+line 3.542050 0.200000 4.051080 -0.630600 0.046000 null
+glyph 4.273280 0.000000 1.000000 Main-Regular null false 43
+glyph 5.273260 0.000000 1.000000 Math-Italic null false 119
+rect 5.273260 -0.295500 0.742830 0.080000 null false
+== inline \fbox{boxed} \colorbox{yellow}{fill} \fcolorbox{red}{white}{both}
+box 7.522260 1.034440 0.340000
+glyph 0.300000 0.000000 1.000000 Main-Regular null false 98
+glyph 0.855560 0.000000 1.000000 Main-Regular null false 111
+glyph 1.355560 0.000000 1.000000 Main-Regular null false 120
+glyph 1.883340 0.000000 1.000000 Main-Regular null false 101
+glyph 2.327790 0.000000 1.000000 Main-Regular null false 100
+rect 0.000000 -1.034400 3.183350 0.040000 null false
+rect 0.000000 0.300000 3.183350 0.040000 null false
+rect 0.000000 -1.034400 0.040000 1.374400 null false
+rect 3.143350 -1.034400 0.040000 1.374400 null false
+rect 3.183350 -0.994400 1.738900 1.294400 yellow false
+glyph 3.483350 0.000000 1.000000 Main-Regular null false 102
+glyph 3.788910 0.000000 1.000000 Main-Regular null false 105
+glyph 4.066690 0.000000 1.000000 Main-Regular null false 108
+glyph 4.344470 0.000000 1.000000 Main-Regular null false 108
+rect 4.922250 -1.034400 2.600010 1.374400 white false
+rect 4.922250 -1.034400 2.600010 0.040000 red false
+rect 4.922250 0.300000 2.600010 0.040000 red false
+rect 4.922250 -1.034400 0.040000 1.374400 red false
+rect 7.482260 -1.034400 0.040000 1.374400 red false
+glyph 5.222250 0.000000 1.000000 Main-Regular null false 98
+glyph 5.777810 0.000000 1.000000 Main-Regular null false 111
+glyph 6.277810 0.000000 1.000000 Main-Regular null false 116
+glyph 6.666700 0.000000 1.000000 Main-Regular null false 104
+== inline \mathrm{d}x \mathit{abc} \mathsf{abc} \mathtt{abc} \mathfrak{ABC} \mathscr{ABC}
+box 10.604300 0.700000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 100
+glyph 0.555560 0.000000 1.000000 Math-Italic null false 120
+glyph 1.127090 0.000000 1.000000 Main-Italic null false 97
+glyph 1.638200 0.000000 1.000000 Main-Italic null false 98
+glyph 2.098200 0.000000 1.000000 Main-Italic null false 99
+glyph 2.558200 0.000000 1.000000 SansSerif-Regular null false 97
+glyph 3.038760 0.000000 1.000000 SansSerif-Regular null false 98
+glyph 3.555430 0.000000 1.000000 SansSerif-Regular null false 99
+glyph 3.999880 0.000000 1.000000 Typewriter-Regular null false 97
+glyph 4.524880 0.000000 1.000000 Typewriter-Regular null false 98
+glyph 5.049880 0.000000 1.000000 Typewriter-Regular null false 99
+glyph 5.574880 0.000000 1.000000 Fraktur-Regular null false 65
+glyph 6.292480 0.000000 1.000000 Fraktur-Regular null false 66
+glyph 7.176450 0.000000 1.000000 Fraktur-Regular null false 67
+glyph 7.788990 0.000000 1.000000 Script-Regular null false 65
+glyph 8.820770 0.000000 1.000000 Script-Regular null false 66
+glyph 9.769210 0.000000 1.000000 Script-Regular null false 67
+== inline \text{Unicode: café ü} \; x²
+box 7.804930 0.814108 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 85
+glyph 0.750000 0.000000 1.000000 Main-Regular null false 110
+glyph 1.305560 0.000000 1.000000 Main-Regular null false 105
+glyph 1.583340 0.000000 1.000000 Main-Regular null false 99
+glyph 2.027790 0.000000 1.000000 Main-Regular null false 111
+glyph 2.527790 0.000000 1.000000 Main-Regular null false 100
+glyph 3.083350 0.000000 1.000000 Main-Regular null false 101
+glyph 3.527800 0.000000 1.000000 Main-Regular null false 58
+glyph 3.805580 0.000000 1.000000 Main-Regular null false 160
+glyph 4.055580 0.000000 1.000000 Main-Regular null false 99
+glyph 4.500030 0.000000 1.000000 Main-Regular null false 97
+glyph 5.000030 0.000000 1.000000 Main-Regular null false 102
+glyph 5.305590 0.000000 1.000000 Main-Regular null false 101
+glyph 5.277815 0.000000 1.000000 Main-Regular null false 714
+glyph 5.750040 0.000000 1.000000 Main-Regular null false 160
+glyph 6.000040 0.000000 1.000000 Main-Regular null false 117
+glyph 6.027820 0.000000 1.000000 Main-Regular null false 168
+glyph 6.833400 0.000000 1.000000 Math-Italic null false 120
+glyph 7.404930 -0.363000 0.700000 Main-Regular null false 50
+== symbol \alpha
+box 0.643400 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 945
+== symbol \beta
+box 0.618410 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 946
+== symbol \gamma
+box 0.573290 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 947
+== symbol \delta
+box 0.482290 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 948
+== symbol \epsilon
+box 0.405900 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 1013
+== symbol \varepsilon
+box 0.466320 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 949
+== symbol \zeta
+box 0.511280 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 950
+== symbol \eta
+box 0.532410 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 951
+== symbol \theta
+box 0.497220 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 952
+== symbol \vartheta
+box 0.591440 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 977
+== symbol \iota
+box 0.353940 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 953
+== symbol \kappa
+box 0.576160 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 954
+== symbol \lambda
+box 0.583340 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 955
+== symbol \mu
+box 0.602550 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 956
+== symbol \nu
+box 0.557640 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 957
+== symbol \xi
+box 0.483510 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 958
+== symbol \pi
+box 0.605910 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 960
+== symbol \varpi
+box 0.855910 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 982
+== symbol \rho
+box 0.517020 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 961
+== symbol \varrho
+box 0.517020 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 1009
+== symbol \sigma
+box 0.607290 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 963
+== symbol \varsigma
+box 0.442710 0.430560 0.097220
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 962
+== symbol \tau
+box 0.550350 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 964
+== symbol \upsilon
+box 0.576160 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 965
+== symbol \phi
+box 0.595830 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 981
+== symbol \varphi
+box 0.654170 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 966
+== symbol \chi
+box 0.625690 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 967
+== symbol \psi
+box 0.687270 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 968
+== symbol \omega
+box 0.658330 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 969
+== symbol \Gamma
+box 0.625000 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 915
+== symbol \Delta
+box 0.833340 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 916
+== symbol \Theta
+box 0.777780 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 920
+== symbol \Lambda
+box 0.694450 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 923
+== symbol \Xi
+box 0.666670 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 926
+== symbol \Pi
+box 0.750000 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 928
+== symbol \Sigma
+box 0.722220 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 931
+== symbol \Upsilon
+box 0.777780 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 933
+== symbol \Phi
+box 0.722220 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 934
+== symbol \Psi
+box 0.777780 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 936
+== symbol \Omega
+box 0.722220 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 937
+== symbol \lt
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 60
+== symbol \gt
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 62
+== symbol \leq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8804
+== symbol \geq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8805
+== symbol \leqslant
+box 0.777780 0.636670 0.136670
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 10877
+== symbol \geqslant
+box 0.777780 0.636670 0.136670
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 10878
+== symbol \neq
+box 0.777780 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 57376
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 61
+== symbol \nleq
+box 0.777780 0.793830 0.302740
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8816
+== symbol \ngeq
+box 0.777780 0.793830 0.302740
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8817
+== symbol \lesssim
+box 0.777780 0.729580 0.229580
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8818
+== symbol \gtrsim
+box 0.777780 0.729580 0.229580
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8819
+== symbol \in
+box 0.666670 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8712
+== symbol \notin
+box 0.666670 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8712
+glyph 0.111070 0.000000 1.000000 Main-Regular null false 47
+== symbol \ni
+box 0.666670 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8715
+== symbol \propto
+box 0.777780 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8733
+== symbol \mid
+box 0.277780 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+== symbol \nmid
+box 0.277780 0.741110 0.251420
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8740
+== symbol \parallel
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+== symbol \sim
+box 0.777780 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8764
+== symbol \simeq
+box 0.777780 0.463750 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8771
+== symbol \cong
+box 0.778000 0.589000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8773
+== symbol \approx
+box 0.777780 0.483120 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8776
+== symbol \asymp
+box 0.777780 0.463750 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8781
+== symbol \doteq
+box 0.778000 0.673000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8784
+== symbol \triangleq
+box 0.777780 0.916670 0.081980
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8796
+== symbol \equiv
+box 0.777780 0.463750 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8801
+== symbol \ll
+box 1.000000 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8810
+== symbol \gg
+box 1.000000 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8811
+== symbol \prec
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8826
+== symbol \succ
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8827
+== symbol \preceq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10927
+== symbol \succeq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10928
+== symbol \subset
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8834
+== symbol \supset
+box 0.777780 0.539100 0.039100
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8835
+== symbol \subseteq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8838
+== symbol \supseteq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8839
+== symbol \subsetneq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8842
+== symbol \supsetneq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8843
+== symbol \sqsubseteq
+box 0.777780 0.635970 0.135970
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8849
+== symbol \vdash
+box 0.611110 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8866
+== symbol \dashv
+box 0.611110 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8867
+== symbol \models
+box 0.867000 0.750000 0.249000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8872
+== symbol \perp
+box 0.777780 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8869
+== symbol \coloneqq
+box 0.988860 0.430560 0.000000
+glyph 0.000000 -0.034700 1.000000 Main-Regular null false 58
+glyph 0.211080 0.000000 1.000000 Main-Regular null false 61
+== symbol \leftarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8592
+== symbol \rightarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8594
+== symbol \leftrightarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8596
+== symbol \Leftarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8656
+== symbol \Rightarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8658
+== symbol \Leftrightarrow
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8660
+== symbol \longrightarrow
+box 1.638000 0.511000 0.011000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10230
+== symbol \Longrightarrow
+box 1.638000 0.525000 0.024000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10233
+== symbol \mapsto
+box 1.000000 0.511000 0.011000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8614
+== symbol \longmapsto
+box 1.638000 0.511000 0.011000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10236
+== symbol \hookrightarrow
+box 1.126000 0.511000 0.011000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8618
+== symbol \uparrow
+box 0.500000 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8593
+== symbol \downarrow
+box 0.500000 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8595
+== symbol \rightleftharpoons
+box 1.000000 0.671000 0.011000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8652
+== symbol \implies
+box 2.193600 0.525000 0.024000
+glyph 0.277800 0.000000 1.000000 Main-Regular null false 10233
+== symbol \iff
+box 2.413600 0.525000 0.024000
+glyph 0.277800 0.000000 1.000000 Main-Regular null false 10234
+== symbol \to
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8594
+== symbol \gets
+box 1.000000 0.366870 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8592
+== symbol \times
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 215
+== symbol \div
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 247
+== symbol \pm
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 177
+== symbol \mp
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8723
+== symbol \cdot
+box 0.277780 0.444450 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8901
+== symbol \circ
+box 0.500000 0.444450 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8728
+== symbol \bullet
+box 0.500000 0.444450 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8729
+== symbol \ast
+box 0.500000 0.465280 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8727
+== symbol \star
+box 0.500000 0.465280 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8902
+== symbol \oplus
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8853
+== symbol \otimes
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8855
+== symbol \odot
+box 0.777780 0.583330 0.083330
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8857
+== symbol \wedge
+box 0.666670 0.555560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8743
+== symbol \vee
+box 0.666670 0.555560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8744
+== symbol \cap
+box 0.666670 0.555560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8745
+== symbol \cup
+box 0.666670 0.555560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8746
+== symbol \setminus
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8726
+== symbol \dagger
+box 0.444450 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8224
+== symbol \ddagger
+box 0.444450 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8225
+== symbol \diamond
+box 0.500000 0.444450 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8900
+== symbol \bmod
+box 2.000100 0.694440 0.000000
+glyph 0.055600 0.000000 1.000000 Main-Regular null false 109
+glyph 0.888940 0.000000 1.000000 Main-Regular null false 111
+glyph 1.388940 0.000000 1.000000 Main-Regular null false 100
+== symbol \infty
+box 1.000000 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8734
+== symbol \partial
+box 0.586460 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8706
+== symbol \nabla
+box 0.833340 0.683330 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8711
+== symbol \hbar
+box 0.540280 0.688890 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8463
+== symbol \ell
+box 0.416670 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8467
+== symbol \Re
+box 0.722220 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8476
+== symbol \Im
+box 0.722220 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8465
+== symbol \aleph
+box 0.611110 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8501
+== symbol \forall
+box 0.555560 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8704
+== symbol \exists
+box 0.555560 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8707
+== symbol \nexists
+box 0.555560 0.688890 0.000000
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8708
+== symbol \emptyset
+box 0.500000 0.750000 0.055560
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8709
+== symbol \varnothing
+box 0.777780 0.581670 0.081670
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 8709
+== symbol \neg
+box 0.666670 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 172
+== symbol \angle
+box 0.722220 0.692240 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8736
+== symbol \top
+box 0.777780 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8868
+== symbol \bot
+box 0.777780 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8869
+== symbol \prime
+box 0.275000 0.555560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8242
+== symbol \ldots
+box 1.172000 0.123000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8230
+== symbol \cdots
+box 1.172000 0.313000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8943
+== symbol \vdots
+box 0.278000 1.500000 0.030000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8942
+rect 0.278000 -1.500000 0.000000 1.500000 null false
+== symbol \ddots
+box 1.282000 0.823000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8945
+== symbol \dots
+box 1.172000 0.123000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8230
+== symbol \triangle
+box 0.888890 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 9651
+== symbol \square
+box 0.777780 0.675000 0.000000
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 9633
+== symbol \checkmark
+box 0.833340 0.692240 0.000000
+glyph 0.000000 0.000000 1.000000 AMS-Regular null false 10003
+== symbol \degree
+box 0.750000 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 176
+== symbol \imath
+box 0.322460 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 57649
+== symbol \jmath
+box 0.384030 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Math-Italic null false 57911
+== symbol \langle
+box 0.388890 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10216
+== symbol \rangle
+box 0.388890 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 10217
+== symbol \lceil
+box 0.444450 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8968
+== symbol \rceil
+box 0.444450 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8969
+== symbol \lfloor
+box 0.444450 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8970
+== symbol \rfloor
+box 0.444450 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8971
+== symbol \lvert
+box 0.277780 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+== symbol \rvert
+box 0.277780 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8739
+== symbol \lVert
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+== symbol \rVert
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+== symbol \sum
+box 1.055560 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8721
+== symbol \prod
+box 0.944450 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8719
+== symbol \coprod
+box 0.944450 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8720
+== symbol \int
+box 0.666670 0.805000 0.306120
+glyph 0.000000 -0.000600 1.000000 Size1-Regular null false 8747
+== symbol \iint
+box 1.013450 0.805000 0.306000
+glyph 0.000000 -0.000500 1.000000 Size1-Regular null false 8748
+== symbol \iiint
+box 1.360450 0.805000 0.306000
+glyph 0.000000 -0.000500 1.000000 Size1-Regular null false 8749
+== symbol \oint
+box 0.666670 0.805000 0.306120
+glyph 0.000000 -0.000600 1.000000 Size1-Regular null false 8750
+== symbol \oiint
+box 0.957000 0.805000 0.306000
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8748
+svg 0.000000 -0.499000 0.957000 0.499000 0.000000,0.000000,957.000000,499.000000 xMinYMin null -52586177 noclip
+== symbol \bigcup
+box 0.833340 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8899
+== symbol \bigcap
+box 0.833340 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8898
+== symbol \bigoplus
+box 1.111110 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 10753
+== symbol \bigotimes
+box 1.111110 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 10754
+== symbol \bigwedge
+box 0.833340 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8896
+== symbol \bigvee
+box 0.833340 0.750000 0.250010
+glyph 0.000000 0.000000 1.000000 Size1-Regular null false 8897
+== symbol \lim
+box 1.388900 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 105
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 109
+== symbol \limsup
+box 3.061170 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 105
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 109
+glyph 1.555600 0.000000 1.000000 Main-Regular null false 115
+glyph 1.950050 0.000000 1.000000 Main-Regular null false 117
+glyph 2.505610 0.000000 1.000000 Main-Regular null false 112
+== symbol \liminf
+box 2.772280 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 105
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 109
+glyph 1.555600 0.000000 1.000000 Main-Regular null false 105
+glyph 1.833380 0.000000 1.000000 Main-Regular null false 110
+glyph 2.388940 0.000000 1.000000 Main-Regular null false 102
+== symbol \max
+box 1.861120 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 109
+glyph 0.833340 0.000000 1.000000 Main-Regular null false 97
+glyph 1.333340 0.000000 1.000000 Main-Regular null false 120
+== symbol \min
+box 1.666680 0.667860 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 109
+glyph 0.833340 0.000000 1.000000 Main-Regular null false 105
+glyph 1.111120 0.000000 1.000000 Main-Regular null false 110
+== symbol \sup
+box 1.505570 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 115
+glyph 0.394450 0.000000 1.000000 Main-Regular null false 117
+glyph 0.950010 0.000000 1.000000 Main-Regular null false 112
+== symbol \inf
+box 1.216680 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 105
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 110
+glyph 0.833340 0.000000 1.000000 Main-Regular null false 102
+== symbol \det
+box 1.388900 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 100
+glyph 0.555560 0.000000 1.000000 Main-Regular null false 101
+glyph 1.000010 0.000000 1.000000 Main-Regular null false 116
+== symbol \log
+box 1.291670 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 111
+glyph 0.777780 0.000000 1.000000 Main-Regular null false 103
+== symbol \ln
+box 0.833340 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 108
+glyph 0.277780 0.000000 1.000000 Main-Regular null false 110
+== symbol \exp
+box 1.527790 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 101
+glyph 0.444450 0.000000 1.000000 Main-Regular null false 120
+glyph 0.972230 0.000000 1.000000 Main-Regular null false 112
+== symbol \sin
+box 1.227790 0.667860 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 115
+glyph 0.394450 0.000000 1.000000 Main-Regular null false 105
+glyph 0.672230 0.000000 1.000000 Main-Regular null false 110
+== symbol \cos
+box 1.338900 0.430560 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 99
+glyph 0.444450 0.000000 1.000000 Main-Regular null false 111
+glyph 0.944450 0.000000 1.000000 Main-Regular null false 115
+== symbol \tan
+box 1.444450 0.615080 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 116
+glyph 0.388890 0.000000 1.000000 Main-Regular null false 97
+glyph 0.888890 0.000000 1.000000 Main-Regular null false 110
+== symbol \arcsin
+box 2.563910 0.667860 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 97
+glyph 0.500000 0.000000 1.000000 Main-Regular null false 114
+glyph 0.891670 0.000000 1.000000 Main-Regular null false 99
+glyph 1.336120 0.000000 1.000000 Main-Regular null false 115
+glyph 1.730570 0.000000 1.000000 Main-Regular null false 105
+glyph 2.008350 0.000000 1.000000 Main-Regular null false 110
+== symbol \sinh
+box 1.783350 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 115
+glyph 0.394450 0.000000 1.000000 Main-Regular null false 105
+glyph 0.672230 0.000000 1.000000 Main-Regular null false 110
+glyph 1.227790 0.000000 1.000000 Main-Regular null false 104
+== symbol \argmax
+box 3.433380 0.430560 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 97
+glyph 0.500000 0.000000 1.000000 Main-Regular null false 114
+glyph 0.891670 0.000000 1.000000 Main-Regular null false 103
+glyph 1.572260 0.000000 1.000000 Main-Regular null false 109
+glyph 2.405600 0.000000 1.000000 Main-Regular null false 97
+glyph 2.905600 0.000000 1.000000 Main-Regular null false 120
+== symbol \quad
+box 1.000000 0.000000 0.000000
+== symbol \qquad
+box 2.000000 0.000000 0.000000
+== symbol \,
+box 0.166700 0.000000 0.000000
+== symbol \:
+box 0.222200 0.000000 0.000000
+== symbol \;
+box 0.277800 0.000000 0.000000
+== symbol \!
+box -0.166700 0.000000 0.000000
+== symbol \ 
+box 0.250000 0.000000 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 160
+== symbol \{
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 123
+== symbol \}
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 125
+== symbol \|
+box 0.500000 0.750000 0.250000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 8741
+== symbol \%
+box 0.833340 0.750000 0.055560
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 37
+== symbol \$
+box 0.500000 0.750000 0.055560
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 36
+== symbol \#
+box 0.833340 0.694440 0.194440
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 35
+== symbol \&
+box 0.777780 0.694440 0.000000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 38
+== symbol \_
+box 0.527780 0.120560 0.310000
+glyph 0.000000 0.000000 1.000000 Main-Regular null false 95
