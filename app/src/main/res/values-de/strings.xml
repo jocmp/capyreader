@@ -91,7 +91,7 @@
     <string name="settings_option_full_content_subtitle">Auswahl, den vollständigen Text zu laden, merken</string>
     <string name="empty_onboarding_prompt">Beginne mit dem Hinzufügen eines Feeds</string>
     <string name="empty_onboarding_title">Keine Feeds vorhanden</string>
-    <string name="article_style_options">Schriftart</string>
+    <string name="article_style_options">Schriftart-Optionen</string>
     <string name="font_option_vollkorn">Vollkorn</string>
     <string name="font_option_atkinson_hyperlegible">Atkinson Hyperlegible</string>
     <string name="font_option_system_default">Systemstandard</string>
@@ -377,4 +377,7 @@
     <string name="settings_section_e_ink">E-Ink</string>
     <string name="reader_video_exit_fullscreen">Vollbildmodus verlassen</string>
     <string name="reader_video_enter_fullscreen">Vollbildmodus aktivieren</string>
+    <string name="article_list_row_swipe_share">Artikel teilen</string>
+    <string name="settings_e_ink_keep_screen_on_title">Bildschirm aktiv halten</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Ausschalten des Bildschirms beim Lesen eines Artikels verhindern</string>
 </resources>

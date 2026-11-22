@@ -191,7 +191,7 @@
     <string name="audio_player_play">Прайграць</string>
     <string name="audio_player_pause">Прыпыніць</string>
     <string name="audio_player_close">Закрыць прайгравальнік</string>
-    <string name="extract_full_content">Выняць поўны змест</string>
+    <string name="extract_full_content">Выняць поўнае змесціва</string>
     <string name="article_actions_mark_below_as_read">Пазначыць ніжэй як прачытанае</string>
     <string name="article_actions_mark_after_as_read">Пазначыць вышэй як прачытанае</string>
     <string name="unauthorized_dialog_title">Вы выйшлі з сістэмы</string>
@@ -356,4 +356,25 @@
     <string name="settings_gestures_list_back_navigation_action">Дзеянне кнопкі «Назад»</string>
     <string name="settings_gestures_list_back_navigation_open_drawer">Адкрыць панэль навігацыі</string>
     <string name="settings_gestures_list_back_navigation_navigate_to_parent">Да бацькоўскага элемента</string>
+    <string name="article_list_row_swipe_share">Абагуліць артыкул</string>
+    <string name="settings_mark_read_on_scroll">Пазначаць як прачытанае пры прагортцы</string>
+    <string name="settings_gestures_enable_horizontal_pagination_title">Уключыць гарызантальную прагортку</string>
+    <string name="settings_e_ink_scrollbar_title">Паласа прагорткі E Ink</string>
+    <string name="settings_e_ink_scrollbar_subtitle">Паказваць шырэйшую паласу прагорткі ў спісе артыкулаў</string>
+    <string name="reader_tap_zone_previous">Прагортванне ўверх</string>
+    <string name="reader_tap_zone_next">Прагортванне ўніз</string>
+    <string name="settings_e_ink_tap_to_page_title">Перагортваць старонкі націсканнем</string>
+    <string name="settings_e_ink_tap_to_page_subtitle">Націсніце на левы або правы край артыкула, каб перайсці на старонку назад або наперад</string>
+    <string name="settings_e_ink_keep_screen_on_title">Трымаць экран уключаным</string>
+    <string name="settings_e_ink_keep_screen_on_subtitle">Не выключаць экран падчас чытання артыкула</string>
+    <string name="after_read_all_behavior_label">Пасля прачытання ўсяго</string>
+    <string name="after_read_all_behavior_open_drawer">Адкрыць панэль навігацыі</string>
+    <string name="feed_nav_drawer_open">Адкрыць панэль навігацыі</string>
+    <string name="filters_supporting_text">Выдаляць артыкулы, якія змяшчаюць ключавыя словы ў загалоўку або змесціве</string>
+    <string name="widget_receiver_headlines_title">Загалоўкі</string>
+    <string name="widget_headlines_title">Апошнія загалоўкі</string>
+    <string name="mark_read_position_floating_action_button">Нефіксаваная кнопка</string>
+    <string name="article_list_row_swipe_toggle_starred">Дадаць/выдаліць з абранага</string>
+    <string name="settings_option_full_content_subtitle">Запомніць выбар загрузкі поўнага змесціва артыкула</string>
+    <string name="settings_option_full_content_title">Заўсёды ўсё змесціва</string>
 </resources>
